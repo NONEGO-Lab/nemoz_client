@@ -42,7 +42,7 @@ const EventList = () => {
   const getEventList = async () => {
     try {
       const response = await eventApi.getEventList({ page });
-      setEventList(response.events);
+      setEventList(response);
     } catch (err) {
       dispatch(setError(err));
       dispatch(setIsError(true));

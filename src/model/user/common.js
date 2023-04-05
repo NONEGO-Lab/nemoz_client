@@ -3,7 +3,8 @@
 export const user_common = {
   id: null,
   user_id: null,
-  user_name: null,
+  username: null,
   role: null,
   company_name: null,
+  token: null
 }

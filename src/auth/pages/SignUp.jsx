@@ -5,7 +5,7 @@ import Header from "../../shared/Header";
 import { Button, Input, Select } from "../../element";
 import { SizeLayout } from "../../shared/Layout";
 import { userApi } from "../data/user_data";
-import { sign_up_request } from "../../model/auth/auth_model";
+import { sign_up_info } from "../../model/auth/auth_model";
 import { sign_up_item } from "./form";
 
 
@@ -17,7 +17,7 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     const userInfo = {
-      ...sign_up_request,
+      ...sign_up_info,
       user_id: data.id,
       username: data.username,
       company_name: data.company_name,
@@ -26,7 +26,7 @@ const SignUp = () => {
     };
 
     userApi.register(userInfo).then((result) => {
-      if(result.data === "Created"){
+      if(result){
         navigate("/");
       } else {
         alert("회원가입 실패입니다");

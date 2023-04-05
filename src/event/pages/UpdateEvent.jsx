@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import SelectBox, { components } from "react-select";
 import { eventApi } from "../data/event_data";
 import { setError, setIsError } from "../../redux/modules/errorSlice";
+import {event_req} from "../../model/event/event_model";
 
 
 const UpdateEvent = () => {
@@ -31,12 +32,11 @@ const UpdateEvent = () => {
   const getEventDetail = async () => {
     try {
       const response = await eventApi.getEventDetail({ page:1, eventId: params.id});
-      let detail = response.response_data.events[0];
-      setEvent(detail);
-      setNewEventInfo({name: detail.event_name, date: detail.due_dt});
-      setSelectedFans(valueMaker(detail.target_fan_ids));
-      setSelectedArtists(valueMaker(detail.target_artist_ids));
-      setSelectedStaffs(valueMaker(detail.target_staff_ids));
+      setEvent(response);
+      setNewEventInfo({ name: response.event_name, date: response.due_dt });
+      setSelectedFans(valueMaker(response.target_fan_ids));
+      setSelectedArtists(valueMaker(response.target_artist_ids));
+      setSelectedStaffs(valueMaker(response.target_staff_ids));
     } catch (err) {
       dispatch(setError(err));
       dispatch(setIsError(true));
@@ -47,11 +47,12 @@ const UpdateEvent = () => {
     getEventDetail();
   },[])
 
+  console.log("newEventInfo::::", newEventInfo);
 
 
   const valueMaker = (array) => {
 
-    array = array?.map((el) => {
+    array?.map((el) => {
       el.value = el.username;
       el.label = el.username;
     })
@@ -66,17 +67,21 @@ const UpdateEvent = () => {
 
   const onSubmit = async (data) => {
 
-    const response = await eventApi.updateEvent({
-      id: Number(params.id),
-      eventName: data.name,
-      artistIds: idArrayMaker(selectedArtists),
-      staffIds: idArrayMaker(selectedStaffs),
-      fanIds: idArrayMaker(selectedFans),
-      creator: userInfo.id,
-      dueDt: data.date.replace("T", " ")+":00"
-    });
 
-    if(response.event_data.length > 0) {
+    /// Fixme: request에서 왜 key값이 얘만 event_id가 아니고 id일까..?
+    const request = {
+      ...event_req,
+      id: Number(params.id),
+      event_name: data.name,
+      target_artist_ids: idArrayMaker(selectedArtists),
+      target_staff_ids: idArrayMaker(selectedStaffs),
+      target_fan_ids: idArrayMaker(selectedFans),
+      creator: userInfo.id,
+      due_dt: data.date.replace("T", " ")+":00"
+    }
+    const response = await eventApi.updateEvent(request);
+
+    if(response) {
       alert("수정 완료!");
       navigate("/eventlist");
     }
@@ -181,7 +186,7 @@ const UpdateEvent = () => {
                       onChange={setSelectedStaffs}
                       closeMenuOnSelect={false}
                       components={{ DropdownIndicator }}
-                      // options={valueMaker(event.target.staff_ids)}
+                      options={valueMaker(event.target_staff_ids)}
                       isMulti
                   />}
           />

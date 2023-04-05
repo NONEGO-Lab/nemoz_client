@@ -34,7 +34,6 @@ const Login = () => {
       }
       sock.emit("join", result.payload.username);
       navigate("/eventlist");
-      // result.payload.role === "fan" ? navigate("/waitcall") : navigate("/roomlist");
 
     })
   }

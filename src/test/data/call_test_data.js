@@ -5,7 +5,7 @@ export const testApi = {
 
   testCreate: async () => {
     const data = await instance.post("/test/create", {});
-    return data.data;
+    return data.data.sessionId;
   },
 
   testJoin: async ({ meetName, userId }) => {
@@ -15,21 +15,22 @@ export const testApi = {
     };
 
     const data = await instance.post("/test/join", req);
-    return data.data;
+    return {
+      id: data.data.id,
+      token: data.data.token
+    };
   },
 
-  testLeave: async ({ meetName, connectionName }) => {
-    let req = {
-      meet_name: meetName,
-      connection_name: connectionName
-    };
-
-    const data = await instance.post("/test/leave", req);
-    return data.data;
+  testLeave: async (request) => {
+    const data = await instance.post("/test/leave", request);
+    return data.data === 'LEAVED';
   },
 
   testEnd: async (meetName) => {
-    const data = await instance.post("/test/end", { meet_name: meetName });
-    return data.data;
+    let req = {
+      meet_name: meetName
+    }
+    const data = await instance.post("/test/end", req);
+    return data.data === 'Meet Ended';
   }
 }

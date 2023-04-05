@@ -1,28 +1,8 @@
 import { user_common } from "../user/common";
 
 
-// 🔶 전역 정보
-export const event_info = {
-  event_id: null,
-  event_staff_ids: [],
-  event_fan_ids: [],
-  event_artist_ids: []
-};
-
-
-// 🔶request
-export const get_event_params = {
-  page_size: 20,
-  current_page: 1,
-  event_id: null
-}
-
-export const req_event_detail = {
-  page: null,
-  event_id: null
-}
-
-export const create_event = {
+// Fixme: id가 event_id로 오면 event_detail 하나로만 쓸 수 있음.
+export const event_req = {
   id: null,
   event_name: null,
   target_artist_ids: [],
@@ -32,10 +12,7 @@ export const create_event = {
   due_dt: null
 }
 
-
-// 🔶response
-
-const res_event_detail = {
+export const event_detail = {
   event_id: null,
   event_name: null,
   target_artist_ids: [
@@ -52,7 +29,8 @@ const res_event_detail = {
     ...user_common
   },
   create_dt: null,
-  update_dt: null
+  update_dt: null,
+  due_dt: null,
 }
 
 

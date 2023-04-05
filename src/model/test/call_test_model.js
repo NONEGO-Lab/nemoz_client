@@ -1,6 +1,7 @@
 
 
-// 🔶 전역 정보
+// Fixme: test는 모델 활용을 어떻게 해야할 지 모르겠음...
+
 export const test_info = {
   user_id: null,
   fan_id: null,
@@ -10,7 +11,6 @@ export const test_info = {
 }
 
 export const test_video = {
-  // Fixme: 비디오 영역일지 test 영역일지 고민해보자
   Ov: null,
   session: null,
   publisher: null,

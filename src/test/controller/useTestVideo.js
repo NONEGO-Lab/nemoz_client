@@ -1,12 +1,19 @@
 import React from "react";
 import {OpenVidu} from "openvidu-browser";
 import {useDispatch, useSelector} from "react-redux";
-import { addTestSessionInfo, addConnectInfo, clearTestSession, addTestPublisher,
-  addTestSubscriber, addTestSession, mutePublisherAudio, mutePublisherVideo } from
-      "../../redux/modules/testSlice";
-import { useNavigate } from "react-router-dom";
-import { testApi } from "../data/call_test_data";
-import { addAudioDevices, addVideoDevices } from "../../redux/modules/videoSlice";
+import {
+  addConnectInfo,
+  addTestPublisher,
+  addTestSession,
+  addTestSessionInfo,
+  addTestSubscriber,
+  clearTestSession,
+  mutePublisherAudio,
+  mutePublisherVideo
+} from "../../redux/modules/testSlice";
+import {useNavigate} from "react-router-dom";
+import {testApi} from "../data/call_test_data";
+import {addAudioDevices, addVideoDevices} from "../../redux/modules/videoSlice";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
 
 export const useTestVideo = () => {
@@ -16,17 +23,15 @@ export const useTestVideo = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const sessionInfo = useSelector((state) => state.test.sessionInfo);
-  const session = useSelector((state) => state.test.session);
-  const meetInfo = useSelector((state) => state.test.sessionInfo);
   const connectInfo = useSelector((state) => state.test.connectInfo);
+  const session = useSelector((state) => state.test.session);
   const publisher = useSelector((state) => state.test.publisher);
 
   let OV;
 
   const createTestSession = async () => {
     try {
-      const response = await testApi.testCreate();
-      return response;
+      return await testApi.testCreate();
     } catch (err) {
       dispatch(setError(err));
       dispatch(setIsError(true));
@@ -36,7 +41,9 @@ export const useTestVideo = () => {
   const createTestToken = async (meetName) => {
     let userId = userInfo.id.toString();
     try {
-      const response = await testApi.testJoin({ meetName, userId });
+      const response = await testApi.testJoin({
+        meetName, userId
+      });
       dispatch(addConnectInfo(response.id))
       return response.token;
     } catch (err) {
@@ -47,12 +54,13 @@ export const useTestVideo = () => {
 
   const msgBeforeOut = async () => {
     try {
-      const response = await testApi.testLeave({
-        meetName: meetInfo.meetName,
-        connectionName: connectInfo
-      });
+      let request = {
+        meet_name: sessionInfo.meet_name,
+        connection_name: connectInfo
+      }
+      const response = await testApi.testLeave(request);
 
-      if(response === "LEAVED") {
+      if(response) {
         dispatch(clearTestSession());
         session.disconnect();
         OV = null;
@@ -75,15 +83,15 @@ export const useTestVideo = () => {
 
     dispatch(addTestSession(_session));
 
-    const serverSessionData = await createTestSession();
+    const sessionId = await createTestSession();
 
 
     let sessionData = {
-      meetName: serverSessionData.sessionId
+      meet_name: sessionId
     };
     dispatch(addTestSessionInfo(sessionData));
 
-    const token = await createTestToken(serverSessionData.sessionId);
+    const token = await createTestToken(sessionId);
     await connectSession(token, _session, OV);
 
     return sessionData;
@@ -98,10 +106,7 @@ export const useTestVideo = () => {
     subscribeToStreamDestroyed(_session);
 
     dispatch(addTestSession(_session));
-
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~session!!!", session);
-
-    const token = await createTestToken(sessionInfo.meetName);
+    const token = await createTestToken(sessionInfo.meet_name);
     await connectSession(token, _session, OV);
   }
 

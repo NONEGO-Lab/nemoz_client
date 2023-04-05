@@ -81,7 +81,7 @@ const ConnectTest = () => {
 
       } else {
         const response = await testApi.testEnd(meetInfo.meetName);
-        if(response === "Meet Ended") {
+        if(response) {
           navigate("/userlist");
           let roomNum = `1_test_${fanInfo.fan_id}`;
           sock.emit("leaveRoom", roomNum, userInfo, navigate);
@@ -142,7 +142,7 @@ const ConnectTest = () => {
       // test meet create -> join 까지 한다.
       // create, join 하고 나온 방을 socket 으로 보낸다!
       createJoinSession().then((sessionInfo) => {
-        let data = { meetName: sessionInfo.meetName, fanId: fanInfo.fan_id }
+        let data = { meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id }
         sock.emit("joinTestSession", data);
         let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
         sock.emit("joinRoom", roomNum, userInfo);

@@ -50,20 +50,15 @@ export const userSlice = createSlice({
       state.isLogin = false;
     },
     updateUserTestValue: (state, action) => {
-      state.userInfo = {...state.userInfo, isCallTested: true}
+      state.userInfo = { ...state.userInfo, isCallTested: true }
     }
   },
   extraReducers: {
     [loginUser.fulfilled]: (state, action) => {
-      let userInfo = {
-        company: action.payload.company,
-        id: action.payload.id,
-        role: action.payload.role,
-        userId: action.payload.userid,
-        username: action.payload.username
-      }
-      state.userInfo = userInfo;
       localStorage.setItem("auth", action.payload.token);
+      delete action.payload.token;
+      state.userInfo = action.payload;
+
     },
     [loginUser.rejected]: (state, action) => {
       state.error = action.payload.errMsg;
