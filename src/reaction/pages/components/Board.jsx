@@ -1,9 +1,9 @@
 import React from "react";
 import ToastMessage from "./ToastMessage";
 import {useMediaQuery} from "react-responsive";
-import { Button } from "../../element";
+import { Button } from "../../../element";
 import {useSelector} from "react-redux";
-import { useReaction } from "../../reaction/controller/useReaction";
+import { useReaction } from "../../controller/useReaction";
 
 
 

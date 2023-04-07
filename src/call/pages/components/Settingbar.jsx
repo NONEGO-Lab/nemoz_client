@@ -33,21 +33,26 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
 
 
   const requestKickOutApi = async () => {
-    const result = await attendeeApi.banFan({ id: connectionInfo.id, userId: userInfo.id});
+    const result = await attendeeApi.banFan({ id: connectionInfo.meet_id, userId: userInfo.id});
 
-    if(result.conn_data[0].meet_id) {
+    if(result.conn_data.meet_id) {
+
+      const request = {
+        user_info: {
+          id: result.fan_data.id.toString(),
+          role: result.fan_data.role,
+        },
+        type: 'ban',
+        meet_name: result.conn_data.meet_name,
+        connection_id: result.conn_data.conn_id,
+        connection_name: result.conn_data.conn_name,
+        progress_time: 180
+      }
+
       try {
-        const response = await meetApi.leaveMeet({
-          id: result.fan_data[0].id,
-          role: result.fan_data[0].role,
-          type: "ban",
-          meetName: result.conn_data[0].meet_name,
-          connectionId: result.conn_data[0].conn_id,
-          connectionName: result.conn_data[0].conn_name,
-          time: 180
-        });
+        const response = await meetApi.leaveMeet(request);
 
-        if(response === "LEAVED") {
+        if(response) {
           sock.emit("kickOut", roomNum, result.fan_data[0]);
         }
       } catch (err) {
@@ -60,8 +65,6 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
   }
 
   const kickOutHandler = async () => {
-
-    console.log("subscribers", subscribers);
 
     if(subscribers.length === 0) return;
 
@@ -78,7 +81,7 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
     if(subscribers.length === 0) return;
 
     if(window.confirm(`정말로 ${currentFan.fan_name}를 경고하시겠습니까?`)){
-      let connId = connectionInfo.id;
+      let connId = connectionInfo.meet_id;
       const result = await attendeeApi.warnFan(connId);
       if(result.msg === "Warning Count is Updated") {
         sock.emit("warnUser", roomNum, currentFan, result.warning_count);

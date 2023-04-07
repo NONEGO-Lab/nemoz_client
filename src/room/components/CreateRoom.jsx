@@ -32,15 +32,16 @@ const CreateRoom = ({ setOnModal, getRoomListApi }) => {
 
   const getEventUsers = async () => {
     let page = 1;
-    const response = await eventApi.getEventList({ page, eventId });
-    setTargetFanIds(response.events[0].target_fan_ids);
-    setTargetArtistIds(response.events[0].target_artist_ids);
-    setTargetStaffIds(response.events[0].target_staff_ids);
+    const response = await eventApi.getEventDetail({ page, eventId });
+    setTargetFanIds(response.target_fan_ids);
+    setTargetArtistIds(response.target_artist_ids);
+    setTargetStaffIds(response.target_staff_ids);
   }
 
   const createRoomForm = [
     { label: "방 제목", name: "roomTitle", placeholder: "입력.." },
-    { label: "아티스트", name: "artistName", placeholder: "아티스트 A", type: "select", options: targetArtistIds.map((artist) => artist.username) },
+    { label: "아티스트", name: "artistName", placeholder: "아티스트 A", type: "select",
+      options: targetArtistIds.map((artist) => artist.username) },
     { label: "1인당 통화 할당 시간", name: "callTime", placeholder: "00:03:00", type:"timeInput" },
     { label: "시작 일시", name: "startDate", placeholder: "2022-08-26-19:00", type: "datetime-local" },
     { label: "대기 화면", name: "file", placeholder: "선택하기", type: "file" }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginCheck } from "../redux/modules/userSlice";
-import Login from "../auth/pages/Login";
+import LoginView from "../auth/pages/LoginView";
 
 
 export const Auth = ({ children }) => {
@@ -39,7 +39,7 @@ export const Auth = ({ children }) => {
   return (
       <>
         {
-          isAuth ? children : <Login/>
+          isAuth ? children : <LoginView/>
         }
       </>
   )

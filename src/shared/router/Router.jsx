@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter, Routes, Route,} from "react-router-dom";
-import SignUp from "../../auth/pages/SignUp";
+import SignUpView from "../../auth/pages/SignUpView";
 import RoomList from "../../room/pages/RoomList";
 import { Auth } from "../Auth";
 import ParticipantList from "../../fans/pages/ParticipantList";
@@ -8,10 +8,10 @@ import DeviceTest from "../../test/pages/DeviceTest";
 import VideoContainer from "../../room/pages/VideoContainer";
 import CreateEvent from "../../event/pages/CreateEvent";
 import UpdateEvent from "../../event/pages/UpdateEvent";
-import EventList from "../../event/pages/EventList";
+import EventListView from "../../event/pages/EventListView";
 import ErrorBoundary from "../../shared/ErrorBoundary";
 import ConnectTest from "../../test/pages/ConnectTest";
-import Login from "../../auth/pages/Login";
+import LoginView from "../../auth/pages/LoginView";
 import WaitingRoom from "../../fans/pages/WaitingRoom";
 
 
@@ -20,8 +20,8 @@ const Router = () => {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login/>}/>
-            <Route path="/signup" element={<SignUp/>}/>
+            <Route path="/" element={<LoginView/>}/>
+            <Route path="/signup" element={<SignUpView/>}/>
             <Route path="/roomlist" element={<Auth><RoomList/></Auth>}/>
             <Route path="/userlist" element={<Auth><ParticipantList/></Auth>}/>
             <Route path="/waitcall" element={<Auth><WaitingRoom/></Auth>}/>
@@ -30,7 +30,7 @@ const Router = () => {
             <Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>
             <Route path="/create/event" element={<Auth><CreateEvent/></Auth>}/>
             <Route path="/update/event/:id" element={<Auth><UpdateEvent/></Auth>}/>
-            <Route path="/eventlist" element={<Auth><EventList/></Auth>}/>
+            <Route path="/eventlist" element={<Auth><EventListView/></Auth>}/>
           </Routes>
           {/*{ isError && <ErrorPopup/> }*/}
         </BrowserRouter>

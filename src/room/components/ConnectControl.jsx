@@ -33,7 +33,7 @@ const ConnectControl = () => {
     const response = await testApi.testEnd(sessionInfo.meetName);
 
     // 종료되면 role에 따라 해산
-    if(response === "Meet Ended") {
+    if(response) {
       dispatch(clearTestSession());
       navigate("/userlist");
       let roomNum = `${eventId}_test_${fanInfo.fan_id}`;

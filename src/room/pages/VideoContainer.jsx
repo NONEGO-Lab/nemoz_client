@@ -5,9 +5,9 @@ import { Button } from "../../element";
 import SettingBar from "../../call/pages/components/Settingbar";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import FanInfo from "../../fans/pages/FanInfo";
-import ReactionButton from "../../reaction/components/ReactionButton";
+import ReactionButton from "../../reaction/pages/components/ReactionButton";
 import { useMediaQuery } from "react-responsive"
-import ReactionBoard from "../../reaction/components/Board";
+import ReactionBoard from "../../reaction/pages/components/Board";
 import { useVideo } from "../../call/controller/useVideo";
 import Video from "../../video/pages/Video";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,6 +30,7 @@ import { videoEvents } from "../../socket/events/video_event";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
 import {addTimer, clearSession} from "../../redux/modules/videoSlice";
 import { createBrowserHistory } from "history";
+import { AdminProvider, ArtistProvider, StaffProvider, FanProvider } from "../../provider/index";
 
 const VideoContainer = () => {
   const isMobile = useMediaQuery ({
@@ -128,15 +129,18 @@ const VideoContainer = () => {
   const endRoom = async () => {
     /// 방을 아예 종료
     if(window.confirm("정말 방을 종료하시겠습니까?")) {
-      try {
-        const response = await meetApi.endMeet({
-          meetId: sessionInfo.meetId,
-          meetName: sessionInfo.meetName,
-          roomId: roomInfo.room_id,
-          eventId: eventId
-        });
 
-        if (response === "Meet Ended") {
+      const request = {
+        meet_id: sessionInfo.meetId,
+        meet_name: sessionInfo.meetName,
+        room_id: roomInfo.room_id,
+        event_id: eventId,
+      }
+
+      try {
+        const response = await meetApi.endMeet(request);
+
+        if (response) {
           sock.emit("endMeet", roomNum);
           leaveSession();
         }
@@ -155,18 +159,20 @@ const VideoContainer = () => {
         alert("방에 팬이 있어서 나갈 수 없습니다! 방 종료 해주세요!")
         return;
       }
+      const request = {
+        user_info: {
+          id: userInfo.id.toString(),
+          role: userInfo.role,
+        },
+        type: 'leave',
+        meet_name: sessionInfo.meetName,
+        connection_id: connectionInfo.meet_id,
+        connection_name: connectionInfo.connection_id,
+        progress_time: leftTimeRef.current
+      }
+      const response = await meetApi.leaveMeet(request);
 
-      const response = await meetApi.leaveMeet({
-        id: userInfo.id,
-        role: userInfo.role,
-        type: "leave",
-        meetName: sessionInfo.meetName,
-        connectionId: connectionInfo.id,
-        connectionName: connectionInfo.response.connectionId,
-        time: leftTimeRef.current
-      });
-
-      if(response === "LEAVED") {
+      if(response) {
         dispatch(clearSessionInfo());
         leaveSession();
         sock.emit("leaveRoom", roomNum, userInfo.username, navigate);
@@ -497,20 +503,23 @@ const VideoContainer = () => {
               <div
                   className="relative m-auto h-[90px] px-[20px] w-[calc(100%-40px)]
                                         bg-white border-black border-t pt-6">
-
-                {
-                  userInfo.role !== "staff" ?
-                      <div className={"flex justify-center"}>
-                        <ReactionButton/>
-                      </div>
-
-                      :
-                      <div className="flex items-center justify-between">
-                        <ConnectInfo staffNoticeList={staffNoticeList}/>
-                        <SettingBar setIsOpenWaitingModal={setIsOpenWaitingModal} currentFan={currentFan}
-                                    leftTimeRef={leftTimeRef}/>
-                      </div>
-                }
+                  <FanProvider>
+                    <div className={"flex justify-center"}>
+                      <ReactionButton/>
+                    </div>
+                  </FanProvider>
+                  <ArtistProvider>
+                    <div className={"flex justify-center"}>
+                      <ReactionButton/>
+                    </div>
+                  </ArtistProvider>
+                <StaffProvider>
+                  <div className="flex items-center justify-between">
+                    <ConnectInfo staffNoticeList={staffNoticeList}/>
+                    <SettingBar setIsOpenWaitingModal={setIsOpenWaitingModal}
+                                currentFan={currentFan} leftTimeRef={leftTimeRef}/>
+                  </div>
+                </StaffProvider>
                 <ToastContainer
                     className="absolute"
                     position="bottom-center"
@@ -521,9 +530,9 @@ const VideoContainer = () => {
             </VideoLayout>
             <SideBar>
               <Timer leftTimeRef={leftTimeRef}/>
-              {
-                userInfo.role === "fan" ?
-                    <>
+              {/*{*/}
+              {/*  userInfo.role === "fan" ?*/}
+                    <FanProvider>
                       <ReactionBoard/>
                       <div className={"w-[150px] m-auto"}>
                         <Button
@@ -540,18 +549,20 @@ const VideoContainer = () => {
                           반반으로 보기
                         </Button>
                       </div>
-                    </>
-                    : toastList.length === 0 ?
-                        <FanInfo
-                            currentFan={currentFan}
-                            setCurrentFan={setCurrentFan}
-                            type={"call"}
-                        />
-                        : <ReactionBoard/>
-              }
+                    </FanProvider>
+                    <AdminProvider>
+                      { toastList.length === 0 ?
+                          <FanInfo
+                              currentFan={currentFan}
+                              setCurrentFan={setCurrentFan}
+                              type={"call"}
+                          />
+                          :
+                          <ReactionBoard/>
+                      }
+                    </AdminProvider>
             </SideBar>
           </div>
-
           { isOpenWaitingModal &&
               <WaitingList
                   addUserOpenHandler={() => setIsOpenAddUser(true)}

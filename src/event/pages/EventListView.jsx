@@ -1,58 +1,12 @@
-import React, {useEffect, useState} from "react";
-import { eventApi } from "../data/event_data";
-import { useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {addEventInfo} from "../../redux/modules/eventSlice";
+import React, { useEffect } from "react";
 import Header from "../../shared/Header";
+import { EventListController as controller } from "../controller/eventListController";
 
 
+const EventListView = () => {
 
-const EventList = () => {
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [page, setPage] = useState(1);
-  const [eventList, setEventList] = useState([]);
-  const userInfo = useSelector((state) => state.user.userInfo);
-
-  const roomArray = [...new Array(10)].map((_, i) => i + 1);
-
-  const goToUpdatePage = (event) => {
-    navigate(`/update/event/${event.event_id}`);
-  }
-
-
-  const goToStartEvent = (event) => {
-    dispatch(addEventInfo(event));
-    navigateByRole();
-  }
-
-  const navigateByRole = () => {
-    if(userInfo.role === "fan") {
-      navigate("/waitcall");
-    } else {
-      navigate("/roomlist");
-    }
-  }
-
-
-
-  const getEventList = async () => {
-    try {
-      const response = await eventApi.getEventList({ page });
-      setEventList(response);
-    } catch (err) {
-      dispatch(setError(err));
-      dispatch(setIsError(true));
-    }
-
-  }
-
-  useEffect(() => {
-    getEventList();
-  }, [page])
+  const { eventList, goToUpdatePage, goToStartEvent,
+    page, setPage, roomArray } = controller();
 
 
   return (
@@ -79,7 +33,7 @@ const EventList = () => {
           </thead>
           <tbody className={"px-4 items-center"}>
           {
-            eventList.map((event, idx) => {
+            eventList?.map((event, idx) => {
               return (
                   <tr key={idx} className={"w-[1080px] items-center flex"}>
                     <td className={"w-[30px] min-h-[40px] align-middle"}>{event.event_id}</td>
@@ -124,7 +78,7 @@ const EventList = () => {
         <div className={"flex justify-end text-xl text-gray-600 mt-[30px]"}>
           <span className="cursor-pointer mr-2"> {"<"} </span>
           {
-            roomArray.map((num, index) => {
+            roomArray?.map((num, index) => {
               return(
                   <div key={index} className={`pr-4`}>
                                     <span onClick={() => setPage(num)}
@@ -144,4 +98,4 @@ const EventList = () => {
 };
 
 
-export default EventList;
+export default EventListView;

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { meetApi } from "../../call/data/call_data";
 import { sock } from "../../socket/config";
 
-
 export const useReaction = () => {
 
   const dispatch = useDispatch();
@@ -48,13 +47,6 @@ export const useReaction = () => {
   }
 
 
-  const buttonList = [
-    { buttonId: 100, msg: "좋아" },
-    { buttonId: 101, msg: "배고파" },
-    { buttonId: 102, msg: "졸려" },
-    { buttonId: 103, msg: "멋져" }
-  ];
-
   const getChatFromSocket = (msg) => {
 
     if(msg.msg) {
@@ -64,7 +56,6 @@ export const useReaction = () => {
   }
 
   return {
-    buttonList,
     onClickReactBtn,
     onClickDeleteBtn,
     getChatFromSocket

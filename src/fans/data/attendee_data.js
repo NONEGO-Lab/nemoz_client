@@ -32,8 +32,14 @@ export const attendeeApi = {
 
   //강퇴
   banFan: async ({id, userId}) => {
-    const data = await instance.get("/attendee/ban", { params : { conn_id: id, userid: userId }});
-    return data.data;
+    const data = await instance.get("/attendee/ban", { params : {
+      conn_id: id,
+      userid: userId
+    }});
+    return {
+      fan_data: {...data.data.fan_data[0]},
+      conn_data: {...data.data.conn_data[0]}
+    };
   },
 
   waitFan: async (eventId, fanId) => {

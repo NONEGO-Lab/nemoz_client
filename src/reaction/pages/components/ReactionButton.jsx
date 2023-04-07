@@ -1,11 +1,11 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import { useReaction } from "../controller/useReaction";
-
+import { useReaction } from "../../controller/useReaction";
+import { buttonList } from "../form";
 
 const ReactionButton = () => {
 
-  const { onClickReactBtn, buttonList } = useReaction();
+  const { onClickReactBtn } = useReaction();
 
 
   const isMobile = useMediaQuery ({

@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 const ToastMessage = ({toast, onClickDeleteBtn}) => {
 
   return (

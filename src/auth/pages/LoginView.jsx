@@ -1,42 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Header from "../../shared/Header";
 import { Button, Input } from "../../element";
 import { SizeLayout } from "../../shared/Layout";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../redux/modules/userSlice";
-import { sock } from "../../socket/config";
-import { login_request } from "../../model/auth/auth_model";
+import { AuthController as controller } from "../controller/authController";
 
-const Login = () => {
+const LoginView = () => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { loginOnSubmit }  = controller();
   const { register, handleSubmit } = useForm();
-
-
-  const onSubmit = (data) => {
-
-    let userInfo = {
-      ...login_request,
-      userid: data.id,
-      password: data.password,
-    }
-
-    dispatch(loginUser(userInfo)).then((result) => {
-      if(result.error) {
-        alert(`${result.payload.errMsg}`);
-        return
-      }
-      if(!sock.connected) {
-        sock.connect();
-      }
-      sock.emit("join", result.payload.username);
-      navigate("/eventlist");
-
-    })
-  }
 
   return (
       <SizeLayout>
@@ -68,7 +40,7 @@ const Login = () => {
                 required={true}
                 type={"password"}
             />
-            <Button _onClick={handleSubmit(onSubmit)}
+            <Button _onClick={handleSubmit(loginOnSubmit)}
                     width={"w-[300px]"}>
               로그인
             </Button>
@@ -78,4 +50,4 @@ const Login = () => {
   )
 };
 
-export default Login;
+export default LoginView;

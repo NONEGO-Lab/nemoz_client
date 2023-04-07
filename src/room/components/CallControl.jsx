@@ -32,23 +32,24 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
 
   const finishCurrentCall = async () => {
     if(window.confirm("정말 통화를 종료하시겠습니까?")){
-
-      let meetId = sessionInfo.meetId;
-      let meetName = sessionInfo.meetName;
-      let roomId = roomInfo.room_id;
-
       try {
+        let roomId = roomInfo.room_id;
         const fanList = await roomApi.getListOrder({ eventId, roomId });
         const curFan = subscribers.find((sub) => sub['role'] === 'fan');
         const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() === curFan.id.toString());
         const nextFan = fanList[curFanIndex + 1];
-
         const fanId = fanList[curFanIndex].fan_id;
 
-        const result = await meetApi.endMeet({
-          meetId, meetName, roomId, eventId, fanId
-        });
-        if(result === "Meet Ended") {
+        const request = {
+          meet_id: sessionInfo.meetId,
+          meet_name: sessionInfo.meetName,
+          room_id: roomId,
+          event_id: eventId,
+          fan_id: fanId
+        }
+        const result = await meetApi.endMeet(request);
+
+        if(result) {
           leaveSession();
           setIsCallProcessing(false);
           dispatch(setIsCallFinished());

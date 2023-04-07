@@ -1,16 +1,21 @@
 import React from "react";
 import {OpenVidu} from "openvidu-browser";
 import {useDispatch, useSelector} from "react-redux";
-import { addPublisher, addSession, addSubscribers, clearSession,
-  deleteSubscribers, addVideoDevices, addAudioDevices,
-  mutePublisherAudio, mutePublisherVideo
+import {
+  addAudioDevices,
+  addPublisher,
+  addSession,
+  addSubscribers,
+  addVideoDevices,
+  clearSession,
+  deleteSubscribers,
+  mutePublisherAudio,
+  mutePublisherVideo
 } from "../../redux/modules/videoSlice";
-import { useNavigate } from "react-router-dom";
-import { meetApi } from "../data/call_data";
-import { addSessionInfo, addConnectionInfo, clearSessionInfo,
-  addCurrentFanName } from "../../redux/modules/commonSlice";
+import {useNavigate} from "react-router-dom";
+import {meetApi} from "../data/call_data";
+import {addConnectionInfo, addSessionInfo, clearSessionInfo} from "../../redux/modules/commonSlice";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {clearTestSession} from "../../redux/modules/testSlice";
 
 export const useVideo = () => {
 
@@ -32,29 +37,33 @@ export const useVideo = () => {
 
 
   const createSession = async (roomId, isReCreated) => {
-    let artistId = roomInfo.artist_id;
-    let staffIds = [roomInfo.staffs[0].staff_id]
-    // isReCreated 값 받아오기
-    const response = await meetApi.createMeet({
-      eventId, roomId, artistId, staffIds, isReCreated });
-    return response;
+    const request = {
+      event_id: eventId,
+      room_id: roomId,
+      artist_id: roomInfo.artist_id,
+      staff_ids: [roomInfo.staffs[0].staff_id],
+      is_recreated: isReCreated
+    }
+    return await meetApi.createMeet(request);
 
   }
 
   const createToken = async ({ roomId, sessionInfo }) => {
-    let meetId = sessionInfo.meetId;
-    let meetName = sessionInfo.meetName;
-    let id = userInfo.id;
-    let userId = userInfo.userId;
-    let userName = userInfo.username;
-    let role = userInfo.role;
+    let request = {
+      event_id: eventId,
+      room_id: roomId,
+      meet_id: sessionInfo.meetId,
+      meet_name: sessionInfo.meetName,
+      id: userInfo.id,
+      userid: userInfo.userId,
+      username: userInfo.username,
+      role: userInfo.role
+    }
 
     try {
-      const response = await meetApi.joinMeet({
-        eventId, roomId, meetId, meetName, id, userId, userName, role });
-
+      const response = await meetApi.joinMeet(request);
       dispatch(addConnectionInfo(response));
-      return response.response.token;
+      return response.token;
     } catch (err) {
       if(err.response.status === 304) {
         //create session으로 새로 session 만들어준다.
@@ -67,19 +76,21 @@ export const useVideo = () => {
   }
 
   const msgBeforeOut = async () => {
-    //leave 처리
     try {
-      const response = await meetApi.leaveMeet({
-        id: userInfo.id,
-        role: userInfo.role,
-        type: "leave",
-        meetName: sessionInfo.meetName,
-        connectionId: connectionInfo.id,
-        connectionName: connectionInfo.response.connectionId,
+      const request = {
+        user_info: {
+          id: userInfo.id.toString(),
+          role: userInfo.role,
+        },
+        type: 'leave',
+        meet_name: sessionInfo.meetName,
+        connection_id: connectionInfo.meet_id,
+        connection_name: connectionInfo.connection_id,
         progress_time: 100
-      });
+      }
+      const response = await meetApi.leaveMeet(request);
 
-      if(response === "LEAVED") {
+      if(response) {
         dispatch(clearSessionInfo());
         leaveSession();
         navigate(-1, { replace: true });

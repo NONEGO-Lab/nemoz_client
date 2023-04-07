@@ -34,7 +34,7 @@ const DeviceTest = () => {
   const endMeet = async () => {
     try {
       const response = await testApi.testEnd(sessionInfo.meetName);
-      if(response === "Meet Ended") {
+      if(response) {
         dispatch(clearDeviceSession());
       } else {
         alert("미팅이 종료되지 않았습니다.");
