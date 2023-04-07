@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "../../../element";
-import { useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { attendeeApi } from "../../../fans/data/attendee_data";
 import { meetApi } from "../../data/call_data";

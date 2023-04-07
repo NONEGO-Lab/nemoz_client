@@ -10,7 +10,7 @@ export const roomApi = {
 
   endRoom: async (roomId) => {
     const data = await instance.get("/room/end", { params : { room_id: roomId } });
-    return data.data;
+    return data.data === "Room Ended";
   },
 
   createRoom: async ({ roomTitle, eventId, staffIds, artistId, fanIdArray,

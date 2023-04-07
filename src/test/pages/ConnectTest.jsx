@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Layout, SizeLayout, VideoLayout, SideBar } from "../../shared/Layout";
 import Header from "../../shared/Header";
 import ReactionButton from "../../reaction/pages/components/ReactionButton";
-import ReactionBoard from "../../reaction/pages/components/Board";
+import ReactionBoard from "../../reaction/pages/components/ReactionBoard";
 import { Button } from "../../element";
 import Video from "../../video/pages/Video";
 import {useSelector, useDispatch} from "react-redux";

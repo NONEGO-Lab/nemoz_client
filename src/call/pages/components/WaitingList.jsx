@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ModalFrame } from "../../../modal/ModalFrame";
 import { Button } from "../../../element";
-import FanDetail from "../../../fans/pages/FanDetailInfo";
+import FanDetail from "../../../fans/pages/FanDetail";
 import { roomApi } from "../../../room/data/room_data";
 import {useSelector} from "react-redux";
 

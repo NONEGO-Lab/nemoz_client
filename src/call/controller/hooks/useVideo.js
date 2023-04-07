@@ -11,11 +11,11 @@ import {
   deleteSubscribers,
   mutePublisherAudio,
   mutePublisherVideo
-} from "../../redux/modules/videoSlice";
+} from "../../../redux/modules/videoSlice";
 import {useNavigate} from "react-router-dom";
-import {meetApi} from "../data/call_data";
-import {addConnectionInfo, addSessionInfo, clearSessionInfo} from "../../redux/modules/commonSlice";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
+import {meetApi} from "../../data/call_data";
+import {addConnectionInfo, addSessionInfo, clearSessionInfo} from "../../../redux/modules/commonSlice";
+import {setError, setIsError} from "../../../redux/modules/errorSlice";
 
 export const useVideo = () => {
 
@@ -29,6 +29,7 @@ export const useVideo = () => {
   const connectionInfo = useSelector((state) => state.common.connectionInfo);
 
   const publisher = useSelector((state) => state.video.publisher);
+  const subscribers = useSelector((state) => state.video.subscribers);
   const session = useSelector((state) => state.video.session);
   const publisherAudio = useSelector((state) => state.video.publisherAudio);
   const publisherVideo = useSelector((state) => state.video.publisherVideo);
@@ -313,16 +314,12 @@ export const useVideo = () => {
 
 
   return {
-    joinSession,
-    onlyJoin,
-    newJoinMeet,
-    leaveSession,
+    publisher,
+    subscribers,
+    publisherAudio,
+    publisherVideo,
     audioMuteHandler,
     videoMuteHandler,
-    createSession,
-    fanJoinSession,
-    msgBeforeOut,
-    onbeforeunload
   }
 };
 

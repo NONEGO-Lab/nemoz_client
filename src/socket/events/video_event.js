@@ -2,7 +2,7 @@ import React from "react";
 import { sock } from "../config";
 import { addTimer, disconnectSession, setIsCallFinished } from "../../redux/modules/videoSlice";
 import { clearSessionInfo } from "../../redux/modules/commonSlice";
-import { notify } from "../../room/pages/VideoContainer";
+import { notify } from "../../call/pages/components/notify";
 
 export const videoEvents = {
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { secondsToTime } from "../../../utils/convert";
-import { useInterval } from "../../controller/useInterval";
+import { useInterval } from "../../controller/hooks/useInterval";
 import { useSelector, useDispatch } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import {sock} from "../../../socket/config";

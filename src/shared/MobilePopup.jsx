@@ -14,6 +14,7 @@ export const MobilePopup = ({ closePopup, type, makeBigScreen, showTime, isReady
   const [myWaitInfo, setMyWaitInfo] = useState({});
   const userInfo = useSelector((state) => state.user.userInfo);
   const roomInfo = useSelector((state) => state.common.roomInfo);
+  const subscribers = useSelector((state) => state.video.subscribers);
 
   const getMyWaitingInfo = async () => {
     try {
@@ -103,12 +104,12 @@ export const MobilePopup = ({ closePopup, type, makeBigScreen, showTime, isReady
         return (
             <div className={"mt-[70px]"}>
               <div
-                  onClick={() => makeBigScreen("half")}
+                  onClick={() => makeBigScreen("half", subscribers)}
                   className="border-y h-[40px] flex items-center justify-center">
                 반반 모드로 보기
               </div>
               <div
-                  onClick={() => makeBigScreen("big")}
+                  onClick={() => makeBigScreen("big", subscribers)}
                   className="border-b h-[40px] flex items-center justify-center">
                 상대방 크게 보기
               </div>

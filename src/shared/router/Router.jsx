@@ -1,11 +1,11 @@
 import React from "react";
 import {BrowserRouter, Routes, Route,} from "react-router-dom";
 import SignUpView from "../../auth/pages/SignUpView";
-import RoomList from "../../room/pages/RoomList";
+import RoomList from "../../room/pages/RoomListView";
 import { Auth } from "../Auth";
-import ParticipantList from "../../fans/pages/ParticipantList";
+import ParticipantList from "../../fans/pages/ParticipantListView";
 import DeviceTest from "../../test/pages/DeviceTest";
-import VideoContainer from "../../room/pages/VideoContainer";
+import VideoContainer from "../../call/pages/VideoContainer";
 import CreateEvent from "../../event/pages/CreateEvent";
 import UpdateEvent from "../../event/pages/UpdateEvent";
 import EventListView from "../../event/pages/EventListView";

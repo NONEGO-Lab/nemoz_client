@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { disconnectSession, videoReset } from "../redux/modules/videoSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { logout } from "../redux/modules/userSlice";
-import { useVideo } from "../call/controller/useVideo";
+import { useVideo } from "../call/controller/hooks/useVideo";
 import { sock } from "../socket/config";
 import { clearSessionInfo } from "../redux/modules/commonSlice";
 

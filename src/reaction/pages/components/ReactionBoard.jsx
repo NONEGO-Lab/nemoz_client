@@ -1,11 +1,8 @@
 import React from "react";
 import ToastMessage from "./ToastMessage";
-import {useMediaQuery} from "react-responsive";
-import { Button } from "../../../element";
+import { useMediaQuery } from "react-responsive";
 import {useSelector} from "react-redux";
 import { useReaction } from "../../controller/useReaction";
-
-
 
 
 const ReactionBoard = () => {

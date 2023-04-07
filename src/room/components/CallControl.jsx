@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Button } from "../../element";
-import { useVideo } from "../../call/controller/useVideo";
+import { useVideo } from "../../call/controller/hooks/useVideo";
 import { useSocket } from "../../socket/useSocket";
 import {useDispatch, useSelector} from "react-redux";
 import { meetApi } from "../../call/data/call_data";

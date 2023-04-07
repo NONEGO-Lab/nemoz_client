@@ -1,102 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Header from "../../shared/Header";
-import { Button, Input } from "../../element";
-import {Layout, ContainerHeader} from "../../shared/Layout";
+import { Button } from "../../element";
+import { Layout } from "../../shared/Layout";
 import CreateRoom from "../../room/components/CreateRoom";
 import WaitingList from "../../call/pages/components/WaitingList";
-import FanDetail from "../../fans/pages/FanDetailInfo";
+import FanDetail from "../../fans/pages/FanDetail";
 import AddUser from "../../call/pages/components/AddUser";
-import { roomApi } from "../data/room_data";
 import { addRoomInfo } from "../../redux/modules/commonSlice";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
+import { RoomListController as controller } from "../controller/roomListController";
+import { StaffProvider, ArtistProvider } from "../../provider/index";
 
 
+const RoomListView = () => {
 
-const RoomList = () => {
-
-
-  const dispatch = useDispatch();
-
-  const [roomList, setRoomList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentRoom, setCurrentRoom] = useState({});
-  const [isOpenRoomCreate, setIsOpenRoomCreate] = useState(false);
-  const [isOpenFanDetail, setIsOpenFanDetail] = useState(false);
-  const [currentFanInfo, setCurrentFanInfo] = useState({});
-  const [isOpenAddUser, setIsOpenAddUser] = useState(false);
-  const userInfo = useSelector((state) => state.user.userInfo);
-  const eventId = useSelector((state) => state.event.eventId);
-
-
-  const isEmptyCheck = (value) => {
-    return Object.keys(value).length === 0;
-  }
-
-  const fanDetailOpenHandler = (fanInfo) => {
-    if(isEmptyCheck(fanInfo)) {
-      setCurrentFanInfo({});
-    } else {
-      setCurrentFanInfo(fanInfo);
-    }
-  }
-
-  const addUserOpenHandler = () => {
-    setIsOpenAddUser(true);
-  }
-
-
-  const getRoomListApi = async (page) => {
-    try {
-      const result = await roomApi.getRoomList(eventId, page);
-      setRoomList(result.data);
-    } catch (err) {
-      dispatch(setError(err));
-      dispatch(setIsError(true));
-    }
-
-  }
-
-  const endRoomApi = async (room) => {
-    // if(room.meet_id !== ""){
-    //     alert("현재 진행중인 영상통화가 있습니다");
-    //     return;
-    // };
-
-    if(window.confirm("정말 종료하시겠습니까?")){
-      try {
-        const result = await roomApi.endRoom(room.room_id);
-        if(result === "Room Ended") {
-          alert("삭제 완료");
-          getRoomListApi(currentPage);
-        } else {
-          alert("방 삭제 실패");
-        }
-      } catch (err) {
-        dispatch(setError(err));
-        dispatch(setIsError(true));
-      }
-
-    }
-  }
-
-  const movePage = async (num) => {
-
-    if(num === 0 || num === 11) {
-      return;
-    }
-
-    setCurrentPage(num);
-    await getRoomListApi(num);
-  }
-
-  useEffect(()=>{
-    getRoomListApi(1);
-  },[])
-
-
-  const roomArray = [...new Array(10)].map((_, i) => i + 1);
+  const { roomList, setIsOpenRoomCreate, roomArray, movePage,
+    isOpenRoomCreate, currentRoom, fanDetailOpenHandler, addUserOpenHandler, setCurrentRoom,
+    isEmptyCheck, currentPage, currentFanInfo, isOpenAddUser, setIsOpenAddUser, endRoomApi,
+    getRoomListApi, setCurrentFanInfo, userInfo
+  } = controller();
 
   return (
       <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)}>
@@ -110,18 +32,24 @@ const RoomList = () => {
           </div>
 
           <div className="overflow-y-auto h-[450px]">
-            {
-              // userInfo.role === "staff" ?
-              roomList.map((room, idx) => {
-                return <Room room={room} key={idx} setCurrentRoom={setCurrentRoom}
-                             endRoomApi={endRoomApi}/>
-              })
-              // :
-              // roomList.filter((room) => room.artist_id === userInfo.id).map((room) => {
-              //     return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
-              //                  endRoomApi={endRoomApi}/>
-              // })
-            }
+
+                <StaffProvider>
+                  {
+                    roomList.map((room, idx) => {
+                      return <Room room={room} key={idx} setCurrentRoom={setCurrentRoom}
+                                   endRoomApi={endRoomApi}/>
+                    })
+                  }
+                </StaffProvider>
+
+                <ArtistProvider>
+                  {
+                    roomList.filter((room) => room.artist_id === userInfo.id).map((room) => {
+                      return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
+                                   endRoomApi={endRoomApi}/>
+                    })
+                  }
+                </ArtistProvider>
           </div>
         </div>
         {
@@ -133,7 +61,8 @@ const RoomList = () => {
                 return(
                     <div key={index} className={`pr-4`}>
                                     <span onClick={() => movePage(num)}
-                                          className={`cursor-pointer text-center ${currentPage === num && "bg-blue-600 px-2 py-1 text-white"}`}>
+                                          className={`cursor-pointer text-center 
+                                          ${currentPage === num && "bg-blue-600 px-2 py-1 text-white"}`}>
                                         {num}
                                     </span>
                     </div>
@@ -147,7 +76,8 @@ const RoomList = () => {
           </div>
         }
 
-        { isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)} getRoomListApi={getRoomListApi}/> }
+        { isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
+                                          getRoomListApi={getRoomListApi}/> }
         { currentRoom.room_id &&
             <WaitingList
                 curRoomId={currentRoom.room_id}
@@ -155,14 +85,15 @@ const RoomList = () => {
                 setOnModal={() => setCurrentRoom({})}
                 addUserOpenHandler={addUserOpenHandler}/>
         }
-        { !isEmptyCheck(currentFanInfo) && <FanDetail currentFanId={currentFanInfo["fan_id"]} setOnModal={() => setCurrentFanInfo({})}/> }
+        { !isEmptyCheck(currentFanInfo) && <FanDetail currentFanId={currentFanInfo["fan_id"]}
+                                                      setOnModal={() => setCurrentFanInfo({})}/> }
         { isOpenAddUser && <AddUser setOnModal={() => setIsOpenAddUser(prev => !prev)}/> }
       </Layout>
   )
 }
 
 
-export default RoomList;
+export default RoomListView;
 
 
 const Room = ({ room, endRoomApi, setCurrentRoom }) => {

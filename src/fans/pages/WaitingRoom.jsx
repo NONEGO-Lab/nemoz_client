@@ -13,7 +13,7 @@ import {secondsToMins} from "../../utils/convert";
 import {logout, loginCheck} from "../../redux/modules/userSlice";
 import {disconnectSession, videoReset, setIsCallFinished} from "../../redux/modules/videoSlice";
 import {clearSessionInfo} from "../../redux/modules/commonSlice";
-import {useVideo} from "../../call/controller/useVideo";
+import {useVideo} from "../../call/controller/hooks/useVideo";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
 
 
