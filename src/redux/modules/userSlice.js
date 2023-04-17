@@ -3,14 +3,7 @@ import { userApi } from "../../auth/data/user_data";
 
 
 const initialState = {
-  userInfo: {
-    company: "",
-    id: undefined,
-    role: undefined,
-    userId: undefined,
-    username: "",
-    isCallTested: false
-  },
+  userInfo: null,
   error: null,
   isLogin: false
 }
@@ -68,15 +61,8 @@ export const userSlice = createSlice({
         state.error = action.payload.errMsg;
         return;
       }
-      let userInfo = {
-        company: action.payload.company_name,
-        id: action.payload.id,
-        role: action.payload.role,
-        userId: action.payload.userid,
-        username: action.payload.username,
-        isCallTested: action.payload.is_tested !== 0,
-      }
-      state.userInfo = userInfo;
+
+      state.userInfo = action.payload;
       state.isLogin = true;
     },
     [loginCheck.rejected]: (state, action) => {

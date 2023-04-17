@@ -1,4 +1,5 @@
 import { instance } from "../../shared/config";
+import {create_room} from "../../model/room/room_model";
 
 
 export const roomApi = {
@@ -15,7 +16,8 @@ export const roomApi = {
 
   createRoom: async ({ roomTitle, eventId, staffIds, artistId, fanIdArray,
                        reserved_time, location, mimeType, due_dt }) => {
-    let req = {
+    const request = {
+      ...create_room,
       room_name: roomTitle,
       event_id: eventId,
       artist_id: artistId,
@@ -28,7 +30,7 @@ export const roomApi = {
       location: location,
       mimetype: mimeType
     }
-    const data = await instance.post("/room/create", req);
+    const data = await instance.post("/room/create", request);
     return data.data
   },
 

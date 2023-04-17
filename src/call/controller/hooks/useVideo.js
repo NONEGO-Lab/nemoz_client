@@ -16,6 +16,7 @@ import {useNavigate} from "react-router-dom";
 import {meetApi} from "../../data/call_data";
 import {addConnectionInfo, addSessionInfo, clearSessionInfo} from "../../../redux/modules/commonSlice";
 import {setError, setIsError} from "../../../redux/modules/errorSlice";
+import {create_token, session_create, leave_meet} from "../../../model/call/call_model";
 
 export const useVideo = () => {
 
@@ -39,6 +40,7 @@ export const useVideo = () => {
 
   const createSession = async (roomId, isReCreated) => {
     const request = {
+      ...session_create,
       event_id: eventId,
       room_id: roomId,
       artist_id: roomInfo.artist_id,
@@ -51,6 +53,7 @@ export const useVideo = () => {
 
   const createToken = async ({ roomId, sessionInfo }) => {
     let request = {
+      ...create_token,
       event_id: eventId,
       room_id: roomId,
       meet_id: sessionInfo.meetId,
@@ -79,6 +82,7 @@ export const useVideo = () => {
   const msgBeforeOut = async () => {
     try {
       const request = {
+        ...leave_meet,
         user_info: {
           id: userInfo.id.toString(),
           role: userInfo.role,
@@ -320,6 +324,8 @@ export const useVideo = () => {
     publisherVideo,
     audioMuteHandler,
     videoMuteHandler,
+    onlyJoin,
+    leaveSession
   }
 };
 

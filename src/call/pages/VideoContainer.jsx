@@ -20,7 +20,7 @@ import { AdminProvider, ArtistProvider, StaffProvider, FanProvider } from "../..
 const VideoContainer = () => {
 
   const { videoMuteHandler, audioMuteHandler, subscribers,
-    publisher, publisherAudio, publisherVideo, } = useVideo();
+    publisher, publisherAudio, publisherVideo } = useVideo();
 
   const { roomInfo, leftTimeRef, toastList,
     endRoom, outRoom, showTime, staffNoticeList, userInfo, setIsOpenWaitingModal, currentFan,

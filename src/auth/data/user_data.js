@@ -1,5 +1,5 @@
 import { instance } from "../../shared/config";
-import { user_common } from "../../model/user/common";
+import {user_auth, user_common} from "../../model/user/common";
 
 
 export const userApi = {
@@ -7,7 +7,7 @@ export const userApi = {
   login: async (userInfo) => {
     const data = await instance.post("/user/auth", userInfo);
     return {
-      ...user_common,
+      ...user_auth,
       company_name: data.data.company,
       id: data.data.id,
       role: data.data.role,
@@ -24,16 +24,22 @@ export const userApi = {
 
   isLogin: async () => {
     const data = await instance.get("/user/check/auth", {});
-    return {
-      ...user_common,
-      company: data.data.company,
-      id: data.data.id,
-      role: data.data.role,
-      userId: data.data.userid,
-      username: data.data.username,
-      isCallTested: data.data.is_tested !== 0,
-    };
 
+    const userData = data.data;
+    const tmpUserData = {
+      ...user_common,
+      company_name: userData.company_name,
+      id: userData.id,
+      role: userData.role,
+      userId: userData.userid,
+      username: userData.username
+    }
+
+    if(userData.role === 'fan') {
+      tmpUserData['isCallTested'] = userData.is_tested !== 0;
+    }
+
+    return tmpUserData;
   }
 
 }
