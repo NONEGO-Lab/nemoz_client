@@ -6,6 +6,7 @@ import { logout } from "../redux/modules/userSlice";
 import { useVideo } from "../call/controller/hooks/useVideo";
 import { sock } from "../socket/config";
 import { clearSessionInfo } from "../redux/modules/commonSlice";
+import {AdminProvider} from "../provider";
 
 
 const Header = () => {
@@ -40,27 +41,23 @@ const Header = () => {
           네모즈랩
         </div>
         <div className={`${loginPage ? "hidden" : "flex"} justify-between text-xl`}>
-          {
-              userInfo.role !== "fan" &&
-              <>
-                <div
-                    onClick={() => navigate("/roomlist")}
-                    className="cursor-pointer font-bold text-blue-600 mr-4">
-                  방목록
-                </div>
-                <div
-                    onClick={() => navigate("/userlist")}
-                    className="cursor-pointer font-bold text-blue-600 mr-4">
-                  참가자 목록
-                </div>
-                <div
-                    onClick={() => navigate("/eventlist")}
-                    className="cursor-pointer text-black-600 mr-4">
-                  이벤트 목록
-                </div>
-              </>
-
-          }
+          <AdminProvider>
+            <div
+                onClick={() => navigate("/roomlist")}
+                className="cursor-pointer font-bold text-blue-600 mr-4">
+              방목록
+            </div>
+            <div
+                onClick={() => navigate("/userlist")}
+                className="cursor-pointer font-bold text-blue-600 mr-4">
+              참가자 목록
+            </div>
+            <div
+                onClick={() => navigate("/eventlist")}
+                className="cursor-pointer text-black-600 mr-4">
+              이벤트 목록
+            </div>
+          </AdminProvider>
 
           <div className="cursor-pointer mr-4">{userInfo.username} 님</div>
           <div

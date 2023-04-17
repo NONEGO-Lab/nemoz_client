@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { userApi } from "../../auth/data/user_data";
+import {user_common} from "../../model/user/common";
 
 
 const initialState = {
-  userInfo: null,
+  userInfo: {...user_common},
   error: null,
   isLogin: false
 }
