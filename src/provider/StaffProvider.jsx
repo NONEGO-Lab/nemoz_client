@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 
@@ -6,17 +6,8 @@ const StaffProvider = ({ children }) => {
 
   const role = useSelector((state) => state.user.userInfo.role);
 
-  return (
-      <React.Fragment>
-        {
-          role === 'staff' ?
-              <div>
-                {children}
-              </div>
-              :
-              null
-        }
-      </React.Fragment>
-  )
+  if (role === 'staff')
+    return <Fragment>{children}</Fragment>
 }
+
 export default StaffProvider;
