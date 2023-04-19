@@ -325,7 +325,10 @@ export const useVideo = () => {
     audioMuteHandler,
     videoMuteHandler,
     onlyJoin,
-    leaveSession
+    leaveSession,
+    fanJoinSession,
+    msgBeforeOut,
+    joinSession
   }
 };
 

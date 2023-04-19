@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { attendeeApi } from "../../fans/data/attendee_data";
 import { setIsCallFinished, addTimer } from "../../redux/modules/videoSlice";
 import { setError, setIsError } from "../../redux/modules/errorSlice";
+import {end_meet} from "../../model/call/call_model";
 
 const CallControl = ({ currentFan, setCurrentFan }) => {
 
@@ -41,6 +42,7 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
         const fanId = fanList[curFanIndex].fan_id;
 
         const request = {
+          ...end_meet,
           meet_id: sessionInfo.meetId,
           meet_name: sessionInfo.meetName,
           room_id: roomId,

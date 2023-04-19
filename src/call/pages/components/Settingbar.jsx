@@ -5,6 +5,7 @@ import { attendeeApi } from "../../../fans/data/attendee_data";
 import { meetApi } from "../../data/call_data";
 import { sock } from "../../../socket/config";
 import { setIsError, setError } from "../../../redux/modules/errorSlice";
+import {leave_meet} from "../../../model/call/call_model";
 
 
 const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
@@ -29,13 +30,13 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
     sock.emit("notifyTime", room, time, currentFan);
   }
 
-
   const requestKickOutApi = async () => {
     const result = await attendeeApi.banFan({ id: connectionInfo.meet_id, userId: userInfo.id});
 
     if(result.conn_data.meet_id) {
 
       const request = {
+        ...leave_meet,
         user_info: {
           id: result.fan_data.id.toString(),
           role: result.fan_data.role,
@@ -44,7 +45,7 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
         meet_name: result.conn_data.meet_name,
         connection_id: result.conn_data.conn_id,
         connection_name: result.conn_data.conn_name,
-        progress_time: 180
+        progress_time: leftTimeRef.current
       }
 
       try {

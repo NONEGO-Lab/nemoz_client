@@ -11,7 +11,7 @@ import { useTestVideo } from "../controller/useTestVideo";
 import { useReaction } from "../../reaction/controller/useReaction";
 import { useMediaQuery } from "react-responsive";
 import { setConnectTest } from "../../redux/modules/videoSlice";
-import FanInfo from "../../fans/pages/FanInfo";
+import FanInfo from "../../fans/pages/components/FanInfo";
 import { MobilePopup } from "../../shared/MobilePopup";
 import dots from "../../static/image/dots.png";
 import { sock } from "../../socket/config";

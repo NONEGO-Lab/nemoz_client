@@ -5,7 +5,7 @@ import { Button } from "../../element";
 import { Layout } from "../../shared/Layout";
 import CreateRoom from "../../room/components/CreateRoom";
 import WaitingList from "../../call/pages/components/WaitingList";
-import FanDetail from "../../fans/pages/FanDetail";
+import FanDetail from "../../fans/pages/components/FanDetail";
 import AddUser from "../../call/pages/components/AddUser";
 import { addRoomInfo } from "../../redux/modules/commonSlice";
 import { RoomListController as controller } from "../controller/roomListController";

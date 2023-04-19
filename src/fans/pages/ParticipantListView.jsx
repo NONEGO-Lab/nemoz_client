@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../../element";
 import { Layout } from "../../shared/Layout";
 import { ParticipantController as controller } from "../controller/participantController";
-import FanDetail from "./FanDetail";
+import FanDetail from "./components/FanDetail";
 
 const ParticipantListView = () => {
 

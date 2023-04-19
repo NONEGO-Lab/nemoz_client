@@ -6,7 +6,7 @@ import { logout } from "../redux/modules/userSlice";
 import { useVideo } from "../call/controller/hooks/useVideo";
 import { sock } from "../socket/config";
 import { clearSessionInfo } from "../redux/modules/commonSlice";
-import {AdminProvider} from "../provider";
+import { AdminProvider } from "../provider";
 
 
 const Header = () => {
@@ -14,7 +14,8 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loginPage = window.location.pathname === "/" || window.location.pathname === "/signup";
+  const loginPage = window.location.pathname === "/" ||
+      window.location.pathname === "/signup";
 
   const userInfo = useSelector((state) => state.user.userInfo);
   const session = useSelector((state) => state.video.session);

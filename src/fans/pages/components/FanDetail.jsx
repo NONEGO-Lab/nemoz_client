@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ModalFrameDepth } from "../../modal/ModalFrame";
-import { Button } from "../../element";
-import { attendeeApi } from "../data/attendee_data";
+import { ModalFrameDepth } from "../../../modal/ModalFrame";
+import { Button } from "../../../element";
+import { attendeeApi } from "../../data/attendee_data";
 
 const FanDetail = ({ setOnModal, currentFanId }) => {
 

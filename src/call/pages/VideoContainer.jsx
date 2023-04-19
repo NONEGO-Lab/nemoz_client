@@ -2,7 +2,7 @@ import React from "react";
 import { SizeLayout, VideoLayout, SideBar } from "../../shared/Layout";
 import Header from "../../shared/Header";
 import { Button } from "../../element";
-import FanInfo from "../../fans/pages/FanInfo";
+import FanInfo from "../../fans/pages/components/FanInfo";
 import { ReactionButton, ReactionBoard } from "../../reaction/pages/components/index";
 import Video from "../../video/pages/Video";
 import ConnectInfo from "../../room/components/ConnectInfo";
@@ -10,7 +10,7 @@ import { MobilePopup } from "../../shared/MobilePopup";
 import dots from "../../static/image/dots.png";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import FanDetail from "../../fans/pages/FanDetail";
+import FanDetail from "../../fans/pages/components/FanDetail";
 import { useVideo } from "../controller/hooks/useVideo";
 import {AddUser, WaitingList, Timer, SettingBar } from "./components"
 import { CallController as controller } from "../controller/callController";

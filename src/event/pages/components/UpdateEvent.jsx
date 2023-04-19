@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Input } from "../../element";
+import { Button, Input } from "../../../element";
 import { Controller, useForm } from "react-hook-form";
 import SelectBox, { components } from "react-select";
-import { eventApi } from "../data/event_data";
-import { setError, setIsError } from "../../redux/modules/errorSlice";
-import {event_req} from "../../model/event/event_model";
+import { eventApi } from "../../data/event_data";
+import { setError, setIsError } from "../../../redux/modules/errorSlice";
+import {event_req} from "../../../model/event/event_model";
 
 
 const UpdateEvent = () => {

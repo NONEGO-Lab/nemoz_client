@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Input, Button } from "../../element";
+import { Input, Button } from "../../../element";
 import { useForm, Controller } from "react-hook-form";
 import SelectBox,  { components } from 'react-select'
-import { eventApi } from "../data/event_data";
+import { eventApi } from "../../data/event_data";
 import { useSelector, useDispatch } from "react-redux";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
+import {setError, setIsError} from "../../../redux/modules/errorSlice";
 
 
 const CreateEvent = () => {

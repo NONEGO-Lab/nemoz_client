@@ -43,6 +43,14 @@ export const leave_meet = {
   progress_time: null
 }
 
+export const end_meet = {
+  meet_id: null,
+  meet_name: null,
+  room_id: null,
+  event_id: null,
+  fan_id: null
+}
+
 
 
 // Todo: 추후에는 함수로 바꿔야 함

@@ -14,6 +14,7 @@ import {videoEvents} from "../../socket/events/video_event";
 import { notify } from "../pages/components/notify";
 import {useVideo} from "./hooks/useVideo";
 import {useReaction} from "../../reaction/controller/useReaction";
+import {leave_meet} from "../../model/call/call_model";
 
 
 export const CallController = () => {
@@ -87,6 +88,7 @@ export const CallController = () => {
   }
 
   const outRoom = async () => {
+    console.log("!!!! out Room !!!!!!!~~~~~~~~")
     // 방을 단순히 나가는 용도로 사용
     try {
       // 방에 팬만 1명 있으면 못 나가게 하기
@@ -95,6 +97,7 @@ export const CallController = () => {
         return;
       }
       const request = {
+        ...leave_meet,
         user_info: {
           id: userInfo.id.toString(),
           role: userInfo.role,
@@ -105,6 +108,8 @@ export const CallController = () => {
         connection_name: connectionInfo.connection_id,
         progress_time: leftTimeRef.current
       }
+
+      console.log("request!!~~~~~~~~~", request);
       const response = await meetApi.leaveMeet(request);
 
       if(response) {
@@ -211,9 +216,13 @@ export const CallController = () => {
       //현재 팬의 정보를 가져오는 것.
       getCurrentFanInfo();
     }
-    return () => {
-      msgBeforeOut();
-    }
+
+    //Fixme: 나갈때, 나가는 leave api가 두번 실행되는거 고민하기
+
+    // return () => {
+    //   msgBeforeOut();
+    // }
+
   },[]);
 
 
