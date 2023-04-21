@@ -41,11 +41,6 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
         const nextFan = fanList[curFanIndex + 1];
         const fanId = fanList[curFanIndex].fan_id;
 
-        //test
-        //test
-        //test2
-        //test2
-
         const request = {
           ...end_meet,
           meet_id: sessionInfo.meetId,
