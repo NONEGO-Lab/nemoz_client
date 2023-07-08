@@ -23,7 +23,7 @@ const Header = () => {
 
 
   return(
-      <div className="flex justify-between items-center h-[100px] mb-8 mx-4">
+      <div className="flex justify-between items-center border-b-4 bg-gray-500">
         <div
             onClick={() => {
               if(session) {
@@ -72,7 +72,7 @@ const Header = () => {
                 sock.offAny();
                 navigate("/");
               }}
-              className="cursor-pointer text-blue-600">로그아웃 ></div>
+              className="cursor-pointer text-blue-600">로그아웃</div>
         </div>
       </div>
   )

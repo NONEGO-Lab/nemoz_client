@@ -13,6 +13,7 @@ import ErrorBoundary from "../../shared/ErrorBoundary";
 import ConnectTest from "../../test/pages/ConnectTest";
 import LoginView from "../../auth/pages/LoginView";
 import WaitingRoom from "../../fans/pages/WaitingRoom";
+import TmpVideoContainer from "call/pages/TmpVideoContainer";
 
 
 const Router = () => {
@@ -28,9 +29,11 @@ const Router = () => {
             <Route path="/devicetest" element={<Auth><DeviceTest/></Auth>}/>
             <Route path="/test/:id" element={<Auth><ConnectTest/></Auth>}/>
             <Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>
+            <Route path="/tmpvideo" element={<TmpVideoContainer/>}/>
             <Route path="/create/event" element={<Auth><CreateEvent/></Auth>}/>
             <Route path="/update/event/:id" element={<Auth><UpdateEvent/></Auth>}/>
             <Route path="/eventlist" element={<Auth><EventListView/></Auth>}/>
+            
           </Routes>
           {/*{ isError && <ErrorPopup/> }*/}
         </BrowserRouter>
