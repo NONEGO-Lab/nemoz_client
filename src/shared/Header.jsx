@@ -23,7 +23,7 @@ const Header = () => {
 
 
   return(
-      <div className="flex justify-between items-center border-b-4 bg-gray-500">
+      <div className="flex justify-between items-center bg-main_theme border-b-2 border-header_under">
         <div
             onClick={() => {
               if(session) {
