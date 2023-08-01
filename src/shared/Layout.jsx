@@ -19,9 +19,9 @@ export const Layout = ({ children, title, buttonText, _onClick, _endClick, endTe
 
 
 
-export const SizeLayout = ({children}) => {
+export const SizeLayout = ({children, width, height,color, flex, justifyCenter, rounded}) => {
   return (
-      <div className="w-[1080px] m-auto">
+      <div className={`m-auto ${width} ${height} ${color} ${flex} ${justifyCenter?'justify-center':''} ${rounded}`}>
         {children}
       </div>
   );

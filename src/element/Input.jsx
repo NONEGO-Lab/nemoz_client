@@ -3,8 +3,8 @@ import React from "react";
 
 const Input = (props) => {
 
-  const { name, register, label, required, type, onChange, value,
-    width, height, marginBottom, placeholder, fileName } = props;
+  const { name, register, required, type, onChange, value,
+    width, height, marginBottom, placeholder, fileName, errors } = props;
 
   const _onChange = onChange !== undefined ? onChange : () => {}
 
@@ -38,13 +38,10 @@ const Input = (props) => {
                     id={"file_input"}
                     type={"file"}
                 />
+                {errors.exampleRequired && <span>This field is required</span>}
               </>
               :
               <>
-                <label className="text-gray-400 text-[12px]">
-                  {label}
-                </label>
-
                 <input
 
                     {
@@ -54,7 +51,7 @@ const Input = (props) => {
                       })
                     }
 
-                    className={`mt-2 text-sm border-2 rounded-[6px] border-gray-400 outline-none p-[10px]
+                    className={`mt-2 text-sm border-b-2 border-b-[#c7c7c7] outline-none p-[10px] placeholder:text-[#646464] focus:bg-none
                                     ${width}
                                     ${height}
                                     ${marginBottom}
@@ -64,6 +61,10 @@ const Input = (props) => {
                     value={value}
                     type={type ? type : "text"}
                 />
+                {errors?.type === "required" && (
+                    <p role="alert">First name is required</p>
+                )}
+
               </>
 
         }

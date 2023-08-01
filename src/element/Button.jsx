@@ -12,7 +12,7 @@ const Button = (props) => {
             tabIndex={tabIndex}
             onClick={_onClick}
             type={type ? type : "button"}
-            className={`rounded border-solid border-2 p-2 pointer-cursor bg-gray-200
+            className={`rounded border-solid border-2 pointer-cursor bg-gray-200
                     ${margin}
                     ${borderColor ? borderColor : "border-blue-600"}
                     ${width}
@@ -31,7 +31,7 @@ const Button = (props) => {
             tabIndex={tabIndex}
             onClick={_onClick}
             type={type ? type : "button"}
-            className={`border-2 rounded border-solid p-2 pointer-cursor
+            className={`border-2 rounded border-solid  pointer-cursor
                     ${margin}
                     ${borderColor ? borderColor : "border-blue-600"}
                     ${width}
