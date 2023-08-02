@@ -6,14 +6,12 @@ import {useNavigate} from "react-router-dom";
 import {userApi} from "../data/user_data";
 
 
-export const AuthController = () => {
+export const AuthController = (setError) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const loginOnSubmit = (data) => {
-
     let userInfo = {
       ...login_request,
       userid: data.id,
@@ -22,7 +20,7 @@ export const AuthController = () => {
 
     dispatch(loginUser(userInfo)).then((result) => {
       if(result.error) {
-        alert(`${result.payload.errMsg}`);
+        setError('authError',{message:result.payload.errMsg})
         return
       }
       if(!sock.connected) {

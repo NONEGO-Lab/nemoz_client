@@ -5,7 +5,7 @@ import {Button} from "../element";
 export const Layout = ({ children, title, buttonText, _onClick, _endClick, endText }) => {
 
   return (
-      <div className="w-[1080px] m-auto">
+      <div className="w-[100%] m-[0 auto]">
         <Header/>
         <div className="bg-sky-100 h-[700px] p-[20px] relative">
           <div className="flex justify-between mb-8">

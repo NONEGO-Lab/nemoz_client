@@ -5,9 +5,11 @@ const Input = (props) => {
 
   const { name, register, required, type, onChange, value,
     width, height, marginBottom, placeholder, fileName, errors } = props;
-
+console.log(errors,'?')
   const _onChange = onChange !== undefined ? onChange : () => {}
+  const reset = (name) =>{
 
+  }
   return(
       <div className={`flex flex-col items-start ${width} justify-center`}>
 
@@ -51,19 +53,18 @@ const Input = (props) => {
                       })
                     }
 
-                    className={`mt-2 text-sm border-b-2 border-b-[#c7c7c7] outline-none p-[10px] placeholder:text-[#646464] focus:bg-none
+                    className={`mt-2 text-sm border-b-2 border-b-[#c7c7c7] outline-none p-[10px] placeholder: text-[#646464] focus:bg-none
                                     ${width}
                                     ${height}
                                     ${marginBottom}
+                                    ${errors && 'text-[#848484]'}
                             `}
                     name={name}
                     placeholder={placeholder}
-                    value={value}
+                    value={errors?errors:value}
                     type={type ? type : "text"}
                 />
-                {errors?.type === "required" && (
-                    <p role="alert">First name is required</p>
-                )}
+
 
               </>
 

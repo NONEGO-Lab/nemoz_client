@@ -6,17 +6,18 @@ import { AuthController as controller } from "../controller/authController";
 
 const LoginView = () => {
 
-  const { loginOnSubmit }  = controller();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  console.log(errors, '????')
+  const { register, handleSubmit, formState: { errors }, setError } = useForm();
+  const { loginOnSubmit }  = controller(setError);
+
+  console.log(errors.authError?.message)
   return (
-      <SizeLayout width={'w-[649.5px]'} height={'h-[565px]'} color={'bg-white'} flex={'flex'} justifyCenter={true} rounded={'rounded-[15px]'}>
+      <SizeLayout width={'w-[650px]'} height={'h-[565px]'} color={'bg-white'} flex={'flex'} justifyCenter={true} rounded={'rounded-[15px]'}>
         <div className="mt-[71px]">
-          <div className="w-[251.5px] h-[44px] m-auto">
+          <div className="w-[252px] h-[44px] m-auto">
           <img src="../images/nemozCallLogo.png" alt="logo" />
           </div>
           <form
-              className="text-center mt-[93.5px] w-[502px] h">
+              className="text-center mt-[94px] w-[502px] h">
             <Input
                 register={register}
                 name={"id"}
@@ -25,7 +26,7 @@ const LoginView = () => {
                 marginBottom={"mb-[55px]"}
                 placeholder={"User ID"}
                 required={true}
-                errors={errors}
+                errors={errors.authError?.message}
             />
             <Input
                 register={register}

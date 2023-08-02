@@ -5,15 +5,15 @@ import Router from "./shared/router/Router";
 
 function App() {
 
-  useEffect(()=>{
-    sock.connect();
-
-    return () => {
-      sock.offAny();
-      sock.disconnect();
-    }
-
-  },[])
+  // useEffect(()=>{
+  //   sock.connect();
+  //
+  //   return () => {
+  //     sock.offAny();
+  //     sock.disconnect();
+  //   }
+  //
+  // },[])
 
 
   return (
