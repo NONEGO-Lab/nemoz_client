@@ -17,8 +17,8 @@ code {
     monospace;
 }
 
-#root{
-  min-width: 1366px;
-  min-height: 1024px;
-  display: flex;
-}
+/*#root {*/
+/*  width: 1366px;*/
+/*  min-height: 1024px;*/
+/*  margin: auto 0;*/
+/*}*/
