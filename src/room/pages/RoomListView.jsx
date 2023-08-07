@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../element";
 import { Layout } from "../../shared/Layout";
 import CreateRoom from "../../room/components/CreateRoom";
+import CreateRoom2 from "../../room/components/CreateRoom2";
 import WaitingList from "../../call/pages/components/WaitingList";
 import FanDetail from "../../fans/pages/components/FanDetail";
 import AddUser from "../../call/pages/components/AddUser";
@@ -19,25 +20,30 @@ const RoomListView = () => {
     isEmptyCheck, currentPage, currentFanInfo, isOpenAddUser, setIsOpenAddUser, endRoomApi,
     getRoomListApi, setCurrentFanInfo, userInfo
   } = controller();
-
+  const isRoomList = window.location.pathname.split('/')[1] === 'roomlist'
   return (
-      <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)}>
+      <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList}>
 
         {/*table 뷰*/}
-        <div className="bg-white h-[500px]">
-          <div className="flex items-center w-[100%] bg-gray-100 h-[50px] px-[20px] font-bold">
-            <div className="w-[340px]">방제목</div>
-            <div className="w-[180px]">아티스트</div>
-            <div className="w-[160px]">팬</div>
+        {/* Tabler Header*/}
+        <div>
+          <div className="flex items-center w-[100%]  px-[100px] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2">
+            <div className="w-[195px]">Artist</div>
+            <div className="w-[140px]">Fan</div>
+              <div className="w-[550px]">Title</div>
+              <div className="w-[132px]">Waiting</div>
+              <div className="w-[120px]">Staff</div>
+              <div >Quit</div>
+
           </div>
 
-          <div className="overflow-y-auto h-[450px]">
+          <div className="px-[100px]">
 
                 <StaffProvider>
                   {
                     roomList.map((room, idx) => {
                       return <Room room={room} key={idx} setCurrentRoom={setCurrentRoom}
-                                   endRoomApi={endRoomApi}/>
+                                   endRoomApi={endRoomApi} bgColor={idx %2 === 0 ?"":"bg-[#e9e9e9]" }/>
                     })
                   }
                 </StaffProvider>
@@ -46,38 +52,42 @@ const RoomListView = () => {
                   {
                     roomList.filter((room) => room.artist_id === userInfo.id).map((room) => {
                       return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
-                                   endRoomApi={endRoomApi}/>
+                                   endRoomApi={endRoomApi} />
                     })
                   }
                 </ArtistProvider>
           </div>
         </div>
+        {/* page */}
         {
-          <div className={"flex justify-end absolute bottom-4 right-4 text-xl text-gray-600"}>
-                    <span onClick={() => movePage(currentPage - 1)}
-                          className="cursor-pointer mr-2"> {"<"} </span>
+          <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
+                    {/*<span onClick={() => movePage(currentPage - 1)}*/}
+                    {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
             {
               roomArray.map((num, index) => {
                 return(
-                    <div key={index} className={`pr-4`}>
-                                    <span onClick={() => movePage(num)}
-                                          className={`cursor-pointer text-center 
-                                          ${currentPage === num && "bg-blue-600 px-2 py-1 text-white"}`}>
+
+                                    <span  key={index} onClick={() => movePage(num)}
+                                          className={`w-[35px] h-[35px] cursor-pointer rounded-full  ml-[20px] flex items-center justify-center
+                                          ${currentPage === num ? "bg-[#01dfe0]" : "bg-white"}
+                                          `}>
                                         {num}
                                     </span>
-                    </div>
+
                 )
               })
             }
-            <div onClick={() => movePage(currentPage + 1)}>
-              <span className="cursor-pointer mr-2">다음</span>
-              <span className="cursor-pointer"> {">"} </span>
-            </div>
+            {/*<div onClick={() => movePage(currentPage + 1)}>*/}
+            {/*  <span className="cursor-pointer mr-2">다음</span>*/}
+            {/*  <span className="cursor-pointer"> {">"} </span>*/}
+            {/*</div>*/}
           </div>
         }
 
-        { isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
-                                          getRoomListApi={getRoomListApi}/> }
+        {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}*/}
+        {/*                                  getRoomListApi={getRoomListApi}/> }*/}
+          { isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
+                                            getRoomListApi={getRoomListApi}/> }
         { currentRoom.room_id &&
             <WaitingList
                 curRoomId={currentRoom.room_id}
@@ -96,11 +106,11 @@ const RoomListView = () => {
 export default RoomListView;
 
 
-const Room = ({ room, endRoomApi, setCurrentRoom }) => {
+const Room = ({ room, endRoomApi, setCurrentRoom, key, bgColor }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  console.log(`KEY: ${key}`)
   const roomEnd = (room) => {
     endRoomApi(room)
   }
@@ -117,28 +127,38 @@ const Room = ({ room, endRoomApi, setCurrentRoom }) => {
   }
 
   return (
-      <div className="flex justify-center items-center mt-2 mb-4 px-[20px]">
-        <div className="flex w-[780px]">
-          <div className="w-[340px]">
-            {room.room_name}
-          </div>
-          <div className="w-[180px]">
-            {room.artist_name}
-          </div>
-          <div className="w-[160px]">
-            {room.fan_name}
-          </div>
-        </div>
+      <div className={`flex items-center h-[70px] ${bgColor} `}>
 
-        <div className="w-[360px] flex justify-between">
-          <Button _onClick={() => setCurrentRoom(room)}>대기열 보기</Button>
-          <Button _onClick={() => joinAdminSession(room)}>입장하기</Button>
+          <div className="w-[195px] font-bold">
+              {room.artist_name}
+
+          </div>
+          <div className="w-[140px]">
+              {room.fan_name}
+          </div>
+          <div className="w-[550px]">
+
+              {room.room_name}
+          </div>
+
+          <Button _onClick={() => setCurrentRoom(room)} width={"w-[132px]"}>
+              <div className={"w-[26px] h-[25px]"}>
+              <img src="../images/waitingIcon.png" alt={'waiting-icon'}/>
+              </div>
+          </Button>
+          <Button _onClick={() => joinAdminSession(room)} width={"w-[120px]"}>
+              <div className={"w-[26px] h-[25px]"}>
+                  <img src="../images/startIcon.png" alt={'start-icon'}/>
+              </div>
+          </Button>
           <Button
               _onClick={() => roomEnd(room)}
-              color={"text-red-500"} borderColor={"border-red-500"}>
-            팬미팅 종료
+             >
+              <div className={"w-[26px] h-[25px]"}>
+                  <img src="../images/quitIcon.png" alt={'quit-icon'}/>
+              </div>
           </Button>
-        </div>
+
       </div>
   )
 }

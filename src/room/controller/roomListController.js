@@ -41,7 +41,7 @@ export const RoomListController = () => {
   const getRoomListApi = async (page) => {
     try {
       const result = await roomApi.getRoomList(eventId, page);
-      setRoomList(result.data);
+      setRoomList(result.data?.slice(0,10));
     } catch (err) {
       dispatch(setError(err));
       dispatch(setIsError(true));

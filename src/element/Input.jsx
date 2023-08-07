@@ -7,9 +7,7 @@ const Input = (props) => {
     width, height, marginBottom, placeholder, fileName, errors } = props;
 console.log(errors,'?')
   const _onChange = onChange !== undefined ? onChange : () => {}
-  const reset = (name) =>{
 
-  }
   return(
       <div className={`flex flex-col items-start ${width} justify-center`}>
 
@@ -40,7 +38,7 @@ console.log(errors,'?')
                     id={"file_input"}
                     type={"file"}
                 />
-                {errors.exampleRequired && <span>This field is required</span>}
+                {errors?.exampleRequired && <span>This field is required</span>}
               </>
               :
               <>
