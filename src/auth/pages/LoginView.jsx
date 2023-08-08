@@ -21,7 +21,7 @@ const LoginView = () => {
             <Input
                 register={register}
                 name={"id"}
-                width={"w-[502px]"}
+                inputWidth={"w-[502px]"}
                 height={"h-[44px]"}
                 marginBottom={"mb-[55px]"}
                 placeholder={"User ID"}
@@ -31,7 +31,7 @@ const LoginView = () => {
             <Input
                 register={register}
                 name={"password"}
-                width={"w-[502px]"}
+                inputWidth={"w-[502px]"}
                 height={"h-[44px]"}
                 marginBottom={"mb-[60px]"}
                 placeholder={"Password"}

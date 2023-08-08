@@ -3,7 +3,7 @@ import {ModalFrame} from "../../modal/ModalFrame";
 import {Input, Button, Select, InputTime} from "../../element";
 import {useForm, Controller} from "react-hook-form";
 import {roomApi} from "../data/room_data";
-import SelectBox, {components, DropdownIndicatorProps} from 'react-select'
+import SelectBox, {components} from 'react-select'
 import {eventApi} from "../../event/data/event_data";
 import {useSelector} from "react-redux";
 
@@ -129,34 +129,103 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                     <div className="text-[24px] font-medium text-[#444]">
                         방 만들기
                     </div>
-                    <div onClick={() => setOnModal(false)} className={"w-[20px] min-h-[20px] flex items-center"}>
+                    <div onClick={() => setOnModal(false)}
+                         className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
                         <img src={"../images/closeIcon.png"}/>
                     </div>
                 </div>
 
                 <form className="mt-[57px]">
-                {/* RoomTitle*/}
+                    {/* RoomTitle*/}
                     <Input
                         register={register}
-                        label={"LABEL"}
+                        title={"방 이름을 입력하세요"}
                         name={"roomTitle"}
                         required={true}
                         width={"w-[100%]"}
                         height={"min-h-[44px]"}
-                        marginBottom={"mb-[44px]"}
-                        placeholder={"방 이름을 입력하세요"}
-                        defaultValue = {0}
+                        marginBottom={"mb-[40px]"}
+                        // placeholder={"방 이름을 입력하세요"}
+                        inputWidth ={"w-[25%]"}
+                        defaultValue={0}
+                        inputStyle={"text-medium"}
                     />
+
                     {/*Select Artist*/}
                     <Select
                         register={register}
                         name={'selectArtist'}
                         label={"아티스트 선택"}
-                        // placeholder={roomInfo.placeholder}
                         options={targetArtistIds.map((artist) => artist.username)}
-                        // width={"w-[100%]"}
-                        defaultValue={"아티스트 선택"}
+                        items={'items-center'}
+                        justify={"justify-between"}
+                        width={"w-[25%]"}
+                        fontSize={"text-[23px]"}
+                        mb={"mb-[40px]"}
                     />
+
+                    {/*영상통화 시간 선택*/}
+                    <Select
+                        register={register}
+                        name={'selectArtist'}
+                        label={"영상통화 시간 선택"}
+                        // options={targetArtistIds.map((artist) => artist.username)}
+                        items={'items-center'}
+                        justify={"justify-between"}
+                        width={"w-[25%]"}
+                        fontSize={"text-[23px]"}
+                        mb={"mb-[40px]"}
+                        isTime={true}
+                    />
+
+                    {/* 시작 일시 */}
+                    <Input
+                        register={register}
+                        title={"시작 일시"}
+                        name={"startDate"}
+                        required={true}
+                        width={"w-[100%]"}
+                        height={"min-h-[44px]"}
+                        marginBottom={"mb-[40px]"}
+                        placeholder={"시작 일시"}
+                        type={"datetime-local"}
+                    />
+
+                    {/* 파일 추가 */}
+                    <Input
+                        register={register}
+                        title={"파일 추가"}
+                        name={"startDate"}
+                        required={true}
+                        width={"w-[100%]"}
+                        height={"min-h-[44px]"}
+                        marginBottom={"mb-[40px]"}
+                        placeholder={"시작 일시"}
+                        fileName={fileName && fileName}
+                        onChange={onChangeFile}
+                        type={"file"}
+                    />
+
+                    {/*multi select가 가능한 스탭 목록*/}
+                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7]`}>
+                    <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
+                        스탭 등록
+                    </label>
+                    <Controller
+                        name="staffIds"
+                        control={control}
+                        render={({field}) =>
+                            <SelectBox
+                                {...field}
+                                styles={customStyles}
+                                closeMenuOnSelect={false}
+                                components={{DropdownIndicator}}
+                                defaultValue={[]}
+                                isMulti
+                                options={valueMaker(targetStaffIds)}
+                            />}
+                    />
+                    </div>
                 </form>
 
             </div>
@@ -164,4 +233,40 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
     );
 };
 
-export default CreateRoom2;
+export default memo(CreateRoom2);
+
+const customStyles = {
+    menu: (provided, state) => ({
+        ...provided,
+        border: 'none',
+        padding: 20,
+        display: "flex"
+    }),
+
+    control: (_, {selectProps: {}}) => ({
+        width: "100%",
+        height: "44px",
+        borderRadius: "7px",
+        border: '1px solid rgb(156, 163, 175, 1)',
+        padding: 2,
+    }),
+
+    indicatorsContainer: () => ({
+        display: "none"
+    }),
+
+    singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = 'opacity 300ms';
+
+        return {...provided, opacity, transition};
+    }
+}
+
+const DropdownIndicator = (props) => {
+    return (
+        <components.DropdownIndicator {...props}>
+
+        </components.DropdownIndicator>
+    );
+};

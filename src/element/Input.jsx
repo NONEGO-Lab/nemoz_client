@@ -3,72 +3,72 @@ import React from "react";
 
 const Input = (props) => {
 
-  const { name, register, required, type, onChange, value,
-    width, height, marginBottom, placeholder, fileName, errors } = props;
-console.log(errors,'?')
-  const _onChange = onChange !== undefined ? onChange : () => {}
+    const {
+        name, register, required, type, onChange, value, inputStyle,
+        width, height, marginBottom, placeholder, fileName, errors, title, inputWidth
+    } = props;
+    console.log(errors, '?')
+    const _onChange = onChange !== undefined ? onChange : () => {
+    }
 
-  return(
-      <div className={`flex flex-col items-start ${width} justify-center`}>
+    return (
+        <div className={`flex ${width} ${marginBottom} justify-between  border-b-2 border-b-[#c7c7c7]`}>
 
-        {
-          type === "file" ?
-              <>
-                <div className="text-gray-400 text-[12px]">
-                  파일 선택
-                </div>
-                <label className={`mt-2 w-full text-sm rounded-lg border border-gray-400 cursor-pointer
-                            dark:text-gray-400 focus:outline-none dark:border-gray-400 dark:placeholder-gray-400 flex items-center
-                            pl-4
-                                ${width}
-                                ${height}
-                                ${marginBottom}
-                       
-                            `}
-                       htmlFor="file_input">
-                  { fileName ? fileName : "파일 선택" }
-                </label>
+            {
+                type === "file" ?
+                    <>
+                        <div className="text-[#646464] text-[20px] font-medium">
+                            {title}
+                        </div>
+                        <label className={` cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-400 dark:placeholder-gray-400 flex items-center
+ `}
+                               htmlFor="file_input">
+                            {fileName ? fileName : "파일 선택"}
+                        </label>
 
-                <input
-                    {...register(name, {
-                      required: required
-                    })}
-                    onChange={onChange}
-                    className={`hidden`}
-                    id={"file_input"}
-                    type={"file"}
-                />
-                {errors?.exampleRequired && <span>This field is required</span>}
-              </>
-              :
-              <>
-                <input
+                        <input
+                            {...register(name, {
+                                required: required
+                            })}
+                            onChange={onChange}
+                            className={`hidden`}
+                            id={"file_input"}
+                            type={"file"}
+                        />
+                        {errors?.exampleRequired && <span>This field is required</span>}
+                    </>
+                    :
+                    <>
+                        <div className="text-[#646464] text-[20px] font-medium">
+                            {title}
+                        </div>
+                        <input
 
-                    {
-                      ...register(name, {
-                        required: required,
-                        onChange: (e) => _onChange(e)
-                      })
-                    }
+                            {
+                                ...register(name, {
+                                    required: required,
+                                    onChange: (e) => _onChange(e)
+                                })
+                            }
 
-                    className={`mt-2 text-sm border-b-2 border-b-[#c7c7c7] outline-none p-[10px] placeholder: text-[#646464] focus:bg-none
-                                    ${width}
+                            className={`text-sm  outline-none 
+                                    ${inputWidth}
                                     ${height}
-                                    ${marginBottom}
                                     ${errors && 'text-[#848484]'}
+                                    ${inputStyle}
                             `}
-                    name={name}
-                    placeholder={placeholder}
-                    value={errors?errors:value}
-                    type={type ? type : "text"}
-                />
+                            name={name}
+                            placeholder={placeholder}
+                            value={errors ? errors : value}
+                            type={type ? type : "text"}
+                        />
 
 
-              </>
+                    </>
 
-        }
-      </div>
-  )
+            }
+        </div>
+    )
 
 };
 

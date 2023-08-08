@@ -279,14 +279,6 @@ const CreateRoom = ({setOnModal, getRoomListApi}) => {
 export default memo(CreateRoom);
 
 
-const DropdownIndicator = (props) => {
-    return (
-        <components.DropdownIndicator {...props}>
-
-        </components.DropdownIndicator>
-    );
-};
-
 const customStyles = {
     menu: (provided, state) => ({
         ...provided,
@@ -314,3 +306,11 @@ const customStyles = {
         return {...provided, opacity, transition};
     }
 }
+
+const DropdownIndicator = (props) => {
+    return (
+        <components.DropdownIndicator {...props}>
+
+        </components.DropdownIndicator>
+    );
+};
