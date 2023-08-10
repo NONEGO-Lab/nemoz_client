@@ -12,7 +12,6 @@ const CreateRoom = ({setOnModal, getRoomListApi}) => {
 
     let style = "w-[650px] h-[900px] rounded-[15px] drop-shadow-md";
     const eventId = useSelector((state) => state.event.eventId);
-
     const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "",

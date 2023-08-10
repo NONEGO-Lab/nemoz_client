@@ -17,7 +17,7 @@ const LoginView = () => {
           <img src="../images/nemozCallLogo.png" alt="logo" />
           </div>
           <form
-              className="text-center mt-[94px] w-[502px] h">
+              className="text-center mt-[94px] w-[502px]">
             <Input
                 register={register}
                 name={"id"}
@@ -43,7 +43,7 @@ const LoginView = () => {
                     height={"min-h-[75px]"}
                     bgColor={"bg-[#848484]"}
                     borderColor={"border-none"}
-                    color={"text-[#fff]"}
+                    textColor={"text-[#fff]"}
                     style={"text-[26px] rounded-[10px] hover:bg-[#01dfe0]"}
 
             >

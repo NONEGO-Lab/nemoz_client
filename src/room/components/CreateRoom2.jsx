@@ -1,6 +1,6 @@
 import React, {useState, memo, useCallback, useEffect} from "react";
 import {ModalFrame} from "../../modal/ModalFrame";
-import {Input, Button, Select, InputTime} from "../../element";
+import {Input, Button, Select} from "../../element";
 import {useForm, Controller} from "react-hook-form";
 import {roomApi} from "../data/room_data";
 import SelectBox, {components} from 'react-select'
@@ -8,10 +8,11 @@ import {eventApi} from "../../event/data/event_data";
 import {useSelector} from "react-redux";
 
 
+
 const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
-    const modalStyle = "w-[650px] h-[900px] rounded-[15px] drop-shadow-md";
+    const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
     const eventId = useSelector((state) => state.event.eventId);
-    const {register, handleSubmit, control} = useForm();
+    const {register, handleSubmit, control,formState: { errors }, setError} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "",
         mimeType: "",
@@ -145,10 +146,10 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         width={"w-[100%]"}
                         height={"min-h-[44px]"}
                         marginBottom={"mb-[40px]"}
-                        // placeholder={"방 이름을 입력하세요"}
-                        inputWidth ={"w-[25%]"}
-                        defaultValue={0}
+                        inputWidth={"w-[25%]"}
                         inputStyle={"text-medium"}
+                        autoFocus={true}
+                        // errors={errors.authError?.message}
                     />
 
                     {/*Select Artist*/}
@@ -162,6 +163,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         width={"w-[25%]"}
                         fontSize={"text-[23px]"}
                         mb={"mb-[40px]"}
+                        pb={"pb-[20px]"}
                     />
 
                     {/*영상통화 시간 선택*/}
@@ -175,6 +177,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         width={"w-[25%]"}
                         fontSize={"text-[23px]"}
                         mb={"mb-[40px]"}
+                        pb={"pb-[20px]"}
                         isTime={true}
                     />
 
@@ -188,7 +191,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         height={"min-h-[44px]"}
                         marginBottom={"mb-[40px]"}
                         placeholder={"시작 일시"}
-                        type={"datetime-local"}
+                        type={"date"}
                     />
 
                     {/* 파일 추가 */}
@@ -200,32 +203,71 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         width={"w-[100%]"}
                         height={"min-h-[44px]"}
                         marginBottom={"mb-[40px]"}
-                        placeholder={"시작 일시"}
                         fileName={fileName && fileName}
                         onChange={onChangeFile}
                         type={"file"}
                     />
 
                     {/*multi select가 가능한 스탭 목록*/}
-                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7]`}>
-                    <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
-                        스탭 등록
-                    </label>
-                    <Controller
-                        name="staffIds"
-                        control={control}
-                        render={({field}) =>
-                            <SelectBox
-                                {...field}
-                                styles={customStyles}
-                                closeMenuOnSelect={false}
-                                components={{DropdownIndicator}}
-                                defaultValue={[]}
-                                isMulti
-                                options={valueMaker(targetStaffIds)}
-                            />}
-                    />
+                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
+                            스탭 등록
+                        </label>
+                        <Controller
+                            name="staffIds"
+                            control={control}
+                            render={({field}) =>
+                                <SelectBox
+                                    {...field}
+                                    styles={customStyles}
+                                    width="100%"
+                                    height="44px"
+                                    placeholder="+"
+                                    closeMenuOnSelect={false}
+                                    components={{DropdownIndicator}}
+                                    defaultValue={[]}
+                                    isMulti
+                                    options={valueMaker(targetStaffIds)}
+                                />}
+                        />
                     </div>
+
+                    {/*multi select가 가능한 팬 목록*/}
+                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
+                            팬 등록
+                        </label>
+                        <Controller
+                            name="fanIds"
+                            control={control}
+                            render={({field}) =>
+                                <SelectBox
+                                    {...field}
+                                    styles={customStyles}
+                                    width="100%"
+                                    height="44px"
+                                    placeholder="+"
+                                    closeMenuOnSelect={false}
+                                    components={{DropdownIndicator}}
+                                    defaultValue={[]}
+                                    isMulti
+                                    options={valueMaker(targetFanIds)}
+                                />
+
+                        }
+                        />
+                    </div>
+
+                    <Button
+                        type={"submit"}
+                        _onClick={handleSubmit(onSubmit)}
+                        bgColor={"bg-[#01dfe0]"}
+                    >
+                        <div className={"mx-[241px] my-[21px] min-h[24.5px] text-[26px] text-white font-medium"}>
+                            확인
+                        </div>
+                    </Button>
+
                 </form>
 
             </div>
@@ -238,17 +280,22 @@ export default memo(CreateRoom2);
 const customStyles = {
     menu: (provided, state) => ({
         ...provided,
+        width:"400px",
         border: 'none',
         padding: 20,
-        display: "flex"
+        display: "flex",
+        borderRadius: "18px",
     }),
 
     control: (_, {selectProps: {}}) => ({
         width: "100%",
         height: "44px",
         borderRadius: "7px",
-        border: '1px solid rgb(156, 163, 175, 1)',
+        // border: '1px solid rgb(156, 163, 175, 1)',
         padding: 2,
+
+
+
     }),
 
     indicatorsContainer: () => ({
@@ -260,7 +307,22 @@ const customStyles = {
         const transition = 'opacity 300ms';
 
         return {...provided, opacity, transition};
-    }
+    },
+
+    multiValue:() =>({
+        borderRadius:"18px",
+        background:'#c7c7c7',
+        width:"110px",
+        color:'#FFF',
+        display:'flex',
+        justifyContent:"center",
+        marginRight:"15px"
+    }),
+    multiValueLabel:() =>({
+        textSize: "20px",
+        margin: "9px 0",
+        fontWeight:"bold"
+    })
 }
 
 const DropdownIndicator = (props) => {

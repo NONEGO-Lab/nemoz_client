@@ -84,8 +84,8 @@ const RoomListView = () => {
           </div>
         }
 
-        {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}*/}
-        {/*                                  getRoomListApi={getRoomListApi}/> }*/}
+        {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
+                                          getRoomListApi={getRoomListApi}/> }*/}
           { isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
                                             getRoomListApi={getRoomListApi}/> }
         { currentRoom.room_id &&
@@ -110,7 +110,7 @@ const Room = ({ room, endRoomApi, setCurrentRoom, key, bgColor }) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(`KEY: ${key}`)
+
   const roomEnd = (room) => {
     endRoomApi(room)
   }
