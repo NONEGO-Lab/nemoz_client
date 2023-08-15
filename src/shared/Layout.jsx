@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import {Button} from "../element";
 
-export const Layout = ({children, title, buttonText, _onClick, _endClick, endText, isRoomList}) => {
+export const Layout = ({children, title, buttonText, _onClick, _endClick, endText, isRoomList, isParticipantsList}) => {
 
     return (
         <div className="w-[100%] m-[0 auto]">
@@ -10,7 +10,7 @@ export const Layout = ({children, title, buttonText, _onClick, _endClick, endTex
             <div className="">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
-                                     endText={endText} isRoomList={isRoomList}/>
+                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList}/>
                 </div>
                 {children}
             </div>
@@ -68,7 +68,7 @@ export const SideBar = ({children}) => {
     )
 }
 
-export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText, role, isRoomList}) => {
+export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText, role, isRoomList, isParticipantsList}) => {
 
     return (
         <div className="w-[100%] flex justify-between items-center px-[100px] py-[44px]">
@@ -76,6 +76,10 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
                 {isRoomList &&
                     <div className={'w-[33px] ml-[11px]'}>
                         <img alt='room-icon' src="../images/roomIcon.png"/>
+                    </div>}
+                {isParticipantsList &&
+                    <div className={'w-[33px] ml-[11px]'}>
+                        <img alt='participants-icon' src="../images/participantsIcon.png"/>
                     </div>}
                 <div className="text-[25px] ml-[15px]">
                     {title}

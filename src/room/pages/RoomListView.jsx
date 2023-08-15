@@ -58,8 +58,8 @@ const RoomListView = () => {
                 </ArtistProvider>
           </div>
         </div>
+
         {/* page */}
-        {
           <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
                     {/*<span onClick={() => movePage(currentPage - 1)}*/}
                     {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
@@ -82,7 +82,7 @@ const RoomListView = () => {
             {/*  <span className="cursor-pointer"> {">"} </span>*/}
             {/*</div>*/}
           </div>
-        }
+
 
         {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
                                           getRoomListApi={getRoomListApi}/> }*/}

@@ -1,93 +1,107 @@
 import React from "react";
-import { Button } from "../../element";
-import { Layout } from "../../shared/Layout";
-import { ParticipantController as controller } from "../controller/participantController";
+import {Button} from "../../element";
+import {Layout} from "../../shared/Layout";
+import {ParticipantController as controller} from "../controller/participantController";
 import FanDetail from "./components/FanDetail";
 
 const ParticipantListView = () => {
 
-  const { attendeeList, movePage, roomArray, isOpenFanDetail, currentPage,
-    connectToTest, setIsOpenFanDetail, setCurrentFanId, currentFanId, setOnModal } = controller();
+    const {
+        attendeeList,
+        movePage,
+        roomArray,
+        isOpenFanDetail,
+        currentPage,
+        connectToTest,
+        setIsOpenFanDetail,
+        setCurrentFanId,
+        currentFanId,
+        setOnModal
+    } = controller();
 
-  return (
-      <Layout title={"참여자 목록"}>
-        {/*table 뷰*/}
-        <div className="bg-white h-[500px]">
-          <div className="flex items-center w-[100%] bg-gray-100 h-[50px] px-[20px] font-bold">
-            <div className="w-[160px]">참여자 이름</div>
-            <div className="w-[220px]">연결 테스트 여부</div>
-            <div className="w-[300px]">진행 현황</div>
-          </div>
+    return (<Layout title={"참가자 목록"} isParticipantsList={true}>
+            {/*table 뷰*/}
+            <div>
+                <div
+                    className="w-[100%] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px]">
+                    <span className="w-[195px] inline-block">Fan</span>
+                    <span className="w-[630px] inline-block">Status</span>
+                    <span className="w-[90px] inline-block">Test</span>
+                </div>
 
-          <div className="overflow-y-auto h-[450px]">
-            {
-              attendeeList.map((user) => {
-                return <User key={user.fan_id} user={user} setCurrentFanId={setCurrentFanId}
-                             setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}/>
-              })
-            }
-          </div>
+            {/* User List */}
+                <div className="overflow-y-auto">
+                    {attendeeList.map((user, idx) => {
+                        return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
+                                     setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest} bgColor={idx %2 === 0 ?"":"bg-[#e9e9e9]"}/>
+                    })}
+                </div>
+            </div>
 
-        </div>
+            {/* Page */}
+            <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
+                {/*<span onClick={() => movePage(currentPage - 1)}*/}
+                {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
+                {roomArray.map((num, index) => {
+                    return (
 
-        <div className={"flex justify-end absolute bottom-4 right-4 text-xl text-gray-600"}>
-          <span onClick={() => movePage(currentPage - 1)} className="cursor-pointer mr-2"> {"<"} </span>
-          {
-            roomArray.map((num, index) => {
-              return(
-                  <div key={num} className={`pr-4`}>
-                                <span onClick={() => movePage(num)}
-                                      className={`cursor-pointer text-center ${currentPage === num && "bg-blue-600 px-2 py-1 text-white"}`}>
-                                    {num}
-                                </span>
-                  </div>
-              )
-            })
-          }
-          <span onClick={() => movePage(currentPage + 1)}
-                className="cursor-pointer"> {">"} </span>
-        </div>
-        { isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal}/> }
-      </Layout>
-  )
+                        <span key={index} onClick={() => movePage(num)}
+                              className={`w-[35px] h-[35px] cursor-pointer rounded-full  ml-[20px] flex items-center justify-center
+                                          ${currentPage === num ? "bg-[#01dfe0]" : "bg-white"}
+                                          `}>
+                                        {num}
+                                    </span>
+
+                    )
+                })}
+                {/*<div onClick={() => movePage(currentPage + 1)}>*/}
+                {/*  <span className="cursor-pointer mr-2">다음</span>*/}
+                {/*  <span className="cursor-pointer"> {">"} </span>*/}
+                {/*</div>*/}
+            </div>
+
+            {/* Modal */}
+            {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal}/>}
+        </Layout>)
 }
 
 export default ParticipantListView;
 
 
+const User = ({user, setIsOpenFanDetail, setCurrentFanId, connectToTest, bgColor}) => {
+    const status = user.status
+    return (<div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
+            <div className="flex ">
+                <div className="w-[195px]">
+                    {user.fan_name}
+                </div>
 
-const User = ({user, setIsOpenFanDetail, setCurrentFanId, connectToTest}) => {
-  const status = user.status
-  return (
-      <div className="flex items-center mt-2 mb-4 px-[20px]">
-        <div className="flex w-[780px]">
-          <div className="w-[160px]">
-            {user.fan_name}
-          </div>
-          <div className="w-[220px]">
-            { user.is_tested ? "테스트 완료" : "테스트 미완료" }
-          </div>
-          <div className="w-[300px]">
-            {status.orders} / 5 -  {status.artist_name} 진행 중
-          </div>
-        </div>
+                <div className="w-[630px]">
+                    {status.orders} / 5 - {status.artist_name} 진행 중
+                </div>
+                <div className="w-[90px]">
+                    {user.is_tested ? "테스트 완료" : "테스트 미완료"}
+                </div>
+            </div>
 
-        <div className="w-[360px] flex flex-start">
-          <Button
-              _onClick={() => {
-                setCurrentFanId(user.fan_id);
-                setIsOpenFanDetail(true);
-              }}
-              width={"w-[100px]"} margin={"mr-[30px]"}>
-            정보 보기
-          </Button>
-          <Button
-              _onClick={() => connectToTest(user)}
-              disabled={user.is_tested}
-              width={"w-[150px]"}>
-            연결 테스트 하기
-          </Button>
-        </div>
-      </div>
-  )
+            <div className="flex flex-start">
+                <button
+                    _onClick={() => {
+                        setCurrentFanId(user.fan_id);
+                        setIsOpenFanDetail(true);
+                    }}
+                    className="w-[110px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                    >
+                    Fan Info {">"}
+                </button>
+                <button
+                    _onClick={() => connectToTest(user)}
+                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested &&"opacity-30"}`}
+                    disabled={user.is_tested}
+                    >
+                    Test Call
+                </button>
+
+            </div>
+        </div>)
 }
