@@ -119,6 +119,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
              </span>
                     <span className={"ml-[8px] text-[16px] text-[#444]"}>Refresh</span>
                 </Button>
+
                 <Button
                     _onClick={saveReOrder}
                     width={"w-[140px]"}
