@@ -77,16 +77,20 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, connectToTest, bgColor
                 </div>
 
                 <div className="w-[630px]">
-                    {status.orders} / 5 - {status.artist_name} 진행 중
+                    <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
+                    <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
+                    <span>{status.artist_name} 진행 중</span>
+                    {/*<span>카리나 (에스파) 3집 미니앨범’Aespa World’ 영상 통화 진행 중</span>*/}
                 </div>
+
                 <div className="w-[90px]">
-                    {user.is_tested ? "테스트 완료" : "테스트 미완료"}
+                    {user.is_tested ? "O" : "X"}
                 </div>
             </div>
 
             <div className="flex flex-start">
                 <button
-                    _onClick={() => {
+                    onClick={() => {
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);
                     }}
@@ -95,7 +99,7 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, connectToTest, bgColor
                     Fan Info {">"}
                 </button>
                 <button
-                    _onClick={() => connectToTest(user)}
+                    onClick={() => connectToTest(user)}
                     className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested &&"opacity-30"}`}
                     disabled={user.is_tested}
                     >

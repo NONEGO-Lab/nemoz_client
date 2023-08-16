@@ -7,6 +7,9 @@ import SelectBox, {components} from 'react-select'
 import {eventApi} from "../../event/data/event_data";
 import {useSelector} from "react-redux";
 
+//@todo
+// 스탭, 팬등록 입력 X
+// 드롭다운 스타일 변경
 
 
 const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
@@ -210,7 +213,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
 
                     {/*multi select가 가능한 스탭 목록*/}
                     <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
-                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
+                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium flex items-center">
                             스탭 등록
                         </label>
                         <Controller
@@ -234,7 +237,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
 
                     {/*multi select가 가능한 팬 목록*/}
                     <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
-                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium">
+                        <label htmlFor={"staffList"} className="text-[#646464] text-[20px] font-medium flex items-center">
                             팬 등록
                         </label>
                         <Controller
@@ -285,6 +288,7 @@ const customStyles = {
         padding: 20,
         display: "flex",
         borderRadius: "18px",
+
     }),
 
     control: (_, {selectProps: {}}) => ({
@@ -292,7 +296,7 @@ const customStyles = {
         height: "44px",
         borderRadius: "7px",
         // border: '1px solid rgb(156, 163, 175, 1)',
-        padding: 2,
+        // padding: 2,
 
 
 
