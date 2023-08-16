@@ -244,8 +244,10 @@ const WaitingFan = ({
                     }}
                     className="w-[110px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
                 >
+                   <div className={"flex items-center justify-center"}>
                     Fan Info
                     <img src={"../images/rightArrowIcon.png"} className={"w-[7px] h-[11px] ml-[10px]"} alt={"arrow-icon"}/>
+                   </div>
                 </button>
 
             </div>
