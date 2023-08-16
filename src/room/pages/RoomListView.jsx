@@ -50,9 +50,9 @@ const RoomListView = () => {
 
                 <ArtistProvider>
                   {
-                    roomList.filter((room) => room.artist_id === userInfo.id).map((room) => {
+                    roomList.filter((room) => room.artist_id === userInfo.id).map((room, idx) => {
                       return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
-                                   endRoomApi={endRoomApi} />
+                                   endRoomApi={endRoomApi} bgColor={idx %2 === 0 ?"":"bg-[#e9e9e9]" } />
                     })
                   }
                 </ArtistProvider>
