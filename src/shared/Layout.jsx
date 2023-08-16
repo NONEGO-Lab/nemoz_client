@@ -95,6 +95,7 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
                             width={"w-[100px]"}
                             height={"h-[46px]"}
                             createRoom={true}
+                            textColor={`${isRoomList ? "text-[#444]" : ''}`}
                         >
                             {buttonText}
                         </Button>
