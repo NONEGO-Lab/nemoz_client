@@ -26,9 +26,11 @@ const AddUser = ({ setOnModal }) => {
   }
 
   const getEventUsers = async () => {
+
     let page = 1;
     const response = await eventApi.getEventList({ page, eventId });
     const fanList = response.events[0].target_fan_ids;
+    console.log(response, '!!!!')
     const fanOptions = fanList.map((fan) => fan.username);
     setFanOptionList(fanOptions);
   }

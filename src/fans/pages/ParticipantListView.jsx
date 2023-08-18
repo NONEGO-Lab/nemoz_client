@@ -23,14 +23,14 @@ const ParticipantListView = () => {
             {/*table 뷰*/}
             <div>
                 <div
-                    className="w-[100%] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px]">
+                    className="w-[100%] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px] pb-[14px]">
                     <span className="w-[195px] inline-block">Fan</span>
                     <span className="w-[630px] inline-block">Status</span>
                     <span className="w-[90px] inline-block">Test</span>
                 </div>
 
             {/* User List */}
-                <div className="overflow-y-auto">
+                <div >
                     {attendeeList.map((user, idx) => {
                         return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
                                      setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest} bgColor={idx %2 === 0 ?"":"bg-[#e9e9e9]"}/>

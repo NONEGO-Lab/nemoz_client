@@ -14,20 +14,28 @@ const TmpVideoContainer = () => {
     const [isVideoTurnOn, SetIsVideoTurnOn] = useState(true)
     const [isVoiceoTurnOn, SetIsVoiceTurnOn] = useState(true)
     return (
-        <SizeLayout>
+        <SizeLayout isVideo={true}>
             <Header />
-            <div className={"h-[700px] bg-main_theme flex flex-col justify-center"}>
-                <div className={"h-[150px] flex justify-center pt-[100px] text-[18px]"}>
-                    fan meeting title Area
+            <div className={"bg-main_theme flex flex-col justify-center"}>
+                <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
+                <span>
+                    <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon" />
+                </span>
+                <span className='ml-[10px]'>Jisoo First Single Album ‘ME’ Fan Meeting</span>
                 </div>
+
+                <div className='text-center'>
+                        <span>Fan 누렁이 (20세)</span>
+                        <span>Test Call</span>
+                        <span>블핑 지수</span>
+                    </div>
                 <div className={"h-[350px] bg-yellow-400 flex flex-row justify-between "}>
+              
                     <div className={"w-[50%] bg-blue-300 flex flex-col"}>
-                        <div className={"text-center"}>Fan Info</div>
                         <div className={`relative h-[360px] mx-[10px] border-2 border-box border-black flex`}>Fan Video</div>
                         <div className={"text-center"}>Fan Letter</div>
                     </div>
                     <div className={"w-[50%] bg-purple-300 flex flex-col"}>
-                        <div className={"text-center"}>Artist Info</div>
                         <div className={`relative h-[360px] mx-[10px] border-2 border-box border-black flex `}>Artist Video</div>
                         <div className={"text-center"}>Artist Letter</div>
                     </div>
@@ -40,7 +48,7 @@ const TmpVideoContainer = () => {
 
                         <div className={"flex flex-col text-[8px] items-center w-[75px]"} onClick={() => SetIsVideoTurnOn(prev => !prev)}>
                             <div className={"w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center  hover:bg-slate-300 cursor-pointer"}>
-                                {isVideoTurnOn? <VideocamOutlinedIcon />:<VideocamOffOutlinedIcon/>}
+                                {isVideoTurnOn ? <VideocamOutlinedIcon /> : <VideocamOffOutlinedIcon />}
                             </div>
                             <div className={"mt-[10px] flex flex-col items-center"}>
                                 <div>{`영상`}</div>
@@ -49,9 +57,9 @@ const TmpVideoContainer = () => {
                         </div>
 
 
-                        <div className={"flex flex-col text-[8px] items-center w-[75px]"}  onClick={() => SetIsVoiceTurnOn(prev => !prev)}>
+                        <div className={"flex flex-col text-[8px] items-center w-[75px]"} onClick={() => SetIsVoiceTurnOn(prev => !prev)}>
                             <div className={"w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center  hover:bg-slate-300 cursor-pointer"}>
-                                {isVoiceoTurnOn ? <KeyboardVoiceOutlinedIcon /> : <MicOffOutlinedIcon/>}
+                                {isVoiceoTurnOn ? <KeyboardVoiceOutlinedIcon /> : <MicOffOutlinedIcon />}
                             </div>
                             <div className={"mt-[10px] flex flex-col items-center"}>
                                 <div>{`음성`}</div>
@@ -62,7 +70,7 @@ const TmpVideoContainer = () => {
 
                         <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
                             <div className={"w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center  hover:bg-slate-300 cursor-pointer"}>
-                                <CloseOutlinedIcon/>
+                                <CloseOutlinedIcon />
                             </div>
                             <div className={"mt-[10px] flex flex-col items-center"}>
                                 <div>{`다음 순서 통화`}</div>
@@ -73,7 +81,7 @@ const TmpVideoContainer = () => {
 
                         <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
                             <div className={"w-[32px] h-[32px] rounded-full bg-white flex justify-center items-center  hover:bg-slate-300 cursor-pointer"}>
-                                <CloseOutlinedIcon/>
+                                <CloseOutlinedIcon />
                             </div>
                             <div className={"mt-[10px] flex flex-col items-center"}>
                                 <div>{`현재 통화 종료`}</div>

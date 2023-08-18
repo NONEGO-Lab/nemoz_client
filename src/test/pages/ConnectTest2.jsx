@@ -22,7 +22,7 @@ import { createBrowserHistory } from "history";
 
 
 
-const ConnectTest = () => {
+const ConnectTest2 = () => {
 
   const isMobile = useMediaQuery ({
     query : "(max-width: 600px)"
@@ -60,38 +60,41 @@ const ConnectTest = () => {
     navigate("/waitcall");
   }
 
-  const quitTest = async () => {
-    if(window.confirm("정말 나가시겠습니까?")) {
-      if(userInfo.role === "fan") {
-        try {
-          const response = await testApi.testLeave({
-            meetName: meetInfo.meetName,
-            connectionName: connectInfo
-          });
+  // const quitTest = async () => {
+  //   if(window.confirm("정말 나가시겠습니까?")) {
+  //     if(userInfo.role === "fan") {
+  //       try {
+  //         const response = await testApi.testLeave({
+  //           meetName: meetInfo.meetName,
+  //           connectionName: connectInfo
+  //         });
 
-          if(response === "LEAVED") {
-            navigate("/waitcall");
-            let roomNum = `1_test_${userInfo.id}`;
-            sock.emit("leaveRoom", roomNum, userInfo, navigate);
-          }
-        } catch (err) {
+  //         if(response === "LEAVED") {
+  //           navigate("/waitcall");
+  //           let roomNum = `1_test_${userInfo.id}`;
+  //           sock.emit("leaveRoom", roomNum, userInfo, navigate);
+  //         }
+  //       } catch (err) {
 
-        }
+  //       }
 
 
-      } else {
-        const response = await testApi.testEnd(meetInfo.meetName);
-        if(response) {
-          navigate("/userlist");
-          let roomNum = `1_test_${fanInfo.fan_id}`;
-          sock.emit("leaveRoom", roomNum, userInfo, navigate);
-        }
-      }
-    }
-  }
+  //     } else {
+  //       const response = await testApi.testEnd(meetInfo.meetName);
+  //       if(response) {
+  //         navigate("/userlist");
+  //         let roomNum = `1_test_${fanInfo.fan_id}`;
+  //         sock.emit("leaveRoom", roomNum, userInfo, navigate);
+  //       }
+  //     }
+  //   }
+  // }
 
 
   // video Size 관련
+  
+  const quitTest = () => console.log('Quit!')
+
   const [isBigScreen, setIsBigScreen] = useState({
     pub: "default",
     sub: "default"
@@ -125,73 +128,75 @@ const ConnectTest = () => {
         return "w-[200px] h-[200px] absolute bottom-[80px] right-[20px]";
       case "large":
         return "w-[100%] h-[100vh]"
+      default:
+        return "w-[100%] h-[50vh]"
     }
   }
 
   const webFullScreenSize = isWebFullScreen ? "w-[100%] flex justify-center" : "w-[calc(50%-10px)] flex";
   const webFullScreenSizeOther = isWebFullScreen ? "hidden" : "w-[calc(50%-10px)] flex";
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(subscriber !== undefined) {
-      return;
-    }
+  //   if(subscriber !== undefined) {
+  //     return;
+  //   }
 
-    if(userInfo.role !== "fan") {
-      // staff 이면,
-      // test meet create -> join 까지 한다.
-      // create, join 하고 나온 방을 socket 으로 보낸다!
-      createJoinSession().then((sessionInfo) => {
-        let data = { meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id }
-        sock.emit("joinTestSession", data);
-        let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
-        sock.emit("joinRoom", roomNum, userInfo);
-      })
-    } else {
-      // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
-      joinTestSession().then(() => {
-        let roomNum = `${eventId}_test_${userInfo.id}`;
-        sock.emit("joinRoom", roomNum, userInfo);
-      })
-    }
+  //   if(userInfo.role !== "fan") {
+  //     // staff 이면,
+  //     // test meet create -> join 까지 한다.
+  //     // create, join 하고 나온 방을 socket 으로 보낸다!
+  //     createJoinSession().then((sessionInfo) => {
+  //       let data = { meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id }
+  //       sock.emit("joinTestSession", data);
+  //       let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
+  //       sock.emit("joinRoom", roomNum, userInfo);
+  //     })
+  //   } else {
+  //     // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
+  //     joinTestSession().then(() => {
+  //       let roomNum = `${eventId}_test_${userInfo.id}`;
+  //       sock.emit("joinRoom", roomNum, userInfo);
+  //     })
+  //   }
 
-  },[]);
+  // },[]);
 
-  useEffect(()=>{
-    sock.on("chatMessage", (msg) => testEvents.chatMessage({ msg, getChatFromSocket }));
-    sock.on("testFail", (fanInfo) => testEvents.testFail({ fanInfo, userInfo, navigate }));
-    sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({ fanInfo, userInfo, dispatch, navigate }));
+  // useEffect(()=>{
+  //   sock.on("chatMessage", (msg) => testEvents.chatMessage({ msg, getChatFromSocket }));
+  //   sock.on("testFail", (fanInfo) => testEvents.testFail({ fanInfo, userInfo, navigate }));
+  //   sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({ fanInfo, userInfo, dispatch, navigate }));
 
-    return () => {
-      sock.removeAllListeners("chatMessage");
-      sock.removeAllListeners("testFail");
-      sock.removeAllListeners("testSuccess");
-      dispatch(clearToast());
-    }
-  },[]);
+  //   return () => {
+  //     sock.removeAllListeners("chatMessage");
+  //     sock.removeAllListeners("testFail");
+  //     sock.removeAllListeners("testSuccess");
+  //     dispatch(clearToast());
+  //   }
+  // },[]);
 
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    if(session === undefined) {
-      return;
-    }
+  //   if(session === undefined) {
+  //     return;
+  //   }
 
-    // window.addEventListener("beforeunload", onbeforeunload);
-    // window.addEventListener("popstate", onbeforeunload);
+  //   // window.addEventListener("beforeunload", onbeforeunload);
+  //   // window.addEventListener("popstate", onbeforeunload);
 
-    // return () => {
-    // window.removeEventListener("beforeunload", onbeforeunload);
-    // window.removeEventListener('popstate', onbeforeunload);
-    history.listen((location) => {
-      console.log("location!!!!!: ", location);
-      if(history.action === "POP") {
-        //뒤로가기일 경우
-        onbeforeunload();
-      }
-    })
-    // }
-  },[session])
+  //   // return () => {
+  //   // window.removeEventListener("beforeunload", onbeforeunload);
+  //   // window.removeEventListener('popstate', onbeforeunload);
+  //   history.listen((location) => {
+  //     console.log("location!!!!!: ", location);
+  //     if(history.action === "POP") {
+  //       //뒤로가기일 경우
+  //       onbeforeunload();
+  //     }
+  //   })
+  //   // }
+  // },[session])
 
 
   if(isMobile) {
@@ -251,7 +256,7 @@ const ConnectTest = () => {
           <Header/>
           <div className="flex">
             <VideoLayout title={"연결 테스트"} _onClick={quitTest} buttonText={"나가기"}>
-              <div className="px-[20px] flex bg-white w-[calc(100%-40px)] h-[480px] m-auto box-border flex justify-between">
+              <div className="px-[20px] flex bg-white w-[calc(100%-40px)] h-[480px] m-auto box-border justify-between">
                 <div className={`${webFullScreenSize} items-center`}>
                   {/*상대방 화면*/}
                   { subscriber !== undefined &&
@@ -321,4 +326,4 @@ const ConnectTest = () => {
 
 };
 
-export default ConnectTest;
+export default ConnectTest2;
