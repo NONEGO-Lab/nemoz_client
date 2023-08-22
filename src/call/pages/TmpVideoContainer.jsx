@@ -34,17 +34,17 @@ const TmpVideoContainer = () => {
                     </span>
                 </div>
 
-                <div className={"flex flex-row justify-evenly "}>
+                <div className={"flex flex-row justify-evenly"}>
                     {/* Fan Area */}
                     <div className='w-[650px] text-center'>
                         <span className='text-[19px] font-medium'>{`Fan ${fan_name} (${fan_age}세)`}</span>
                         <div className={"flex flex-col mt-[24px]"}>
-                            <div className={`relative h-[360px] border-none rounded-[15px] bg-[#444] flex `}>
-                                {!isVideoTurnOn && <span className='flex justify-center items-center text-[25px] text-white w-full'>FAN</span>}
+                            <div className={`relative h-[360px] border-none rounded-[15px] bg-[#444] flex  flex-col justify-end`}>
+                                {!isVideoTurnOn && <div className='flex justify-center items-center text-[25px] text-white w-full'>FAN</div>}
                              
-                                    <div className='w-full flex justify-center items-end mb-[43px]'>
+                                    <div className={`w-full flex justify-center items-end mb-[43px] ${!isVideoTurnOn ? "mt-[98px]" :""}`}>
                                         <div className='w-[180px] min-h-[50px] mr-[35px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer'>
-                                            <span className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</span>
+                                            <div className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</div>
                                           </div>
                                         <div className='w-[180px] min-h-[50px] rounded-[25px] bg-[#ff483a] flex items-center justify-center cursor-pointer'>
                                             <span className='text-white text-[19px] font-medium'>연결 실패</span>

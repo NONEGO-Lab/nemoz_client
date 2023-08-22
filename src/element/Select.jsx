@@ -4,12 +4,12 @@ import React from "react";
 const Select = (props) => {
 
     const {
-        name, register, options, required, label, items, justify,
+        name, register, options, required, label, items, justify,border,
         width, height, marginBottom, placeholder, selectStyle, defaultValue, fontSize, mb, isTime, pb
     } = props;
 
     return (
-        <div className={`flex ${items} ${justify} border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] ${mb} ${pb}`}>
+        <div className={`flex ${items} ${justify} ${border? border: "border-b-[1.5px] border-b-[#c7c7c7]"} min-h-[44px] ${mb} ${pb}`}>
             <label htmlFor={name} className=" flex items-center text-[20px] text-[#646464] font-medium">
                 {label}
             </label>

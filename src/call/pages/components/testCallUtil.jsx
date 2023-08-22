@@ -48,15 +48,15 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
             </div>
 
             {/* 다음 사람 */}
-            {isRealService && <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}>
+           <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}>
                 <div className={`w-[75px] h-[75px]  ${isRealService ? "cursor-pointer" : ""}`}>
-                    {isRealService ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
+                    {isTest ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`NEXT`}</div>
                 </div>
             </div>
-            }
+            
 
             {/* 나가기 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px]"}>

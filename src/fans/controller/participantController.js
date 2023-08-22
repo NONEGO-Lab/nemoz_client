@@ -12,7 +12,7 @@ export const ParticipantController = () => {
   const [attendeeList, setAttendeeList] = useState([]);
   const [isOpenFanDetail, setIsOpenFanDetail] = useState(false);
   const [currentFanId, setCurrentFanId] = useState();
-
+  const [openDeviceSetting, setOpenDeviceSetting] = useState(false)
   const roomArray = [...new Array(10)].map((_, i) => i + 1);
   const eventId = useSelector((state) => state.event.eventId);
 
@@ -40,6 +40,10 @@ export const ParticipantController = () => {
     setCurrentFanId();
   }
 
+  const closeDeviceSetting = () => {
+    setOpenDeviceSetting(false)
+  }
+
   useEffect(()=>{
     getAttendeeListApi(1);
     dispatch(clearTestSession());
@@ -65,6 +69,9 @@ export const ParticipantController = () => {
     setIsOpenFanDetail,
     setCurrentFanId,
     currentFanId,
-    setOnModal
+    setOnModal,
+    openDeviceSetting, 
+    setOpenDeviceSetting,
+    closeDeviceSetting
   }
 }

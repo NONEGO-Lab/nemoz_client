@@ -91,7 +91,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                         :
                         <div>대기자가 없습니다.</div>
                 }
-            < /div>
+            </div>
 
             <div className="flex items-center justify-start pt-[46px] px-[60px]">
                 <div>

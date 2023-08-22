@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "../../element";
 import { Layout } from "../../shared/Layout";
 import { ParticipantController as controller } from "../controller/participantController";
 import FanDetail from "./components/FanDetail";
+import DeviceSetting from "test/pages/DeviceSetting";
 
 const ParticipantListView = () => {
 
@@ -16,7 +16,10 @@ const ParticipantListView = () => {
         setIsOpenFanDetail,
         setCurrentFanId,
         currentFanId,
-        setOnModal
+        setOnModal,
+        openDeviceSetting,
+        setOpenDeviceSetting,
+        closeDeviceSetting
     } = controller();
 
     return (<Layout title={"참가자 목록"} isParticipantsList={true}>
@@ -32,7 +35,7 @@ const ParticipantListView = () => {
             {/* User List */}
             <div >
                 {attendeeList.map((user, idx) => {
-                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
+                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setOpenDeviceSetting={setOpenDeviceSetting}
                         setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"} />
                 })}
             </div>
@@ -62,60 +65,61 @@ const ParticipantListView = () => {
 
         {/* Modal */}
         {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} />}
+        {openDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
     </Layout>)
 }
 
 export default ParticipantListView;
 
 
-const User = ({ user, setIsOpenFanDetail, setCurrentFanId, connectToTest, bgColor }) => {
+const User = ({ user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, connectToTest, bgColor }) => {
     const status = user.status
     return (
-    <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
-        <div className="flex items-center">
-            <div className="w-[115px]">
-                {user.fan_name}
-            </div>
+        <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
+            <div className="flex items-center">
+                <div className="w-[115px]">
+                    {user.fan_name}
+                </div>
 
-            <div className="w-[630px]">
-                <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
-                <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
-                {/* <span>{status.artist_name} 진행 중</span> */}
-                <span>카리나 (에스파) 3집 미니앨범’Aespa World’ 영상 통화 진행 중</span>
-            </div>
-            {/* 
+                <div className="w-[630px]">
+                    <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
+                    <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
+                    {/* <span>{status.artist_name} 진행 중</span> */}
+                    <span>카리나 (에스파) 3집 미니앨범’Aespa World’ 영상 통화 진행 중</span>
+                </div>
+                {/* 
                 is_tested 0 테스트전
                 is_tested 1 성공
                 is_tested 2 실패
             
             */}
-            <div className="w-[90px] ml-[10px]">
-                {user.is_tested === 0 && <img className="w-[14px] h-[2px]" src="../images/testBefore.png" alt='test-before' />}
-                {user.is_tested === 1 && <img className="w-[17px] h-[17px]" src="../images/testSuccess.png" alt='test-success' />}
-                {user.is_tested === 2 && <img className="w-[17px] h-[17px]" src="../images/testFail.png" alt='test-fail' />}
+                <div className="w-[90px] ml-[10px]">
+                    {user.is_tested === 0 && <img className="w-[14px] h-[2px]" src="../images/testBefore.png" alt='test-before' />}
+                    {user.is_tested === 1 && <img className="w-[17px] h-[17px]" src="../images/testSuccess.png" alt='test-success' />}
+                    {user.is_tested === 2 && <img className="w-[17px] h-[17px]" src="../images/testFail.png" alt='test-fail' />}
+                </div>
             </div>
-        </div>
 
-        <div>
-            <button
-                onClick={() => {
-                    setCurrentFanId(user.fan_id);
-                    setIsOpenFanDetail(true);
-                }}
-                className="w-[110px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
-            >
-                Fan Info {">"}
-            </button>
-        </div>
-        <div>
-            <button
-                onClick={() => connectToTest(user)}
-                className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested && "opacity-30"}`}
-                disabled={user.is_tested}
-            >
-                Test Call
-            </button>
+            <div>
+                <button
+                    onClick={() => {
+                        setCurrentFanId(user.fan_id);
+                        setIsOpenFanDetail(true);
+                    }}
+                    className="w-[110px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                >
+                    Fan Info {">"}
+                </button>
+            </div>
+            <div>
+                <button
+                    onClick={() => {setOpenDeviceSetting(true)}}
+                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested && "opacity-30"}`}
+                    disabled={user.is_tested}
+                >
+                    Test Call
+                </button>
 
-        </div>
-    </div>)
+            </div>
+        </div>)
 }
