@@ -9,7 +9,7 @@ const LoginView = () => {
   const { register, handleSubmit, formState: { errors }, setError } = useForm();
   const { loginOnSubmit }  = controller(setError);
 
-  console.log(errors.authError?.message)
+  // console.log(errors.authError?.message)
   return (
       <SizeLayout width={'w-[650px]'} height={'h-[565px]'} color={'bg-white'} flex={'flex'} justifyCenter={true} rounded={'rounded-[15px]'}>
         <div className="mt-[71px]">
