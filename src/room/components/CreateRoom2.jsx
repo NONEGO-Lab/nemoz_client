@@ -1,21 +1,21 @@
-import React, {useState, memo, useCallback, useEffect} from "react";
-import {ModalFrame} from "../../modal/ModalFrame";
-import {Input, Button, Select} from "../../element";
-import {useForm, Controller} from "react-hook-form";
-import {roomApi} from "../data/room_data";
-import SelectBox, {components} from 'react-select'
-import {eventApi} from "../../event/data/event_data";
-import {useSelector} from "react-redux";
+import React, { useState, memo, useCallback, useEffect } from "react";
+import { ModalFrame } from "../../modal/ModalFrame";
+import { Input, Button, Select } from "../../element";
+import { useForm, Controller } from "react-hook-form";
+import { roomApi } from "../data/room_data";
+import SelectBox, { components } from 'react-select'
+import { eventApi } from "../../event/data/event_data";
+import { useSelector } from "react-redux";
 
 //@todo
 // 스탭, 팬등록 입력 X
 // 드롭다운 스타일 변경
 
 
-const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
+const CreateRoom2 = ({ setOnModal, getRoomListApi }) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
     const eventId = useSelector((state) => state.event.eventId);
-    const {register, handleSubmit, control,formState: { errors }, setError} = useForm();
+    const { register, handleSubmit, control, formState: { errors }, setError } = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "",
         mimeType: "",
@@ -34,18 +34,18 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
 
     const getEventUsers = async () => {
         let page = 1;
-        const response = await eventApi.getEventDetail({page, eventId});
+        const response = await eventApi.getEventDetail({ page, eventId });
         setTargetFanIds(response.target_fan_ids);
         setTargetArtistIds(response?.target_artist_ids);
         setTargetStaffIds(response.target_staff_ids);
     }
 
     const onSubmit = async (data) => {
-        const {artistName, roomTitle, startDate, fanIds, staffIds} = data;
+        const { artistName, roomTitle, startDate, fanIds, staffIds } = data;
 
         let fanIdArray = [];
         fanIds.forEach((fan, idx) => {
-            let data = {"fan_id": fan.id, "order": idx + 1};
+            let data = { "fan_id": fan.id, "order": idx + 1 };
             fanIdArray.push(data);
         });
 
@@ -82,7 +82,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
 
 
     const timeOnChangeHandler = useCallback((e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         let check = /^[0-9]+$/;
         if (!check.test(value)) return;
@@ -95,13 +95,13 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
 
         switch (name) {
             case "hour":
-                setTime((prev) => ({...prev, hour: value.toString()}));
+                setTime((prev) => ({ ...prev, hour: value.toString() }));
                 break
             case "min":
-                setTime((prev) => ({...prev, min: value.toString()}));
+                setTime((prev) => ({ ...prev, min: value.toString() }));
                 break
             case "sec":
-                setTime((prev) => ({...prev, sec: value.toString()}));
+                setTime((prev) => ({ ...prev, sec: value.toString() }));
                 break
             default:
         }
@@ -123,7 +123,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
         getEventUsers();
     }, [])
 
-    const {location, mimeType, fileName} = imgUrl;
+    const { location, mimeType, fileName } = imgUrl;
 
     return (
         <ModalFrame setOnModal={setOnModal} style={modalStyle}>
@@ -134,8 +134,8 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         방 만들기
                     </div>
                     <div onClick={() => setOnModal(false)}
-                         className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
-                        <img src={"../images/closeIcon.png"}/>
+                        className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
+                        <img src={"../images/closeIcon.png"} alt='close-icon' />
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         inputWidth={"w-[25%]"}
                         inputStyle={"text-medium"}
                         autoFocus={true}
-                        // errors={errors.authError?.message}
+                    // errors={errors.authError?.message}
                     />
 
                     {/*Select Artist*/}
@@ -219,7 +219,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         <Controller
                             name="staffIds"
                             control={control}
-                            render={({field}) =>
+                            render={({ field }) =>
                                 <SelectBox
                                     {...field}
                                     styles={customStyles}
@@ -227,7 +227,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                                     height="44px"
                                     placeholder="+"
                                     closeMenuOnSelect={false}
-                                    components={{DropdownIndicator}}
+                                    components={{ DropdownIndicator }}
                                     defaultValue={[]}
                                     isMulti
                                     options={valueMaker(targetStaffIds)}
@@ -243,7 +243,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                         <Controller
                             name="fanIds"
                             control={control}
-                            render={({field}) =>
+                            render={({ field }) =>
                                 <SelectBox
                                     {...field}
                                     styles={customStyles}
@@ -251,13 +251,13 @@ const CreateRoom2 = ({setOnModal, getRoomListApi}) => {
                                     height="44px"
                                     placeholder="+"
                                     closeMenuOnSelect={false}
-                                    components={{DropdownIndicator}}
+                                    components={{ DropdownIndicator }}
                                     defaultValue={[]}
                                     isMulti
                                     options={valueMaker(targetFanIds)}
                                 />
 
-                        }
+                            }
                         />
                     </div>
 
@@ -283,7 +283,7 @@ export default memo(CreateRoom2);
 const customStyles = {
     menu: (provided, state) => ({
         ...provided,
-        width:"400px",
+        width: "400px",
         border: 'none',
         padding: 20,
         display: "flex",
@@ -291,7 +291,7 @@ const customStyles = {
 
     }),
 
-    control: (_, {selectProps: {}}) => ({
+    control: (_, { selectProps: { } }) => ({
         width: "100%",
         height: "44px",
         borderRadius: "7px",
@@ -310,29 +310,28 @@ const customStyles = {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = 'opacity 300ms';
 
-        return {...provided, opacity, transition};
+        return { ...provided, opacity, transition };
     },
 
-    multiValue:() =>({
-        borderRadius:"18px",
-        background:'#c7c7c7',
-        width:"110px",
-        color:'#FFF',
-        display:'flex',
-        justifyContent:"center",
-        marginRight:"15px"
+    multiValue: () => ({
+        borderRadius: "18px",
+        background: '#c7c7c7',
+        width: "110px",
+        color: '#FFF',
+        display: 'flex',
+        justifyContent: "center",
+        marginRight: "15px"
     }),
-    multiValueLabel:() =>({
+    multiValueLabel: () => ({
         textSize: "20px",
         margin: "9px 0",
-        fontWeight:"bold"
+        fontWeight: "bold"
     })
 }
 
 const DropdownIndicator = (props) => {
     return (
-        <components.DropdownIndicator {...props}>
+        <components.DropdownIndicator {...props} />
 
-        </components.DropdownIndicator>
-    );
+    )
 };

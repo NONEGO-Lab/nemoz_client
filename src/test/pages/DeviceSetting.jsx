@@ -1,64 +1,137 @@
-import { Select } from "element";
+import InnerCircleText from "common/InnerCircleText";
+
 import DeviceSelect from "element/DeviceSelect";
 import { ModalFrame } from "modal/ModalFrame";
 import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearDeviceSession } from "redux/modules/deviceSlice";
+import { useDeviceTest } from "test/controller/useDeviceTest";
+import { testApi } from "test/data/call_test_data";
+import Video2 from "video/pages/Video2";
+import { setError, setIsError } from "../../redux/modules/errorSlice";
 
 
 const DeviceSetting = ({ closeDeviceSetting }) => {
 
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
 
     const { register, watch } = useForm();
+    const { createJoinSession, msgBeforeOut } = useDeviceTest();
+    const publisher = useSelector((state) => state.device.publisher);
+    const sessionInfo = useSelector((state) => state.device.sessionInfo);
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const fanInfo = useSelector((state) => state.test.fanInfo);
     const videoDevices = useSelector((state) => state.device.videoDevices);
     const audioDevices = useSelector((state) => state.device.audioDevices);
-    
+
+   
+
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
 
-    let tmpList = ['testtesttest1','testtesttest2'];
-    
-    const watchAllFields = watch((data, { name, type }) => {
-        let videoId = videoDevices.find((vi) => vi.label === data.videoDevices);
-        let audioId = audioDevices.find((au) => au.label === data.audioDevices);
+    const endMeet = async () => {
+        try {
+            const response = await testApi.testEnd(sessionInfo.meetName);
+            if (response) {
+                dispatch(clearDeviceSession());
+            } else {
+                alert("미팅이 종료되지 않았습니다.");
+            }
+        } catch (err) {
+            dispatch(setError(err));
+            dispatch(setIsError(true));
+        }
 
-        localStorage.setItem("audio", audioId.deviceId);
-        localStorage.setItem("video", videoId.deviceId);
-    });
+    }
+
+    const outRoom = async () => {
+        if (window.confirm("정말 나가시겠습니까?")) {
+            await endMeet();
+            navigate(-1);
+
+        }
+    }
+
+    const setDefaultDevice = () => {
+        if (!localStorage.getItem("audioId")) {
+            localStorage.setItem("audioId", audioDevices[0].deviceId);
+        }
+        if (!localStorage.getItem("videoId")) {
+            localStorage.setItem("videoId", videoDevices[0].deviceId);
+        }
+    }
+
+    const setDeviceHandler = async () => {
+        //완료 버튼을 누르면, 장비 체크 여부 확인을 하고 연결 테스트 화면으로 넘어간다.
+        setDefaultDevice();
+
+        if (userInfo.role !== "fan") {
+            localStorage.setItem("isSetDevice", "true");
+            await endMeet();
+            navigate(`/test/${fanInfo.fan_id}`);
+
+        } else {
+            await endMeet();
+            navigate(`/test/${userInfo.id}`);
+
+
+        }
+    }
+
+    useEffect(() => {
+        //meet start를 해준다. 완료할때 /meet end 를 해준다.
+        console.log('Hello')
+        createJoinSession().then((sessionInfo) => {
+
+        })
+
+    }, [])
+
+
+    const event_title = "BLACKPINK Jisoo First Single Album ‘ME’ Fan Meeting Event"
+    const age = 20
+    const name = '누렁이'
+    const gender = '남'
+
+
 
     return (
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>
             <div className="flex flex-col justify-center">
                 <div className=" flex justify-between items-center px-[60px] mt-[60px]">
-                    <div className="text-[22.5px] font-medium ">BLACKPINK Jisoo First Single Album ‘ME’
-                        Fan Meeting Event</div>
+                    <div className="text-[22.5px] font-medium w-[433px] ">{event_title}</div>
                     <img className={"w-20px h-[20px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
                         onClick={closeDeviceSetting} />
                 </div>
                 <div className="mt-[40px]">
-                    <div className="h-[368px] bg-amber-500">
-                        <div className="flex flex-col items-center">FAN 누렁이(20세) 남</div>
+                    <div className="h-[368px] ">
+                        {publisher !== undefined && <Video2 streamManager={publisher}>
+                            <div className="relative top-[90%] flex justify-center items-center text-[19px] text-[#fff] font-medium">
+                                {`FAN ${name}(${age}세)`}
+                                <InnerCircleText gender={gender} textSize={'text-[15px]'} fontWeight={"font-medium"} textColor={"text-[#444]"} bgcolor={"bg-white"} width={"w-[22px]"} height={"h-[22px]"} ml={"ml-[9px]"} />
+                            </div>
+                        </Video2>}
                     </div>
                 </div>
                 <div className="mt-[50px] mx-[60px]">
                     <form>
                         <DeviceSelect
                             register={register}
-                            options={tmpList}
+                            options={videoList ?? []}
                             name={"videoDevices"}
                             isVideo={true}
                             width={"w-[100%]"}
                             mb={"mb-[20px]"}
                             border={"border border-[#c7c7c7] rounded-[10px]"}
-
                         />
                         <DeviceSelect
                             register={register}
-                            options={tmpList}
+                            options={audioList ?? []}
                             name={"audioDevices"}
                             isAudio={true}
                             width={"w-[100%]"}
@@ -68,7 +141,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                     </form>
                 </div>
                 <div className="m-[60px]">
-                    <button  onClick={closeDeviceSetting} className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료</button>
+                    <button onClick={closeDeviceSetting} className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료</button>
                 </div>
             </div>
 
@@ -76,6 +149,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
 
     )
 }
+
 
 
 export default DeviceSetting

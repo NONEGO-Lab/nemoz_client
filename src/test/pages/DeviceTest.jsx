@@ -21,7 +21,6 @@ const DeviceTest = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const { createJoinSession, msgBeforeOut } = useDeviceTest();
   const publisher = useSelector((state) => state.device.publisher);
   const sessionInfo = useSelector((state) => state.device.sessionInfo);

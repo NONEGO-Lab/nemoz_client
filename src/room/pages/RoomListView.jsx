@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../element";
 import { Layout } from "../../shared/Layout";
-import CreateRoom from "../../room/components/CreateRoom";
 import CreateRoom2 from "../../room/components/CreateRoom2";
 import WaitingList from "../../call/pages/components/WaitingList";
 import FanDetail from "../../fans/pages/components/FanDetail";
@@ -32,7 +31,7 @@ const RoomListView = () => {
           <div className="w-[140px]">Fan</div>
           <div className="w-[550px]">Title</div>
           <div className="w-[132px]">Waiting</div>
-          <div className="w-[120px]">Staff</div>
+          <div className="w-[120px]">Start</div>
           <div >Quit</div>
 
         </div>
@@ -130,13 +129,13 @@ const Room = ({ room, endRoomApi, setCurrentRoom, key, bgColor }) => {
 
       <div className="w-[195px] font-bold">
         {room.artist_name}
-
       </div>
+
       <div className="w-[140px]">
         {room.fan_name}
       </div>
-      <div className="w-[550px]">
 
+      <div className="w-[550px]">
         {room.room_name}
       </div>
 
