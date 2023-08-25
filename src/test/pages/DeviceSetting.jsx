@@ -33,13 +33,14 @@ const DeviceSetting = ({closeDeviceSetting}) => {
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
 
-    console.log(videoDevices, audioDevices, 'DEVICES')
 
     const endMeet = async () => {
         try {
+            console.log(sessionInfo.meetName)
             const response = await testApi.testEnd(sessionInfo.meetName);
             if (response) {
                 dispatch(clearDeviceSession());
+                closeDeviceSetting()
             } else {
                 alert("미팅이 종료되지 않았습니다.");
             }
@@ -52,8 +53,8 @@ const DeviceSetting = ({closeDeviceSetting}) => {
 
     const outRoom = async () => {
         if (window.confirm("정말 나가시겠습니까?")) {
-            await endMeet();
-            closeDeviceSetting()
+            await endMeet()
+
 
         }
     }
@@ -86,7 +87,6 @@ const DeviceSetting = ({closeDeviceSetting}) => {
 
     useEffect(() => {
         //meet start를 해준다. 완료할때 /meet end 를 해준다.
-        console.log('Hello')
         createJoinSession().then((sessionInfo) => {
 
         })

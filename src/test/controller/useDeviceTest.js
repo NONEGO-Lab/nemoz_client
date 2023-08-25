@@ -51,10 +51,10 @@ export const useDeviceTest = () => {
 
   // meet create -> meet join
   const createJoinSession = async () => {
-    console.log('Create Join Session')
+
     let OV = new OpenVidu();
     let _session = OV.initSession()
-    console.log(_session, 'SESSION')
+
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
 
@@ -62,9 +62,9 @@ export const useDeviceTest = () => {
 
     //meet-create
     const serverSessionData = await createTestSession();
-  console.log(serverSessionData, 'serverSessionData')
+
     let sessionData = {
-      meetName: serverSessionData.sessionId
+      meetName: serverSessionData
     };
 
     dispatch(addDeviceSessionInfo(sessionData));

@@ -1,5 +1,4 @@
 import React, {useRef, useEffect, Fragment} from "react";
-import {useSelector} from "react-redux";
 import InnerCircleText from "../../common/InnerCircleText";
 
 
