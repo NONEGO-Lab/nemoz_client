@@ -1,27 +1,27 @@
 import InnerCircleText from "common/InnerCircleText";
 
 import DeviceSelect from "element/DeviceSelect";
-import { ModalFrame } from "modal/ModalFrame";
-import React, { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearDeviceSession } from "redux/modules/deviceSlice";
-import { useDeviceTest } from "test/controller/useDeviceTest";
-import { testApi } from "test/data/call_test_data";
+import {ModalFrame} from "modal/ModalFrame";
+import React, {useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {clearDeviceSession} from "redux/modules/deviceSlice";
+import {useDeviceTest} from "test/controller/useDeviceTest";
+import {testApi} from "test/data/call_test_data";
 import Video2 from "video/pages/Video2";
-import { setError, setIsError } from "../../redux/modules/errorSlice";
+import {setError, setIsError} from "../../redux/modules/errorSlice";
 
 
-const DeviceSetting = ({ closeDeviceSetting }) => {
+const DeviceSetting = ({closeDeviceSetting}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
 
-    const { register, watch } = useForm();
-    const { createJoinSession, msgBeforeOut } = useDeviceTest();
+    const {register, watch} = useForm();
+    const {createJoinSession, msgBeforeOut} = useDeviceTest();
     const publisher = useSelector((state) => state.device.publisher);
     const sessionInfo = useSelector((state) => state.device.sessionInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
@@ -29,10 +29,11 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const videoDevices = useSelector((state) => state.device.videoDevices);
     const audioDevices = useSelector((state) => state.device.audioDevices);
 
-   
 
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
+
+    console.log(videoDevices, audioDevices, 'DEVICES')
 
     const endMeet = async () => {
         try {
@@ -52,7 +53,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const outRoom = async () => {
         if (window.confirm("정말 나가시겠습니까?")) {
             await endMeet();
-            navigate(-1);
+            closeDeviceSetting()
 
         }
     }
@@ -99,23 +100,19 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const gender = '남'
 
 
-
     return (
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>
             <div className="flex flex-col justify-center">
                 <div className=" flex justify-between items-center px-[60px] mt-[60px]">
                     <div className="text-[22.5px] font-medium w-[433px] ">{event_title}</div>
                     <img className={"w-20px h-[20px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
-                        onClick={closeDeviceSetting} />
+                         onClick={outRoom}/>
                 </div>
                 <div className="mt-[40px]">
-                    <div className="h-[368px] ">
-                        {publisher !== undefined && <Video2 streamManager={publisher}>
-                            <div className="relative top-[90%] flex justify-center items-center text-[19px] text-[#fff] font-medium">
-                                {`FAN ${name}(${age}세)`}
-                                <InnerCircleText gender={gender} textSize={'text-[15px]'} fontWeight={"font-medium"} textColor={"text-[#444]"} bgcolor={"bg-white"} width={"w-[22px]"} height={"h-[22px]"} ml={"ml-[9px]"} />
-                            </div>
-                        </Video2>}
+                    <div className="h-[368px] flex justify-center relative">
+                        {publisher !== undefined && (
+                            <Video2 streamManager={publisher} name={name} age={age} gender={gender} />)
+                        }
                     </div>
                 </div>
                 <div className="mt-[50px] mx-[60px]">
@@ -141,7 +138,9 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                     </form>
                 </div>
                 <div className="m-[60px]">
-                    <button onClick={closeDeviceSetting} className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료</button>
+                    <button onClick={setDeviceHandler}
+                            className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료
+                    </button>
                 </div>
             </div>
 
@@ -149,7 +148,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
 
     )
 }
-
 
 
 export default DeviceSetting

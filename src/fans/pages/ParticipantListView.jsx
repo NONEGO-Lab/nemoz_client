@@ -1,6 +1,6 @@
 import React from "react";
-import { Layout } from "../../shared/Layout";
-import { ParticipantController as controller } from "../controller/participantController";
+import {Layout} from "../../shared/Layout";
+import {ParticipantController as controller} from "../controller/participantController";
 import FanDetail from "./components/FanDetail";
 import DeviceSetting from "test/pages/DeviceSetting";
 
@@ -33,10 +33,12 @@ const ParticipantListView = () => {
             </div>
 
             {/* User List */}
-            <div >
+            <div>
                 {attendeeList.map((user, idx) => {
-                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setOpenDeviceSetting={setOpenDeviceSetting}
-                        setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"} />
+                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
+                                 setOpenDeviceSetting={setOpenDeviceSetting}
+                                 setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}
+                                 bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                 })}
             </div>
         </div>
@@ -49,7 +51,7 @@ const ParticipantListView = () => {
                 return (
 
                     <span key={index} onClick={() => movePage(num)}
-                        className={`w-[35px] h-[35px] cursor-pointer rounded-full  ml-[20px] flex items-center justify-center
+                          className={`w-[35px] h-[35px] cursor-pointer rounded-full  ml-[20px] flex items-center justify-center
                                           ${currentPage === num ? "bg-[#01dfe0]" : "bg-white"}
                                           `}>
                         {num}
@@ -64,7 +66,7 @@ const ParticipantListView = () => {
         </div>
 
         {/* Modal */}
-        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} />}
+        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal}/>}
         {openDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
     </Layout>)
 }
@@ -72,7 +74,7 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({ user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, connectToTest, bgColor }) => {
+const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, connectToTest, bgColor}) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
@@ -91,12 +93,14 @@ const User = ({ user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId,
                 is_tested 0 테스트전
                 is_tested 1 성공
                 is_tested 2 실패
-            
-            */}
+                */}
                 <div className="w-[90px] ml-[10px]">
-                    {user.is_tested === 0 && <img className="w-[14px] h-[2px]" src="../images/testBefore.png" alt='test-before' />}
-                    {user.is_tested === 1 && <img className="w-[17px] h-[17px]" src="../images/testSuccess.png" alt='test-success' />}
-                    {user.is_tested === 2 && <img className="w-[17px] h-[17px]" src="../images/testFail.png" alt='test-fail' />}
+                    {user.is_tested === 0 &&
+                        <img className="w-[14px] h-[2px]" src="../images/testBefore.png" alt='test-before'/>}
+                    {user.is_tested === 1 &&
+                        <img className="w-[17px] h-[17px]" src="../images/testSuccess.png" alt='test-success'/>}
+                    {user.is_tested === 2 &&
+                        <img className="w-[17px] h-[17px]" src="../images/testFail.png" alt='test-fail'/>}
                 </div>
             </div>
 
@@ -113,8 +117,10 @@ const User = ({ user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId,
             </div>
             <div>
                 <button
-                    onClick={() => {setOpenDeviceSetting(true)}}
-                    // onClick={() => connectToTest(user)}
+                    // onClick={() => {
+                    //     setOpenDeviceSetting(true)
+                    // }}
+                    onClick={() => connectToTest(user)}
                     className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested && "opacity-30"}`}
                     disabled={user.is_tested}
                 >

@@ -51,9 +51,10 @@ export const useDeviceTest = () => {
 
   // meet create -> meet join
   const createJoinSession = async () => {
+    console.log('Create Join Session')
     let OV = new OpenVidu();
     let _session = OV.initSession()
-
+    console.log(_session, 'SESSION')
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
 
@@ -61,14 +62,14 @@ export const useDeviceTest = () => {
 
     //meet-create
     const serverSessionData = await createTestSession();
-
+  console.log(serverSessionData, 'serverSessionData')
     let sessionData = {
       meetName: serverSessionData.sessionId
     };
 
     dispatch(addDeviceSessionInfo(sessionData));
 
-    const token = await createTestToken(serverSessionData.sessionId);
+    const token = await createTestToken(serverSessionData);
     await connectSession(token, _session, OV);
 
     return sessionData;
@@ -91,7 +92,7 @@ export const useDeviceTest = () => {
       videoSource: undefined, // The source of video. If undefined default webcam
       publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
       publishVideo: true, // Whether you want to start publishing with your video enabled or not
-      resolution: '640x480', // The resolution of your video
+      resolution: '1280x720', // The resolution of your video
       frameRate: 30, // The frame rate of your video
       insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
       mirror: false, // Whether to mirror your local video or not

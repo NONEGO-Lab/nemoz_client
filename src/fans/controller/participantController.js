@@ -21,8 +21,9 @@ export const ParticipantController = () => {
     if(localStorage.getItem("isSetDevice") === "true"){
       navigate(`/test/${user.fan_id}`);
     } else {
-      navigate("/devicetest");
+      setOpenDeviceSetting(true)
     }
+
   };
 
   const getAttendeeListApi = async (page) => {
