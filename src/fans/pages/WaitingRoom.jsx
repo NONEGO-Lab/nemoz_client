@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {SizeLayout, VideoLayout, SideBar} from "../../shared/Layout";
 import Header from "../../shared/Header";
-import {Button} from "../../element";
 import {MobilePopup} from "../../shared/MobilePopup";
-import {secondsToMins} from "../../utils/convert";
 import {WaitRoomController as controller} from "../controller/waitRoomController"
 import WaitingMents from "./components/WaitingMents";
 

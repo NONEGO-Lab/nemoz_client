@@ -20,7 +20,6 @@ import {clearToast} from "../../redux/modules/toastSlice";
 const TmpVideoContainer = () => {
 
 
-
     const [isVideoTurnOn, SetIsVideoTurnOn] = useState(false)
     const [isVoiceoTurnOn, SetIsVoiceTurnOn] = useState(false)
     const title = 'Jisoo First Single Album ‘ME’ Fan Meeting'
@@ -31,14 +30,14 @@ const TmpVideoContainer = () => {
     const staff_name = "찌오"
     const role = "staff"
     const isStaff = role === 'staff'
-    const screenName = (role) => role === 'staff' ? staff_name: artist_name
+    const screenName = (role) => role === 'staff' ? staff_name : artist_name
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const history = createBrowserHistory();
 
-    const isMobile = useMediaQuery ({
-        query : "(max-width: 600px)"
+    const isMobile = useMediaQuery({
+        query: "(max-width: 600px)"
     })
     const [isOpenMobileSetting, setOpenMobileSetting] = useState(false);
     const [mobileSettingType, setMobileSettingType] = useState("");
@@ -55,20 +54,22 @@ const TmpVideoContainer = () => {
     const session = useSelector((state) => state.test.session);
     const eventId = useSelector((state) => state.event.eventId);
 
-    const { createJoinSession, joinTestSession, preventBrowserBack,
-        onbeforeunload, muteHandler } = useTestVideo();
-    const { getChatFromSocket } = useReaction();
+    // const {
+    //     createJoinSession, joinTestSession, preventBrowserBack,
+    //     onbeforeunload, muteHandler
+    // } = useTestVideo();
+    const {getChatFromSocket} = useReaction();
 
     const quitTest = async () => {
-        if(window.confirm("정말 나가시겠습니까?")) {
-            if(userInfo.role === "fan") {
+        if (window.confirm("정말 나가시겠습니까?")) {
+            if (userInfo.role === "fan") {
                 try {
                     const response = await testApi.testLeave({
                         meetName: meetInfo.meetName,
                         connectionName: connectInfo
                     });
 
-                    if(response === "LEAVED") {
+                    if (response === "LEAVED") {
                         navigate("/waitcall");
                         let roomNum = `1_test_${userInfo.id}`;
                         sock.emit("leaveRoom", roomNum, userInfo, navigate);
@@ -80,7 +81,7 @@ const TmpVideoContainer = () => {
 
             } else {
                 const response = await testApi.testEnd(meetInfo.meetName);
-                if(response) {
+                if (response) {
                     navigate("/userlist");
                     let roomNum = `1_test_${fanInfo.fan_id}`;
                     sock.emit("leaveRoom", roomNum, userInfo, navigate);
@@ -96,9 +97,9 @@ const TmpVideoContainer = () => {
     });
 
     const [isWebFullScreen, setIsWebFullScreen] = useState(false);
-
+    const [showBtn, setShowBtn] = useState(false)
     const makeBigScreen = (type) => {
-        if(type === "half") {
+        if (type === "half") {
             setIsBigScreen({
                 pub: "default",
                 sub: "default"
@@ -113,36 +114,36 @@ const TmpVideoContainer = () => {
         }
     }
 
+    // useEffect(() => {
+    //
+    //     if (subscriber !== undefined) {
+    //         return;
+    //     }
+    //
+    //     if (userInfo.role !== "fan") {
+    //         // staff 이면,
+    //         // test meet create -> join 까지 한다.
+    //         // create, join 하고 나온 방을 socket 으로 보낸다!
+    //         createJoinSession().then((sessionInfo) => {
+    //             let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
+    //             sock.emit("joinTestSession", data);
+    //             let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
+    //             sock.emit("joinRoom", roomNum, userInfo);
+    //         })
+    //     } else {
+    //         // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
+    //         joinTestSession().then(() => {
+    //             let roomNum = `${eventId}_test_${userInfo.id}`;
+    //             sock.emit("joinRoom", roomNum, userInfo);
+    //         })
+    //     }
+    //
+    // }, []);
+
     useEffect(() => {
-
-        if(subscriber !== undefined) {
-            return;
-        }
-
-        if(userInfo.role !== "fan") {
-            // staff 이면,
-            // test meet create -> join 까지 한다.
-            // create, join 하고 나온 방을 socket 으로 보낸다!
-            createJoinSession().then((sessionInfo) => {
-                let data = { meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id }
-                sock.emit("joinTestSession", data);
-                let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
-                sock.emit("joinRoom", roomNum, userInfo);
-            })
-        } else {
-            // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
-            joinTestSession().then(() => {
-                let roomNum = `${eventId}_test_${userInfo.id}`;
-                sock.emit("joinRoom", roomNum, userInfo);
-            })
-        }
-
-    },[]);
-
-    useEffect(()=>{
-        sock.on("chatMessage", (msg) => testEvents.chatMessage({ msg, getChatFromSocket }));
-        sock.on("testFail", (fanInfo) => testEvents.testFail({ fanInfo, userInfo, navigate }));
-        sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({ fanInfo, userInfo, dispatch, navigate }));
+        sock.on("chatMessage", (msg) => testEvents.chatMessage({msg, getChatFromSocket}));
+        sock.on("testFail", (fanInfo) => testEvents.testFail({fanInfo, userInfo, navigate}));
+        sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({fanInfo, userInfo, dispatch, navigate}));
 
         return () => {
             sock.removeAllListeners("chatMessage");
@@ -150,12 +151,12 @@ const TmpVideoContainer = () => {
             sock.removeAllListeners("testSuccess");
             dispatch(clearToast());
         }
-    },[]);
+    }, []);
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(session === undefined) {
+        if (session === undefined) {
             return;
         }
 
@@ -167,13 +168,14 @@ const TmpVideoContainer = () => {
         // window.removeEventListener('popstate', onbeforeunload);
         history.listen((location) => {
             console.log("location!!!!!: ", location);
-            if(history.action === "POP") {
+            if (history.action === "POP") {
                 //뒤로가기일 경우
                 onbeforeunload();
             }
         })
         // }
-    },[session])
+    }, [session])
+
 
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
@@ -200,21 +202,24 @@ const TmpVideoContainer = () => {
                         <span className='text-[19px] font-medium'>{`Fan ${fan_name} (${fan_age}세)`}</span>
                         <div className={"flex flex-col mt-[24px]"}>
                             <div
-                                className={`relative h-[360px] border-none rounded-[15px] bg-[#444] flex  flex-col justify-end`}>
+                                className={`relative h-[360px] border-none rounded-[15px] bg-[#444] flex  flex-col justify-end `}>
                                 {!isVideoTurnOn && <div
                                     className='flex justify-center items-center text-[25px] text-white w-full'>FAN</div>}
 
-                                <div
-                                    className={`w-full flex justify-center items-end mb-[43px] ${!isVideoTurnOn ? "mt-[98px]" : ""}`}>
+                                {isStaff &&
                                     <div
-                                        className='w-[180px] min-h-[50px] mr-[35px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer'>
-                                        <div className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</div>
-                                    </div>
-                                    <div
-                                        className='w-[180px] min-h-[50px] rounded-[25px] bg-[#ff483a] flex items-center justify-center cursor-pointer'>
-                                        <span className='text-white text-[19px] font-medium'>연결 실패</span>
-                                    </div>
-                                </div>
+                                        className={`w-full flex justify-center items-end mb-[43px] ${!isVideoTurnOn ? "mt-[98px]" : ""}`}>
+
+                                        <div
+                                            className='w-[180px] min-h-[50px] mr-[35px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer'>
+                                            <div className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</div>
+                                        </div>
+                                        <div
+                                            className='w-[180px] min-h-[50px] rounded-[25px] bg-[#ff483a] flex items-center justify-center cursor-pointer'>
+                                            <span className='text-white text-[19px] font-medium'>연결 실패</span>
+
+                                        </div>
+                                    </div>}
                             </div>
                             {fan_letter && <div className='text-center mt-[27px]'>
                                 {/* <image /> */}
@@ -223,17 +228,19 @@ const TmpVideoContainer = () => {
                         </div>
                     </div>
 
-                    {/* Artist Area */}
+                    {/* Artist or Staff Area */}
                     <div className='w-[650px]'>
                         <div className='flex justify-center items-center'>
                             {isStaff ?
                                 <>
-                                    <img src="../images/staffIcon.png" alt='stafficon' className='w-[24px] h-[24px] mr-[7px]'/>
+                                    <img src="../images/staffIcon.png" alt='stafficon'
+                                         className='w-[24px] h-[24px] mr-[7px]'/>
                                     <div className='text-[19px] font-medium'>{staff_name}</div>
                                 </>
                                 :
                                 <>
-                                    <img src="../images/starIcon.png" alt='staricon' className='w-[24px] h-[24px] mr-[7px]'/>
+                                    <img src="../images/starIcon.png" alt='staricon'
+                                         className='w-[24px] h-[24px] mr-[7px]'/>
                                     <div className='text-[19px] font-medium'>{artist_name}</div>
                                 </>
                             }
@@ -258,7 +265,7 @@ const TmpVideoContainer = () => {
                               SetIsVideoTurnOn={SetIsVideoTurnOn}
                               isVoiceoTurnOn={isVoiceoTurnOn}
                               SetIsVoiceTurnOn={SetIsVoiceTurnOn}
-                              role={'staff'}
+                              role={role}
                 />
 
             </div>

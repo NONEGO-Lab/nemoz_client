@@ -92,11 +92,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     }, [])
 
 
-    const event_title = "BLACKPINK Jisoo First Single Album ‘ME’ Fan Meeting Event"
-    const age = 20
-    const name = '누렁이'
-    const gender = '남'
-
 
     return (
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>
@@ -109,7 +104,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                 <div className="mt-[40px]">
                     <div className="h-[368px] flex justify-center relative">
                         {publisher !== undefined && (
-                            <Video2 streamManager={publisher} name={name} age={age} gender={gender} />)
+                            <Video2 streamManager={publisher} userInfo={userInfo} />)
                         }
                     </div>
                 </div>
