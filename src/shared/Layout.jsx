@@ -19,10 +19,10 @@ export const Layout = ({children, title, buttonText, _onClick, _endClick, endTex
 };
 
 
-export const SizeLayout = ({children, width, height, color, flex, justifyCenter, rounded, isVideo}) => {
+export const SizeLayout = ({children, width, height, color, flex, justifyCenter, rounded, isVideo, isWaitingRoom}) => {
     return (
         <div
-            className={`m-auto ${isVideo? "":"mt-[230px]" } ${width} ${height} ${color} ${flex} ${justifyCenter ? 'justify-center' : ''} ${rounded}`}>
+            className={`m-auto ${isVideo||isWaitingRoom? "":"mt-[230px]" } ${width} ${height} ${color} ${flex} ${justifyCenter ? 'justify-center' : ''} ${rounded}`}>
             {children}
         </div>
     );

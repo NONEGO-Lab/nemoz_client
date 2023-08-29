@@ -8,14 +8,22 @@ import {WaitRoomController as controller} from "../controller/waitRoomController
 import WaitingMents from "./components/WaitingMents";
 
 
-const WaitingRoom = () => {
+const Waiting2 = () => {
 
     const {
         isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,
         closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen
 
     } = controller();
+    console.log(userInfo)
+    // const isMobile = false
+    const fan_name = 'lovejisoo99'
     const img_url = "https://images8.alphacoders.com/132/1321612.jpeg"
+    // const userInfo = {isCallTested: false}
+    // const isCallFinished = false
+    // const isAvailableCall = false
+    // const isReadyTest = true
+
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
@@ -35,58 +43,32 @@ const WaitingRoom = () => {
 
                         <div className={"text-[#444] font-medium mr-[87px]"}>
                             <WaitingMents isCallTested={userInfo.isCallTested} isCallFinished={isCallFinished}
-                                          myWaitInfo={myWaitInfo}
-                                          fan_name={userInfo.name}/>
+                                          fan_name={fan_name}/>
                         </div>
 
                         {/* 버튼 */}
                         <div className={'flex justify-center items-center'}>
                             <button
                                 disabled={!isReadyTest}
-                                onClick={connectTest}
-                                className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer  text-white font-medium ${isReadyTest ? "bg-[#00cace]" : "bg-[#c8c8c8]"} flex items-center justify-center mr-[35px]`}>
+                                className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer  text-white font-medium ${isReadyTest ? "bg-[#00cace]" : "bg-[#c8c8c8]" } flex items-center justify-center mr-[35px]`}>
                                 연결테스트 시작
                             </button>
                             <button
                                 disabled={!isAvailableCall}
-                                onClick={goToArtistRoom}
                                 className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium ${isAvailableCall ? "bg-[#00cace]" : "bg-[#c8c8c8]"} flex items-center justify-center`}>통화
                                 시작
                             </button>
 
                             {userInfo.isCallTested && isCallFinished &&
                                 <button
-                                    onClick={fanLogout}>
                                     className={"w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium bg-[#00cace] flex items-center justify-center ml-[215px]"}>나가기</button>}
                         </div>
                     </div>
                 </div>
             </SizeLayout>
         )
-    } else {
-        return (
-            <div className={"bg-gray-200 w-[100vw] h-[100vh]"}>
-                <div className={"flex justify-center items-center pt-[100px]"}>
-                    대기화면입니다...
-                </div>
-
-                {
-                    isMobPopupOpen && (
-                        userInfo.isCallTested ?
-                            isCallFinished ?
-                                <MobilePopup type={"endCall"} closePopup={closePopup}/>
-                                :
-                                <MobilePopup type={"waiting"} closePopup={closePopup}
-                                             isAvailableCall={isAvailableCall}/>
-                            : <MobilePopup type={"goToConnectTest"} closePopup={closePopup}
-                                           isReadyTest={isReadyTest}/>
-                    )
-                }
-
-            </div>
-        )
     }
 
 };
 
-export default WaitingRoom;
+export default Waiting2;

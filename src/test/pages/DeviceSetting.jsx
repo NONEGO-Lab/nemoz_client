@@ -1,34 +1,32 @@
-import InnerCircleText from "common/InnerCircleText";
-
 import DeviceSelect from "element/DeviceSelect";
-import {ModalFrame} from "modal/ModalFrame";
-import React, {useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {clearDeviceSession} from "redux/modules/deviceSlice";
-import {useDeviceTest} from "test/controller/useDeviceTest";
-import {testApi} from "test/data/call_test_data";
+import { ModalFrame } from "modal/ModalFrame";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearDeviceSession } from "redux/modules/deviceSlice";
+import { useDeviceTest } from "test/controller/useDeviceTest";
+import { testApi } from "test/data/call_test_data";
 import Video2 from "video/pages/Video2";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
+import { setError, setIsError } from "../../redux/modules/errorSlice";
 
 
-const DeviceSetting = ({closeDeviceSetting}) => {
+const DeviceSetting = ({ closeDeviceSetting }) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
 
-    const {register, watch} = useForm();
-    const {createJoinSession, msgBeforeOut} = useDeviceTest();
+    const { register, watch } = useForm();
+    const { createJoinSession, msgBeforeOut } = useDeviceTest();
     const publisher = useSelector((state) => state.device.publisher);
     const sessionInfo = useSelector((state) => state.device.sessionInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
     const fanInfo = useSelector((state) => state.test.fanInfo);
     const videoDevices = useSelector((state) => state.device.videoDevices);
     const audioDevices = useSelector((state) => state.device.audioDevices);
-
+    const eventName = useSelector(state => state.event.eventName)
 
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
@@ -75,11 +73,11 @@ const DeviceSetting = ({closeDeviceSetting}) => {
         if (userInfo.role !== "fan") {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
-            navigate(`/test/${fanInfo.fan_id}`);
+            navigate(`/test2/${fanInfo.fan_id}`);
 
         } else {
             await endMeet();
-            navigate(`/test/${userInfo.id}`);
+            navigate(`/test2/${userInfo.id}`);
 
 
         }
@@ -104,9 +102,9 @@ const DeviceSetting = ({closeDeviceSetting}) => {
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>
             <div className="flex flex-col justify-center">
                 <div className=" flex justify-between items-center px-[60px] mt-[60px]">
-                    <div className="text-[22.5px] font-medium w-[433px] ">{event_title}</div>
+                    <div className="text-[22.5px] font-medium w-[433px] ">{eventName}</div>
                     <img className={"w-20px h-[20px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
-                         onClick={outRoom}/>
+                        onClick={outRoom} />
                 </div>
                 <div className="mt-[40px]">
                     <div className="h-[368px] flex justify-center relative">
@@ -139,7 +137,7 @@ const DeviceSetting = ({closeDeviceSetting}) => {
                 </div>
                 <div className="m-[60px]">
                     <button onClick={setDeviceHandler}
-                            className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료
+                        className="min-h-[67px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26px]">완료
                     </button>
                 </div>
             </div>

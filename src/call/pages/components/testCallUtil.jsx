@@ -5,27 +5,27 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
     const isTest = true
     const isRealService = isTest && role === 'staff'
     return (
-        <div className={"flex justify-center items-center flex-row mt-[110px]"}>
+        <div className={"flex justify-start items-center flex-row mt-[153px] mx-[110px]"}>
             {/* 팬 리스트 */}
-            {isRealService && <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} >
-                <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    <img src="../images/callOutFanList.png" alt='fanlist' />
+            {isRealService && <div className={"flex flex-col text-[8px] items-center mr-[57px]"} >
+                <div className={"cursor-pointer"}>
+                    <img src="../images/callOutFanList.png" alt='fanlist'/>
                 </div>
-                <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                    <div>{`FAN LIST`}</div>
-
-                </div>
+                <span className={"mt-[25px] flex flex-col items-center text-[#848484] text-[12px] whitespace-nowrap"}>
+                   {`FAN LIST`}
+                </span>
             </div>}
-            {/* 강퇴 */}
-            {isRealService && <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} >
-                <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    <img src="../images/callOutBan.png" alt='ban' />
+            {/* 다음 사람 */}
+            <div className={"flex flex-col text-[8px] items-center  mr-[285px]"}>
+                <div className={`w-[44px] ${isRealService ? "cursor-pointer" : ""}`}>
+                    {isTest ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
                 </div>
-                <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                    <div>{`OUT`}</div>
+                <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>
+                    {`NEXT`}
+                </span>
+            </div>
 
-                </div>
-            </div>}
+
             {/* 캠 토글 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => SetIsVideoTurnOn(prev => !prev)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
@@ -46,28 +46,25 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
 
                 </div>
             </div>
-
-            {/* 다음 사람 */}
-           <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}>
-                <div className={`w-[75px] h-[75px]  ${isRealService ? "cursor-pointer" : ""}`}>
-                    {isTest ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
-                </div>
-                <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                    <div>{`NEXT`}</div>
-                </div>
-            </div>
-            
-
-            {/* 나가기 */}
-            <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
+            {/* 연결 끊기 */}
+            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[370px]"}>
                 <div className={"w-[75px] h-[75px]  cursor-pointer"}>
                     <img src="../images/callOutQuit.png" alt="quit" />
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                    <div>{`QUIT`}</div>
+                    <div>{`DISCONNECT`}</div>
                 </div>
             </div>
 
+            {/* 방 종료 */}
+            <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
+                <div className={"w-[55px] h-[55px]  cursor-pointer"}>
+                    <img src="../images/callOutRoomEnd.png" alt="quit" />
+                </div>
+                <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
+                    <div>{`CLOSE`}</div>
+                </div>
+            </div>
 
         </div>
     )
