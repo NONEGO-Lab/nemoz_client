@@ -19,7 +19,7 @@ export const ParticipantController = () => {
   const connectToTest = (user) => {
     dispatch(addTestFanInfo(user))
     if(localStorage.getItem("isSetDevice") === "true"){
-      navigate(`/test/${user.fan_id}`);
+      navigate(`/test2/${user.fan_id}`);
     } else {
       setOpenDeviceSetting(true)
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVoiceTurnOn, role }) => {
+const TestCallUtil = ({ publisherAudio, publisherVideo, muteHandler, role, quitTest }) => {
     const isTest = true
     const isRealService = isTest && role === 'staff'
     return (
@@ -27,9 +27,9 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
 
 
             {/* 캠 토글 */}
-            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => SetIsVideoTurnOn(prev => !prev)}>
+            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => muteHandler("video", publisherVideo)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    {isVideoTurnOn ? <img src="../images/callOutCameraOn.png" alt="cam-on" /> : <img src="../images/callOutCameraOff.png" alt="cam-off" />}
+                    {publisherVideo ? <img src="../images/callOutCameraOn.png" alt="cam-on" /> : <img src="../images/callOutCameraOff.png" alt="cam-off" />}
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`CAM`}</div>
@@ -37,9 +37,9 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
                 </div>
             </div>
             {/* 마이크 토글 */}
-            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => SetIsVoiceTurnOn(prev => !prev)}>
+            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => muteHandler("audio", publisherAudio)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    {isVoiceoTurnOn ? <img src="../images/callOutMicOn.png" alt="mic-on" /> : <img src="../images/callOutMicOff.png" alt="mic-off" />}
+                    {publisherAudio ? <img src="../images/callOutMicOn.png" alt="mic-on" /> : <img src="../images/callOutMicOff.png" alt="mic-off" />}
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`MIC`}</div>
@@ -58,7 +58,7 @@ const TestCallUtil = ({ isVideoTurnOn, SetIsVideoTurnOn, isVoiceoTurnOn, SetIsVo
 
             {/* 방 종료 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
-                <div className={"w-[55px] h-[55px]  cursor-pointer"}>
+                <div className={"w-[55px] h-[55px]  cursor-pointer"} onClick={quitTest}>
                     <img src="../images/callOutRoomEnd.png" alt="quit" />
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>

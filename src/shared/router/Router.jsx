@@ -33,7 +33,7 @@ const Router = () => {
             <Route path="/test/:id" element={<Auth><ConnectTest/></Auth>}/>
             <Route path="/test2/:id" element={<Auth><TmpVideoContainer/></Auth>}/>
             <Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>
-            <Route path="/tmpvideo" element={<TmpVideoContainer/>}/>
+            <Route path="/tmpvideo" element={<Auth><TmpVideoContainer/></Auth>}/>
             <Route path="/create/event" element={<Auth><CreateEvent/></Auth>}/>
             <Route path="/update/event/:id" element={<Auth><UpdateEvent/></Auth>}/>
             <Route path="/eventlist" element={<Auth><EventListView/></Auth>}/>

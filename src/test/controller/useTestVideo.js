@@ -104,9 +104,10 @@ export const useTestVideo = () => {
 
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
-
+    console.log(_session, '재미없다')
     dispatch(addTestSession(_session));
-    const token = await createTestToken(sessionInfo.meet_name);
+    console.log('sessionInfo in JoinTestSession', sessionInfo)
+    const token = await createTestToken(sessionInfo.meetName);
     await connectSession(token, _session, OV);
   }
 
@@ -127,7 +128,7 @@ export const useTestVideo = () => {
       videoSource: undefined, // The source of video. If undefined default webcam
       publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
       publishVideo: true, // Whether you want to start publishing with your video enabled or not
-      resolution: '640x480', // The resolution of your video
+      resolution: '1280x720', // The resolution of your video
       frameRate: 30, // The frame rate of your video
       insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
       mirror: false, // Whether to mirror your local video or not
@@ -136,7 +137,7 @@ export const useTestVideo = () => {
     publisher["role"] = userInfo.role;
     publisher.on("accessAllowed",() => {
       _session.publish(publisher).then( async () => {
-
+      console.log(publisher, 'publisher')
         dispatch(addTestPublisher(publisher));
         dispatch(addTestSession(_session));
 
@@ -156,6 +157,7 @@ export const useTestVideo = () => {
   const subscribeToStreamCreated = (_session) => {
     _session.on('streamCreated', (event) => {
       let subscriber = _session.subscribe(event.stream, undefined);
+      console.log(subscriber)
       dispatch(addTestSubscriber(subscriber));
     });
   }

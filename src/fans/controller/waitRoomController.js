@@ -36,7 +36,7 @@ export const WaitRoomController = () => {
 
 
   const connectTest = () => {
-    navigate(`/test/${userInfo.id}`);
+    navigate(`/test2/${userInfo.id}`);
   };
 
   const goToArtistRoom = () => {
