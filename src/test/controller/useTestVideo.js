@@ -104,9 +104,9 @@ export const useTestVideo = () => {
 
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
-    console.log(_session, '재미없다')
+
     dispatch(addTestSession(_session));
-    console.log('sessionInfo in JoinTestSession', sessionInfo)
+
     const token = await createTestToken(sessionInfo.meetName);
     await connectSession(token, _session, OV);
   }
@@ -201,12 +201,13 @@ export const useTestVideo = () => {
 
 
 
+
   return {
     createJoinSession,
     msgBeforeOut,
     joinTestSession,
     muteHandler,
-    onbeforeunload
+    onbeforeunload,
   }
 };
 

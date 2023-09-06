@@ -194,14 +194,14 @@ const CreateRoom2 = ({ setOnModal, getRoomListApi }) => {
                         height={"min-h-[44px]"}
                         marginBottom={"mb-[40px]"}
                         placeholder={"시작 일시"}
-                        type={"date"}
+                        type={"datetime-local"}
                     />
 
                     {/* 파일 추가 */}
                     <Input
                         register={register}
                         title={"파일 추가"}
-                        name={"startDate"}
+                        name={"file"}
                         required={true}
                         width={"w-[100%]"}
                         height={"min-h-[44px]"}

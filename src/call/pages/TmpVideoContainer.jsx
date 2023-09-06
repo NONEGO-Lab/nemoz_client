@@ -1,9 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../../shared/Header";
 import {SizeLayout} from "../../shared/Layout";
-import {ReactionButton} from "../../reaction/pages/components/index";
-
-import {useState} from 'react';
 import TestCallUtil from './components/TestCallUtil';
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -15,23 +12,11 @@ import {sock} from "../../socket/config";
 import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
 import {clearToast} from "../../redux/modules/toastSlice";
-import InnerCircleText from "../../common/InnerCircleText";
-import Video2 from "../../video/pages/Video2";
-// const isVideoTurnOn = false;
-// const isVoiceOn = true
+import VideoArea from "./components/VideoArea";
+
 const TmpVideoContainer = () => {
 
-    const [isVideoTurnOn, SetIsVideoTurnOn] = useState(false)
-    const [isVoiceoTurnOn, SetIsVoiceTurnOn] = useState(false)
-
-    const fan_gender = '여'
-    const fan_letter = '블핑 김지수 1호팬, 여기 숨 쉰 채 발견되다'
-    const artist_name = "블핑 지수"
-    const staff_name = "찌오"
-    // const role = "staff"
-
-    const screenName = (role) => role === 'staff' ? staff_name : artist_name
-
+    const currentLocation = () => window.location.pathname.split('/')[1]
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const history = createBrowserHistory();
@@ -54,9 +39,6 @@ const TmpVideoContainer = () => {
     const session = useSelector((state) => state.test.session);
     const eventId = useSelector((state) => state.event.eventId);
     const eventName = useSelector(state => state.event.eventName)
-
-    const {age, fan_name, sex, message} = fanInfo
-    const isStaff = userInfo.role === 'staff'
 
     const {
         createJoinSession, joinTestSession, preventBrowserBack,
@@ -131,7 +113,7 @@ const TmpVideoContainer = () => {
             // create, join 하고 나온 방을 socket 으로 보낸다!
             createJoinSession().then((sessionInfo) => {
                 console.log('CREATE JOIN SESSION in Video View', sessionInfo)
-                 console.log(fanInfo)
+                console.log(fanInfo)
                 let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
                 console.log(data, "DATA")
                 sock.emit("joinTestSession", data);
@@ -175,13 +157,12 @@ const TmpVideoContainer = () => {
         // return () => {
         //     window.removeEventListener("beforeunload", onbeforeunload);
         //     window.removeEventListener('popstate', onbeforeunload);
-            history.listen((location) => {
-                console.log("location!!!!!: ", location);
-                if (history.action === "POP") {
-                    //뒤로가기일 경우
-                    onbeforeunload();
-                }
-            })
+        history.listen((location) => {
+            if (history.action === "POP") {
+                //뒤로가기일 경우
+                onbeforeunload();
+            }
+        })
 
     }, [session])
 
@@ -205,97 +186,15 @@ const TmpVideoContainer = () => {
                     </span>
                 </div>
 
-                <div className={"flex flex-row justify-evenly"}>
-                    {/* Fan Area */}
-                    <div className='w-[650px] text-center'>
-                        <span
-                            className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${fan_name} (${age}세)`}
-                            <InnerCircleText gender={sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
-                                             ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
-                                             fontWeight={"font-normal"}/></span>
-                        <div className={"flex flex-col mt-[24px]"}>
-
-                            <div
-                                id={"sub"}
-                                className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex  flex-col justify-end`}>
-
-                                {subscriber == undefined && <div
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>FAN</div>}
-                                {subscriber !== undefined && (
-
-                                    <Video2 style={`rounded-[15px] border-2 border-rose-600`}
-                                            streamManager={subscriber}/>
-
-                                )
-                                }
-
-                                {isStaff &&
-                                    <div
-                                        className={`w-full flex justify-center items-end mb-[43px] ${!isVideoTurnOn ? "mt-[98px]" : ""}`}>
-
-                                        <div
-                                            className='w-[180px] min-h-[50px] mr-[35px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer'>
-                                            <div className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</div>
-                                        </div>
-                                        <div
-                                            className='w-[180px] min-h-[50px] rounded-[25px] bg-[#ff483a] flex items-center justify-center cursor-pointer'>
-                                            <span className='text-white text-[19px] font-medium'>연결 실패</span>
-
-                                        </div>
-                                    </div>}
-                            </div>
-                            {message && <div className='text-center mt-[27px]'>
-                                {/* <image /> */}
-                                <span>{message}</span>
-                            </div>}
-                        </div>
-                    </div>
-
-                    {/* Artist or Staff Area */}
-
-                    <div className='w-[650px]'>
-                        <div className='flex justify-center items-center'>
-                            {/*{isStaff ?*/}
-                            {/*    <>*/}
-                            {/*        <img src="../images/staffIcon.png" alt='stafficon'*/}
-                            {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                            {/*        <div className='text-[19px] font-medium'>{staff_name}</div>*/}
-                            {/*    </>*/}
-                            {/*    :*/}
-                            {/*    <>*/}
-                            {/*        <img src="../images/starIcon.png" alt='staricon'*/}
-                            {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                            {/*        <div className='text-[19px] font-medium'>{artist_name}</div>*/}
-                            {/*    </>*/}
-                            {/*}*/}
-                            <>
-                                <img src="../images/starIcon.png" alt='staricon'
-                                     className='w-[24px] h-[24px] mr-[7px]'/>
-                                <div className='text-[19px] font-medium'>{'바꿔야함'}</div>
-                            </>
-                        </div>
-                        <div className={"flex flex-col mt-[24px]"}>
-                            <div className={`h-[368px] ${publisherVideo ? "" : "hidden"}`}>
-                                {publisher !== undefined && (
-                                    <Video2 streamManager={publisher} publisherAudio={publisherAudio}
-                                            publisherVideo={publisherVideo}
-                                            muteHandler={muteHandler} style={`rounded-[15px] `}/>)
-                                }
-                            </div>
-
-                            {!publisherVideo &&
-                                <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
-
-                                <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{screenName(userInfo.role)}</span>
-
-
-                                </div>}
-                        </div>
-                    </div>
-                </div>
-
+                <VideoArea
+                    userInfo={userInfo}
+                    fanInfo={fanInfo}
+                    publisher={publisher}
+                    subscriber={subscriber}
+                    publisherVideo={publisherVideo}
+                    publisherAudio={publisherAudio}
+                    muteHandler={muteHandler}
+                    isTestConnect={currentLocation() === 'test'} />
                 {/*                     
                     <div className={"bg-pink-600 h-[40%] flex justify-center items-center"}>
                         <ReactionButton />
@@ -308,6 +207,9 @@ const TmpVideoContainer = () => {
                     muteHandler={muteHandler}
                     quitTest={quitTest}
                     role={userInfo.role}
+                    dispatch={dispatch}
+                    navigate={navigate}
+                    isTest = {currentLocation() === 'test'}
                 />
 
             </div>

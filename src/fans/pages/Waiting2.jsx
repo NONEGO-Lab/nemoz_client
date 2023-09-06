@@ -15,14 +15,10 @@ const Waiting2 = () => {
         closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen
 
     } = controller();
-    console.log(userInfo)
+    console.log(userInfo, 'USERINFO')
     // const isMobile = false
-    const fan_name = 'lovejisoo99'
+
     const img_url = "https://images8.alphacoders.com/132/1321612.jpeg"
-    // const userInfo = {isCallTested: false}
-    // const isCallFinished = false
-    // const isAvailableCall = false
-    // const isReadyTest = true
 
     if (!isMobile) {
         return (
@@ -43,7 +39,7 @@ const Waiting2 = () => {
 
                         <div className={"text-[#444] font-medium mr-[87px]"}>
                             <WaitingMents isCallTested={userInfo.isCallTested} isCallFinished={isCallFinished}
-                                          fan_name={fan_name}/>
+                                          fan_name={userInfo.name}/>
                         </div>
 
                         {/* 버튼 */}

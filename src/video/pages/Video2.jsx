@@ -1,14 +1,13 @@
 import React, {useRef, useEffect, Fragment} from "react";
 import InnerCircleText from "../../common/InnerCircleText";
+import ConnectControl2 from "../../room/components/ConnectControl2";
 
 
-const Video2 = ({streamManager, userInfo, style}) => {
+const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
 
     const videoRef = useRef();
-    console.log('in Video', streamManager)
-    console.log("hahaha", videoRef.current)
     useEffect(() => {
-        console.log('useEffect in Video')
+
         if (streamManager.stream && !!videoRef.current) {
             streamManager.addVideoElement(videoRef.current);
         }
@@ -36,6 +35,9 @@ const Video2 = ({streamManager, userInfo, style}) => {
                                          textColor={"text-[#444]"} bgcolor={"bg-white"} width={"w-[22px]"} />
                     </div>
                 </div>
+            }
+            {isStaff && isTestConnect &&
+                <ConnectControl2 />
             }
         </>
     )

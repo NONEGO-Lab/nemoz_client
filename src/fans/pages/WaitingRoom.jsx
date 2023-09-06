@@ -4,16 +4,17 @@ import Header from "../../shared/Header";
 import {MobilePopup} from "../../shared/MobilePopup";
 import {WaitRoomController as controller} from "../controller/waitRoomController"
 import WaitingMents from "./components/WaitingMents";
+import {useSelector} from "react-redux";
 
 
 const WaitingRoom = () => {
-
     const {
         isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,
         closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen
-
     } = controller();
+
     const img_url = "https://images8.alphacoders.com/132/1321612.jpeg"
+
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
@@ -34,7 +35,7 @@ const WaitingRoom = () => {
                         <div className={"text-[#444] font-medium mr-[87px]"}>
                             <WaitingMents isCallTested={userInfo.isCallTested} isCallFinished={isCallFinished}
                                           myWaitInfo={myWaitInfo}
-                                          fan_name={userInfo.name}/>
+                                          fan_name={userInfo.username}/>
                         </div>
 
                         {/* 버튼 */}
