@@ -29,11 +29,16 @@ export const testApi = {
   },
 
   testEnd: async (meetName) => {
-    console.log(meetName, 'CHECK REQUET')
-    // let req = {
-    //   meet_name: meetName
-    // }
-    const data = await instance.post("/test/end", meetName);
+    const req = {...meetName}
+    const key = Object.keys(req)
+    const haveUnderBar = (text) => text.includes('_')
+
+    if(!haveUnderBar(key[0])){
+      req.meet_name = req.meetName
+      delete req.meetName
+    }
+
+    const data = await instance.post("/test/end", req);
     return data.data === 'Meet Ended';
   }
 }

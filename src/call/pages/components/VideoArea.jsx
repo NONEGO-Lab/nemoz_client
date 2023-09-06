@@ -16,6 +16,7 @@ const VideoArea = ({
                    }) => {
 
     const {age, fan_name, sex, message} = fanInfo
+    console.log(userInfo)
     const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'fan'
@@ -56,7 +57,7 @@ const VideoArea = ({
                                 )
                         }
                     </div>
-                    <ConnectControl2 />
+                    {!isFan && <ConnectControl2/>}
                     {(role === 'fan' && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span

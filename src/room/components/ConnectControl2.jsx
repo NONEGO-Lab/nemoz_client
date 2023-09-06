@@ -52,11 +52,9 @@ const ConnectControl2 = () => {
 
     return (
         <div
-            className={`flex justify-center mt-[-80px] z-10`}>
+            className={`flex justify-center z-10 w-[650px] absolute top-[600px] `}>
             <button
-                onClick={(e) => {
-                    successConnect(e)
-                }}
+                onClick={successConnect}
                 className='w-[180px] min-h-[50px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer mr-[35px]'>
                 <div className='text-[#02c5cb] text-[19px] font-medium'>연결 성공</div>
             </button>
