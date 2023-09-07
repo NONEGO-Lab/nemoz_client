@@ -3,12 +3,14 @@ import InnerCircleText from "../../../common/InnerCircleText";
 
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
+import StaffVideoArea from "./StaffVideoArea";
 
 const VideoArea = ({
                        userInfo,
                        fanInfo,
                        publisher,
                        subscriber,
+                       subscribers,
                        isTestConnect,
                        publisherVideo,
                        publisherAudio,
@@ -21,9 +23,17 @@ const VideoArea = ({
     const isStaff = role === 'staff'
     const isFan = role === 'fan'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
-
-    const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
+    const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
+    console.log(subscribers, 'subscriberssubscribers')
+   if(!isTestConnect && role === 'staff'){
+       return(
+           <StaffVideoArea subscribers={subscribers}/>
+
+       )
+   }
+
+
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -57,7 +67,7 @@ const VideoArea = ({
                                 )
                         }
                     </div>
-                    {!isFan && <ConnectControl2/>}
+                    {!isFan && isTestConnect && <ConnectControl2/>}
                     {(role === 'fan' && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span

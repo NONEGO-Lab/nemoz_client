@@ -1,10 +1,10 @@
 import React, {useRef, useEffect, Fragment} from "react";
 import InnerCircleText from "../../common/InnerCircleText";
-import ConnectControl2 from "../../room/components/ConnectControl2";
+
 
 
 const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
-
+    console.log(streamManager, 'stream Manager')
     const videoRef = useRef();
     useEffect(() => {
 
@@ -20,10 +20,10 @@ const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
             {
                 streamManager !== undefined &&
                 <video
-                    className={`object-contain h-[100%] w-full ${style}`}
+                    className={`object-contain h-[100%] w-full ${style} scale-x-[-1] `}
                     autoPlay
                     ref={videoRef}
-
+                    // style={{transform:"rotateY(180deg)"}}
                 />
             }
             {userInfo &&
@@ -36,9 +36,7 @@ const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
                     </div>
                 </div>
             }
-            {isStaff && isTestConnect &&
-                <ConnectControl2 />
-            }
+
         </>
     )
 

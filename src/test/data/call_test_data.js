@@ -15,7 +15,7 @@ export const testApi = {
     };
 
     const data = await instance.post("/test/join", req);
-    console.log(data, 'DATADATADTATATATATDATADTATA')
+
     return {
       id: data.data.id,
       token: data.data.token

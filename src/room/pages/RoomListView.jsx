@@ -121,7 +121,7 @@ const Room = ({ room, endRoomApi, setCurrentRoom, key, bgColor }) => {
 
   const joinAdminSession = async (room) => {
     await joinNewSession(room);
-    navigate(`/video/${room.room_id}`);
+    navigate(`/video2/${room.room_id}`);
   }
 
   return (

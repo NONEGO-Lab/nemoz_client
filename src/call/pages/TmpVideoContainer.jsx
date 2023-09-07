@@ -28,7 +28,9 @@ const TmpVideoContainer = () => {
     const [mobileSettingType, setMobileSettingType] = useState("");
 
     const publisher = useSelector((state) => state.test.publisher);
+    const publisherLoading = useSelector((state) => state.test.publisherLoading);
     const subscriber = useSelector((state) => state.test.subscriber);
+    const subscriberLoading = useSelector((state) => state.test.subscriberLoading);
     const userInfo = useSelector((state) => state.user.userInfo);
     const toastList = useSelector((state) => state.toast.toastList);
     const publisherVideo = useSelector((state) => state.test.publisherVideo);
@@ -39,7 +41,7 @@ const TmpVideoContainer = () => {
     const session = useSelector((state) => state.test.session);
     const eventId = useSelector((state) => state.event.eventId);
     const eventName = useSelector(state => state.event.eventName)
-
+    console.log(eventName, 'event Name?')
     const {
         createJoinSession, joinTestSession, preventBrowserBack,
         onbeforeunload, muteHandler
@@ -100,6 +102,8 @@ const TmpVideoContainer = () => {
             setOpenMobileSetting(false);
         }
     }
+    console.log(publisherLoading,'publisherLoadingpublisherLoadingpublisherLoadingpublisherLoading')
+    console.log(subscriberLoading, 'subscriberLoadingsubscriberLoadingsubscriberLoading')
 
     useEffect(() => {
 
@@ -122,7 +126,6 @@ const TmpVideoContainer = () => {
             })
         } else {
             // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
-            console.log('HELLO?')
             joinTestSession().then(() => {
                 let roomNum = `${eventId}_test_${userInfo.id}`;
                 sock.emit("joinRoom", roomNum, userInfo);
@@ -166,7 +169,7 @@ const TmpVideoContainer = () => {
 
     }, [session])
 
-
+    console.log(publisher?.stream.videoActive)
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>

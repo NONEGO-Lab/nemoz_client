@@ -10,7 +10,6 @@ export const eventApi = {
         event_id: eventId
       }
     });
-      /// Fixme: 🟨 모델 활용을 이렇게 하는건가요?
       const result = [];
       data.data.response_data.events.map((event) => {
         let tmpEvent = {

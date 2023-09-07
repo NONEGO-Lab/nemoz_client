@@ -36,11 +36,11 @@ export const WaitRoomController = () => {
 
 
   const connectTest = () => {
-    navigate(`/test2/${userInfo.id}`);
+    navigate(`/test/${userInfo.id}`);
   };
 
   const goToArtistRoom = () => {
-    navigate(`/video/${roomInfo.room_id}`);
+    navigate(`/video2/${roomInfo.room_id}`);
   }
 
   const closePopup = () => {

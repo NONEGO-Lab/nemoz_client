@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {Button} from "../../element";
 import {attendeeApi} from "../../fans/data/attendee_data";
 import {testApi} from "../../test/data/call_test_data";
 import {clearTestSession} from "../../redux/modules/testSlice";
@@ -31,9 +30,7 @@ const ConnectControl2 = () => {
         }
     }
 
-    const successConnect = async (e) => {
-        //attendee/test
-        e.stopPropagation()
+    const successConnect = async () => {
         let fanId = fanInfo.fan_id;
         attendeeApi.testFan({eventId, fanId}).then((res) => {
             if (res === "Test result Updated") {
