@@ -17,7 +17,7 @@ import {useReaction} from "../../reaction/controller/useReaction";
 import {leave_meet} from "../../model/call/call_model";
 
 
-export const CallController = () => {
+export const  CallController = () => {
 
   const { joinSession, onlyJoin, newJoinMeet, leaveSession,
     fanJoinSession, msgBeforeOut, onbeforeunload } = useVideo();

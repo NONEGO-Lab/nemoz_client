@@ -25,14 +25,12 @@ const VideoArea = ({
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
-    console.log(subscribers, 'subscriberssubscribers')
    if(!isTestConnect && role === 'staff'){
        return(
-           <StaffVideoArea subscribers={subscribers}/>
+           <StaffVideoArea subscriberss={subscribers} fanInfo={fanInfo}/>
 
        )
    }
-
 
     return (
         <div className={"flex flex-row justify-evenly"}>

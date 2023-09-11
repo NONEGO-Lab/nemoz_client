@@ -3,8 +3,7 @@ import InnerCircleText from "../../common/InnerCircleText";
 
 
 
-const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
-    console.log(streamManager, 'stream Manager')
+const Video2 = ({streamManager, userInfo, style}) => {
     const videoRef = useRef();
     useEffect(() => {
 
@@ -23,7 +22,6 @@ const Video2 = ({streamManager, userInfo, style, isStaff, isTestConnect}) => {
                     className={`object-contain h-[100%] w-full ${style} scale-x-[-1] `}
                     autoPlay
                     ref={videoRef}
-                    // style={{transform:"rotateY(180deg)"}}
                 />
             }
             {userInfo &&

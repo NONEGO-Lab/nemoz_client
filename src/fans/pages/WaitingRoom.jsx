@@ -55,8 +55,8 @@ const WaitingRoom = () => {
 
                             {userInfo.isCallTested && isCallFinished &&
                                 <button
-                                    onClick={fanLogout}>
-                                    className={"w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium bg-[#00cace] flex items-center justify-center ml-[215px]"}>나가기</button>}
+                                    onClick={fanLogout}
+                                    className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium bg-[#00cace] flex items-center justify-center ml-[215px]`}>나가기</button>}
                         </div>
                     </div>
                 </div>

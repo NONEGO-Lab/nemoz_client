@@ -9,21 +9,19 @@ import {useReaction} from "../../../reaction/controller/useReaction";
 import {useVideo} from "../../controller/hooks/useVideo";
 import {CallController as controller} from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
+import StaffVideoArea from "./StaffVideoArea";
 
 const VideoContainer2 = () => {
-
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const history = createBrowserHistory();
 
 
-
-
-    const subscriber = useSelector((state) => state.test.subscriber);
     const fanInfo = useSelector((state) => state.test.fanInfo);
     const eventName = useSelector(state => state.event.eventName)
-    console.log(eventName, 'event Name?')
+    const subscribedArtistInfo = useSelector(state => state.video.subscribedArtistInfo)
+    const subscribedFanInfo = useSelector(state => state.video.subscribedFanInfo)
 
     const { videoMuteHandler, audioMuteHandler, subscribers,
         publisher, publisherAudio, publisherVideo } = useVideo();
@@ -35,11 +33,10 @@ const VideoContainer2 = () => {
     const {getChatFromSocket} = useReaction();
 
 
+console.log(subscribers, 'subscribers')
 
 
-
-    const muteHandler = () => alert('아룡~')
-
+    const isStaff = userInfo.role === 'staff'
 
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
@@ -68,17 +65,19 @@ const VideoContainer2 = () => {
                     섭스/섭스
 
                 */}
-
-                <VideoArea
-                    userInfo={userInfo}
-                    fanInfo={fanInfo}
-                    publisher={publisher}
-                    subscriber={subscriber}
-                    subscribers = {subscribers}
-                    publisherVideo={audioMuteHandler}
-                    publisherAudio={videoMuteHandler}
-                    muteHandler={muteHandler}
+                {isStaff? <StaffVideoArea subscribedArtistInfo={subscribedArtistInfo} subscribedFanInfo={subscribedFanInfo}  fanInfo={fanInfo}/> :
+                    <VideoArea
+                        userInfo={userInfo}
+                        fanInfo={fanInfo}
+                        publisher={publisher}
+                        subscriber={subscribers[0]}
+                        publisherVideo={audioMuteHandler}
+                        publisherAudio={videoMuteHandler}
+                        muteHandler={audioMuteHandler}
                     />
+                }
+
+
                 {/*
                     <div className={"bg-pink-600 h-[40%] flex justify-center items-center"}>
                         <ReactionButton />
@@ -88,7 +87,7 @@ const VideoContainer2 = () => {
                 <MainCallUtil
                     publisherAudio={publisherAudio}
                     publisherVideo={publisherVideo}
-                    muteHandler={muteHandler}
+                    muteHandler={audioMuteHandler}
                     quitTest={false}
                     role={userInfo.role}
                     dispatch={dispatch}

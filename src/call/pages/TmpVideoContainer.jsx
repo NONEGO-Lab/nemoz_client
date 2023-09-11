@@ -102,8 +102,6 @@ const TmpVideoContainer = () => {
             setOpenMobileSetting(false);
         }
     }
-    console.log(publisherLoading,'publisherLoadingpublisherLoadingpublisherLoadingpublisherLoading')
-    console.log(subscriberLoading, 'subscriberLoadingsubscriberLoadingsubscriberLoading')
 
     useEffect(() => {
 
@@ -169,7 +167,6 @@ const TmpVideoContainer = () => {
 
     }, [session])
 
-    console.log(publisher?.stream.videoActive)
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>

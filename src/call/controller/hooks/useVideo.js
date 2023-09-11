@@ -9,8 +9,9 @@ import {
   addVideoDevices,
   clearSession,
   deleteSubscribers,
+  isFanLoading,
   mutePublisherAudio,
-  mutePublisherVideo
+  mutePublisherVideo, subscribedArtistInfo, subscribedFanInfo
 } from "../../../redux/modules/videoSlice";
 import {useNavigate} from "react-router-dom";
 import {meetApi} from "../../data/call_data";
@@ -36,6 +37,7 @@ export const useVideo = () => {
   const publisherVideo = useSelector((state) => state.video.publisherVideo);
 
   const eventId = useSelector((state) => state.event.eventId);
+
 
 
   const createSession = async (roomId, isReCreated) => {
@@ -234,7 +236,7 @@ export const useVideo = () => {
       videoSource: undefined, // The source of video. If undefined default webcam
       publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
       publishVideo: true, // Whether you want to start publishing with your video enabled or not
-      resolution: '640x480', // The resolution of your video
+      resolution: '1280x720', // The resolution of your video
       frameRate: 30, // The frame rate of your video
       insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
       mirror: false, // Whether to mirror your local video or not
@@ -269,14 +271,31 @@ export const useVideo = () => {
 
 
   const subscribeToStreamCreated = (_session) => {
+
     _session.on('streamCreated', (event) => {
+      console.log('STREAM CREATED')
+      console.log(event.stream.connection.data)
       let newUserData = JSON.parse(event.stream.connection.data.split("%/%")[0]);
 
       let subscriber = _session.subscribe(event.stream, undefined);
       subscriber["role"] = newUserData['role'];
       subscriber["id"] = newUserData['id']
       subscriber["username"] = newUserData['username'];
-      dispatch(addSubscribers(subscriber));
+
+      if(subscriber.role === 'fan'){
+        /*
+      * @todo
+      * 회원 정보 API통신 후 GET
+      * */
+        subscriber["gender"] = '여'
+        subscriber["age"] = 20
+        dispatch(addSubscribers(subscriber));
+        dispatch(subscribedFanInfo(subscriber))
+      }
+      if(subscriber.role === 'artist'){
+        dispatch(addSubscribers(subscriber))
+        dispatch(subscribedArtistInfo(subscriber))
+      }
     });
   }
 
@@ -320,6 +339,8 @@ export const useVideo = () => {
   return {
     publisher,
     subscribers,
+    subscribedFanInfo,
+    subscribedArtistInfo,
     publisherAudio,
     publisherVideo,
     audioMuteHandler,
@@ -328,7 +349,8 @@ export const useVideo = () => {
     leaveSession,
     fanJoinSession,
     msgBeforeOut,
-    joinSession
+    joinSession,
+    onbeforeunload,
   }
 };
 

@@ -10,7 +10,11 @@ const initialState = {
   isCallFinished: false,
   publisherAudio: true,
   publisherVideo: true,
-  timer: 0
+  timer: 0,
+  subscribedFanInfo: undefined,
+  subscribedArtistInfo: undefined,
+  isFanLoading: false,
+  isArtistLoading: true
 }
 
 
@@ -28,6 +32,15 @@ export const videoSlice = createSlice({
       if(state.subscribers.length <= 1) {
         state.subscribers = [...state.subscribers, action.payload]
       }
+    },
+    subscribedFanInfo:(state, action) =>{
+      state.subscribedFanInfo = action.payload
+    },
+    subscribedArtistInfo:(state, action) =>{
+      state.subscribedArtistInfo = action.payload
+    },
+    isArtistLoading:(state, action) =>{
+      state.isArtistLoading = action.payload
     },
     deleteSubscribers: (state, action) => {
       state.subscribers = state.subscribers.filter((sub) => sub.stream.streamId !== action.payload);
@@ -76,6 +89,8 @@ export const videoSlice = createSlice({
 
 export const { addPublisher, addSession, addSubscribers, clearSession, addTimer, videoReset,
   mutePublisherAudio, mutePublisherVideo, deleteSubscribers, addVideoDevices,
-  addAudioDevices, setConnectTest, disconnectSession, setIsCallFinished } = videoSlice.actions
+  addAudioDevices, setConnectTest, disconnectSession, setIsCallFinished,
+  subscribedFanInfo,
+  subscribedArtistInfo,isFanLoading,isArtistLoading } = videoSlice.actions
 
 export default videoSlice.reducer
