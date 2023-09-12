@@ -84,6 +84,7 @@ export const WaitRoomController = () => {
       data, userInfo, dispatch, setIsReadyTest
     }));
     sock.on("nextFanTurn", (nextFanInfo, sessionInfo, roomInfo) => {
+      console.log(nextFanInfo, 'nextFanInfonextFanInfo')
       fanEvents.nextFanTurn({
         nextFanInfo, sessionInfo, roomInfo, userInfo, dispatch, setIsAvailableCall
       });

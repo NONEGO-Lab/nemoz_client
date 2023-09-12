@@ -33,11 +33,12 @@ const VideoContainer2 = () => {
     const {getChatFromSocket} = useReaction();
 
 
-console.log(subscribers, 'subscribers')
-
+// console.log(subscribers, 'subscribers')
+    console.log('으아아')
+    console.log(subscribers.find( s => s.role === 'artist'))
 
     const isStaff = userInfo.role === 'staff'
-
+    console.log(subscribers, 'subscribers')
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -56,24 +57,24 @@ console.log(subscribers, 'subscribers')
                         <div className='w-[8px] h-[8px] rounded-full bg-[#02c5cb] ml-[6px]'/>
                     </span>
                 </div>
-                {/*
-                    팬일때
-                    퍼블/섭스
-                    아티스트
-                    섭스/퍼블
-                    스태프
-                    섭스/섭스
 
-                */}
-                {isStaff? <StaffVideoArea subscribedArtistInfo={subscribedArtistInfo} subscribedFanInfo={subscribedFanInfo}  fanInfo={fanInfo}/> :
+                {isStaff?
+                    <StaffVideoArea
+                        subscribedArtistInfo={subscribedArtistInfo}
+                        subscribedFanInfo={subscribedFanInfo}
+                        fanInfo={currentFan}/>
+
+                    :
+
                     <VideoArea
                         userInfo={userInfo}
                         fanInfo={fanInfo}
                         publisher={publisher}
                         subscriber={subscribers[0]}
+                        subscribedArtistInfo={subscribedArtistInfo}
+                        subscribedFanInfo={subscribedFanInfo}
                         publisherVideo={audioMuteHandler}
                         publisherAudio={videoMuteHandler}
-                        muteHandler={audioMuteHandler}
                     />
                 }
 
@@ -85,14 +86,15 @@ console.log(subscribers, 'subscribers')
 
                 {/* 기능 Component */}
                 <MainCallUtil
-                    publisherAudio={publisherAudio}
-                    publisherVideo={publisherVideo}
-                    muteHandler={audioMuteHandler}
+                    audioMuteHandler={audioMuteHandler}
+                    videoMuteHandler={videoMuteHandler}
                     quitTest={false}
                     role={userInfo.role}
                     dispatch={dispatch}
                     navigate={navigate}
                     currentFan={currentFan}
+                    subscribers={subscribers}
+                    endRoom={endRoom}
                 />
 
             </div>

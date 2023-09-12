@@ -1,8 +1,8 @@
 import React from 'react';
 import {secondsToMins} from "../../../utils/convert";
 
-const WatingMents = ({isCallTested, isCallFinished,myWaitInfo, fan_name}) => {
-    if(!isCallTested && !isCallFinished){
+const WatingMents = ({isCallTested, isCallFinished, myWaitInfo, fan_name}) => {
+    if(!isCallTested){
         return(
             <>
                 <div className={"text-[25px] "}>Jisoo First Single Album ‘ME’ 첫번째 팬미팅(Fan Meeting)

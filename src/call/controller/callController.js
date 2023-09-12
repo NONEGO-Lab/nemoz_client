@@ -51,6 +51,7 @@ export const  CallController = () => {
   const [currentFan, setCurrentFan] = useState({});
   const [staffNoticeList, setStaffNoticeList] = useState([]);
   const leftTimeRef = useRef(0);
+  const [isLastFan, setIsLastFan] = useState(false)
 
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
@@ -71,6 +72,7 @@ export const  CallController = () => {
         meet_name: sessionInfo.meetName,
         room_id: roomInfo.room_id,
         event_id: eventId,
+      //   fan_id 추가 필요
       }
 
       try {
@@ -148,6 +150,7 @@ export const  CallController = () => {
 
     try {
       const result = await roomApi.getListOrder({ eventId, roomId });
+      console.log(result, '?')
       const currentFan = result.find((fan) => fan.orders === 1);
       const response = await attendeeApi.getFanDetail(currentFan.fan_id);
       setCurrentFan(response);
@@ -297,7 +300,8 @@ export const  CallController = () => {
     isOpenLeftTime,
     roomInfo,
     toBack,
-    isOpenWaitingModal
+    isOpenWaitingModal,
+    isLastFan
   }
 
 }

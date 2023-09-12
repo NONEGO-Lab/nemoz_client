@@ -31,10 +31,11 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
 
+    console.log(sessionInfo)
 
     const endMeet = async () => {
         try {
-            console.log(sessionInfo.meetName)
+            console.log('end Meet in Device Setting', sessionInfo.meetName)
             const response = await testApi.testEnd(sessionInfo.meetName);
             if (response) {
                 dispatch(clearDeviceSession());
@@ -52,7 +53,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const outRoom = async () => {
         if (window.confirm("정말 나가시겠습니까?")) {
             await endMeet()
-
+            closeDeviceSetting()
 
         }
     }
@@ -73,11 +74,11 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
         if (userInfo.role !== "fan") {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
-            navigate(`/test2/${fanInfo.fan_id}`);
+            navigate(`/test/${fanInfo.fan_id}`);
 
         } else {
             await endMeet();
-            navigate(`/test2/${userInfo.id}`);
+            navigate(`/test/${userInfo.id}`);
 
 
         }

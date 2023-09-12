@@ -19,7 +19,7 @@ const ConnectControl2 = () => {
 
     const finishTest = async () => {
 
-        const response = await testApi.testEnd(sessionInfo);
+        const response = await testApi.testEnd(sessionInfo.meet_name);
 
         // 종료되면 role에 따라 해산
         if (response) {

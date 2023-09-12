@@ -289,12 +289,16 @@ export const useVideo = () => {
       * */
         subscriber["gender"] = '여'
         subscriber["age"] = 20
+        subscriber["letter"] = '필요 정보 가져와야함'
         dispatch(addSubscribers(subscriber));
         dispatch(subscribedFanInfo(subscriber))
       }
-      if(subscriber.role === 'artist'){
+      else if(subscriber.role === 'artist'){
         dispatch(addSubscribers(subscriber))
         dispatch(subscribedArtistInfo(subscriber))
+      }else{
+        console.log("Diyoyong")
+        dispatch(addSubscribers(subscriber))
       }
     });
   }

@@ -30,7 +30,7 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
 
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
-
+  console.log(subscribers, 'subscribers')
   const finishCurrentCall = async () => {
     if(window.confirm("정말 통화를 종료하시겠습니까?")){
       try {
@@ -164,7 +164,7 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
         <div className="m-auto flex flex-col">
           <Button
               _onClick={finishCurrentCall}
-              disabled={isCallProcessing === false}
+              disabled={subscribers === false}
               margin={"mt-4 m-auto"} width={"w-[150px]"} height={"h-[50px]"}>
             현재 통화 종료
           </Button>

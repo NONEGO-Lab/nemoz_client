@@ -13,6 +13,7 @@ import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
 import {clearToast} from "../../redux/modules/toastSlice";
 import VideoArea from "./components/VideoArea";
+import TestVideoArea from "./components/TestVideoArea";
 
 const TmpVideoContainer = () => {
 
@@ -41,6 +42,7 @@ const TmpVideoContainer = () => {
     const session = useSelector((state) => state.test.session);
     const eventId = useSelector((state) => state.event.eventId);
     const eventName = useSelector(state => state.event.eventName)
+    const sessionInfo = useSelector((state) => state.test.sessionInfo);
     console.log(eventName, 'event Name?')
     const {
         createJoinSession, joinTestSession, preventBrowserBack,
@@ -69,7 +71,7 @@ const TmpVideoContainer = () => {
 
 
             } else {
-                const response = await testApi.testEnd(meetInfo);
+                const response = await testApi.testEnd(sessionInfo.meet_name);
                 if (response) {
                     navigate("/userlist");
                     let roomNum = `1_test_${fanInfo.fan_id}`;
@@ -114,10 +116,7 @@ const TmpVideoContainer = () => {
             // test meet create -> join 까지 한다.
             // create, join 하고 나온 방을 socket 으로 보낸다!
             createJoinSession().then((sessionInfo) => {
-                console.log('CREATE JOIN SESSION in Video View', sessionInfo)
-                console.log(fanInfo)
                 let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
-                console.log(data, "DATA")
                 sock.emit("joinTestSession", data);
                 let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
                 sock.emit("joinRoom", roomNum, userInfo);
@@ -186,7 +185,7 @@ const TmpVideoContainer = () => {
                     </span>
                 </div>
 
-                <VideoArea
+                <TestVideoArea
                     userInfo={userInfo}
                     fanInfo={fanInfo}
                     publisher={publisher}

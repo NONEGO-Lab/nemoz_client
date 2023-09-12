@@ -1,39 +1,35 @@
 import React from 'react';
+import StaffVideoArea from "./StaffVideoArea";
 import InnerCircleText from "../../../common/InnerCircleText";
-
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
-import StaffVideoArea from "./StaffVideoArea";
 
-const VideoArea = ({
-                       userInfo,
-                       fanInfo,
-                       publisher,
-                       subscriber,
-                       subscribedFanInfo,
-                       subscribedArtistInfo,
-                       subscribers,
-                       isTestConnect,
-                       publisherVideo,
-                       publisherAudio,
-                       muteHandler
-                   }) => {
+const TestVideoArea = ({
+                           userInfo,
+                           fanInfo,
+                           publisher,
+                           subscriber,
+                           subscribers,
+                           isTestConnect,
+                           publisherVideo,
+                           publisherAudio,
+                           muteHandler
+                       }) => {
 
+    const {age, fan_name, sex, message} = fanInfo
     console.log(userInfo)
-    const {role} = userInfo
+    const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'fan'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
+    if(!isTestConnect && role === 'staff'){
+        return(
+            <StaffVideoArea subscriberss={subscribers} fanInfo={fanInfo}/>
 
-    console.log(subscribedArtistInfo, 'subscribedArtistInfo')
-    console.log(subscribedFanInfo, 'subscribedFanInfo')
-
-    const username = subscribedFanInfo?.username || userInfo.username
-    const age = subscribedFanInfo?.age || userInfo.age
-    const gender = subscribedFanInfo?.gender || userInfo?.sex
-    const letter =  subscribedFanInfo?.message || userInfo?.letter
+        )
+    }
 
     return (
         <div className={"flex flex-row justify-evenly"}>
@@ -41,8 +37,8 @@ const VideoArea = ({
             <div className='w-[650px] text-center'>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${username} (${age}세)`}
-                            <InnerCircleText gender={gender} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
+                            {`Fan ${fan_name} (${age}세)`}
+                            <InnerCircleText gender={sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -60,10 +56,10 @@ const VideoArea = ({
                                 )
                                 :
                                 (
-                                    subscribedFanInfo !== undefined && (
+                                    subscriber !== undefined && (
                                         <Video2 style={`rounded-[15px]`}
-                                                streamManager={subscribedFanInfo} isStaff={isStaff}
-                                               />
+                                                streamManager={subscriber} isStaff={isStaff}
+                                                isTestConnect={isTestConnect}/>
                                     )
                                 )
                         }
@@ -72,12 +68,12 @@ const VideoArea = ({
                     {(role === 'fan' && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{subscribedFanInfo?.username}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{"Fan 이름 나와야함"}</span>
                         </div>}
 
-                    {letter && <div className='text-center mt-[27px]'>
+                    {message && <div className='text-center mt-[27px]'>
                         {/* <image /> */}
-                        <span>{letter}</span>
+                        <span>{message}</span>
                     </div>}
                 </div>
             </div>
@@ -116,9 +112,9 @@ const VideoArea = ({
 
                         )}
                         {isFan && (
-                            subscribedArtistInfo !== undefined && (
+                            subscriber !== undefined && (
                                 <Video2 style={`rounded-[15px]`}
-                                        streamManager={subscribedArtistInfo} isStaff={isStaff} isTestConnect={isTestConnect}/>
+                                        streamManager={subscriber} isStaff={isStaff} isTestConnect={isTestConnect}/>
                             )
                         )}
                     </div>
@@ -134,4 +130,4 @@ const VideoArea = ({
     );
 };
 
-export default VideoArea;
+export default TestVideoArea;
