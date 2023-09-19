@@ -16,10 +16,11 @@ const VideoArea = ({
                        isTestConnect,
                        publisherVideo,
                        publisherAudio,
-                       muteHandler
+                       muteHandler,
+                       artistName,
                    }) => {
 
-    console.log(userInfo)
+
     const {role} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'fan'
@@ -27,13 +28,12 @@ const VideoArea = ({
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
 
-    console.log(subscribedArtistInfo, 'subscribedArtistInfo')
-    console.log(subscribedFanInfo, 'subscribedFanInfo')
+    console.log(fanInfo, 'fanInfo')
 
-    const username = subscribedFanInfo?.username || userInfo.username
-    const age = subscribedFanInfo?.age || userInfo.age
-    const gender = subscribedFanInfo?.gender || userInfo?.sex
-    const letter =  subscribedFanInfo?.message || userInfo?.letter
+    const username = fanInfo?.fan_name
+    const age = fanInfo?.age
+    const gender = fanInfo?.sex
+    const letter =  fanInfo?.letter
 
     return (
         <div className={"flex flex-row justify-evenly"}>
@@ -72,7 +72,7 @@ const VideoArea = ({
                     {(role === 'fan' && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{subscribedFanInfo?.username}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
                         </div>}
 
                     {letter && <div className='text-center mt-[27px]'>
@@ -102,7 +102,7 @@ const VideoArea = ({
                     <>
                         <img src="../images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
-                        <div className='text-[19px] font-medium'>{'바꿔야함'}</div>
+                        <div className='text-[19px] font-medium'>{artistName}</div>
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -126,7 +126,7 @@ const VideoArea = ({
                     {role === 'staff' && !publisherVideo &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{"Staff 이름 나와야함"}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{artistName}</span>
                         </div>}
                 </div>
             </div>

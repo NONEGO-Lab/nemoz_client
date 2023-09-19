@@ -11,8 +11,7 @@ import {attendeeApi} from "../../../fans/data/attendee_data";
 import {setError, setIsError} from "../../../redux/modules/errorSlice";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
-const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, session, currentFan, setCurrentFan, endRoom, subscribers}) => {
-    const isTestTmp = true
+const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setCurrentFan, session, subscribers, outRoom}) => {
     const [isCallProcessing, setIsCallProcessing] = useState(false);
     const [isFirstCall, setIsFirstCall] = useState(true);
     const roomInfo = useSelector((state) => state.common.roomInfo);
@@ -24,9 +23,11 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
 
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+    const navigate = useNavigate()
     let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+
+    console.log(subscribers, 'in Bottom Buttons')
+
     const routeToFanList = () =>{
         if(role === 'fan'){
             alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
@@ -41,8 +42,6 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
             navigate("/userlist");
         }
     }
-    console.log(subscribers, 'in Bottom Buttons')
-    console.log(Object.keys(currentFan).length, 'currentFan')
     const nextCallConnect = async () => {
         console.log('다음 팬 호출')
         if(role === 'fan'){
@@ -52,12 +51,10 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
         // 첫 렌더링때는 이미 join 되어있는 상황이라, fan에게 socket 알람만 가면 된다.
         if(Object.keys(currentFan).length === 0) {
             alert("마지막 팬입니다.");
-            navigate("/roomlist");
             return;
         }
 
         if(isFirstCall) {
-            console.log('처음은 아닐텐디')
             sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
             setIsFirstCall(false);
         } else {
@@ -78,7 +75,6 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
                 const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() === curFan.id.toString());
                 const nextFan = fanList[curFanIndex + 1];
                 const fanId = fanList[curFanIndex].fan_id;
-                console.log(nextFan, '흐이익')
                 const request = {
                     ...end_meet,
                     meet_id: sessionInfo.meetId,
@@ -87,7 +83,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
                     event_id: eventId,
                     fan_id: fanId
                 }
-                const result = await meetApi.endMeet(request);
+                const result = await meetApi.endMeet(request);console.log(result)
 
                 if(result) {
                     leaveSession();
@@ -102,9 +98,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
 
                     // 다음 팬이 있으면, 팬 정보 가져오고, 새 session을 열어준다.
                     if(nextFan !== undefined) {
-                        console.log(nextFan, 'nextFannextFan')
                         const detail = await attendeeApi.getFanDetail(nextFan.fan_id);
-                        console.log(detail, 'DETAIL')
                         setCurrentFan(detail);
 
                         // 대기열에 있는 팬들의 대기열 업데이트 필요
@@ -122,7 +116,9 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
                         sock.emit("joinRoom", roomNum, userInfo);
 
                     } else {
+                        console.log('마지막 팬 미팅 종료!')
                         setCurrentFan({});
+                        console.log(subscribers, 'Last Fan Meeting')
                         const otherStaffInfo = subscribers.find((sub) => sub['id'].toString() !== userInfo.id.toString());
                         sock.emit("lastMeet", otherStaffInfo['id']);
                     }
@@ -173,7 +169,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
    return (
         <div className={"flex justify-start items-center flex-row mt-[153px] mx-[110px]"}>
             {/* 팬 리스트 */}
-             <div className={"flex flex-col text-[8px] items-center mr-[57px]"} >
+            <div className={"flex flex-col text-[8px] items-center mr-[57px]"}>
                 <div className={"cursor-pointer"} onClick={routeToFanList}>
                     <img src="../images/callOutFanList.png" alt='fanlist'/>
                 </div>
@@ -184,7 +180,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
             {/* 다음 사람 */}
             <div className={"flex flex-col text-[8px] items-center  mr-[285px]"}>
                 <div className={`w-[44px] cursor-pointer`}  onClick={nextCallConnect}>
-                    {isTestTmp ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
+                    {!isCallProcessing ? <img src="../images/callOutNext.png" alt="next" /> : <img src="../images/callOutNextOff.png" alt="next" />}
                 </div>
                 <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     {`NEXT`}
@@ -213,19 +209,19 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, quitTest, sessio
                 </div>
             </div>
             {/* 연결 끊기 */}
-            <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[370px]"}>
-                <div className={"w-[75px] h-[75px]  cursor-pointer"}  onClick={finishCurrentCall}>
-                    <img src="../images/callOutQuit.png" alt="quit" />
+           <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[370px]"}>
+                <div className={"w-[75px] h-[75px]  cursor-pointer"} onClick={finishCurrentCall}>
+                    <img src="../images/callOutQuit.png" alt="quit"/>
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`DISCONNECT`}</div>
                 </div>
             </div>
 
-            {/* 방 종료 */}
+            {/* 방 나가기 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
-                <div className={"w-[55px] h-[55px]  cursor-pointer"} onClick={endRoom}>
-                    <img src="../images/callOutRoomEnd.png" alt="quit" />
+                <div className={"w-[55px] h-[55px]  cursor-pointer"} onClick={()=>outRoom(role)}>
+                    <img src="../images/callOutRoomEnd.png" alt="close" />
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`CLOSE`}</div>

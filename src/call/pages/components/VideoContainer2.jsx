@@ -24,7 +24,7 @@ const VideoContainer2 = () => {
     const subscribedFanInfo = useSelector(state => state.video.subscribedFanInfo)
 
     const { videoMuteHandler, audioMuteHandler, subscribers,
-        publisher, publisherAudio, publisherVideo } = useVideo();
+        publisher, publisherAudio, publisherVideo, routeToFanList } = useVideo();
     const { roomInfo, leftTimeRef, toastList,
         endRoom, outRoom, showTime, staffNoticeList, userInfo, setIsOpenWaitingModal, currentFan,
         setCurrentFan, setIsOpenAddUser, fanDetailOpenHandler, isOpenAddUser, isOpenFanDetail,
@@ -32,13 +32,9 @@ const VideoContainer2 = () => {
     } = controller();
     const {getChatFromSocket} = useReaction();
 
-
-// console.log(subscribers, 'subscribers')
-    console.log('으아아')
-    console.log(subscribers.find( s => s.role === 'artist'))
-
+    const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
-    console.log(subscribers, 'subscribers')
+
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -62,19 +58,25 @@ const VideoContainer2 = () => {
                     <StaffVideoArea
                         subscribedArtistInfo={subscribedArtistInfo}
                         subscribedFanInfo={subscribedFanInfo}
-                        fanInfo={currentFan}/>
+                        artistName = {artist_name}
+                        fanInfo={currentFan}
+                        roomInfo={roomInfo}
+
+                    />
 
                     :
 
                     <VideoArea
                         userInfo={userInfo}
-                        fanInfo={fanInfo}
+                        fanInfo={currentFan}
                         publisher={publisher}
                         subscriber={subscribers[0]}
                         subscribedArtistInfo={subscribedArtistInfo}
                         subscribedFanInfo={subscribedFanInfo}
                         publisherVideo={audioMuteHandler}
                         publisherAudio={videoMuteHandler}
+                        roomInfo = {roomInfo}
+                        artistName={artist_name}
                     />
                 }
 
@@ -93,8 +95,11 @@ const VideoContainer2 = () => {
                     dispatch={dispatch}
                     navigate={navigate}
                     currentFan={currentFan}
+                    setCurrentFan={setCurrentFan}
                     subscribers={subscribers}
+                    routeToFanList={routeToFanList}
                     endRoom={endRoom}
+                    outRoom={outRoom}
                 />
 
             </div>

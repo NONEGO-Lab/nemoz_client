@@ -9,6 +9,7 @@ import {
   addVideoDevices,
   clearSession,
   deleteSubscribers,
+  disconnectSession,
   isFanLoading,
   mutePublisherAudio,
   mutePublisherVideo, subscribedArtistInfo, subscribedFanInfo
@@ -20,7 +21,6 @@ import {setError, setIsError} from "../../../redux/modules/errorSlice";
 import {create_token, session_create, leave_meet} from "../../../model/call/call_model";
 
 export const useVideo = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -122,7 +122,6 @@ export const useVideo = () => {
     dispatch(addSession(_session));
 
     const sessionData = await createSession(roomId, isReCreated);
-
     let sessionInfo = {
       meetId: sessionData.meet_id,
       meetName: sessionData.meet_name
@@ -290,16 +289,12 @@ export const useVideo = () => {
         subscriber["gender"] = '여'
         subscriber["age"] = 20
         subscriber["letter"] = '필요 정보 가져와야함'
-        dispatch(addSubscribers(subscriber));
         dispatch(subscribedFanInfo(subscriber))
       }
       else if(subscriber.role === 'artist'){
-        dispatch(addSubscribers(subscriber))
         dispatch(subscribedArtistInfo(subscriber))
-      }else{
-        console.log("Diyoyong")
-        dispatch(addSubscribers(subscriber))
       }
+      dispatch(addSubscribers(subscriber))
     });
   }
 
@@ -340,6 +335,7 @@ export const useVideo = () => {
   }
 
 
+
   return {
     publisher,
     subscribers,
@@ -355,6 +351,7 @@ export const useVideo = () => {
     msgBeforeOut,
     joinSession,
     onbeforeunload,
+    newJoinMeet
   }
 };
 

@@ -22,7 +22,6 @@ const Header = () => {
     const {leaveSession} = useVideo();
     const currentLocation = () => window.location.pathname.split('/')[1]
     const isRoomList = currentLocation() === 'roomlist'
-    console.log(currentLocation())
 
     return (
         <div

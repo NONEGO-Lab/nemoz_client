@@ -2,8 +2,7 @@ import React from 'react';
 import Video2 from "../../../video/pages/Video2";
 import InnerCircleText from "../../../common/InnerCircleText";
 
-const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo}) => {
-
+const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo}) => {
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -11,7 +10,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo}) => {
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
                             {`Fan ${fanInfo?.fan_name} (${fanInfo?.age}세)`}
-                            <InnerCircleText gender={fanInfo?.gender} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
+                            <InnerCircleText gender={fanInfo?.sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -27,12 +26,12 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo}) => {
 
                     {!subscribedFanInfo &&<div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{subscribedFanInfo?.username}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo?.fan_name}</span>
                     </div>}
 
-                    {subscribedFanInfo?.message && <div className='text-center mt-[27px]'>
+                    {fanInfo?.letter && <div className='text-center mt-[27px]'>
                         {/* <image /> */}
-                        <span>{subscribedFanInfo?.message}</span>
+                        <span>{fanInfo?.letter}</span>
                     </div>}
                 </div>
             </div>
@@ -43,7 +42,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo}) => {
                     <>
                         <img src="../images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
-                        <div className='text-[19px] font-medium'>{subscribedArtistInfo?.username}</div>
+                        <div className='text-[19px] font-medium'>{subscribedArtistInfo?.username || roomInfo.artist_name}</div>
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -57,7 +56,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo}) => {
                     {!subscribedArtistInfo &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{"artist 이름 나와야함"}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo.artist_name}</span>
                         </div>}
                 </div>
             </div>
