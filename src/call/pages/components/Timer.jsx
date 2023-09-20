@@ -66,16 +66,16 @@ const Timer = ({type, leftTimeRef}) => {
           isMobile ?
               type === "default" ?
                   <div className={"text-sm w-[fit] absolute right-[45px] top-[20px] bg-white rounded-[10px] px-2"}>
-                    {secondsToTime(meetingTime)} 남음
+                    {secondsToTime(meetingTime)}
                   </div>
                   :
                   <div className={"text-[10px] w-[fit] absolute right-[30px] top-[20px] bg-white rounded-[8px] px-1"}>
-                    {secondsToTime(meetingTime)} 남음
+                    {secondsToTime(meetingTime)}
                   </div>
 
               :
-              <div className={"ml-4"}>
-                남은시간: { secondsToTime(meetingTime) }
+              <div className={"text-[24px] text-[#454444] font-[500]"}>
+                {secondsToTime(meetingTime) }
               </div>
         }
       </>

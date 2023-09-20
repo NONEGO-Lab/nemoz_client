@@ -10,6 +10,7 @@ import {useVideo} from "../../controller/hooks/useVideo";
 import {CallController as controller} from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
 import StaffVideoArea from "./StaffVideoArea";
+import Timer from "./Timer";
 
 const VideoContainer2 = () => {
 
@@ -48,8 +49,8 @@ const VideoContainer2 = () => {
 
                 <div className='flex justify-center mb-[-30px]'>
                     <span
-                        className='w-[125px] h-[30px] rounded-[15px] border-[1.5px] border-[#444] text-[16px] text-[#444] flex items-center justify-center'>
-                        <div>Test Call</div>
+                        className='w-[125px] h-[30px] text-[16px] text-[#444] flex items-center justify-center'>
+                        <Timer leftTimeRef={leftTimeRef}/>
                         <div className='w-[8px] h-[8px] rounded-full bg-[#02c5cb] ml-[6px]'/>
                     </span>
                 </div>
