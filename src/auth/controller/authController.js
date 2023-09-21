@@ -8,52 +8,56 @@ import {userApi} from "../data/user_data";
 
 export const AuthController = (setError) => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const regex = new RegExp(emailRegex);
+    const loginOnSubmit = (data) => {
+        let userInfo = {
+            ...login_request,
+            userid: data.id,
+            password: data.password,
+            member: regex.test(data.id) ? 'member' : 'admin'
+        }
 
-  const loginOnSubmit = (data) => {
-    let userInfo = {
-      ...login_request,
-      userid: data.id,
-      password: data.password,
+        dispatch(loginUser(userInfo)).then((result) => {
+            if (result.error) {
+                setError('authError', {message: result.payload.errMsg})
+                return
+            }
+            if (!sock.connected) {
+                sock.connect();
+            }
+            sock.emit("join", result.payload.memberNo || result.payload.adminNo);
+            result.payload.memberNo ? navigate("/waitcall") : navigate("/roomlist");
+
+        })
+
+
     }
 
-    dispatch(loginUser(userInfo)).then((result) => {
-      if(result.error) {
-        setError('authError',{message:result.payload.errMsg})
-        return
-      }
-      if(!sock.connected) {
-        sock.connect();
-      }
-      sock.emit("join", result.payload.username);
-      navigate("/eventlist");
+    const signUpOnSubmit = (data) => {
+        const userInfo = {
+            ...sign_up_info,
+            user_id: data.id,
+            username: data.username,
+            company_name: data.company_name,
+            password: data.password,
+            role: data.role
+        };
 
-    })
-  }
-
-  const signUpOnSubmit = (data) => {
-    const userInfo = {
-      ...sign_up_info,
-      user_id: data.id,
-      username: data.username,
-      company_name: data.company_name,
-      password: data.password,
-      role: data.role
-    };
-
-    userApi.register(userInfo).then((result) => {
-      if(result){
-        navigate("/");
-      } else {
-        alert("회원가입 실패입니다");
-      }
-    })
-  }
+        userApi.register(userInfo).then((result) => {
+            if (result) {
+                navigate("/");
+            } else {
+                alert("회원가입 실패입니다");
+            }
+        })
+    }
 
 
-  return {
-    loginOnSubmit,
-    signUpOnSubmit
-  }
+    return {
+        loginOnSubmit,
+        signUpOnSubmit
+    }
 }

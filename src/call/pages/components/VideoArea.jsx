@@ -28,7 +28,7 @@ const VideoArea = ({
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
 
-    console.log(fanInfo, 'fanInfo')
+    console.log(subscribedArtistInfo, 'subscribedArtistInfo')
 
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
@@ -69,7 +69,7 @@ const VideoArea = ({
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2/>}
-                    {(role === 'fan' && !publisherVideo)&&
+                    {((isFan && !publisherVideo)||(role==='artist' && !subscribedFanInfo))&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
@@ -123,7 +123,7 @@ const VideoArea = ({
                         )}
                     </div>
 
-                    {role === 'staff' && !publisherVideo &&
+                    {((role === 'staff' && !publisherVideo) ||(isFan && subscribedArtistInfo === undefined)) &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{artistName}</span>

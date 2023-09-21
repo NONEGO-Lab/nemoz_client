@@ -22,6 +22,30 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+export const memberLogin = createAsyncThunk(
+    'user/loginUser',
+    async (userInfo, thunkAPI) => {
+      try {
+        const response = await userApi.memberLogin(userInfo);
+        return thunkAPI.fulfillWithValue(response);
+      } catch (err) {
+        return thunkAPI.rejectWithValue(err.response.data);
+      }
+    }
+);
+
+export const staffLogin = createAsyncThunk(
+    'user/loginUser',
+    async (userInfo, thunkAPI) => {
+      try {
+        const response = await userApi.staffLogin(userInfo);
+        return thunkAPI.fulfillWithValue(response);
+      } catch (err) {
+        return thunkAPI.rejectWithValue(err.response.data);
+      }
+    }
+);
+
 export const loginCheck = createAsyncThunk(
     "user/loginCheck",
     async ( _ ,thunkAPI) => {
@@ -49,8 +73,8 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [loginUser.fulfilled]: (state, action) => {
-      localStorage.setItem("auth", action.payload.token);
-      delete action.payload.token;
+      localStorage.setItem("auth", action.payload.accessToken);
+      delete action.payload.accessToken;
       state.userInfo = action.payload;
 
     },

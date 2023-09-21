@@ -8,15 +8,21 @@ export const userApi = {
     const data = await instance.post("/user/auth", userInfo);
     return {
       ...user_auth,
-      company_name: data.data.company,
-      id: data.data.id,
-      role: data.data.role,
-      user_id: data.data.userid,
-      username: data.data.username,
-      token: data.data.token
+      // company_name: data.data.company,
+      // id: data.data.id,
+      // role: data.data.role,
+      // user_id: data.data.userid,
+      // username: data.data.username,
+      // token: data.data.token
+      result: data.data.result,
+      expiredAt: data.data.expiredAt,
+      memberNo: data.data.memberNo,
+      adminNo: data.data.adminNo,
+      code: data.data.code,
+      accessToken: data.data.accessToken,
+      type: data.data.type,
     };
   },
-
   register: async (userInfo) => {
     const data = await instance.post("/user/register", userInfo);
     return data.data === "Created";
