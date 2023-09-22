@@ -17,34 +17,11 @@ export const loginUser = createAsyncThunk(
         const response = await userApi.login(userInfo);
         return thunkAPI.fulfillWithValue(response);
       } catch (err) {
-        return thunkAPI.rejectWithValue(err.response.data);
+        return thunkAPI.rejectWithValue(err.message);
       }
     }
 );
 
-export const memberLogin = createAsyncThunk(
-    'user/loginUser',
-    async (userInfo, thunkAPI) => {
-      try {
-        const response = await userApi.memberLogin(userInfo);
-        return thunkAPI.fulfillWithValue(response);
-      } catch (err) {
-        return thunkAPI.rejectWithValue(err.response.data);
-      }
-    }
-);
-
-export const staffLogin = createAsyncThunk(
-    'user/loginUser',
-    async (userInfo, thunkAPI) => {
-      try {
-        const response = await userApi.staffLogin(userInfo);
-        return thunkAPI.fulfillWithValue(response);
-      } catch (err) {
-        return thunkAPI.rejectWithValue(err.response.data);
-      }
-    }
-);
 
 export const loginCheck = createAsyncThunk(
     "user/loginCheck",
@@ -79,7 +56,7 @@ export const userSlice = createSlice({
 
     },
     [loginUser.rejected]: (state, action) => {
-      state.error = action.payload.errMsg;
+      state.error = action.payload;
     },
     [loginCheck.fulfilled]: (state, action) => {
       if(action.payload.errMsg) {

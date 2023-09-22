@@ -1,27 +1,32 @@
 import { instance } from "../../shared/config";
 import {user_auth, user_common} from "../../model/user/common";
+import {ERROR_CONSTANTS} from "../../shared/constants/ERRORS";
 
 
 export const userApi = {
 
   login: async (userInfo) => {
     const data = await instance.post("/user/auth", userInfo);
-    return {
-      ...user_auth,
-      // company_name: data.data.company,
-      // id: data.data.id,
-      // role: data.data.role,
-      // user_id: data.data.userid,
-      // username: data.data.username,
-      // token: data.data.token
-      result: data.data.result,
-      expiredAt: data.data.expiredAt,
-      memberNo: data.data.memberNo,
-      adminNo: data.data.adminNo,
-      code: data.data.code,
-      accessToken: data.data.accessToken,
-      type: data.data.type,
-    };
+    if(data.data.code === 2000){
+      return {
+        ...user_auth,
+        // company_name: data.data.company,
+        // id: data.data.id,
+        // role: data.data.role,
+        // user_id: data.data.userid,
+        // username: data.data.username,
+        // token: data.data.token
+        expiredAt: data.data.expiredAt,
+        memberNo: data.data.memberNo,
+        adminNo: data.data.adminNo,
+        accessToken: data.data.accessToken,
+        type: data.data.type,
+      };
+    }else{
+      const error = new Error(`{"code":"${data.data.code}", "errMsg":"${ERROR_CONSTANTS[data.data.code] || "에러가 발생했습니다."}"}`)
+      throw error
+    }
+
   },
   register: async (userInfo) => {
     const data = await instance.post("/user/register", userInfo);
@@ -38,7 +43,12 @@ export const userApi = {
       id: userData.id,
       role: userData.role,
       userId: userData.userid,
-      username: userData.username
+      username: userData.username,
+      expiredAt: userData.expiredAt,
+      memberNo: userData.memberNo,
+      adminNo: userData.adminNo,
+      accessToken: userData.accessToken,
+      type: userData.type,
     }
 
     if(userData.role === 'fan') {

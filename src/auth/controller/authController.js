@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {userApi} from "../data/user_data";
 
 
-export const AuthController = (setError) => {
+export const AuthController = (setError, setValue, setShowPwdError) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,7 +22,17 @@ export const AuthController = (setError) => {
 
         dispatch(loginUser(userInfo)).then((result) => {
             if (result.error) {
-                setError('authError', {message: result.payload.errMsg})
+                const err = JSON.parse(result.payload)
+                if(Number(err.code)=== 1004||Number(err.code)=== 1006){
+                    setError('id', {message: err.errMsg})
+                    setValue('id',`${err.errMsg}`)
+                }
+                if(Number(err.code)=== 1005 || Number(err.code)=== 1007){
+                    setShowPwdError(true)
+                    setError('password', {message: err.errMsg})
+                    setValue('password',`${err.errMsg}`)
+                }
+
                 return
             }
             if (!sock.connected) {

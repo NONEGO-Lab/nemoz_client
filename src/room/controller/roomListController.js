@@ -39,6 +39,9 @@ export const RoomListController = () => {
 
 
   const getRoomListApi = async (page) => {
+    console.log('GET ROOM LIST')
+    console.log(userInfo.adminNo)
+    // eventList 부르기
     try {
       const result = await roomApi.getRoomList(eventId, page);
       setRoomList(result.data?.slice(0,10));

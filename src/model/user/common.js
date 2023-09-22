@@ -6,7 +6,12 @@ export const user_auth = {
   username: null,
   role: null,
   company_name: null,
-  token: null
+  token: null,
+  expiredAt: null,
+  memberNo: null,
+  adminNo: null,
+  accessToken: null,
+  type: null,
 }
 
 export const user_common = {
@@ -14,5 +19,11 @@ export const user_common = {
   userId: null,
   username: null,
   role: null,
-  company_name: null
+  company_name: null,
+  token: null,
+  expiredAt: null,
+  memberNo: null,
+  adminNo: null,
+  accessToken: null,
+  type: null,
 }

@@ -24,8 +24,9 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  if(error.response.status === 401) {
+  if(error.response.data.code !== 2000) {
     console.log("response 401 error");
+
   }
   return Promise.reject(error);
 });
