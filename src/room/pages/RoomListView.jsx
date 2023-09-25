@@ -17,7 +17,7 @@ const RoomListView = () => {
   const { roomList, setIsOpenRoomCreate, roomArray, movePage,
     isOpenRoomCreate, currentRoom, fanDetailOpenHandler, addUserOpenHandler, setCurrentRoom,
     isEmptyCheck, currentPage, currentFanInfo, isOpenAddUser, setIsOpenAddUser, endRoomApi,
-    getRoomListApi, setCurrentFanInfo, userInfo
+    getRoomListApi, setCurrentFanInfo, userInfo, getEventListApi, eventList
   } = controller();
   const isRoomList = window.location.pathname.split('/')[1] === 'roomlist'
   return (
@@ -85,7 +85,7 @@ const RoomListView = () => {
       {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
                                           getRoomListApi={getRoomListApi}/> }*/}
       {isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
-        getRoomListApi={getRoomListApi} />}
+        getRoomListApi={getRoomListApi} eventList={eventList} />}
       {currentRoom.room_id &&
         <WaitingList
           curRoomId={currentRoom.room_id}

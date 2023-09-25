@@ -5,7 +5,8 @@ import {create_room} from "../../model/room/room_model";
 export const roomApi = {
 
   getRoomList: async (event_id, page) => {
-    const data = await instance.get("/room/list", { params: { event_id : event_id, page_size: 20, current_page: page } });
+    console.log(event_id.join())
+    const data = await instance.get("/room/list", { params: { event_id : event_id.join(), page_size: 20, current_page: page } });
     return data.data;
   },
 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   eventName: "",
-  eventId: 8,
+  eventId: null,
   fanIds: [],
   artistIds: [],
   staffIds: [],

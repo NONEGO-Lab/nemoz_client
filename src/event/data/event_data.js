@@ -2,33 +2,56 @@ import {instance} from "../../shared/config";
 import {event_detail} from "../../model/event/event_model";
 
 export const eventApi = {
-  getEventList: async ({page, eventId}) => {
+  // getEventList: async ({page, eventId}) => {
+  //   const data = await instance.get("/event/list", {
+  //     params: {
+  //       page_size: 20,
+  //       current_page: page,
+  //       event_id: eventId
+  //     }
+  //   });
+  //     const result = [];
+  //     data.data.response_data.events.map((event) => {
+  //       let tmpEvent = {
+  //         ...event_detail,
+  //         event_id: event.event_id,
+  //         event_name: event.event_name,
+  //         target_staff_ids: event.target_staff_ids,
+  //         target_artist_ids: event.target_artist_ids,
+  //         target_fan_ids: event.target_fan_ids,
+  //         creator_info: event.creator_info,
+  //         create_dt: event.create_dt,
+  //         update_dt: event.update_dt
+  //       }
+  //       result.push(tmpEvent);
+  //     });
+  //
+  //     return result;
+  // },
+  getEventList: async ({userId}) => {
+    console.log(userId,'?')
+    const params = userId
     const data = await instance.get("/event/list", {
-      params: {
-        page_size: 20,
-        current_page: page,
-        event_id: eventId
-      }
+      params
     });
-      const result = [];
-      data.data.response_data.events.map((event) => {
-        let tmpEvent = {
-          ...event_detail,
-          event_id: event.event_id,
-          event_name: event.event_name,
-          target_staff_ids: event.target_staff_ids,
-          target_artist_ids: event.target_artist_ids,
-          target_fan_ids: event.target_fan_ids,
-          creator_info: event.creator_info,
-          create_dt: event.create_dt,
-          update_dt: event.update_dt
-        }
-        result.push(tmpEvent);
-      });
+    const result = [];
+    data.data.data.event_data.map((event) => {
+      let tmpEvent = {
+        ...event_detail,
+        event_id: event.no,
+        event_name: event.title,
+        target_staff_ids: event.adminList,
+        target_artist_ids: event.target_artist_ids,
+        target_fan_ids: event.memberList,
+        eventDate: event.eventDate,
+        eventState: event.eventState,
+        displayState: event.displayState
+      }
+      result.push(tmpEvent);
+    });
 
-      return result;
+    return result;
   },
-
 
   getEventDetail: async ({page, eventId}) => {
     const data = await instance.get("/event/list", {

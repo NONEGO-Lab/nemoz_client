@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {roomApi} from "../data/room_data";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
+import {eventApi} from "../../event/data/event_data";
 
 
 
@@ -16,6 +17,7 @@ export const RoomListController = () => {
   const [isOpenRoomCreate, setIsOpenRoomCreate] = useState(false);
   const [currentFanInfo, setCurrentFanInfo] = useState({});
   const [isOpenAddUser, setIsOpenAddUser] = useState(false);
+  const [eventList, setEventList] = useState([]);
 
   const eventId = useSelector((state) => state.event.eventId);
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -37,22 +39,44 @@ export const RoomListController = () => {
     setIsOpenAddUser(true);
   }
 
+  // const getRoomListApi = async (page) => {
+  //   console.log('GET ROOM LIST')
+  //   console.log(eventList)
+  //   console.log(eventList.map(e => e.event_id), 'DDF?DF?')
+  //   try {
+  //     const result = await roomApi.getRoomList(eventId, page);
+  //     setRoomList(result.data?.slice(0,10));
+  //   } catch (err) {
+  //     dispatch(setError(err));
+  //     dispatch(setIsError(true));
+  //   }
+  //
+  // }
 
-  const getRoomListApi = async (page) => {
-    console.log('GET ROOM LIST')
-    console.log(userInfo.adminNo)
-    // eventList 부르기
+  const getEventListApi = async (userId) =>{
     try {
-      const result = await roomApi.getRoomList(eventId, page);
-      setRoomList(result.data?.slice(0,10));
-    } catch (err) {
-      dispatch(setError(err));
-      dispatch(setIsError(true));
-    }
+      const eventList = await eventApi.getEventList({userId})
+      setEventList(eventList)
+      if(eventList.length >0){
+        try {
 
+          const eventIds =  eventList.map(e => e.event_id)
+          const result = await roomApi.getRoomList(eventIds, 1);
+
+          setRoomList(result.data?.slice(0,10));
+        } catch (err) {
+          dispatch(setError(err));
+          dispatch(setIsError(true));
+        }
+      }
+
+    }catch (err){
+      console.error(err)
+    }
   }
 
-  const endRoomApi = async (room) => {
+
+  const endRoomApi = async (room, userId) => {
     // if(room.meet_id !== ""){
     //     alert("현재 진행중인 영상통화가 있습니다");
     //     return;
@@ -63,7 +87,7 @@ export const RoomListController = () => {
         const result = await roomApi.endRoom(room.room_id);
         if(result) {
           alert("삭제 완료");
-          getRoomListApi(currentPage);
+          await getEventListApi({userId});
         } else {
           alert("방 삭제 실패");
         }
@@ -82,11 +106,13 @@ export const RoomListController = () => {
     }
 
     setCurrentPage(num);
-    await getRoomListApi(num);
+    await getEventListApi(num);
   }
 
   useEffect(()=>{
-    getRoomListApi(1);
+    getEventListApi({userId: userInfo.adminNo})
+
+
   },[])
 
 
@@ -107,8 +133,9 @@ export const RoomListController = () => {
     isOpenAddUser,
     setIsOpenAddUser,
     endRoomApi,
-    getRoomListApi,
+    // getRoomListApi,
     setCurrentFanInfo,
-    userInfo
+    userInfo,
+    eventList
   }
 }
