@@ -17,6 +17,8 @@ export const roomApi = {
 
   createRoom: async ({ roomTitle, eventId, staffIds, artistId, fanIdArray,
                        reserved_time, location, mimeType, due_dt }) => {
+    console.log(roomTitle, eventId, staffIds, artistId, fanIdArray,
+        reserved_time, location, mimeType, due_dt, 'reserved_time')
     const request = {
       ...create_room,
       room_name: roomTitle,

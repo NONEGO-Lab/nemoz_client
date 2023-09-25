@@ -20,10 +20,7 @@ const CreateRoom2 = ({setOnModal, getRoomListApi, eventList}) => {
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
     });
-    const [time, setTime] = useState({
-        hour: "", min: "", sec: "",
-
-    });
+    // const [time, setTime] = useState(0);
     console.log(eventList, ' in Room Create')
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
     const [targetArtistIds, setTargetArtistIds] = useState([]);
@@ -40,15 +37,15 @@ const CreateRoom2 = ({setOnModal, getRoomListApi, eventList}) => {
     //     setTargetStaffIds(response.target_staff_ids);
     // }
     console.log(currentEventId, 'currentEventId')
+    const {location, mimeType, fileName} = imgUrl;
     const onSubmit = async (data) => {
         const {artistName, roomTitle, time, startDate, fanIds, staffIds} = data;
-
+        console.log(mimeType,fileName, location, 'DATA')
         let fanIdArray = [];
         fanIds.forEach((fan, idx) => {
-            let data = {"fan_id": fan.id, "order": idx + 1};
+            let data = {"fan_id": fan.value, "order": idx + 1};
             fanIdArray.push(data);
         });
-
 
         // let artistId = targetArtistIds.find((ar) => ar.username === artistName)?.id;
         //
@@ -56,14 +53,14 @@ const CreateRoom2 = ({setOnModal, getRoomListApi, eventList}) => {
         //     artistId = targetArtistIds[0].id;
         // }
         const artistId = 9999
-        let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
+        // let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
         let due_dt = startDate.replace("T", " ") + ":00"
 
         const result = await roomApi.createRoom({
-            roomTitle, eventId, staffIds, artistId, fanIdArray, reserved_time, location, mimeType, due_dt
+            roomTitle, eventId:currentEventId, staffIds, artistId, fanIdArray, reserved_time:Number(time), location, mimeType, due_dt
         });
 
-        if (result === "Room Created") {
+        if (result.message === "Room Created") {
             window.alert("방이 만들어졌습니다.");
             setOnModal();
             getRoomListApi();
@@ -74,44 +71,45 @@ const CreateRoom2 = ({setOnModal, getRoomListApi, eventList}) => {
         value, label, ...rest
     })), [])
 
-    const timeOnChangeHandler = useCallback((e) => {
-        const {name, value} = e.target;
-
-        let check = /^[0-9]+$/;
-        if (!check.test(value)) return;
-
-        let time = parseInt(value);
-
-        if (time > 60 || time < 0) {
-            return;
-        }
-
-        switch (name) {
-            case "hour":
-                setTime((prev) => ({...prev, hour: value.toString()}));
-                break
-            case "min":
-                setTime((prev) => ({...prev, min: value.toString()}));
-                break
-            case "sec":
-                setTime((prev) => ({...prev, sec: value.toString()}));
-                break
-            default:
-        }
-
-    }, [time])
+    // const timeOnChangeHandler = useCallback((e) => {
+    //     const {name, value} = e.target;
+    //
+    //     let check = /^[0-9]+$/;
+    //     if (!check.test(value)) return;
+    //
+    //     let time = parseInt(value);
+    //
+    //     if (time > 60 || time < 0) {
+    //         return;
+    //     }
+    //
+    //     switch (name) {
+    //         case "hour":
+    //             setTime((prev) => ({...prev, hour: value.toString()}));
+    //             break
+    //         case "min":
+    //             setTime((prev) => ({...prev, min: value.toString()}));
+    //             break
+    //         case "sec":
+    //             setTime((prev) => ({...prev, sec: value.toString()}));
+    //             break
+    //         default:
+    //     }
+    //
+    // }, [time])
 
 
     const onChangeFile = async (e) => {
         let file = e.target.files[0]
-        const response = await roomApi.uploadImage(eventId, file);
+        const response = await roomApi.uploadImage(currentEventId, file);
+        console.log(response, 'uploadFile')
         setImgUrl({
-            fileName: file.name, location: response.location, mimeType: response.mimetype
+            fileName: file.name, location: response.data.location, mimeType: response.data.mimetype
         });
     }
 
 
-    const {location, mimeType, fileName} = imgUrl;
+
 
 
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
@@ -182,15 +180,12 @@ const CreateRoom2 = ({setOnModal, getRoomListApi, eventList}) => {
                         </label>
                         <div>
                             <input
-                                {...register('time', {
-                                    pattern: /^[0-9]*[1-9][0-9]*$/,
-                                })}
+                                {...register('time')}
                                 className={`bg-white text-[23px]  text-[#646464] w-[30px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                                 name={"time"}
                                 type={"number"}
                             >
                             </input>
-                            <span>분</span>
                         </div>
                     </div>
 
