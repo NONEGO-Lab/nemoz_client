@@ -7,20 +7,23 @@ export const userApi = {
 
   login: async (userInfo) => {
     const data = await instance.post("/user/auth", userInfo);
+    console.log(data.data)
     if(data.data.code === 2000){
+      const userData = data.data;
       return {
         ...user_auth,
         // company_name: data.data.company,
         // id: data.data.id,
-        // role: data.data.role,
+        role: userData.role,
         // user_id: data.data.userid,
         // username: data.data.username,
         // token: data.data.token
-        expiredAt: data.data.expiredAt,
-        memberNo: data.data.memberNo,
-        adminNo: data.data.adminNo,
-        accessToken: data.data.accessToken,
-        type: data.data.type,
+        expiredAt: userData.expiredAt,
+        memberNo: userData.memberNo,
+        staffNo: userData.staffNo,
+        artistNo: userData.artistNo,
+        accessToken: userData.accessToken,
+        type: userData.type,
       };
     }else{
       const error = new Error(`{"code":"${data.data.code}", "errMsg":"${ERROR_CONSTANTS[data.data.code] || "에러가 발생했습니다."}"}`)
@@ -46,7 +49,8 @@ export const userApi = {
       username: userData.username,
       expiredAt: userData.expiredAt,
       memberNo: userData.memberNo,
-      adminNo: userData.adminNo,
+      staffNo: userData.staffNo,
+      artistNo: userData.artistNo,
       accessToken: userData.accessToken,
       type: userData.type,
     }

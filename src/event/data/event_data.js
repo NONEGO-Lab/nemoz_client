@@ -29,19 +29,19 @@ export const eventApi = {
   //     return result;
   // },
   getEventList: async ({userId}) => {
-    console.log(userId,'?')
     const params = userId
     const data = await instance.get("/event/list", {
       params
     });
     const result = [];
+    console.log(data, 'EVENT DATA')
     data.data.data.event_data.map((event) => {
       let tmpEvent = {
         ...event_detail,
         event_id: event.no,
         event_name: event.title,
-        target_staff_ids: event.adminList,
-        target_artist_ids: event.target_artist_ids,
+        target_staff_ids: event.staffList,
+        target_artist_ids: event.artistList,
         target_fan_ids: event.memberList,
         eventDate: event.eventDate,
         eventState: event.eventState,

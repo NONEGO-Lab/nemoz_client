@@ -56,14 +56,14 @@ export const RoomListController = () => {
   const getEventListApi = async (userId) =>{
     try {
       const eventList = await eventApi.getEventList({userId})
+      console.log(eventList)
       setEventList(eventList)
       if(eventList.length >0){
         try {
 
           const eventIds =  eventList.map(e => e.event_id)
           const result = await roomApi.getRoomList(eventIds, 1);
-
-          setRoomList(result.data?.slice(0,10));
+          setRoomList(result.data?.room_data?.slice(0,10));
         } catch (err) {
           dispatch(setError(err));
           dispatch(setIsError(true));
@@ -110,7 +110,7 @@ export const RoomListController = () => {
   }
 
   useEffect(()=>{
-    getEventListApi({userId: userInfo.adminNo})
+    getEventListApi({userId: 10200})
 
 
   },[])
@@ -134,6 +134,7 @@ export const RoomListController = () => {
     setIsOpenAddUser,
     endRoomApi,
     // getRoomListApi,
+    getEventListApi,
     setCurrentFanInfo,
     userInfo,
     eventList

@@ -6,19 +6,20 @@ import {roomApi} from "../../../room/data/room_data";
 import {useSelector} from "react-redux";
 
 
-const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHandler}) => {
+const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHandler, eventId}) => {
 
 
     const containerRef = useRef()
     let roomId = curRoomId;
     const originalWaitingList = useRef([]);
 
-    const eventId = useSelector((state) => state.event.eventId);
-
+    // const eventId = useSelector((state) => state.event.eventId);
+    console.log(eventId, 'CURRENT eventId')
     const getWaitingListApi = async (eventId, roomId) => {
         const result = await roomApi.getListOrder({eventId, roomId});
-        setWaitingList(result);
-        originalWaitingList.current = result;
+        console.log(result, 'Waiting Result')
+        setWaitingList(result.data.fan_orders);
+        originalWaitingList.current = result.data.fan_orders;
     }
 
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
@@ -32,6 +33,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
         originalOrder: [], // 변경전 원래 배열 list
         updatedOrder: [], // 변경 후의 배열
     });
+
 
     const resetOrder = () => {
         setWaitingList(originalWaitingList.current);
@@ -74,6 +76,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                 {
                     waitingList.length > 0 ?
                         waitingList.map((fan, index) => {
+                            console.log(fan, 'Fan')
                             return (
                                 <WaitingFan
                                     fan={fan}
@@ -240,9 +243,7 @@ const WaitingFan = ({
 
 
                 <button
-                    onClick={() => {
-                        fanDetailOpenHandler(fan)
-                    }}
+                    onClick={() => {fanDetailOpenHandler(fan)}}
                     className="w-[110px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
                 >
                    <div className={"flex items-center justify-center"}>
