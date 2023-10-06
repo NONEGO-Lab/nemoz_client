@@ -17,7 +17,7 @@ export const AuthController = (setError, setValue, setShowPwdError) => {
             ...login_request,
             userid: data.id,
             password: data.password,
-            member: regex.test(data.id) ? 'member' : 'admin'
+            type: regex.test(data.id) ? 'member' : 'admin'
         }
 
         dispatch(loginUser(userInfo)).then((result) => {

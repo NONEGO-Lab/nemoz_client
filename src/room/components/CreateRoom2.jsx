@@ -22,8 +22,9 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     });
     // const [time, setTime] = useState(0);
     console.log(eventList, ' in Room Create')
+
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
-    const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)?.map(a => a.no)[0] || []);
+    const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0].name || []);
     // const [targetArtistIds, setTargetArtistIds] = useState([]);
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
@@ -41,6 +42,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const {location, mimeType, fileName} = imgUrl;
     const onSubmit = async (data) => {
         const {artistName, roomTitle, time, startDate} = data;
+
         const fanIds = [{value:10200}, {value:10201}]
         const staffIds = [21]
         let fanIdArray = [];
@@ -144,7 +146,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                                 const targetEventId = eventList.find(e => e.event_name === target)?.event_id
                                 setCurrentEventId(targetEventId)
                                 setTargetFanIds(eventList.find(e => e.event_name === target)?.target_fan_ids);
-                                setTargetArtistIds(eventList.find(e => e.event_name === target)?.target_artist_ids.map(a => a.no));
+                                setTargetArtistIds(eventList.find(e => e.event_name === target)?.target_artist_ids.map(a => a.name));
                                 setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                             }}
                             className={`bg-white text-[23px] flex items-center text-[#646464] `}

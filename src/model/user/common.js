@@ -9,7 +9,10 @@ export const user_auth = {
   token: null,
   expiredAt: null,
   memberNo: null,
-  adminNo: null,
+  staffNo: null,
+  staffName: null,
+  artistNo: null,
+  artistName: null,
   accessToken: null,
   type: null,
 }
@@ -23,7 +26,10 @@ export const user_common = {
   token: null,
   expiredAt: null,
   memberNo: null,
-  adminNo: null,
+  staffNo: null,
+  staffName: null,
+  artistNo: null,
+  artistName: null,
   accessToken: null,
   type: null,
 }

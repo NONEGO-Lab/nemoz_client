@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "./Header";
 import {Button} from "../element";
+import {useDispatch, useSelector} from "react-redux";
+import {RoomListController} from "../room/controller/roomListController";
+import {setEventIds} from "../redux/modules/eventSlice";
 
-export const Layout = ({children, title, buttonText, _onClick, _endClick, endText, isRoomList, isParticipantsList}) => {
+export const Layout = ({children, title, buttonText, _onClick, _endClick, endText, isRoomList, isParticipantsList, eventList}) => {
 
     return (
         <div className="w-[100%] m-[0 auto]">
@@ -10,13 +13,16 @@ export const Layout = ({children, title, buttonText, _onClick, _endClick, endTex
             <div className="">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
-                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList}/>
+                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList} eventlists={eventList}/>
+
                 </div>
                 {children}
             </div>
         </div>
     );
 };
+
+
 
 
 export const SizeLayout = ({children, width, height, color, flex, justifyCenter, rounded, isVideo, isWaitingRoom}) => {
@@ -68,7 +74,7 @@ export const SideBar = ({children}) => {
     )
 }
 
-export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText, role, isRoomList, isParticipantsList}) => {
+export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText, role, isRoomList, isParticipantsList, eventlists}) => {
 
     return (
         <div className="w-[100%] flex justify-between items-center px-[100px] py-[44px]">
@@ -84,6 +90,9 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
                 <div className="text-[25px] ml-[15px]">
                     {title}
                 </div>
+                {isRoomList &&
+                    <EventListFilter eventList={eventlists}/>
+                }
             </div>
             {
                 role !== "fan" &&
@@ -117,4 +126,39 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
             }
         </div>
     )
+
+
 }
+
+const EventListFilter = ({eventlists}) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const dispatch = useDispatch()
+    const eventId =useSelector((state) => state.event.eventId);
+    console.log(eventId, 'in Filter')
+    const {eventList} = RoomListController()
+    const allEventIds = eventList.map(e => e.event_id)
+    const currentEventName = eventList.find(e => e.event_id === eventId)?.event_name || '전체'
+    const clickLi = (target) =>{
+        dispatch(setEventIds({event_id: target}))
+        setIsOpen(!isOpen)
+    }
+    return (
+        <div className={"w-[278px] ml-[45px] "}>
+            <div className={"flex justify-between items-center border-b-[#e0e0e0] border-b-[1px] pb-[10px] "}>
+                <div className={"font-medium text-[17.5px]"}>{currentEventName}</div>
+                <img className={"w-[13.5px] h-[7.5px] cursor-pointer z-5"} src="../images/arrowDown.png"
+                     alt={'arrowdown-icon'} onClick={() => setIsOpen(!isOpen)}/>
+            </div>
+            {isOpen && <div className={"w-[278px] fixed bg-[#e9e9e9] text-[17.5px]"}>
+                <li className={"mx-[5px] list-none cursor-pointer"} onClick={()=>clickLi(allEventIds)}>전체</li>
+                {eventList.map((e,i )=> <li className={"mx-[5px] list-none cursor-pointer"} onClick={()=>clickLi(e.event_id)} key={i}>{e.event_name}</li>)}
+            </div>}
+        </div>
+    )
+}
+
+
+
+
+

@@ -21,29 +21,31 @@ const RoomListView = () => {
         getRoomListApi, setCurrentFanInfo, userInfo, getEventListApi, eventList
     } = controller();
     const isRoomList = window.location.pathname.split('/')[1] === 'roomlist'
+    console.log(roomList, 'roomList')
     return (
-        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList}>
+        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList} eventlists={eventList}>
 
             {/*table 뷰*/}
             {/* Tabler Header*/}
             <div>
                 <div
                     className="flex items-center w-[100%]  px-[100px] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 pb-[14px]">
-                    <div className="w-[550px]">Event</div>
+                    <div className="w-[288px]">Event</div>
                     <div className="w-[195px]">Artist</div>
-                    <div className="w-[140px]">Fan</div>
+                    <div className="w-[317px]">Fan</div>
                     <div className="w-[132px]">Waiting</div>
                     <div className="w-[120px]">Start</div>
                     <div>Quit</div>
-
                 </div>
+
 
                 <div className="px-[100px]">
 
                     <StaffProvider>
                         {
                             roomList?.map((room, idx) => {
-                                return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom} eventList={eventList}
+                                return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
+                                             eventList={eventList}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
                         }
@@ -91,7 +93,7 @@ const RoomListView = () => {
             {currentRoom.room_id &&
                 <WaitingList
                     curRoomId={currentRoom.room_id}
-                    eventId = {currentRoom.event_id}
+                    eventId={currentRoom.event_id}
                     fanDetailOpenHandler={fanDetailOpenHandler}
                     setOnModal={() => setCurrentRoom({})}
                     addUserOpenHandler={addUserOpenHandler}/>
@@ -132,7 +134,7 @@ const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
 
     return (
         <div className={`flex items-center h-[70px] ${bgColor} `}>
-            <div className="w-[550px]">
+            <div className="w-[288px]">
                 {room.room_name}
             </div>
 
@@ -140,7 +142,7 @@ const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
                 {room.artist_name}
             </div>
 
-            <div className="w-[140px]">
+            <div className="w-[317px]">
                 {room.fan_name}
             </div>
 

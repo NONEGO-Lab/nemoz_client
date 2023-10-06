@@ -34,7 +34,6 @@ export const eventApi = {
       params
     });
     const result = [];
-    console.log(data, 'EVENT DATA')
     data.data.data.event_data.map((event) => {
       let tmpEvent = {
         ...event_detail,
