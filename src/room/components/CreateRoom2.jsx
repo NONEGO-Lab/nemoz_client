@@ -12,7 +12,6 @@ import {useSelector} from "react-redux";
 // 드롭다운 스타일 변경
 
 
-
 const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
     const eventId = useSelector((state) => state.event.eventId);
@@ -43,7 +42,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const onSubmit = async (data) => {
         const {artistName, roomTitle, time, startDate} = data;
 
-        const fanIds = [{value:10200}, {value:10201}]
+        const fanIds = [{value: 10200}, {value: 10201}]
         const staffIds = [21]
         let fanIdArray = [];
         fanIds.forEach((fan, idx) => {
@@ -61,7 +60,15 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
         let due_dt = startDate.replace("T", " ") + ":00"
 
         const result = await roomApi.createRoom({
-            roomTitle, eventId:currentEventId, staffIds, artistId, fanIdArray, reserved_time:Number(time), location, mimeType, due_dt
+            roomTitle,
+            eventId: currentEventId,
+            staffIds,
+            artistId,
+            fanIdArray,
+            reserved_time: Number(time),
+            location,
+            mimeType,
+            due_dt
         });
 
         if (result.message === "Room Created") {
@@ -113,177 +120,174 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     }
 
 
-
-
-
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
-            <div className={"p-[60px]"}>
-                {/*Title*/}
-                <div className="flex justify-between">
-                    <div className="text-[24px] font-medium text-[#444]">
-                        방 만들기
-                    </div>
-                    <div onClick={() => setOnModal(false)}
-                         className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
-                        <img src={"../images/closeIcon.png"} alt='close-icon'/>
+        <div className={"p-[60px]"}>
+            {/*Title*/}
+            <div className="flex justify-between">
+                <div className="text-[24px] font-medium text-[#444]">
+                    방 만들기
+                </div>
+                <div onClick={() => setOnModal(false)}
+                     className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
+                    <img src={"../images/closeIcon.png"} alt='close-icon'/>
+                </div>
+            </div>
+
+            <form className="mt-[57px]">
+                {/*Select Event*/}
+                <div
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
+                    <label htmlFor={"roomTitle"}
+                           className=" flex items-center text-[20px] text-[#646464] font-medium">
+                        이벤트 선택
+                    </label>
+                    <select
+                        {...register('roomTitle', {
+                            required: true
+                        })}
+                        onChange={(e) => {
+                            const target = e.target.value
+                            const targetEventId = eventList.find(e => e.event_name === target)?.event_id
+                            setCurrentEventId(targetEventId)
+                            setTargetFanIds(eventList.find(e => e.event_name === target)?.target_fan_ids);
+                            setTargetArtistIds(eventList.find(e => e.event_name === target)?.target_artist_ids.map(a => a.name));
+                            setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
+                        }}
+                        className={`bg-white text-[23px] flex items-center text-[#646464] `}
+                        id={"roomTitle"}
+                        placeholder={"이벤트 선택"}
+                    >
+                        {eventList.map(e => e.event_name).map((value, idx) => {
+                            return (<option className={"bg-white text-center"} key={idx} value={value}>
+                                {value}
+                            </option>)
+                        })}
+                    </select>
+                </div>
+
+
+                {/*Select Artist*/}
+                <Select
+                    register={register}
+                    name={'selectArtist'}
+                    label={"아티스트 선택"}
+                    options={targetArtistIds}
+                    items={'items-center'}
+                    justify={"justify-between"}
+                    width={"w-[25%]"}
+                    fontSize={"text-[23px]"}
+                    mb={"mb-[40px]"}
+                    pb={"pb-[20px]"}
+                />
+
+                {/*영상통화 시간 선택*/}
+                <div
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
+                    <label htmlFor={"time"} className=" flex items-center text-[20px] text-[#646464] font-medium">
+                        영상통화 시간 선택
+                    </label>
+                    <div>
+                        <input
+                            {...register('time')}
+                            className={`bg-white text-[23px]  text-[#646464] w-[30px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            name={"time"}
+                            type={"number"}
+                        >
+                        </input>
                     </div>
                 </div>
 
-                <form className="mt-[57px]">
-                    {/*Select Event*/}
-                    <div
-                        className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
-                        <label htmlFor={"roomTitle"}
-                               className=" flex items-center text-[20px] text-[#646464] font-medium">
-                            이벤트 선택
-                        </label>
-                        <select
-                            {...register('roomTitle', {
-                                required: true
-                            })}
-                            onChange={(e) => {
-                                const target = e.target.value
-                                const targetEventId = eventList.find(e => e.event_name === target)?.event_id
-                                setCurrentEventId(targetEventId)
-                                setTargetFanIds(eventList.find(e => e.event_name === target)?.target_fan_ids);
-                                setTargetArtistIds(eventList.find(e => e.event_name === target)?.target_artist_ids.map(a => a.name));
-                                setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
-                            }}
-                            className={`bg-white text-[23px] flex items-center text-[#646464] `}
-                            id={"roomTitle"}
-                            placeholder={"이벤트 선택"}
-                        >
-                            {eventList.map(e => e.event_name).map((value, idx) => {
-                                return (<option className={"bg-white text-center"} key={idx} value={value}>
-                                        {value}
-                                    </option>)
-                            })}
-                        </select>
-                    </div>
+                {/* 시작 일시 */}
+                <Input
+                    register={register}
+                    title={"시작 일시"}
+                    name={"startDate"}
+                    required={true}
+                    width={"w-[100%]"}
+                    height={"min-h-[44px]"}
+                    marginBottom={"mb-[40px]"}
+                    placeholder={"시작 일시"}
+                    type={"datetime-local"}
+                />
 
+                {/* 파일 추가 */}
+                <Input
+                    register={register}
+                    title={"파일 추가"}
+                    name={"file"}
+                    required={true}
+                    width={"w-[100%]"}
+                    height={"min-h-[44px]"}
+                    marginBottom={"mb-[40px]"}
+                    fileName={fileName && fileName}
+                    onChange={onChangeFile}
+                    type={"file"}
+                />
 
-                    {/*Select Artist*/}
-                    <Select
-                        register={register}
-                        name={'selectArtist'}
-                        label={"아티스트 선택"}
-                        options={targetArtistIds}
-                        items={'items-center'}
-                        justify={"justify-between"}
-                        width={"w-[25%]"}
-                        fontSize={"text-[23px]"}
-                        mb={"mb-[40px]"}
-                        pb={"pb-[20px]"}
+                {/*multi select가 가능한 스탭 목록*/}
+                <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                    <label htmlFor={"staffList"}
+                           className="text-[#646464] text-[20px] font-medium flex items-center">
+                        스탭 등록
+                    </label>
+                    <Controller
+                        name="staffIds"
+                        control={control}
+                        render={({field}) => <SelectBox
+                            {...field}
+                            styles={customStyles}
+                            width="100%"
+                            height="44px"
+                            placeholder="+"
+                            closeMenuOnSelect={false}
+                            components={{DropdownIndicator}}
+                            defaultValue={[]}
+                            isMulti
+                            options={valueMaker(targetStaffIds)}
+                        />}
                     />
+                </div>
 
-                    {/*영상통화 시간 선택*/}
-                    <div
-                        className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
-                        <label htmlFor={"time"} className=" flex items-center text-[20px] text-[#646464] font-medium">
-                            영상통화 시간 선택
-                        </label>
-                        <div>
-                            <input
-                                {...register('time')}
-                                className={`bg-white text-[23px]  text-[#646464] w-[30px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
-                                name={"time"}
-                                type={"number"}
-                            >
-                            </input>
-                        </div>
-                    </div>
-
-                    {/* 시작 일시 */}
-                    <Input
-                        register={register}
-                        title={"시작 일시"}
-                        name={"startDate"}
-                        required={true}
-                        width={"w-[100%]"}
-                        height={"min-h-[44px]"}
-                        marginBottom={"mb-[40px]"}
-                        placeholder={"시작 일시"}
-                        type={"datetime-local"}
-                    />
-
-                    {/* 파일 추가 */}
-                    <Input
-                        register={register}
-                        title={"파일 추가"}
-                        name={"file"}
-                        required={true}
-                        width={"w-[100%]"}
-                        height={"min-h-[44px]"}
-                        marginBottom={"mb-[40px]"}
-                        fileName={fileName && fileName}
-                        onChange={onChangeFile}
-                        type={"file"}
-                    />
-
-                    {/*multi select가 가능한 스탭 목록*/}
-                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
-                        <label htmlFor={"staffList"}
-                               className="text-[#646464] text-[20px] font-medium flex items-center">
-                            스탭 등록
-                        </label>
-                        <Controller
-                            name="staffIds"
-                            control={control}
-                            render={({field}) => <SelectBox
-                                {...field}
-                                styles={customStyles}
-                                width="100%"
-                                height="44px"
-                                placeholder="+"
-                                closeMenuOnSelect={false}
-                                components={{DropdownIndicator}}
-                                defaultValue={[]}
-                                isMulti
-                                options={valueMaker(targetStaffIds)}
-                            />}
+                {/*multi select가 가능한 팬 목록*/}
+                <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                    <label htmlFor={"staffList"}
+                           className="text-[#646464] text-[20px] font-medium flex items-center">
+                        팬 등록
+                    </label>
+                    <Controller
+                        name="fanIds"
+                        control={control}
+                        render={({field}) => <SelectBox
+                            {...field}
+                            styles={customStyles}
+                            width="100%"
+                            height="44px"
+                            placeholder="+"
+                            closeMenuOnSelect={false}
+                            components={{DropdownIndicator}}
+                            defaultValue={[]}
+                            isMulti
+                            options={valueMaker(targetFanIds)}
                         />
+
+                        }
+                    />
+                </div>
+
+                <Button
+                    type={"submit"}
+                    _onClick={handleSubmit(onSubmit)}
+                    bgColor={"bg-[#01dfe0]"}
+                >
+                    <div className={"mx-[241px] my-[21px] min-h[24.5px] text-[26px] text-white font-medium"}>
+                        확인
                     </div>
+                </Button>
 
-                    {/*multi select가 가능한 팬 목록*/}
-                    <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
-                        <label htmlFor={"staffList"}
-                               className="text-[#646464] text-[20px] font-medium flex items-center">
-                            팬 등록
-                        </label>
-                        <Controller
-                            name="fanIds"
-                            control={control}
-                            render={({field}) => <SelectBox
-                                {...field}
-                                styles={customStyles}
-                                width="100%"
-                                height="44px"
-                                placeholder="+"
-                                closeMenuOnSelect={false}
-                                components={{DropdownIndicator}}
-                                defaultValue={[]}
-                                isMulti
-                                options={valueMaker(targetFanIds)}
-                            />
+            </form>
 
-                            }
-                        />
-                    </div>
-
-                    <Button
-                        type={"submit"}
-                        _onClick={handleSubmit(onSubmit)}
-                        bgColor={"bg-[#01dfe0]"}
-                    >
-                        <div className={"mx-[241px] my-[21px] min-h[24.5px] text-[26px] text-white font-medium"}>
-                            확인
-                        </div>
-                    </Button>
-
-                </form>
-
-            </div>
-        </ModalFrame>);
+        </div>
+    </ModalFrame>);
 };
 
 export default memo(CreateRoom2);

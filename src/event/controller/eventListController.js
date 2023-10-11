@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addEventInfo} from "../../redux/modules/eventSlice";
+import {addEventInfo, addEventList, setEventIds} from "../../redux/modules/eventSlice";
 import {eventApi} from "../data/event_data";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
 
@@ -38,6 +38,7 @@ export const EventListController = () => {
   const getEventList = async () => {
     try {
       const response = await eventApi.getEventList({ page });
+      dispatch(addEventList(response))
       setEventList(response);
     } catch (err) {
       dispatch(setError(err));
@@ -48,7 +49,6 @@ export const EventListController = () => {
   useEffect(() => {
     getEventList();
   }, [page]);
-
 
   return {
     eventList,

@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addTestFanInfo, clearTestSession} from "../../redux/modules/testSlice";
 import {attendeeApi} from "../data/attendee_data";
+import {roomApi} from "../../room/data/room_data";
+import {setError, setIsError} from "../../redux/modules/errorSlice";
 
 export const ParticipantController = () => {
   const navigate = useNavigate();
@@ -12,10 +14,11 @@ export const ParticipantController = () => {
   const [attendeeList, setAttendeeList] = useState([]);
   const [isOpenFanDetail, setIsOpenFanDetail] = useState(false);
   const [currentFanId, setCurrentFanId] = useState();
+  const [currentFanEventId, setCurrentFanEventId] = useState()
   const [openDeviceSetting, setOpenDeviceSetting] = useState(false)
   const roomArray = [...new Array(10)].map((_, i) => i + 1);
-  const eventId = useSelector((state) => state.event.eventId);
-
+  const eventId = localStorage.getItem("eventId")
+  const eventList = useSelector(state => state.event.eventList)
   const connectToTest = (user) => {
     dispatch(addTestFanInfo(user))
     if(localStorage.getItem("isSetDevice") === "true"){
@@ -26,7 +29,19 @@ export const ParticipantController = () => {
 
   };
 
-  const getAttendeeListApi = async (page) => {
+
+
+  const setOnModal = () => {
+    setIsOpenFanDetail(false);
+    setCurrentFanId();
+    setCurrentFanEventId();
+  }
+
+  const closeDeviceSetting = () => {
+    setOpenDeviceSetting(false)
+  }
+
+  const getAttendeeListApi = async (eventId, page) => {
     try {
       const result = await attendeeApi.getAttendeeList(eventId, page);
       setAttendeeList(result.fan_lists);
@@ -36,19 +51,13 @@ export const ParticipantController = () => {
     }
   }
 
-  const setOnModal = () => {
-    setIsOpenFanDetail(false);
-    setCurrentFanId();
-  }
-
-  const closeDeviceSetting = () => {
-    setOpenDeviceSetting(false)
-  }
-
-  useEffect(()=>{
-    getAttendeeListApi(1);
+  useEffect(()=> {
+    if(eventList?.length>0){
+      getAttendeeListApi(eventId,1);
+    }
     dispatch(clearTestSession());
-  },[])
+  },[eventList, eventId])
+
 
   const movePage = async (num) => {
 
@@ -69,6 +78,8 @@ export const ParticipantController = () => {
     connectToTest,
     setIsOpenFanDetail,
     setCurrentFanId,
+    currentFanEventId,
+    setCurrentFanEventId,
     currentFanId,
     setOnModal,
     openDeviceSetting, 

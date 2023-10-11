@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch} from "react-redux";
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../../element";
 import {Layout} from "../../shared/Layout";
@@ -18,12 +18,13 @@ const RoomListView = () => {
         roomList, setIsOpenRoomCreate, roomArray, movePage,
         isOpenRoomCreate, currentRoom, fanDetailOpenHandler, addUserOpenHandler, setCurrentRoom,
         isEmptyCheck, currentPage, currentFanInfo, isOpenAddUser, setIsOpenAddUser, endRoomApi,
-        getRoomListApi, setCurrentFanInfo, userInfo, getEventListApi, eventList
+        setCurrentFanInfo, userInfo, getEventListApi
     } = controller();
+    const eventList = useSelector(state => state.event.eventList)
     const isRoomList = window.location.pathname.split('/')[1] === 'roomlist'
-    console.log(roomList, 'roomList')
     return (
-        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList} eventlists={eventList}>
+        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList}
+                >
 
             {/*table 뷰*/}
             {/* Tabler Header*/}
@@ -53,7 +54,7 @@ const RoomListView = () => {
 
                     <ArtistProvider>
                         {
-                            roomList.filter((room) => room.artist_id === userInfo.id).map((room, idx) => {
+                            roomList.filter((room) => room.artist_id === userInfo.artistNo).map((room, idx) => {
                                 return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
@@ -120,8 +121,6 @@ const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
     const roomEnd = (room) => {
         endRoomApi(room)
     }
-
-
     //dispatch 하고 navigate 해야해서 한 어쩔수 없는 방법 이게 최선일까..
     const joinNewSession = (room) => {
         dispatch(addRoomInfo(room));

@@ -6,7 +6,8 @@ const initialState = {
   fanIds: [],
   artistIds: [],
   staffIds: [],
-  creatorInfo: {}
+  creatorInfo: {},
+  eventList : null,
 }
 
 
@@ -28,10 +29,13 @@ export const eventSlice = createSlice({
     currentEvent: (state, action) =>{
 
       state.currentEventId = action.payload.event_id
+    },
+    addEventList: (state, action) =>{
+      state.eventList = action.payload.eventList
     }
   }
 });
 
-export const { addEventInfo, setEventIds } = eventSlice.actions
+export const { addEventInfo, setEventIds, addEventList } = eventSlice.actions
 
 export default eventSlice.reducer

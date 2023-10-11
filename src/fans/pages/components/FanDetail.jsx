@@ -3,7 +3,7 @@ import {ModalFrameDepth} from "../../../modal/ModalFrame";
 import {Button} from "../../../element";
 import {attendeeApi} from "../../data/attendee_data";
 
-const FanDetail = ({setOnModal, currentFanId}) => {
+const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
 
     let style = "w-[650px] h-[900px] rounded-[15px]  drop-shadow-md";
 
@@ -17,7 +17,7 @@ const FanDetail = ({setOnModal, currentFanId}) => {
     const [fanInfo, setFanInfo] = useState({});
 
     const getFanDetailApi = async () => {
-        const result = await attendeeApi.getFanDetail(currentFanId);
+        const result = await attendeeApi.getFanDetail(currentFanId, currentFanEventId);
         setFanInfo(result);
     }
 
@@ -42,7 +42,7 @@ const FanDetail = ({setOnModal, currentFanId}) => {
                             이름
                         </div>
                         <div className={"text-[21px] text-[#444] font-[500]"}>
-                            {fanInfo.fan_name}
+                            {fanInfo.fan_name || '이름 없음'}
                         </div>
 
                     </div>
@@ -52,7 +52,7 @@ const FanDetail = ({setOnModal, currentFanId}) => {
                             성별
                         </div>
                         <div className={"text-[21px] text-[#444] font-[500]"}>
-                            {fanInfo.sex}
+                            {fanInfo.sex || '정보 없음'}
                         </div>
 
                     </div>
@@ -62,7 +62,7 @@ const FanDetail = ({setOnModal, currentFanId}) => {
                             나이
                         </div>
                         <div className={"text-[21px] text-[#444] font-[500]"}>
-                            {fanInfo.age}
+                            {fanInfo.age || '나이 없음'}
                         </div>
 
                     </div>

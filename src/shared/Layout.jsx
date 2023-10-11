@@ -1,11 +1,22 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Header from "./Header";
 import {Button} from "../element";
 import {useDispatch, useSelector} from "react-redux";
-import {RoomListController} from "../room/controller/roomListController";
-import {setEventIds} from "../redux/modules/eventSlice";
+import {addEventList, setEventIds} from "../redux/modules/eventSlice";
+import {eventApi} from "../event/data/event_data";
+import {useNavigate} from "react-router-dom";
 
-export const Layout = ({children, title, buttonText, _onClick, _endClick, endText, isRoomList, isParticipantsList, eventList}) => {
+export const Layout = ({
+                           children,
+                           title,
+                           buttonText,
+                           _onClick,
+                           _endClick,
+                           endText,
+                           isRoomList,
+                           isParticipantsList,
+
+                       }) => {
 
     return (
         <div className="w-[100%] m-[0 auto]">
@@ -13,7 +24,8 @@ export const Layout = ({children, title, buttonText, _onClick, _endClick, endTex
             <div className="">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
-                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList} eventlists={eventList}/>
+                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList}
+                                     />
 
                 </div>
                 {children}
@@ -23,12 +35,10 @@ export const Layout = ({children, title, buttonText, _onClick, _endClick, endTex
 };
 
 
-
-
 export const SizeLayout = ({children, width, height, color, flex, justifyCenter, rounded, isVideo, isWaitingRoom}) => {
     return (
         <div
-            className={`m-auto ${isVideo||isWaitingRoom? "":"mt-[230px]" } ${width} ${height} ${color} ${flex} ${justifyCenter ? 'justify-center' : ''} ${rounded}`}>
+            className={`m-auto ${isVideo || isWaitingRoom ? "" : "mt-[230px]"} ${width} ${height} ${color} ${flex} ${justifyCenter ? 'justify-center' : ''} ${rounded}`}>
             {children}
         </div>
     );
@@ -74,7 +84,16 @@ export const SideBar = ({children}) => {
     )
 }
 
-export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText, role, isRoomList, isParticipantsList, eventlists}) => {
+export const ContainerHeader = ({
+                                    title,
+                                    buttonText,
+                                    _onClick,
+                                    _endClick,
+                                    endText,
+                                    role,
+                                    isRoomList,
+                                    isParticipantsList
+                                }) => {
 
     return (
         <div className="w-[100%] flex justify-between items-center px-[100px] py-[44px]">
@@ -90,9 +109,9 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
                 <div className="text-[25px] ml-[15px]">
                     {title}
                 </div>
-                {isRoomList &&
-                    <EventListFilter eventList={eventlists}/>
-                }
+
+                <EventListFilter/>
+
             </div>
             {
                 role !== "fan" &&
@@ -126,23 +145,65 @@ export const ContainerHeader = ({title, buttonText, _onClick, _endClick, endText
             }
         </div>
     )
-
-
 }
-
-const EventListFilter = ({eventlists}) => {
+const EventListFilter = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const dispatch = useDispatch()
-    const eventId =useSelector((state) => state.event.eventId);
-    console.log(eventId, 'in Filter')
-    const {eventList} = RoomListController()
-    const allEventIds = eventList.map(e => e.event_id)
-    const currentEventName = eventList.find(e => e.event_id === eventId)?.event_name || '전체'
-    const clickLi = (target) =>{
-        dispatch(setEventIds({event_id: target}))
-        setIsOpen(!isOpen)
-    }
+    const eventId = localStorage.getItem("eventId");
+    const eventList = useSelector(state => state.event.eventList)
+    const allEventIds = eventList?.map(e => e.event_id)
+    const currentEventName = eventList?.find(e => e.event_id === Number(eventId))?.event_name || '전체'
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const navigate = useNavigate();
+    const clickLi = useCallback(
+        (target) => {
+            dispatch(setEventIds({event_id: target}))
+            if(localStorage.getItem("eventId")){
+                localStorage.setItem("eventId",target)
+            }
+            setIsOpen(!isOpen)
+        },
+        [isOpen],
+    );
+
+    useEffect(() => {
+        console.log('in Layout')
+        const getEventListApi = async (userId) => {
+            //팬일 경우 바로 대기화면으로
+            if (userInfo.role === "fan") {
+                navigate("/waitcall");
+            }
+            try {
+                const eventList = await eventApi.getEventList({userId})
+                dispatch(addEventList({eventList}))
+                const eventIds = eventList.map(e => e.event_id)
+                dispatch(setEventIds({event_id: eventIds}))
+                if(!localStorage.getItem("eventId")){
+                    localStorage.setItem("eventId",eventIds)
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        function exractUserId (role){
+            if(role === 'staff'){
+                return userInfo.staffNo
+            }
+            else if(role === 'artist'){
+                return userInfo.artistNo
+            }
+            else{
+                console.log('Dummy Id')
+                return 10200
+            }
+        }
+        getEventListApi({userId: 10200})
+        // getEventListApi({userId: exractUserId(userInfo.role)})
+
+
+    }, [eventId])
+
     return (
         <div className={"w-[278px] ml-[45px] "}>
             <div className={"flex justify-between items-center border-b-[#e0e0e0] border-b-[1px] pb-[10px] "}>
@@ -151,13 +212,13 @@ const EventListFilter = ({eventlists}) => {
                      alt={'arrowdown-icon'} onClick={() => setIsOpen(!isOpen)}/>
             </div>
             {isOpen && <div className={"w-[278px] fixed bg-[#e9e9e9] text-[17.5px]"}>
-                <li className={"mx-[5px] list-none cursor-pointer"} onClick={()=>clickLi(allEventIds)}>전체</li>
-                {eventList.map((e,i )=> <li className={"mx-[5px] list-none cursor-pointer"} onClick={()=>clickLi(e.event_id)} key={i}>{e.event_name}</li>)}
+                <li className={"mx-[5px] list-none cursor-pointer"} onClick={() => clickLi(allEventIds)}>전체</li>
+                {eventList.map((e, i) => <li className={"mx-[5px] list-none cursor-pointer"}
+                                             onClick={() => clickLi(e.event_id)} key={i}>{e.event_name}</li>)}
             </div>}
         </div>
     )
 }
-
 
 
 

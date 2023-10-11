@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {roomApi} from "../data/room_data";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {setEventIds} from "../../redux/modules/eventSlice"
+import {addEventList, setEventIds} from "../../redux/modules/eventSlice"
 import {eventApi} from "../../event/data/event_data";
 import {useNavigate} from "react-router-dom";
 
 
 export const RoomListController = () => {
-
     const roomArray = [...new Array(10)].map((_, i) => i + 1);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -19,11 +18,9 @@ export const RoomListController = () => {
     const [isOpenRoomCreate, setIsOpenRoomCreate] = useState(false);
     const [currentFanInfo, setCurrentFanInfo] = useState({});
     const [isOpenAddUser, setIsOpenAddUser] = useState(false);
-    const [eventList, setEventList] = useState([]);
-
-    const eventId = useSelector((state) => state.event.eventId);
+    const eventId = localStorage.getItem("eventId");
     const userInfo = useSelector((state) => state.user.userInfo);
-
+    const eventList = useSelector(state => state.event.eventList)
 
     const isEmptyCheck = (value) => {
         return Object.keys(value).length === 0;
@@ -62,7 +59,7 @@ export const RoomListController = () => {
         }
         try {
             const eventList = await eventApi.getEventList({userId})
-            setEventList(eventList)
+            dispatch(addEventList({eventList}))
             const eventIds = eventList.map(e => e.event_id)
             dispatch(setEventIds({event_id: eventIds}))
         } catch (err) {
@@ -105,13 +102,8 @@ export const RoomListController = () => {
     }
 
     useEffect(() => {
-        getEventListApi({userId: 10200})
-
-
-    }, [userInfo])
-
-    useEffect(() => {
-        if (eventList.length > 0) {
+        console.log('get Room List')
+        if (eventList?.length > 0) {
             const getRoomListApi = async (eventId) => {
                 try {
                     const result = await roomApi.getRoomList(eventId, 1);

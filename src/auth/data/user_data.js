@@ -7,8 +7,6 @@ export const userApi = {
 
     login: async (userInfo) => {
         const data = await instance.post("/user/auth", userInfo);
-        console.log(data.data.data.code)
-        // const userData = data.data.data
         if (data.data.data.code === 2000) {
             const userData = data.data.data;
             return {
@@ -43,14 +41,13 @@ export const userApi = {
         const data = await instance.get("/user/check/auth", {});
 
         const userData = data.data.data;
-        console.log(userData, 'login Chcek')
         const tmpUserData = {
             ...user_common,
             company_name: userData.company_name,
             id: userData.id,
             role: userData.role,
             userId: userData.userid,
-            username: userData.username,
+            username: userData.memberName || userData.artistName || userData.staffName || '이름없음',
             expiredAt: userData.expiredAt,
             memberNo: userData.memberNo,
             staffNo: userData.staffNo,

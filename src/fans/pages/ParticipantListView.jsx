@@ -16,6 +16,8 @@ const ParticipantListView = () => {
         setIsOpenFanDetail,
         setCurrentFanId,
         currentFanId,
+        currentFanEventId,
+        setCurrentFanEventId,
         setOnModal,
         openDeviceSetting,
         setOpenDeviceSetting,
@@ -35,7 +37,7 @@ const ParticipantListView = () => {
             {/* User List */}
             <div>
                 {attendeeList.map((user, idx) => {
-                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
+                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setCurrentFanEventId={setCurrentFanEventId}
                                  setOpenDeviceSetting={setOpenDeviceSetting}
                                  setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}
                                  bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
@@ -66,7 +68,7 @@ const ParticipantListView = () => {
         </div>
 
         {/* Modal */}
-        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal}/>}
+        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} currentFanEventId={currentFanEventId}/>}
         {openDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
     </Layout>)
 }
@@ -74,7 +76,7 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, connectToTest, bgColor}) => {
+const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor}) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
@@ -107,6 +109,7 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
             <div>
                 <button
                     onClick={() => {
+                        setCurrentFanEventId(user.event_id)
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);
                     }}

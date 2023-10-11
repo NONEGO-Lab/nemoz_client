@@ -4,12 +4,14 @@ import { instance } from "../../shared/config";
 export const attendeeApi = {
 
   getAttendeeList: async (eventId, page) => {
+    if(Array.isArray(eventId)){eventId = eventId.join()
+    }
     const data = await instance.get("/attendee/list", { params: { event_id: eventId, page_size: 20, current_page: page } });
-    return data.data;
+    return data.data.data;
   },
 
-  getFanDetail: async (fanId) => {
-    const data = await instance.get("/attendee/detail", { params: { fan_id: fanId } });
+  getFanDetail: async (fanId, eventId) => {
+    const data = await instance.get("/attendee/detail", { params: { fan_id: fanId, event_id:eventId } });
     return data.data;
   },
 
