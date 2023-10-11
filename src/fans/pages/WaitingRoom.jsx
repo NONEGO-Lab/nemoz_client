@@ -15,10 +15,6 @@ const WaitingRoom = () => {
 
     const img_url = "https://images8.alphacoders.com/132/1321612.jpeg"
 
-    console.log(userInfo)
-    console.log(myWaitInfo)
-    console.log(isCallFinished)
-
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>

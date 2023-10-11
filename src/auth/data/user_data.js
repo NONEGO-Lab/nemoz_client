@@ -44,7 +44,7 @@ export const userApi = {
         const tmpUserData = {
             ...user_common,
             company_name: userData.company_name,
-            id: userData.id,
+            id: userData.id||userData.memberNo||userData.artistNo||userData.staffNo,
             role: userData.role,
             userId: userData.userid,
             username: userData.memberName || userData.artistName || userData.staffName || '이름없음',

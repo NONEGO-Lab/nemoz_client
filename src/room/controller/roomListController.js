@@ -73,13 +73,12 @@ export const RoomListController = () => {
         //     alert("현재 진행중인 영상통화가 있습니다");
         //     return;
         // };
-
         if (window.confirm("정말 종료하시겠습니까?")) {
             try {
                 const result = await roomApi.endRoom(room.room_id);
                 if (result) {
                     alert("삭제 완료");
-                    await getEventListApi({userId});
+                    await getEventListApi({userId:10200});
                 } else {
                     alert("방 삭제 실패");
                 }

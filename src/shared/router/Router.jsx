@@ -14,8 +14,6 @@ import ConnectTest from "../../test/pages/ConnectTest";
 import LoginView from "../../auth/pages/LoginView";
 import WaitingRoom from "../../fans/pages/WaitingRoom";
 import TmpVideoContainer from "call/pages/TmpVideoContainer";
-import ConnectTest2 from "test/pages/ConnectTest2";
-import Waiting2 from "../../fans/pages/Waiting2";
 import VideoContainer2 from "../../call/pages/components/VideoContainer2";
 
 
@@ -29,7 +27,6 @@ const Router = () => {
             <Route path="/roomlist" element={<Auth><RoomList/></Auth>}/>
             <Route path="/userlist" element={<Auth><ParticipantList/></Auth>}/>
             <Route path="/waitcall" element={<Auth><WaitingRoom/></Auth>}/>
-            <Route path="/wait2" element={<Waiting2/>}/>
             <Route path="/devicetest" element={<Auth><DeviceTest/></Auth>}/>
             {/*<Route path="/test/:id" element={<Auth><ConnectTest/></Auth>}/>*/}
             <Route path="/test/:id" element={<Auth><TmpVideoContainer/></Auth>}/>

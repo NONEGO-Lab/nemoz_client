@@ -51,6 +51,18 @@ export const eventApi = {
 
     return result;
   },
+    getFanIncludedEventList: async ({userId})=>{
+    const response = await  instance.get("event/list",
+        {
+          params: {
+            userId: userId
+          }
+        }
+    )
+      return response.data.data.event_data
+    }
+
+    ,
 
   getEventDetail: async ({page, eventId}) => {
     const data = await instance.get("/event/list", {

@@ -14,7 +14,7 @@ import {useSelector} from "react-redux";
 
 const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
-    const eventId = useSelector((state) => state.event.eventId);
+    const eventId = localStorage.getItem('eventId');
     const {register, handleSubmit, control, formState: {errors}, setError, onChange} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -24,7 +24,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
 
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
     const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0].name || []);
-    // const [targetArtistIds, setTargetArtistIds] = useState([]);
+    const [targetArtistFullInfo, setTargetArtistFullInfo] = useState(eventList.map(e => e.target_artist_ids));
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
 
@@ -40,29 +40,29 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     console.log(currentEventId, 'currentEventId')
     const {location, mimeType, fileName} = imgUrl;
     const onSubmit = async (data) => {
-        const {artistName, roomTitle, time, startDate} = data;
+        const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
 
-        const fanIds = [{value: 10200}, {value: 10201}]
-        const staffIds = [21]
+
         let fanIdArray = [];
         fanIds.forEach((fan, idx) => {
             let data = {"fan_id": fan.value, "order": idx + 1};
             fanIdArray.push(data);
         });
 
-        // let artistId = targetArtistIds.find((ar) => ar.username === artistName)?.id;
-        //
-        // if (artistId === undefined) {
-        //     artistId = targetArtistIds[0].id;
-        // }
-        const artistId = 9999
+
+        let artistId = targetArtistFullInfo.find((ar) => ar.name === selectArtist)?.no;
+
+        if (artistId === undefined) {
+            artistId = targetArtistFullInfo[0].no;
+        }
+
         // let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
         let due_dt = startDate.replace("T", " ") + ":00"
 
         const result = await roomApi.createRoom({
             roomTitle,
             eventId: currentEventId,
-            staffIds,
+            staffIds:staffIds.map(s => s.value),
             artistId,
             fanIdArray,
             reserved_time: Number(time),
@@ -74,11 +74,12 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
         if (result.message === "Room Created") {
             window.alert("방이 만들어졌습니다.");
             setOnModal();
-            getEventListApi();
+            getEventListApi({userId:10200});
+            // localStorage.setItem('eventId',eventId)
         }
     }
 
-    const valueMaker = useCallback((array) => array.map(({no: label, name: value, ...rest}) => ({
+    const valueMaker = useCallback((array) => array.map(({no: value, name: label, ...rest}) => ({
         label, value, ...rest
     })), [])
 
@@ -151,6 +152,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                             setCurrentEventId(targetEventId)
                             setTargetFanIds(eventList.find(e => e.event_name === target)?.target_fan_ids);
                             setTargetArtistIds(eventList.find(e => e.event_name === target)?.target_artist_ids.map(a => a.name));
+                            setTargetArtistFullInfo(eventList.find(e =>e.event_name === target).target_artist_ids)
                             setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                         }}
                         className={`bg-white text-[23px] flex items-center text-[#646464] `}

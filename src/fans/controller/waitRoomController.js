@@ -10,6 +10,7 @@ import {disconnectSession, setIsCallFinished, videoReset} from "../../redux/modu
 import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {sock} from "../../socket/config";
 import {fanEvents} from "../../socket/events/fan_event";
+import {eventApi} from "../../event/data/event_data";
 
 
 export const WaitRoomController = () => {
@@ -61,8 +62,12 @@ export const WaitRoomController = () => {
 
   const getMyWaitingInfo = async () => {
     try {
-      const response = await attendeeApi.waitFan(eventId, userInfo.id);
-      if(response === "All meet is ended") {
+      // 팬 아이디로 이벤트 리스트 조회
+      const evnetList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
+      const targetEventId = evnetList.map(e => e.no)[0]
+
+      const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
+      if(response.message === "All meet is ended") {
         dispatch(setIsCallFinished());
       } else {
         setMyWaitInfo(response);

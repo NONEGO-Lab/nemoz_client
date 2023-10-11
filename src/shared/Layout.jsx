@@ -172,18 +172,20 @@ const EventListFilter = () => {
             //팬일 경우 바로 대기화면으로
             if (userInfo.role === "fan") {
                 navigate("/waitcall");
-            }
-            try {
-                const eventList = await eventApi.getEventList({userId})
-                dispatch(addEventList({eventList}))
-                const eventIds = eventList.map(e => e.event_id)
-                dispatch(setEventIds({event_id: eventIds}))
-                if(!localStorage.getItem("eventId")){
-                    localStorage.setItem("eventId",eventIds)
+            }else{
+                try {
+                    const eventList = await eventApi.getEventList({userId})
+                    dispatch(addEventList({eventList}))
+                    const eventIds = eventList.map(e => e.event_id)
+                    dispatch(setEventIds({event_id: eventIds}))
+                    if(!localStorage.getItem("eventId")){
+                        localStorage.setItem("eventId",eventIds)
+                    }
+                } catch (err) {
+                    console.error(err)
                 }
-            } catch (err) {
-                console.error(err)
             }
+
         }
 
         function exractUserId (role){

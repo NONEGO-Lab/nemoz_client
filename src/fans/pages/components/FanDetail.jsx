@@ -18,7 +18,7 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
 
     const getFanDetailApi = async () => {
         const result = await attendeeApi.getFanDetail(currentFanId, currentFanEventId);
-        setFanInfo(result);
+        setFanInfo(result.data);
     }
 
     useEffect(() => {
