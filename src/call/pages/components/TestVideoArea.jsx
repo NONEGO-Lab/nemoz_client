@@ -17,10 +17,9 @@ const TestVideoArea = ({
                        }) => {
 
     const {age, fan_name, sex, message} = fanInfo
-    console.log(userInfo)
     const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
-    const isFan = role === 'fan'
+    const isFan = role === 'member'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
@@ -65,7 +64,7 @@ const TestVideoArea = ({
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2/>}
-                    {(role === 'fan' && !publisherVideo)&&
+                    {(isFan && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{"Fan 이름 나와야함"}</span>

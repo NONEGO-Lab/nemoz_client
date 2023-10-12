@@ -24,6 +24,7 @@ export const userApi = {
                 artistNo: userData.artistNo,
                 artistName: userData.artistName,
                 accessToken: userData.accessToken,
+                adminNo: userData.adminNo,
                 type: userData.type,
             };
         } else {

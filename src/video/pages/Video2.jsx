@@ -4,6 +4,7 @@ import InnerCircleText from "../../common/InnerCircleText";
 
 
 const Video2 = ({streamManager, userInfo, style}) => {
+    // console.log('streamManager', streamManager)
     const videoRef = useRef();
     useEffect(() => {
 

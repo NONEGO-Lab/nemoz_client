@@ -52,6 +52,7 @@ const TmpVideoContainer = () => {
     const {getChatFromSocket} = useReaction();
 
     const quitTest = async () => {
+        // quitTest 룸 넘버 확인
         if (window.confirm("정말 나가시겠습니까?")) {
             if (userInfo.role === "fan") {
                 try {
@@ -74,7 +75,7 @@ const TmpVideoContainer = () => {
                 const response = await testApi.testEnd(sessionInfo.meet_name);
                 if (response) {
                     navigate("/userlist");
-                    let roomNum = `1_test_${fanInfo.fan_id}`;
+                    let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
                     sock.emit("leaveRoom", roomNum, userInfo, navigate);
                 }
             }
@@ -104,25 +105,28 @@ const TmpVideoContainer = () => {
             setOpenMobileSetting(false);
         }
     }
-
+    // console.log(subscriber, 'subscribersubscribersubscribersubscribersubscribersubscribersubscribersubscribersubscriber')
     useEffect(() => {
 
         if (subscriber !== undefined) {
+            console.log('sub is not exist')
             return;
         }
-
-        if (userInfo.role !== "fan") {
+        console.log(userInfo.role, 'userInfo.role')
+        if (userInfo.role !== "member") {
             // staff 이면,
             // test meet create -> join 까지 한다.
             // create, join 하고 나온 방을 socket 으로 보낸다!
             createJoinSession().then((sessionInfo) => {
                 let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
                 sock.emit("joinTestSession", data);
-                let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
+                let roomNum = `${fanInfo.event_id}_test_${fanInfo.fan_id}`;
+
                 sock.emit("joinRoom", roomNum, userInfo);
             })
         } else {
             // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
+            console.log(userInfo, 'FAN USER INFO')
             joinTestSession().then(() => {
                 let roomNum = `${eventId}_test_${userInfo.id}`;
                 sock.emit("joinRoom", roomNum, userInfo);

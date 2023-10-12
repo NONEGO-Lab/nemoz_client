@@ -31,7 +31,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => audio.label);
 
-    console.log(sessionInfo)
 
     const endMeet = async () => {
         try {

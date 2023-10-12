@@ -5,7 +5,7 @@ export const testApi = {
 
   testCreate: async () => {
     const data = await instance.post("/test/create", {});
-    return data.data.sessionId;
+    return data.data.data.sessionId;
   },
 
   testJoin: async ({ meetName, userId }) => {
@@ -17,15 +17,15 @@ export const testApi = {
     const data = await instance.post("/test/join", req);
 
     return {
-      id: data.data.id,
-      token: data.data.token
+      id: data.data.data.id,
+      token: data.data.data.token
     };
   },
 
   testLeave: async (request) => {
     const data = await instance.post("/test/leave", request);
 
-    return data.data === 'LEAVED';
+    return data.data.message === 'LEAVED';
   },
 
   testEnd: async (meetName) => {
@@ -41,6 +41,6 @@ export const testApi = {
     }
 
     const data = await instance.post("/test/end", req);
-    return data.data === 'Meet Ended';
+    return data.data.message === 'Meet Ended';
   }
 }

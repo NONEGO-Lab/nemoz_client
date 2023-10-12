@@ -101,7 +101,6 @@ export const useTestVideo = () => {
   const joinTestSession = async () => {
     let OV = new OpenVidu();
     let _session = OV.initSession();
-
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
 
@@ -137,7 +136,6 @@ export const useTestVideo = () => {
     publisher["role"] = userInfo.role;
     publisher.on("accessAllowed",() => {
       _session.publish(publisher).then( async () => {
-      console.log(publisher, 'publisher')
         dispatch(addTestPublisher(publisher));
         dispatch(addTestSession(_session));
 
@@ -157,14 +155,13 @@ export const useTestVideo = () => {
   const subscribeToStreamCreated = (_session) => {
     _session.on('streamCreated', (event) => {
       let subscriber = _session.subscribe(event.stream, undefined);
-      console.log(subscriber)
       dispatch(addTestSubscriber(subscriber));
     });
   }
 
   const subscribeToStreamDestroyed = (_session) => {
     _session.on('streamDestroyed', (event) => {
-      if(userInfo.role === "fan") {
+      if(userInfo.role === "fan" || "member") {
         navigate("/waitcall", { replace: true });
       } else {
 

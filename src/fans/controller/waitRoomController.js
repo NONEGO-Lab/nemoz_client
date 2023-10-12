@@ -64,13 +64,14 @@ export const WaitRoomController = () => {
     try {
       // 팬 아이디로 이벤트 리스트 조회
       const evnetList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
-      const targetEventId = evnetList.map(e => e.no)[0]
-
+      // const targetEventId = evnetList.map(e => e.no)[0]
+      const targetEventId = 12
       const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
+      console.log(response)
       if(response.message === "All meet is ended") {
         dispatch(setIsCallFinished());
       } else {
-        setMyWaitInfo(response);
+        setMyWaitInfo(response.data.res_data);
       }
     } catch (err) {
       console.log(err);
@@ -84,10 +85,15 @@ export const WaitRoomController = () => {
 
 
   useEffect(() => {
+    console.log('WAIT ROOM CONTROLLER')
+    sock.on("joinTestSession", (data) => {
+    console.log('JOIN TEST SESSION', data)
+      fanEvents.joinTestSession({
+        data, userInfo, dispatch, setIsReadyTest
+      })
 
-    sock.on("joinTestSession", (data) => fanEvents.joinTestSession({
-      data, userInfo, dispatch, setIsReadyTest
-    }));
+
+    });
     sock.on("nextFanTurn", (nextFanInfo, sessionInfo, roomInfo) => {
       console.log(nextFanInfo, 'nextFanInfonextFanInfo')
       fanEvents.nextFanTurn({

@@ -106,7 +106,6 @@ export const useDeviceTest = () => {
         dispatch(addDeviceSession(_session));
 
         let devices = await OV.getDevices();
-
         let videoDevices = devices.filter((device) =>
             device.kind === "videoinput");
         let audioDevices = devices.filter((device) =>
