@@ -33,7 +33,6 @@ export const WaitRoomController = () => {
   const roomInfo = useSelector((state) => state.common.roomInfo);
   // const isConnectTestComplete = useSelector((state) => state.video.isConnectTestComplete);
   const isCallFinished = useSelector((state) => state.video.isCallFinished);
-  const eventId = useSelector((state) => state.event.eventId);
 
 
   const connectTest = () => {
@@ -70,10 +69,11 @@ export const WaitRoomController = () => {
       const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
 
       console.log(response)
+
       if(response.message === "All meet is ended") {
         dispatch(setIsCallFinished());
       } else {
-        setMyWaitInfo(response.data.res_data);
+        setMyWaitInfo(response.data);
       }
     } catch (err) {
       console.log(err);

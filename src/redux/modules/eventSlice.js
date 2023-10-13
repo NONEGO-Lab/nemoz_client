@@ -8,6 +8,7 @@ const initialState = {
   staffIds: [],
   creatorInfo: {},
   eventList : null,
+  currentEventId:null,
 }
 
 
@@ -27,7 +28,7 @@ export const eventSlice = createSlice({
       state.eventId = action.payload.event_id;
     },
     currentEvent: (state, action) =>{
-      state.currentEventId = action.payload.event_id
+      state.currentEventId = action.payload
     },
     addEventList: (state, action) =>{
       state.eventList = action.payload.eventList

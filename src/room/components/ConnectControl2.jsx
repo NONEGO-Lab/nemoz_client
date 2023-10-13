@@ -16,7 +16,6 @@ const ConnectControl2 = () => {
     const sessionInfo = useSelector((state) => state.test.sessionInfo);
     const eventId = useSelector((state) => state.event.currentEventId);
 
-
     const finishTest = async () => {
 
         const response = await testApi.testEnd(sessionInfo.meet_name);
@@ -32,8 +31,8 @@ const ConnectControl2 = () => {
 
     const successConnect = async () => {
         let fanId = fanInfo.fan_id;
-        attendeeApi.testFan({eventId, fanId}).then((res) => {
-            if (res === "Test result Updated") {
+        attendeeApi.testFan(eventId, fanId).then((res) => {
+            if (res.message === "Test result Updated") {
                 sock.emit("testSuccess", fanInfo);
                 finishTest();
             }

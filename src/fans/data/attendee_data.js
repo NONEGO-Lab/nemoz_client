@@ -15,7 +15,7 @@ export const attendeeApi = {
     return data.data;
   },
 
-  testFan: async ({eventId, fanId}) => {
+  testFan: async (eventId, fanId) => {
     const data = await instance.get("/attendee/test", { params:
           {
             event_id: eventId,
