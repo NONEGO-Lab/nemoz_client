@@ -18,7 +18,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     const sessionInfo = useSelector((state) => state.common.sessionInfo);
     // const subscribers = useSelector((state) => state.video.subscribers);
     const userInfo = useSelector((state) => state.user.userInfo);
-    const eventId = useSelector((state) => state.event.eventId);
+    const eventId = useSelector((state) => state.event.currentEventId);
     const { leaveSession, joinSession, publisherAudio, publisherVideo } = useVideo();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -29,7 +29,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     console.log(subscribers, 'in Bottom Buttons')
 
     const routeToFanList = () =>{
-        if(role === 'fan'){
+        if(role === 'fan'||'member'){
             alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
             return
         }
@@ -69,6 +69,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     const finishCurrentCall = async () => {
         if(window.confirm("정말 통화를 종료하시겠습니까?")){
             try {
+                console.log(3)
                 let roomId = roomInfo.room_id;
                 const fanList = await roomApi.getListOrder({ eventId, roomId });
                 const curFan = subscribers.find((sub) => sub['role'] === 'fan');
@@ -135,7 +136,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
         let roomId = roomInfo.room_id;
         try {
             const result = await roomApi.getListOrder({ eventId, roomId });
-            const detail = await attendeeApi.getFanDetail(result[0].fan_id);
+            const detail = await attendeeApi.getFanDetail(result[0].fan_id, eventId);
             setCurrentFan(detail);
         } catch (err) {
             dispatch(setError(err));

@@ -10,6 +10,7 @@ import AddUser from "../../call/pages/components/AddUser";
 import {addRoomInfo} from "../../redux/modules/commonSlice";
 import {RoomListController as controller} from "../controller/roomListController";
 import {StaffProvider, ArtistProvider} from "../../provider/index";
+import {currentEvent} from "../../redux/modules/eventSlice";
 
 
 const RoomListView = () => {
@@ -109,15 +110,12 @@ const RoomListView = () => {
 
 export default RoomListView;
 
-/**
- * @todo: roomlist에서 각 room마다 event_id 내려달라고 하기
- */
-
 const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const event_id = eventList.find(e => e.event_name === room.room_name).event_id
+    dispatch(currentEvent(event_id))
     const roomEnd = (room) => {
         endRoomApi(room)
     }

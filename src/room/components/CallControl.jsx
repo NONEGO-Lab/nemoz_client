@@ -13,15 +13,14 @@ import { setError, setIsError } from "../../redux/modules/errorSlice";
 import {end_meet} from "../../model/call/call_model";
 
 const CallControl = ({ currentFan, setCurrentFan }) => {
-
+  console.log('CALL CONTROL')
   const [isCallProcessing, setIsCallProcessing] = useState(false);
   const [isFirstCall, setIsFirstCall] = useState(true);
   const roomInfo = useSelector((state) => state.common.roomInfo);
   const sessionInfo = useSelector((state) => state.common.sessionInfo);
   const subscribers = useSelector((state) => state.video.subscribers);
   const userInfo = useSelector((state) => state.user.userInfo);
-  const eventId = useSelector((state) => state.event.eventId);
-
+  const eventId = useSelector((state) => state.event.currentEventId);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { leaveSession, joinSession } = useVideo();
@@ -29,11 +28,11 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
   const navigate = useNavigate();
 
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-
   console.log(subscribers, 'subscribers')
   const finishCurrentCall = async () => {
     if(window.confirm("정말 통화를 종료하시겠습니까?")){
       try {
+        console.log(6)
         let roomId = roomInfo.room_id;
         const fanList = await roomApi.getListOrder({ eventId, roomId });
         const curFan = subscribers.find((sub) => sub['role'] === 'fan');
@@ -116,6 +115,7 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
   };
 
   const getFirstFanInfo = async () => {
+    console.log('1')
     let roomId = roomInfo.room_id;
     try {
       const result = await roomApi.getListOrder({ eventId, roomId });
@@ -128,6 +128,7 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
   }
 
   useEffect(() => {
+    console.log('GET FIRST FANINFO')
     getFirstFanInfo();
 
     if(subscribers.length > 0) {

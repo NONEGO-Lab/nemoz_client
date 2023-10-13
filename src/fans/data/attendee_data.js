@@ -12,7 +12,7 @@ export const attendeeApi = {
 
   getFanDetail: async (fanId, eventId) => {
     const data = await instance.get("/attendee/detail", { params: { fan_id: fanId, event_id:eventId } });
-    return data.data;
+    return data.data.data;
   },
 
   testFan: async (eventId, fanId) => {

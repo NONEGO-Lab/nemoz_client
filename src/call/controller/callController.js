@@ -41,7 +41,7 @@ export const  CallController = () => {
   const roomInfo = useSelector((state) => state.common.roomInfo);
   const sessionInfo = useSelector((state) => state.common.sessionInfo);
   const connectionInfo = useSelector((state) => state.common.connectionInfo);
-  const eventId = useSelector((state) => state.event.eventId);
+  const eventId = useSelector((state) => state.event.currentEventId);
 
   const [isOpenWaitingModal, setIsOpenWaitingModal] = useState(false);
   const [isOpenAddUser, setIsOpenAddUser] = useState(false);
@@ -54,7 +54,6 @@ export const  CallController = () => {
   const [isLastFan, setIsLastFan] = useState(false)
 
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-
   const navigateByRole = () => {
     if(userInfo.role === "fan") {
       navigate("/waitcall");
@@ -153,7 +152,8 @@ export const  CallController = () => {
     let roomId = roomInfo.room_id;
 
     try {
-      const result = await roomApi.getListOrder({ eventId, roomId });
+      console.log(2)
+      const result = await roomApi.getListOrder( eventId, roomId );
       console.log(result, '?')
       const currentFan = result.find((fan) => fan.orders === 1);
       const response = await attendeeApi.getFanDetail(currentFan.fan_id);
@@ -190,7 +190,7 @@ export const  CallController = () => {
     if(publisher) {
       return;
     }
-    if(userInfo.role === "fan"){
+    if(userInfo.role === "fan"||"member"){
       let roomId = roomInfo.room_id;
       let callTime = roomInfo.reserved_time;
 
@@ -221,6 +221,7 @@ export const  CallController = () => {
         })
       }
       //현재 팬의 정보를 가져오는 것.
+      console.log('GET Current INfo')
       getCurrentFanInfo();
     }
 

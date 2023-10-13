@@ -54,8 +54,7 @@ export const roomApi = {
   getListOrder: async ({eventId, roomId}) => {
     const data = await instance.get("/room/listorder",
         { params: { event_id : eventId, room_id: roomId } });
-
-    return data.data
+    return data.data.data.fan_orders
   },
 
   updateListOrder: async (eventId, roomId, fanIds) => {

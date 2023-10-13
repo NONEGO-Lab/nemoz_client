@@ -49,11 +49,11 @@ const WaitingRoom = () => {
                             <button
                                 disabled={!isAvailableCall}
                                 onClick={goToArtistRoom}
-                                className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium ${isAvailableCall ? "bg-[#00cace]" : "bg-[#c8c8c8]"} flex items-center justify-center`}>통화
-                                시작
+                                className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium ${isAvailableCall ? "bg-[#00cace]" : "bg-[#c8c8c8]"} flex items-center justify-center`}>
+                                통화 시작
                             </button>
 
-                            {userInfo.isCallTested && isCallFinished &&
+                            {isCallFinished &&
                                 <button
                                     onClick={fanLogout}
                                     className={`w-[180px] min-h-[50px] rounded-[25px] text-[19px] cursor-pointer text-white font-medium bg-[#00cace] flex items-center justify-center ml-[215px]`}>나가기</button>}

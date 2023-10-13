@@ -13,8 +13,6 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
     let roomId = curRoomId;
     const originalWaitingList = useRef([]);
 
-    // const eventId = useSelector((state) => state.event.eventId);
-    console.log(eventId, 'CURRENT eventId')
     const getWaitingListApi = async (eventId, roomId) => {
         const result = await roomApi.getListOrder({eventId, roomId});
         console.log(result, 'Waiting Result')
@@ -76,7 +74,6 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                 {
                     waitingList.length > 0 ?
                         waitingList.map((fan, index) => {
-                            console.log(fan, 'Fan')
                             return (
                                 <WaitingFan
                                     fan={fan}
