@@ -59,7 +59,7 @@ export const eventApi = {
           }
         }
     )
-      return response.data.data.event_data
+      return response.data.data
     }
 
     ,

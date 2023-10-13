@@ -14,7 +14,7 @@ const ConnectControl2 = () => {
     const fanInfo = useSelector((state) => state.test.fanInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
     const sessionInfo = useSelector((state) => state.test.sessionInfo);
-    const eventId = useSelector((state) => state.event.eventId);
+    const eventId = useSelector((state) => state.event.currentEventId);
 
 
     const finishTest = async () => {

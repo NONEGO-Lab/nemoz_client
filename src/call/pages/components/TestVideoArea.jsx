@@ -16,19 +16,13 @@ const TestVideoArea = ({
                            muteHandler
                        }) => {
 
-    const {age, fan_name, sex, message} = fanInfo
+    const {age, fan_name, sex, message, name} = fanInfo
     const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'member'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
-    if(!isTestConnect && role === 'staff'){
-        return(
-            <StaffVideoArea subscriberss={subscribers} fanInfo={fanInfo}/>
-
-        )
-    }
 
     return (
         <div className={"flex flex-row justify-evenly"}>
@@ -36,7 +30,7 @@ const TestVideoArea = ({
             <div className='w-[650px] text-center'>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${fan_name} (${age}세)`}
+                            {`Fan ${fan_name || name} (${age}세)`}
                             <InnerCircleText gender={sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
@@ -81,23 +75,10 @@ const TestVideoArea = ({
 
             <div className='w-[650px]'>
                 <div className='flex justify-center items-center'>
-                    {/*{isStaff ?*/}
-                    {/*    <>*/}
-                    {/*        <img src="../images/staffIcon.png" alt='stafficon'*/}
-                    {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                    {/*        <div className='text-[19px] font-medium'>{staff_name}</div>*/}
-                    {/*    </>*/}
-                    {/*    :*/}
-                    {/*    <>*/}
-                    {/*        <img src="../images/starIcon.png" alt='staricon'*/}
-                    {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                    {/*        <div className='text-[19px] font-medium'>{artist_name}</div>*/}
-                    {/*    </>*/}
-                    {/*}*/}
                     <>
-                        <img src="../images/starIcon.png" alt='staricon'
+                        <img src="../images/staffIcon.png" alt='stafficon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
-                        <div className='text-[19px] font-medium'>{'바꿔야함'}</div>
+                        <div className='text-[19px] font-medium'>{'스태프이름'}</div>
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>

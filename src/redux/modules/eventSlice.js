@@ -27,7 +27,6 @@ export const eventSlice = createSlice({
       state.eventId = action.payload.event_id;
     },
     currentEvent: (state, action) =>{
-
       state.currentEventId = action.payload.event_id
     },
     addEventList: (state, action) =>{
@@ -36,6 +35,6 @@ export const eventSlice = createSlice({
   }
 });
 
-export const { addEventInfo, setEventIds, addEventList } = eventSlice.actions
+export const { addEventInfo, setEventIds, addEventList, currentEvent } = eventSlice.actions
 
 export default eventSlice.reducer

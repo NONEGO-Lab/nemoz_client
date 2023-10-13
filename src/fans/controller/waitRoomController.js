@@ -64,9 +64,11 @@ export const WaitRoomController = () => {
     try {
       // 팬 아이디로 이벤트 리스트 조회
       const evnetList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
-      // const targetEventId = evnetList.map(e => e.no)[0]
+      // const targetEventId = evnetList.event_data.map(e => e.no)[0]
+      dispatch(addTestFanInfo(evnetList.memberInfo))
       const targetEventId = 12
       const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
+
       console.log(response)
       if(response.message === "All meet is ended") {
         dispatch(setIsCallFinished());
