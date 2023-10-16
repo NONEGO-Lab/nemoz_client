@@ -193,15 +193,15 @@ const EventListFilter = () => {
                 return userInfo.staffNo
             }
             else if(role === 'artist'){
-                return userInfo.artistNo
+                return userInfo.id
             }
             else{
                 console.log('Dummy Id')
-                return 10200
+                return userInfo.id
             }
         }
-        getEventListApi({userId: 10200})
-        // getEventListApi({userId: exractUserId(userInfo.role)})
+        // getEventListApi({userId: 10200})
+        getEventListApi({userId: exractUserId(userInfo.role)})
 
 
     }, [eventId])

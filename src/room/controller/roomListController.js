@@ -5,6 +5,7 @@ import {setError, setIsError} from "../../redux/modules/errorSlice";
 import {addEventList, setEventIds} from "../../redux/modules/eventSlice"
 import {eventApi} from "../../event/data/event_data";
 import {useNavigate} from "react-router-dom";
+import {sock} from "../../socket/config";
 
 
 export const RoomListController = () => {
@@ -19,6 +20,7 @@ export const RoomListController = () => {
     const [currentFanInfo, setCurrentFanInfo] = useState({});
     const [isOpenAddUser, setIsOpenAddUser] = useState(false);
     const eventId = localStorage.getItem("eventId");
+    const currentEventId = useSelector(state => state.event.currentEventId)
     const userInfo = useSelector((state) => state.user.userInfo);
     const eventList = useSelector(state => state.event.eventList)
 
@@ -69,6 +71,7 @@ export const RoomListController = () => {
 
 
     const endRoomApi = async (room, userId) => {
+        let roomNum = `${currentEventId}_${room.room_id}_${room.meet_id}`;
         // if(room.meet_id !== ""){
         //     alert("현재 진행중인 영상통화가 있습니다");
         //     return;
@@ -78,7 +81,7 @@ export const RoomListController = () => {
                 const result = await roomApi.endRoom(room.room_id);
                 if (result) {
                     alert("삭제 완료");
-                    await getEventListApi({userId:10200});
+                    await getEventListApi({userId});
                 } else {
                     alert("방 삭제 실패");
                 }

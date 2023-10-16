@@ -7,32 +7,31 @@ export const meetApi = {
     const data = await instance.post("/meet/create", request);
     return {
       ...session_info,
-      meet_id: data.data.meet_id,
-      meet_name: data.data.meet_name,
+      meet_id: data.data.data.meet_id,
+      meet_name: data.data.data.meet_name,
     }
   },
 
   joinMeet: async (request) => {
     const data = await instance.post("/meet/join", request);
-
     return {
       ...connection_info,
-      meet_id: data.data.id,
-      connection_id: data.data.response.connectionId,
-      token: data.data.response.token
+      meet_id: data.data.data.id,
+      connection_id: data.data.data.response.connectionId,
+      token: data.data.data.response.token
     }
 
   },
 
   leaveMeet: async (request) => {
     const data = await instance.post("/meet/leave", request);
-    return data.data === "LEAVED";
+    return data.data.message === "Meet Leaved";
 
   },
 
   endMeet: async (request) => {
     const data = await instance.post("/meet/end", request);
-    return data.data === 'Meet Ended';
+    return data.data.message === 'Meet Ended';
   },
 
 

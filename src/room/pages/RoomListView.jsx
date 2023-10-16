@@ -55,8 +55,8 @@ const RoomListView = () => {
 
                     <ArtistProvider>
                         {
-                            roomList.filter((room) => room.artist_id === userInfo.artistNo).map((room, idx) => {
-                                return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
+                            roomList.filter((room) => room.artist_id === userInfo.artistNo||userInfo.no).map((room, idx) => {
+                                return <Room room={room} key={room?.room_id} eventList={eventList} setCurrentRoom={setCurrentRoom}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
                         }
@@ -114,7 +114,7 @@ const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const event_id = eventList.find(e => e.event_name === room.room_name).event_id
+    const event_id = eventList.find(e => e.event_name === room.room_name)?.event_id
     dispatch(currentEvent(event_id))
     const roomEnd = (room) => {
         endRoomApi(room)

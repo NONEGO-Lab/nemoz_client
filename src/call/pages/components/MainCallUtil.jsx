@@ -26,8 +26,6 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     const navigate = useNavigate()
     let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
-    console.log(subscribers, 'in Bottom Buttons')
-
     const routeToFanList = () =>{
         if(role === 'fan'||'member'){
             alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
@@ -69,7 +67,6 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     const finishCurrentCall = async () => {
         if(window.confirm("정말 통화를 종료하시겠습니까?")){
             try {
-                console.log(3)
                 let roomId = roomInfo.room_id;
                 const fanList = await roomApi.getListOrder({ eventId, roomId });
                 const curFan = subscribers.find((sub) => sub['role'] === 'fan');

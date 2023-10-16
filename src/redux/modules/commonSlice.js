@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  eventId: 8,
+  eventId: null,
   roomInfo: {},
   sessionInfo: {},
   connectionInfo: {}

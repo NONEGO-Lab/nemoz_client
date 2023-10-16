@@ -37,16 +37,17 @@ export const useVideo = () => {
   const publisherVideo = useSelector((state) => state.video.publisherVideo);
 
   const eventId = useSelector((state) => state.event.eventId);
+  const currentEventId = useSelector((state) => state.event.currentEventId);
 
 
 
   const createSession = async (roomId, isReCreated) => {
     const request = {
       ...session_create,
-      event_id: eventId,
+      event_id: currentEventId,
       room_id: roomId,
       artist_id: roomInfo.artist_id,
-      staff_ids: [roomInfo.staffs[0].staff_id],
+      staff_ids: [Number(roomInfo.staffs) || Number(roomInfo.staffs[0].staff_id)],
       is_recreated: isReCreated
     }
     return await meetApi.createMeet(request);
@@ -56,13 +57,13 @@ export const useVideo = () => {
   const createToken = async ({ roomId, sessionInfo }) => {
     let request = {
       ...create_token,
-      event_id: eventId,
+      event_id: currentEventId,
       room_id: roomId,
       meet_id: sessionInfo.meetId,
       meet_name: sessionInfo.meetName,
       id: userInfo.id,
-      userid: userInfo.userId,
-      username: userInfo.username,
+      // userid: userInfo.userId,
+      userid: userInfo.username,
       role: userInfo.role
     }
 

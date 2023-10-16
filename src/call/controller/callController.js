@@ -65,7 +65,6 @@ export const  CallController = () => {
   const endRoom = async () => {
     /// 방을 아예 종료
     if(window.confirm("정말 방을 종료하시겠습니까?")) {
-
       const request = {
         meet_id: sessionInfo.meetId,
         meet_name: sessionInfo.meetName,
@@ -73,10 +72,8 @@ export const  CallController = () => {
         event_id: eventId,
       //   fan_id 추가 필요
       }
-
       try {
         const response = await meetApi.endMeet(request);
-
         if (response) {
           sock.emit("endMeet", roomNum);
           leaveSession();
@@ -150,12 +147,9 @@ export const  CallController = () => {
 
   const getCurrentFanInfo = async () => {
     let roomId = roomInfo.room_id;
-
     try {
-      console.log(2)
-      const result = await roomApi.getListOrder( eventId, roomId );
-      console.log(result, '?')
-      const currentFan = result.find((fan) => fan.orders === 1);
+      const result = await roomApi.getListOrder({eventId, roomId} );
+      const currentFan = result.fan_orders.find((fan) => fan.orders === 1);
       const response = await attendeeApi.getFanDetail(currentFan.fan_id);
       setCurrentFan(response);
     } catch (err) {
@@ -190,13 +184,13 @@ export const  CallController = () => {
     if(publisher) {
       return;
     }
-    if(userInfo.role === "fan"||"member"){
+    if(userInfo.role === "fan"||userInfo.role ==="member"){
       let roomId = roomInfo.room_id;
       let callTime = roomInfo.reserved_time;
 
       fanJoinSession({ roomId, sessionInfo }).then((sessionInfo) => {
         completeSession(sessionInfo);
-        let roomNum = `${eventId}_${roomId}_${sessionInfo.meetId}`;
+        let roomNum = `${publisher}_${roomId}_${sessionInfo.meetId}`;
         sock.emit("timerStart", roomNum, callTime);
         dispatch(addTimer(roomInfo.reserved_time));
       });
@@ -206,7 +200,6 @@ export const  CallController = () => {
         // 현재 진행중인 meet가 이미 있을 때 중간에 join
         onlyJoin(roomId).then((sessionInfo) => {
           completeSession(sessionInfo);
-
           if(userInfo.role === "staff"){
             let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
             sock.emit("reqLeftTime", roomNum);
@@ -238,7 +231,6 @@ export const  CallController = () => {
     if(session === undefined) {
       return;
     }
-
     history.listen((location) => {
       if(history.action === "POP") {
         //뒤로가기일 경우
