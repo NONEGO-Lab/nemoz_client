@@ -55,7 +55,7 @@ export const  CallController = () => {
 
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
   const navigateByRole = () => {
-    if(userInfo.role === "fan") {
+    if(userInfo.role === "fan" || userInfo.role === 'member') {
       navigate("/waitcall");
     } else {
       navigate("/roomlist");

@@ -161,7 +161,7 @@ export const useTestVideo = () => {
 
   const subscribeToStreamDestroyed = (_session) => {
     _session.on('streamDestroyed', (event) => {
-      if(userInfo.role === "fan" || "member") {
+      if(userInfo.role === "fan" || userInfo.role ==="member") {
         navigate("/waitcall", { replace: true });
       } else {
 

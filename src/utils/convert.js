@@ -39,5 +39,7 @@ export const TimeToSeconds = (time) => {
 }
 
 export const secondsToMins = (sec) => {
+
+  if (sec < 60) return 1
   return Math.floor(sec / 60);
 }

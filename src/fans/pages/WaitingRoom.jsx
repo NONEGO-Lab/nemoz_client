@@ -9,22 +9,27 @@ import {useSelector} from "react-redux";
 
 const WaitingRoom = () => {
     const {
-        isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,
+        isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,eventTitle,
         closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen
     } = controller();
 
-    const img_url = "https://images8.alphacoders.com/132/1321612.jpeg"
-
+    const wait_url = myWaitInfo?.waiting?.std_screen_url
+    const isVideo = myWaitInfo?.waiting?.mimetype.includes('video')
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
                 <Header/>
                 <div className="flex flex-col">
                     {/* 대기 화면*/}
-                    <div className={"min-h-[781px]"}>
-                        <img src={img_url}/>
-                    </div>
 
+                    {!isVideo?
+                        <div className={"min-h-[781px]"}>
+                            <img src={wait_url} alt={"waiting"}/>
+                        </div>
+                        :<video autoPlay loop>
+                            <source src={wait_url} type="video/mp4"/>
+                        </video>
+                    }
 
                     <div className={"mt-[59px] mx-[66px] mb-[72px] flex"}>
                         {/* 멘트 */}
@@ -35,6 +40,7 @@ const WaitingRoom = () => {
                         <div className={"text-[#444] font-medium mr-[87px]"}>
                             <WaitingMents isCallTested={userInfo.isCallTested} isCallFinished={isCallFinished}
                                           myWaitInfo={myWaitInfo}
+                                          eventTitle={eventTitle}
                                           fan_name={userInfo.username}/>
                         </div>
 

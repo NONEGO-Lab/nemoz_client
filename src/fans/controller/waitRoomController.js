@@ -28,12 +28,12 @@ export const WaitRoomController = () => {
   const [isReadyTest, setIsReadyTest] = useState(false);
   const [myWaitInfo, setMyWaitInfo] = useState({});
   const [isMobPopupOpen, setIsMobPopupOpen] = useState(true);
+  const [eventTitle, setEventTitle] = useState(null)
 
   const userInfo = useSelector((state) => state.user.userInfo);
   const roomInfo = useSelector((state) => state.common.roomInfo);
   // const isConnectTestComplete = useSelector((state) => state.video.isConnectTestComplete);
   const isCallFinished = useSelector((state) => state.video.isCallFinished);
-
 
   const connectTest = () => {
     navigate(`/test/${userInfo.id}`);
@@ -63,7 +63,9 @@ export const WaitRoomController = () => {
     try {
       // 팬 아이디로 이벤트 리스트 조회
       const evnetList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
-      // const targetEventId = evnetList.event_data.map(e => e.no)[0]
+      // const currentEventId = evnetList.event_data[0].no
+
+      setEventTitle(evnetList.event_data[0].title)
       dispatch(addTestFanInfo(evnetList.memberInfo))
       const targetEventId = 12
       const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
@@ -129,6 +131,7 @@ export const WaitRoomController = () => {
     myWaitInfo,
     isAvailableCall,
     isReadyTest,
-    isMobPopupOpen
+    isMobPopupOpen,
+    eventTitle
   }
 }
