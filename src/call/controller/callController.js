@@ -187,7 +187,6 @@ export const  CallController = () => {
     if(userInfo.role === "fan"||userInfo.role ==="member"){
       let roomId = roomInfo.room_id;
       let callTime = roomInfo.reserved_time;
-
       fanJoinSession({ roomId, sessionInfo }).then((sessionInfo) => {
         completeSession(sessionInfo);
         let roomNum = `${publisher}_${roomId}_${sessionInfo.meetId}`;

@@ -19,7 +19,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
     // const subscribers = useSelector((state) => state.video.subscribers);
     const userInfo = useSelector((state) => state.user.userInfo);
     const eventId = useSelector((state) => state.event.currentEventId);
-    const { leaveSession, joinSession, publisherAudio, publisherVideo } = useVideo();
+    const { leaveSession, joinSession, publisherAudio, publisherVideo, currentEventId } = useVideo();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
@@ -68,8 +68,9 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
         if(window.confirm("정말 통화를 종료하시겠습니까?")){
             try {
                 let roomId = roomInfo.room_id;
+                let eventId = roomInfo.event_id
                 const fanList = await roomApi.getListOrder({ eventId, roomId });
-                const curFan = subscribers.find((sub) => sub['role'] === 'fan');
+                const curFan = subscribers.find((sub) => sub['role'] === 'fan'||sub['role'] === 'member');
                 const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() === curFan.id.toString());
                 const nextFan = fanList[curFanIndex + 1];
                 const fanId = fanList[curFanIndex].fan_id;
@@ -81,8 +82,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
                     event_id: eventId,
                     fan_id: fanId
                 }
-                const result = await meetApi.endMeet(request);console.log(result)
-
+                const result = await meetApi.endMeet(request);
                 if(result) {
                     leaveSession();
                     setIsCallProcessing(false);
@@ -96,7 +96,7 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
 
                     // 다음 팬이 있으면, 팬 정보 가져오고, 새 session을 열어준다.
                     if(nextFan !== undefined) {
-                        const detail = await attendeeApi.getFanDetail(nextFan.fan_id);
+                        const detail = await attendeeApi.getFanDetail(nextFan.fan_id, eventId);
                         setCurrentFan(detail);
 
                         // 대기열에 있는 팬들의 대기열 업데이트 필요
@@ -105,7 +105,6 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
 
                         // 방에 있는 artist or staff 에게도 알려줘야 함!
                         const newSessionInfo = await joinSession(roomId);
-                        console.log(newSessionInfo, 'NEW SESSION INFO')
                         setSearchParams({meetName: newSessionInfo.meetName});
                         let roomNum = `${eventId}_${roomId}_${newSessionInfo.meetId}`;
 
@@ -131,8 +130,9 @@ const MainCallUtil = ({audioMuteHandler, videoMuteHandler,role, currentFan, setC
 
     const getFirstFanInfo = async () => {
         let roomId = roomInfo.room_id;
+        let eventId = roomInfo.event_id
         try {
-            const result = await roomApi.getListOrder({ eventId, roomId });
+            const result = await roomApi.getListOrder({ eventId: currentEventId||eventId, roomId });
             const detail = await attendeeApi.getFanDetail(result[0].fan_id, eventId);
             setCurrentFan(detail);
         } catch (err) {

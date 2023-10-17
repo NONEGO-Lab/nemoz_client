@@ -23,7 +23,7 @@ const VideoArea = ({
 
     const {role} = userInfo
     const isStaff = role === 'staff'
-    const isFan = role === 'fan'
+    const isFan = role === 'fan'||role==='member'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"

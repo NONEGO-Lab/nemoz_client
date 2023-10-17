@@ -273,8 +273,6 @@ export const useVideo = () => {
   const subscribeToStreamCreated = (_session) => {
 
     _session.on('streamCreated', (event) => {
-      console.log('STREAM CREATED')
-      console.log(event.stream.connection.data)
       let newUserData = JSON.parse(event.stream.connection.data.split("%/%")[0]);
 
       let subscriber = _session.subscribe(event.stream, undefined);
@@ -282,7 +280,7 @@ export const useVideo = () => {
       subscriber["id"] = newUserData['id']
       subscriber["username"] = newUserData['username'];
 
-      if(subscriber.role === 'fan'){
+      if(subscriber.role === 'fan' || subscriber.role==='member'){
         /*
       * @todo
       * 회원 정보 API통신 후 GET
@@ -352,7 +350,8 @@ export const useVideo = () => {
     msgBeforeOut,
     joinSession,
     onbeforeunload,
-    newJoinMeet
+    newJoinMeet,
+    currentEventId
   }
 };
 
