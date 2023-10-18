@@ -20,15 +20,14 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
         location: "", mimeType: "", fileName: "",
     });
     // const [time, setTime] = useState(0);
-    console.log(eventList, ' in Room Create')
 
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
     const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0].name || []);
     const [targetArtistFullInfo, setTargetArtistFullInfo] = useState(eventList.map(e => e.target_artist_ids));
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
-
-
+    const userInfo = useSelector(state => state.user.userInfo)
+    console.log(userInfo,'????')
     // const getEventUsers = async () => {
     //     let page = 1;
     //     const response = await eventApi.getEventDetail({ page, eventId });
@@ -37,7 +36,6 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     //     setTargetArtistIds(response?.target_artist_ids);
     //     setTargetStaffIds(response.target_staff_ids);
     // }
-    console.log(currentEventId, 'currentEventId')
     const {location, mimeType, fileName} = imgUrl;
     const onSubmit = async (data) => {
         const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
@@ -68,7 +66,8 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
             reserved_time: Number(time),
             location,
             mimeType,
-            due_dt
+            due_dt,
+            creator:userInfo.id,
         });
 
         if (result.message === "Room Created") {
@@ -114,7 +113,6 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const onChangeFile = async (e) => {
         let file = e.target.files[0]
         const response = await roomApi.uploadImage(currentEventId, file);
-        console.log(response, 'uploadFile')
         setImgUrl({
             fileName: file.name, location: response.data.location, mimeType: response.data.mimetype
         });

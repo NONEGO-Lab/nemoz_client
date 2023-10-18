@@ -14,7 +14,7 @@ const WaitingRoom = () => {
     } = controller();
 
     const wait_url = myWaitInfo?.waiting?.std_screen_url
-    const isVideo = myWaitInfo?.waiting?.mimetype.includes('video')
+    const isVideo = myWaitInfo?.waiting?.mimetype?.includes('video')
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
@@ -22,11 +22,12 @@ const WaitingRoom = () => {
                 <div className="flex flex-col">
                     {/* 대기 화면*/}
 
-                    {!isVideo?
-                        <div className={"min-h-[781px]"}>
-                            <img src={wait_url} alt={"waiting"}/>
-                        </div>
-                        :<video autoPlay loop>
+                    {!isVideo ?
+                        wait_url ?
+                            <div className={"min-h-[781px]"}>
+                                <img src={wait_url} alt={"waiting"}/>
+                            </div> : <div className={"min-h-[781px] text-[36px] flex items-center justify-center"}>이벤트 대기중</div>
+                        : <video autoPlay loop>
                             <source src={wait_url} type="video/mp4"/>
                         </video>
                     }
@@ -45,6 +46,7 @@ const WaitingRoom = () => {
                         </div>
 
                         {/* 버튼 */}
+
                         <div className={'flex justify-center items-center'}>
                             <button
                                 disabled={!isReadyTest}

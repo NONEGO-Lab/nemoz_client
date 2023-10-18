@@ -19,7 +19,6 @@ const VideoContainer2 = () => {
     const history = createBrowserHistory();
 
 
-    const fanInfo = useSelector((state) => state.test.fanInfo);
     const eventName = useSelector(state => state.event.eventName)
     const subscribedArtistInfo = useSelector(state => state.video.subscribedArtistInfo)
     const subscribedFanInfo = useSelector(state => state.video.subscribedFanInfo)
@@ -29,13 +28,13 @@ const VideoContainer2 = () => {
     const { roomInfo, leftTimeRef, toastList,
         endRoom, outRoom, showTime, staffNoticeList, userInfo, setIsOpenWaitingModal, currentFan,
         setCurrentFan, setIsOpenAddUser, fanDetailOpenHandler, isOpenAddUser, isOpenFanDetail,
-        waitingFanInfo, setIsOpenFanDetail, isOpenLeftTime, toBack, isOpenWaitingModal
+        waitingFanInfo, setIsOpenFanDetail, isOpenLeftTime, toBack, isOpenWaitingModal,warnHandler,warnCnt, kickOutHandler,setWarnCnt
     } = controller();
     const {getChatFromSocket} = useReaction();
 
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
-
+    console.log(warnCnt, 'warnCntwarnCnt')
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -62,7 +61,7 @@ const VideoContainer2 = () => {
                         artistName = {artist_name}
                         fanInfo={currentFan}
                         roomInfo={roomInfo}
-
+                        warnCnt={warnCnt}
                     />
 
                     :
@@ -78,6 +77,7 @@ const VideoContainer2 = () => {
                         publisherAudio={videoMuteHandler}
                         roomInfo = {roomInfo}
                         artistName={artist_name}
+                        warnCnt={warnCnt}
                     />
                 }
 
@@ -101,6 +101,10 @@ const VideoContainer2 = () => {
                     routeToFanList={routeToFanList}
                     endRoom={endRoom}
                     outRoom={outRoom}
+                    leftTimeRef={leftTimeRef}
+                    warnHandler={warnHandler}
+                    setWarnCnt={setWarnCnt}
+                    kickOutHandler={kickOutHandler}
                 />
 
             </div>

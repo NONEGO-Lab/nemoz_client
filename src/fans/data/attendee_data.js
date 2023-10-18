@@ -34,13 +34,17 @@ export const attendeeApi = {
 
   //강퇴
   banFan: async ({id, userId}) => {
+    console.log(
+        '진짜나가라'
+    )
     const data = await instance.get("/attendee/ban", { params : {
       conn_id: id,
       userid: userId
     }});
+    const ddd = data.data.data
     return {
-      fan_data: {...data.data.fan_data[0]},
-      conn_data: {...data.data.conn_data[0]}
+      fan_data: {...ddd.fan_data},
+      conn_data: {...ddd.conn_data[0]}
     };
   },
 

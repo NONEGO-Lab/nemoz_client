@@ -22,9 +22,12 @@ const RoomListView = () => {
         setCurrentFanInfo, userInfo, getEventListApi
     } = controller();
     const eventList = useSelector(state => state.event.eventList)
-    const isRoomList = window.location.pathname.split('/')[1] === 'roomlist'
+
+    const role = useSelector((state) => state.user.userInfo.role);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     return (
-        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)} isRoomList={isRoomList}
+        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)}
                 >
 
             {/*table 뷰*/}
@@ -43,20 +46,21 @@ const RoomListView = () => {
 
                 <div className="px-[100px]">
 
-                    <StaffProvider>
+                    <StaffProvider role={role}>
                         {
                             roomList?.map((room, idx) => {
                                 return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
-                                             eventList={eventList}
+                                             eventList={eventList} navigate={navigate} dispatch={dispatch}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
                         }
                     </StaffProvider>
 
-                    <ArtistProvider>
+                    <ArtistProvider role={role}>
                         {
                             roomList.filter((room) => room.artist_id === userInfo.artistNo||userInfo.no).map((room, idx) => {
                                 return <Room room={room} key={room?.room_id} eventList={eventList} setCurrentRoom={setCurrentRoom}
+                                             navigate={navigate} dispatch={dispatch}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
                         }
@@ -69,7 +73,7 @@ const RoomListView = () => {
                 {/*<span onClick={() => movePage(currentPage - 1)}*/}
                 {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
                 {
-                    roomArray.map((num, index) => {
+                    roomArray?.map((num, index) => {
                         return (
 
                             <span key={index} onClick={() => movePage(num)}
@@ -110,10 +114,9 @@ const RoomListView = () => {
 
 export default RoomListView;
 
-const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList}) => {
+const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList, navigate, dispatch}) => {
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+
     const event_id = eventList.find(e => e.event_name === room.room_name)?.event_id
     dispatch(currentEvent(event_id))
     const roomEnd = (room) => {

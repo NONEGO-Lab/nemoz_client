@@ -23,6 +23,7 @@ export const videoEvents = {
   },
 
   leaveRoom: ({ userInfo, notify, setStaffNoticeList, dispatch }) => {
+    console.log(userInfo, 'leaveRoomleaveRoomleaveRoom')
     if(userInfo !== undefined) {
       if(userInfo.role === "fan") {
         /// fan이면 타이머 멈추기
@@ -44,8 +45,15 @@ export const videoEvents = {
   },
 
   kickOut: ({ fanInfo, userInfo, roomInfo, sessionInfo, navigate, eventId }) => {
+    console.log(fanInfo, 'fanInfofanInfofanInfo')
+    console.log(userInfo,'userInfouserInfo')
+    console.log(roomInfo,'roomInforoomInforoomInfo')
+    console.log(sessionInfo,'sessionInfosessionInfosessionInfo')
+    console.log(navigate,'navigatenavigate')
+    console.log(eventId,'eventIdeventIdeventId')
     if(fanInfo.id.toString() === userInfo.id.toString()){
       /// 강퇴 당하는 팬이면, leaveRoom 찍고, 대기방으로 쫓겨나기
+
       let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
       sock.emit("leaveRoom", roomNum, fanInfo, navigate);
       navigate("/waitcall");

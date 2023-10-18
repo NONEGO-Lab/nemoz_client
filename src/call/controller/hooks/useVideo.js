@@ -115,6 +115,7 @@ export const useVideo = () => {
   // 제일 처음에 session 만드는 역할(staff, artist)
   const joinSession = async (roomId, isReCreated) => {
     let OV = new OpenVidu();
+    OV.enableProdMode();
     let _session = OV.initSession()
 
     subscribeToStreamCreated(_session);
@@ -127,6 +128,7 @@ export const useVideo = () => {
       meetId: sessionData.meet_id,
       meetName: sessionData.meet_name
     };
+    console.log('joinSession',sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
 
     const token = await createToken({ roomId, sessionInfo });
@@ -138,6 +140,7 @@ export const useVideo = () => {
 
   const onlyJoin = async () => {
     let OV = new OpenVidu();
+    OV.enableProdMode()
     let _session = OV.initSession();
 
     subscribeToStreamCreated(_session);
@@ -149,7 +152,7 @@ export const useVideo = () => {
       meetId: roomInfo.meet_id,
       meetName: roomInfo.meet_name
     }
-
+    console.log('onlyJoin', sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
 
     const result = await createToken({ roomId: roomInfo.room_id, sessionInfo });
@@ -166,7 +169,7 @@ export const useVideo = () => {
         meetId: sessionData.meet_id,
         meetName: sessionData.meet_name
       };
-
+      console.log('noResult onlyJoin', sessionInfo)
       dispatch(addSessionInfo(sessionInfo));
 
       const token = await createToken({ roomId, sessionInfo });
@@ -180,7 +183,7 @@ export const useVideo = () => {
   const newJoinMeet = async (newSessionInfo) => {
     let OV = new OpenVidu();
     let _session = OV.initSession();
-
+    OV.enableProdMode()
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
 
@@ -190,6 +193,7 @@ export const useVideo = () => {
       meetId: newSessionInfo.meetId,
       meetName: newSessionInfo.meetName
     }
+    console.log('newJoinMeet', sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
 
     const token = await createToken({ roomId: roomInfo.room_id, sessionInfo });
@@ -201,13 +205,15 @@ export const useVideo = () => {
 
   // fan이 조인할 때,
   const fanJoinSession = async ({ roomId, sessionInfo }) => {
-
+    console.log('FAN IS JOIN')
     let OV = new OpenVidu();
     let _session = OV.initSession();
-
+    OV.enableProdMode()
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
-
+    console.log(_session)
+    console.log(sessionInfo)
+    dispatch(addSessionInfo(sessionInfo));
     dispatch(addSession(_session));
 
     await createToken({ roomId, sessionInfo })

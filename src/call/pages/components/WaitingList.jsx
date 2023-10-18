@@ -16,8 +16,8 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
     const getWaitingListApi = async (eventId, roomId) => {
         const result = await roomApi.getListOrder({eventId, roomId});
         console.log(result, 'Waiting Result')
-        setWaitingList(result.data.fan_orders);
-        originalWaitingList.current = result.data.fan_orders;
+        setWaitingList(result);
+        originalWaitingList.current = result?.data;
     }
 
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
@@ -72,8 +72,8 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                 ref={containerRef}
                 className="overflow-y-auto">
                 {
-                    waitingList.length > 0 ?
-                        waitingList.map((fan, index) => {
+                    waitingList?.length > 0 ?
+                        waitingList?.map((fan, index) => {
                             return (
                                 <WaitingFan
                                     fan={fan}

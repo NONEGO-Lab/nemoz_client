@@ -16,12 +16,11 @@ const Header = () => {
     const navigate = useNavigate();
     const loginPage = window.location.pathname === "/" ||
         window.location.pathname === "/signup";
-
     const userInfo = useSelector((state) => state.user.userInfo);
     const session = useSelector((state) => state.video.session);
     const {leaveSession} = useVideo();
     const currentLocation = () => window.location.pathname.split('/')[1]
-    const isRoomList = currentLocation() === 'roomlist'
+    // const isRoomList = currentLocation() === 'roomlist'
 
     return (
         <div
@@ -51,13 +50,13 @@ const Header = () => {
                         {/*방목록*/}
                         <div onClick={() => navigate("/roomlist")}
                              className={'flex items-center cursor-pointer hover:font-bold'}>
-                            {isRoomList && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
+                            { currentLocation() === 'roomlist' && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/roomIcon.png"/>
                             </div>
                             <div
 
-                                className={` ml-[10px] ${isRoomList ? 'font-bold' : ''}`}>
+                                className={` ml-[10px] ${ currentLocation() === 'roomlist' ? 'font-bold' : ''}`}>
                                 방목록
                             </div>
                             <div>
@@ -68,14 +67,14 @@ const Header = () => {
                         {/*참가자 목록*/}
                         <div onClick={() => navigate("/userlist")}
                              className={'flex items-center ml-[56px] cursor-pointer hover:font-bold'}>
-                            {!isRoomList && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
+                            {currentLocation() !== 'roomlist' && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
 
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/participantsIcon.png"/>
                             </div>
                             <div
 
-                                className={`ml-[10px] ${isRoomList ? '' : 'font-bold'}`}>
+                                className={`ml-[10px] ${ currentLocation() === 'roomlist' ? '' : 'font-bold'}`}>
                                 참가자 목록
                             </div>
                             <div>

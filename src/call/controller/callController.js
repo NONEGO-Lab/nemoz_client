@@ -52,7 +52,7 @@ export const  CallController = () => {
   const [staffNoticeList, setStaffNoticeList] = useState([]);
   const leftTimeRef = useRef(0);
   const [isLastFan, setIsLastFan] = useState(false)
-
+  const [warnCnt, setWarnCnt] = useState(0);
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
   const navigateByRole = () => {
     if(userInfo.role === "fan" || userInfo.role === 'member') {
@@ -146,12 +146,14 @@ export const  CallController = () => {
   }
 
   const getCurrentFanInfo = async () => {
+    console.log('GET CURRENt FAN INFO')
     let roomId = roomInfo.room_id;
     try {
       const result = await roomApi.getListOrder({eventId, roomId} );
       const currentFan = result.fan_orders.find((fan) => fan.orders === 1);
       const response = await attendeeApi.getFanDetail(currentFan.fan_id);
       setCurrentFan(response);
+      setWarnCnt(response?.warning_count)
     } catch (err) {
       dispatch(setError(err));
       dispatch(setIsError(true));
@@ -171,7 +173,9 @@ export const  CallController = () => {
     });
     //nextFan detail 요청하기
     const detail = await attendeeApi.getFanDetail(nextFan.fan_id);
+    console.log('룰루랄라룰루랄라룰루랄라')
     setCurrentFan(detail);
+    setWarnCnt(detail?.warning_count)
   };
 
 
@@ -179,6 +183,69 @@ export const  CallController = () => {
     navigate(-1);
   }
 
+  const requestKickOutApi = async () => {
+    console.log('호롤로')
+    const result = await attendeeApi.banFan({id: connectionInfo.meet_id, userId: userInfo.id});
+    const conn_data = result?.conn_data
+    const fan_data = result.fan_data
+    if (conn_data.meet_id) {
+
+      const request = {
+        ...leave_meet,
+        user_info: {
+          id: fan_data?.user_info.id.toString(),
+          role: fan_data?.user_info.role,
+        },
+        type: 'ban',
+        meet_name: conn_data.meet_name,
+        connection_id: conn_data.conn_id,
+        connection_name: conn_data.conn_name,
+        progress_time: leftTimeRef.current
+      }
+
+      try {
+        const response = await meetApi.leaveMeet(request);
+        console.log(response, 'responseresponse')
+        if (response) {
+          console.log( fan_data?.user_info,roomNum, ' fan_data?.user_info')
+          sock.emit("kickOut", roomNum, fan_data?.user_info);
+        }
+      } catch (err) {
+        console.error(err)
+        dispatch(setError(err));
+        dispatch(setIsError(true));
+      }
+
+
+    }
+  }
+  const warnHandler = async () => {
+    // 경고 api + 경고 socket
+
+    if (subscribers.length === 0) return;
+
+    if (window.confirm(`정말로 ${currentFan.fan_name}를 경고하시겠습니까?`)) {
+      setWarnCnt(prev => prev+1)
+      let connId = connectionInfo.meet_id;
+      const result = await attendeeApi.warnFan(connId);
+      if (result.message === "Warning Count is Updated") {
+        sock.emit("warnUser", roomNum, currentFan, result.data.warning_count);
+      }
+
+      if (result.data.warning_count >= 3) {
+        requestKickOutApi();
+      }
+    }
+  }
+
+  const kickOutHandler = async () => {
+    console.log('나가라')
+    if (subscribers.length === 0) return;
+
+    if (window.confirm(`정말로 ${currentFan.fan_name}씨를 강퇴하시겠습니까?`)) {
+      requestKickOutApi();
+    }
+  }
 
   useEffect(() => {
     if(publisher) {
@@ -213,9 +280,11 @@ export const  CallController = () => {
         })
       }
       //현재 팬의 정보를 가져오는 것.
-      console.log('GET Current INfo')
+      console.log('룰루랄라')
       getCurrentFanInfo();
     }
+
+
 
     //Fixme: 나갈때, 나가는 leave api가 두번 실행되는거 고민하기
 
@@ -242,6 +311,7 @@ export const  CallController = () => {
 
 
   useEffect(() => {
+    console.log('SOCKET ON')
     sock.on("chatMessage", (msg) => videoEvents.chatMessage({ msg, getChatFromSocket }));
     sock.on("joinRoom", (user) => videoEvents.joinRoom({ user, setStaffNoticeList}));
     sock.on("joinNextRoom", (num, newSessionInfo, userId, nextFan) => videoEvents.joinNextRoom({ newSessionInfo, userId, nextFan, userInfo, onlyJoinNewRoom }));
@@ -297,7 +367,11 @@ export const  CallController = () => {
     roomInfo,
     toBack,
     isOpenWaitingModal,
-    isLastFan
+    isLastFan,
+    warnHandler,
+    warnCnt,
+    setWarnCnt,
+    kickOutHandler
   }
 
 }

@@ -16,19 +16,17 @@ export const roomApi = {
     return data.data.message === "Room Ended";
   },
 
-  createRoom: async ({ roomTitle, eventId, staffIds, artistId, fanIdArray,
+  createRoom: async ({ roomTitle, eventId, staffIds, artistId, fanIdArray,creator,
                        reserved_time, location, mimeType, due_dt }) => {
-    console.log(roomTitle, eventId, staffIds, artistId, fanIdArray,
-        reserved_time, location, mimeType, due_dt, 'reserved_time')
     const request = {
       ...create_room,
       room_name: roomTitle,
       event_id: eventId,
       artist_id: artistId,
       // staff_ids: staffIds,
-      staff_ids: 24,
+      staff_ids: staffIds,
       fan_ids: fanIdArray,
-      creator: 1,
+      creator: creator,
       reserved_time: reserved_time,
       due_dt: due_dt,
       location: location,
@@ -40,8 +38,9 @@ export const roomApi = {
 
   uploadImage: async (eventId, file) => {
     let formData = new FormData();
-    formData.append("file", file);
     formData.append("event_id", eventId);
+    formData.append("file", file);
+
 
     const data = await instance.post("/room/uploadscreen", formData, {
       headers: {

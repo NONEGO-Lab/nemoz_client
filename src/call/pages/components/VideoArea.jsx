@@ -18,6 +18,7 @@ const VideoArea = ({
                        publisherAudio,
                        muteHandler,
                        artistName,
+                       warnCnt
                    }) => {
 
 
@@ -28,13 +29,11 @@ const VideoArea = ({
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
 
-    console.log(subscribedArtistInfo, 'subscribedArtistInfo')
 
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
     const letter =  fanInfo?.letter
-
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -55,6 +54,9 @@ const VideoArea = ({
                                     publisher !== undefined && (
                                         <Video2 streamManager={publisher} publisherAudio={publisherAudio}
                                                 publisherVideo={publisherVideo}
+                                                role={role}
+                                                fanInfo={fanInfo}
+                                                warnCnt={warnCnt}
                                                 muteHandler={muteHandler} style={`rounded-[15px]`}/>)
 
                                 )
@@ -62,6 +64,9 @@ const VideoArea = ({
                                 (
                                     subscribedFanInfo !== undefined && (
                                         <Video2 style={`rounded-[15px]`}
+                                                role={role}
+                                                fanInfo={fanInfo}
+                                                warnCnt={warnCnt}
                                                 streamManager={subscribedFanInfo} isStaff={isStaff}
                                                />
                                     )

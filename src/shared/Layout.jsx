@@ -13,8 +13,7 @@ export const Layout = ({
                            _onClick,
                            _endClick,
                            endText,
-                           isRoomList,
-                           isParticipantsList,
+
 
                        }) => {
 
@@ -24,7 +23,7 @@ export const Layout = ({
             <div className="">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
-                                     endText={endText} isRoomList={isRoomList} isParticipantsList={isParticipantsList}
+                                     endText={endText}
                                      />
 
                 </div>
@@ -90,19 +89,18 @@ export const ContainerHeader = ({
                                     _onClick,
                                     _endClick,
                                     endText,
-                                    role,
-                                    isRoomList,
-                                    isParticipantsList
+                                    role
                                 }) => {
-
+    const currentLocation=(location) => window.location.pathname.split('/')[1] === location
     return (
+
         <div className="w-[100%] flex justify-between items-center px-[100px] py-[44px]">
             <div className="flex items-center font-medium">
-                {isRoomList &&
+                {currentLocation('roomlist') &&
                     <div className={'w-[33px] ml-[11px]'}>
                         <img alt='room-icon' src="../images/roomIcon.png"/>
                     </div>}
-                {isParticipantsList &&
+                {currentLocation('userlist') &&
                     <div className={'w-[33px] ml-[11px]'}>
                         <img alt='participants-icon' src="../images/participantsIcon.png"/>
                     </div>}
@@ -123,7 +121,7 @@ export const ContainerHeader = ({
                             width={"w-[100px]"}
                             height={"h-[46px]"}
                             createRoom={true}
-                            textColor={`${isRoomList ? "text-[#444]" : ''}`}
+                            textColor={`${currentLocation('roomlist') ? "text-[#444]" : ''}`}
                         >
                             {buttonText}
                         </Button>
@@ -167,7 +165,6 @@ const EventListFilter = () => {
     );
 
     useEffect(() => {
-        console.log('in Layout')
         const getEventListApi = async (userId) => {
             //팬일 경우 바로 대기화면으로
             if (userInfo.role === "fan") {
