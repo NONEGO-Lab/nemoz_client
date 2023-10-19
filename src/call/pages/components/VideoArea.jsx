@@ -92,19 +92,6 @@ const VideoArea = ({
 
             <div className='w-[650px]'>
                 <div className='flex justify-center items-center'>
-                    {/*{isStaff ?*/}
-                    {/*    <>*/}
-                    {/*        <img src="../images/staffIcon.png" alt='stafficon'*/}
-                    {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                    {/*        <div className='text-[19px] font-medium'>{staff_name}</div>*/}
-                    {/*    </>*/}
-                    {/*    :*/}
-                    {/*    <>*/}
-                    {/*        <img src="../images/starIcon.png" alt='staricon'*/}
-                    {/*             className='w-[24px] h-[24px] mr-[7px]'/>*/}
-                    {/*        <div className='text-[19px] font-medium'>{artist_name}</div>*/}
-                    {/*    </>*/}
-                    {/*}*/}
                     <>
                         <img src="../images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
