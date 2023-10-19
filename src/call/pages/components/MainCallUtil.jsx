@@ -38,6 +38,7 @@ const MainCallUtil = ({
     const dispatch = useDispatch();
     const navigate = useNavigate()
     let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+
     const routeToFanList = () => {
         if (role === 'fan' || role === 'member') {
             alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
@@ -53,11 +54,6 @@ const MainCallUtil = ({
         }
     }
     const nextCallConnect = async () => {
-        console.log('다음 팬 호출')
-        if (role === 'fan') {
-            alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
-            return
-        }
         // 첫 렌더링때는 이미 join 되어있는 상황이라, fan에게 socket 알람만 가면 된다.
         if (Object.keys(currentFan).length === 0) {
             alert("마지막 팬입니다.");
@@ -162,6 +158,7 @@ const MainCallUtil = ({
         console.log("notifyTime", room, time, currentFan)
         sock.emit("notifyTime", room, time, currentFan);
     }
+
     useEffect(() => {
         getFirstFanInfo();
 
@@ -250,28 +247,6 @@ const MainCallUtil = ({
             {/* 팬 리스트 */}
             {userInfo.role !== 'staff' &&
                 <>
-                    <div className={"flex flex-col text-[8px] items-center mr-[57px]"}>
-                        <div className={"w-[44px] cursor-pointer"} onClick={routeToFanList}>
-                            <img src="../images/callOutFanList.png" alt='fanlist'/>
-                        </div>
-                        <span
-                            className={"mt-[25px] flex flex-col items-center text-[#848484] text-[12px] whitespace-nowrap"}>
-                   {`FAN LIST`}
-                </span>
-                    </div>
-
-                    {/* 다음 사람 */}
-                    <div className={"flex flex-col text-[8px] items-center  mr-[30px]"}>
-                        <div className={`w-[44px] cursor-pointer`} onClick={nextCallConnect}>
-                            {!isCallProcessing ? <img src="../images/callOutNext.png" alt="next"/> :
-                                <img src="../images/callOutNextOff.png" alt="next"/>}
-                        </div>
-                        <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                    {`NEXT`}
-                </span>
-                    </div>
-
-
                     {/* 캠 토글 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={videoMuteHandler}>
@@ -292,26 +267,25 @@ const MainCallUtil = ({
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`MIC`}</div>
-
                         </div>
                     </div>
-                    {/* 연결 끊기 */}
-                    <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}>
-                        <div className={"w-[75px] cursor-pointer"} onClick={finishCurrentCall}>
-                            <img src="../images/callOutQuit.png" alt="quit"/>
+                    {/* 다음 사람 */}
+                    {userInfo.role === 'artist' &&
+                        <div className={"flex flex-col text-[8px] items-center  mr-[30px]"}>
+                        <div className={`w-[75px] cursor-pointer`} onClick={nextCallConnect}>
+                            <img src="../images/callOutNext.png" alt="next"/>
                         </div>
-                        <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                            <div>{`DISCONNECT`}</div>
-                        </div>
-                    </div>
-
+                        <span className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
+                    {`NEXT`}
+                </span>
+                    </div>}
                     {/* 방 나가기 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
                         <div className={"w-[75px] cursor-pointer"} onClick={() => outRoom(role)}>
-                            <img src="../images/callOutRoomEnd.png" alt="close"/>
+                            <img src="../images/callOutQuit.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
-                            <div>{`CLOSE`}</div>
+                            <div>{`QUIT`}</div>
                         </div>
                     </div>
                 </>}

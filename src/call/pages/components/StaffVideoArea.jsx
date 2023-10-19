@@ -21,6 +21,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                                     streamManager={subscribedFanInfo}
                                     fanInfo={fanInfo}
                                     warnCnt={warnCnt}
+                                    left={true}
                             />
                         )}
 
@@ -54,6 +55,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                             <Video2 streamManager={subscribedArtistInfo}
                                     fanInfo={fanInfo}
                                     warnCnt={warnCnt}
+                                    right={true}
                                     style={`rounded-[15px] `}/>)
                         }
                     </div>

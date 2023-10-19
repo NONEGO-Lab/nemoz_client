@@ -29,7 +29,6 @@ const VideoArea = ({
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
 
-
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
@@ -57,6 +56,7 @@ const VideoArea = ({
                                                 role={role}
                                                 fanInfo={fanInfo}
                                                 warnCnt={warnCnt}
+                                                left={true}
                                                 muteHandler={muteHandler} style={`rounded-[15px]`}/>)
 
                                 )
@@ -67,6 +67,7 @@ const VideoArea = ({
                                                 role={role}
                                                 fanInfo={fanInfo}
                                                 warnCnt={warnCnt}
+                                                left={true}
                                                 streamManager={subscribedFanInfo} isStaff={isStaff}
                                                />
                                     )
@@ -116,13 +117,13 @@ const VideoArea = ({
                         {!isFan && (
                             publisher !== undefined && (
                                 <Video2 streamManager={publisher} publisherAudio={publisherAudio}
-                                        publisherVideo={publisherVideo}
+                                        publisherVideo={publisherVideo} right={true}
                                         muteHandler={muteHandler} style={`rounded-[15px] `}/>)
 
                         )}
                         {isFan && (
                             subscribedArtistInfo !== undefined && (
-                                <Video2 style={`rounded-[15px]`}
+                                <Video2 style={`rounded-[15px]`} right={true}
                                         streamManager={subscribedArtistInfo} isStaff={isStaff} isTestConnect={isTestConnect}/>
                             )
                         )}

@@ -34,7 +34,6 @@ const VideoContainer2 = () => {
 
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
-    console.log(warnCnt, 'warnCntwarnCnt')
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -62,6 +61,7 @@ const VideoContainer2 = () => {
                         fanInfo={currentFan}
                         roomInfo={roomInfo}
                         warnCnt={warnCnt}
+                        publisher={publisher}
                     />
 
                     :
