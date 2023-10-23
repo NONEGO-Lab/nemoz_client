@@ -18,13 +18,17 @@ const VideoArea = ({
                        publisherAudio,
                        muteHandler,
                        artistName,
-                       warnCnt
+                       warnCnt,
+                       imoticonToggle,
+                       setImoticonToggle,
+                       toastList,
+                       onClickReactBtn
                    }) => {
 
 
     const {role} = userInfo
     const isStaff = role === 'staff'
-    const isFan = role === 'fan'||role==='member'
+    const isFan = role === 'fan' || role === 'member'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
@@ -32,7 +36,7 @@ const VideoArea = ({
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
-    const letter =  fanInfo?.letter
+    const letter = fanInfo?.letter
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -40,7 +44,8 @@ const VideoArea = ({
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
                             {`Fan ${username} (${age}세)`}
-                            <InnerCircleText gender={gender} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
+                            <InnerCircleText gender={gender} width={"w-[22px]"} height={"h-[22px]"}
+                                             bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -51,13 +56,19 @@ const VideoArea = ({
                             isFan ?
                                 (
                                     publisher !== undefined && (
-                                        <Video2 streamManager={publisher} publisherAudio={publisherAudio}
+                                        <Video2 streamManager={publisher}
+                                                publisherAudio={publisherAudio}
                                                 publisherVideo={publisherVideo}
                                                 role={role}
                                                 fanInfo={fanInfo}
                                                 warnCnt={warnCnt}
                                                 left={true}
-                                                muteHandler={muteHandler} style={`rounded-[15px]`}/>)
+                                                muteHandler={muteHandler}
+                                                imoticonToggle={imoticonToggle}
+                                                setImoticonToggle={setImoticonToggle}
+                                                toastList={toastList}
+                                                onClickReactBtn={onClickReactBtn}
+                                                style={`rounded-[15px]`}/>)
 
                                 )
                                 :
@@ -68,14 +79,19 @@ const VideoArea = ({
                                                 fanInfo={fanInfo}
                                                 warnCnt={warnCnt}
                                                 left={true}
-                                                streamManager={subscribedFanInfo} isStaff={isStaff}
-                                               />
+                                                streamManager={subscribedFanInfo}
+                                                isStaff={isStaff}
+                                                imoticonToggle={imoticonToggle}
+                                                setImoticonToggle={setImoticonToggle}
+                                                toastList={toastList}
+                                                onClickReactBtn={onClickReactBtn}
+                                        />
                                     )
                                 )
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2/>}
-                    {((isFan && !publisherVideo)||(role==='artist' && !subscribedFanInfo))&&
+                    {((isFan && !publisherVideo) || (role === 'artist' && !subscribedFanInfo)) &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
@@ -105,18 +121,29 @@ const VideoArea = ({
                             publisher !== undefined && (
                                 <Video2 streamManager={publisher} publisherAudio={publisherAudio}
                                         publisherVideo={publisherVideo} right={true}
-                                        muteHandler={muteHandler} style={`rounded-[15px] `}/>)
+                                        muteHandler={muteHandler} style={`rounded-[15px] `}
+                                        imoticonToggle={imoticonToggle}
+                                        setImoticonToggle={setImoticonToggle}
+                                        toastList={toastList}
+                                        onClickReactBtn={onClickReactBtn}
+                                />)
 
                         )}
                         {isFan && (
                             subscribedArtistInfo !== undefined && (
                                 <Video2 style={`rounded-[15px]`} right={true}
-                                        streamManager={subscribedArtistInfo} isStaff={isStaff} isTestConnect={isTestConnect}/>
+                                        streamManager={subscribedArtistInfo} isStaff={isStaff}
+                                        isTestConnect={isTestConnect}
+                                        imoticonToggle={imoticonToggle}
+                                        setImoticonToggle={setImoticonToggle}
+                                        toastList={toastList}
+                                        onClickReactBtn={onClickReactBtn}
+                                />
                             )
                         )}
                     </div>
 
-                    {((role === 'staff' && !publisherVideo) ||(isFan && subscribedArtistInfo === undefined)) &&
+                    {((role === 'staff' && !publisherVideo) || (isFan && subscribedArtistInfo === undefined)) &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{artistName}</span>

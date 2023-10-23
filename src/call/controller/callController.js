@@ -53,6 +53,7 @@ export const  CallController = () => {
   const leftTimeRef = useRef(0);
   const [isLastFan, setIsLastFan] = useState(false)
   const [warnCnt, setWarnCnt] = useState(0);
+  const [imoticonToggle, setImoticonToggle] = useState(false)
   let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
   const navigateByRole = () => {
     if(userInfo.role === "fan" || userInfo.role === 'member') {
@@ -240,6 +241,17 @@ export const  CallController = () => {
     }
   }
 
+  const sendLeftTimeHandler = (subscribers, leftTimeRef) => {
+
+    if (subscribers.length === 0) return;
+
+    // socket 으로 방에 있는 모든 사람들에게 남은 시간을 알려준다!
+    let room = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+    let time = leftTimeRef.current;
+    console.log("notifyTime", room, time, currentFan)
+    sock.emit("notifyTime", room, time, currentFan);
+  }
+
   useEffect(() => {
     if(publisher) {
       return;
@@ -364,7 +376,10 @@ export const  CallController = () => {
     warnHandler,
     warnCnt,
     setWarnCnt,
-    kickOutHandler
+    kickOutHandler,
+    imoticonToggle,
+    setImoticonToggle,
+    sendLeftTimeHandler
   }
 
 }

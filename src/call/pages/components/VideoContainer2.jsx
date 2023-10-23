@@ -11,6 +11,7 @@ import {CallController as controller} from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
 import StaffVideoArea from "./StaffVideoArea";
 import Timer from "./Timer";
+import {ToastContainer} from "react-toastify";
 
 const VideoContainer2 = () => {
 
@@ -23,17 +24,44 @@ const VideoContainer2 = () => {
     const subscribedArtistInfo = useSelector(state => state.video.subscribedArtistInfo)
     const subscribedFanInfo = useSelector(state => state.video.subscribedFanInfo)
 
-    const { videoMuteHandler, audioMuteHandler, subscribers,
-        publisher, publisherAudio, publisherVideo, routeToFanList } = useVideo();
-    const { roomInfo, leftTimeRef, toastList,
-        endRoom, outRoom, showTime, staffNoticeList, userInfo, setIsOpenWaitingModal, currentFan,
-        setCurrentFan, setIsOpenAddUser, fanDetailOpenHandler, isOpenAddUser, isOpenFanDetail,
-        waitingFanInfo, setIsOpenFanDetail, isOpenLeftTime, toBack, isOpenWaitingModal,warnHandler,warnCnt, kickOutHandler,setWarnCnt
+    const {
+        videoMuteHandler, audioMuteHandler, subscribers,
+        publisher, publisherAudio, publisherVideo, routeToFanList
+    } = useVideo();
+    const {
+        roomInfo,
+        leftTimeRef,
+        toastList,
+        endRoom,
+        outRoom,
+        showTime,
+        staffNoticeList,
+        userInfo,
+        setIsOpenWaitingModal,
+        currentFan,
+        setCurrentFan,
+        setIsOpenAddUser,
+        fanDetailOpenHandler,
+        isOpenAddUser,
+        isOpenFanDetail,
+        waitingFanInfo,
+        setIsOpenFanDetail,
+        isOpenLeftTime,
+        toBack,
+        isOpenWaitingModal,
+        warnHandler,
+        warnCnt,
+        kickOutHandler,
+        setWarnCnt,
+        imoticonToggle,
+        setImoticonToggle,
+        sendLeftTimeHandler
     } = controller();
-    const {getChatFromSocket} = useReaction();
+    const {getChatFromSocket,onClickReactBtn,onClickDeleteBtn} = useReaction();
 
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
+
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -62,6 +90,7 @@ const VideoContainer2 = () => {
                         roomInfo={roomInfo}
                         warnCnt={warnCnt}
                         publisher={publisher}
+                        toastList={toastList}
                     />
 
                     :
@@ -78,6 +107,10 @@ const VideoContainer2 = () => {
                         roomInfo = {roomInfo}
                         artistName={artist_name}
                         warnCnt={warnCnt}
+                        imoticonToggle={imoticonToggle}
+                        setImoticonToggle={setImoticonToggle}
+                        toastList={toastList}
+                        onClickReactBtn={onClickReactBtn}
                     />
                 }
 
@@ -105,9 +138,16 @@ const VideoContainer2 = () => {
                     warnHandler={warnHandler}
                     setWarnCnt={setWarnCnt}
                     kickOutHandler={kickOutHandler}
+                    sendLeftTimeHandler={sendLeftTimeHandler}
                 />
 
             </div>
+            {/*<ToastContainer*/}
+            {/*    className="absolute"*/}
+            {/*    position="bottom-center"*/}
+            {/*    autoClose={3000}*/}
+            {/*    hideProgressBar*/}
+            {/*/>*/}
         </SizeLayout>
     );
 };

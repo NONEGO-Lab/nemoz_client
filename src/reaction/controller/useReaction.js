@@ -8,7 +8,7 @@ import { sock } from "../../socket/config";
 export const useReaction = () => {
 
   const dispatch = useDispatch();
-  const eventId = useSelector((state) => state.common.eventId);
+  const eventId = useSelector((state) => state.common.currentEventId);
   const roomInfo = useSelector((state) => state.common.roomInfo);
   const sessionInfo = useSelector((state) => state.common.sessionInfo);
 
@@ -18,6 +18,7 @@ export const useReaction = () => {
 
 
   const onClickReactBtn = (button) => {
+    console.log(button)
     count.current += 1;
     let newButton = {
       id: count.current,
@@ -29,9 +30,10 @@ export const useReaction = () => {
     if(window.location.pathname.includes("test")) {
       num = `${eventId}_test_${params.id}`;
     } else {
-      num = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+      num = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
     }
-
+    console.log(num)
+    console.log(newButton)
     sock.emit("chatMessage", num, newButton);
 
     // meetId랑 content 보내야 함. 즉 함수 보낼때 meetId도 같이 보내야 함!

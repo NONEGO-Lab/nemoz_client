@@ -74,6 +74,7 @@ export const videoEvents = {
   },
 
   notifyTime: ({ time, fan, setStaffNoticeList, userInfo }) => {
+    console.log('NOTI TIME', time, fan)
     let noticeData = { type: "time", msg: `${fan.fan_name}님에게 ${time}초 남았음을 알려주었습니다.` };
     setStaffNoticeList((prev) => [...prev, noticeData]);
 

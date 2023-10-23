@@ -23,7 +23,8 @@ const MainCallUtil = ({
                           leftTimeRef,
                           warnHandler,
                           kickOutHandler,
-                          setWarnCnt
+                          setWarnCnt,
+                          sendLeftTimeHandler
                       }) => {
     const [isCallProcessing, setIsCallProcessing] = useState(false);
     const [isFirstCall, setIsFirstCall] = useState(true);
@@ -148,16 +149,16 @@ const MainCallUtil = ({
             dispatch(setIsError(true));
         }
     }
-    const sendLeftTimeHandler = () => {
-
-        if (subscribers.length === 0) return;
-
-        // socket 으로 방에 있는 모든 사람들에게 남은 시간을 알려준다!
-        let room = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-        let time = leftTimeRef.current;
-        console.log("notifyTime", room, time, currentFan)
-        sock.emit("notifyTime", room, time, currentFan);
-    }
+    // const sendLeftTimeHandler = () => {
+    //
+    //     if (subscribers.length === 0) return;
+    //
+    //     // socket 으로 방에 있는 모든 사람들에게 남은 시간을 알려준다!
+    //     let room = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+    //     let time = leftTimeRef.current;
+    //     console.log("notifyTime", room, time, currentFan)
+    //     sock.emit("notifyTime", room, time, currentFan);
+    // }
 
     useEffect(() => {
         getFirstFanInfo();
@@ -197,7 +198,7 @@ const MainCallUtil = ({
 
                     {/* 알람 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
-                         onClick={sendLeftTimeHandler}>
+                         onClick={()=>sendLeftTimeHandler(subscribers, leftTimeRef)}>
                         <div className={"w-[75px] cursor-pointer"}>
                             <img src="../images/staffAlramIcon.png" alt="close"/>
                         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Video2 from "../../../video/pages/Video2";
 import InnerCircleText from "../../../common/InnerCircleText";
 
-const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt}) => {
+const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt, toastList}) => {
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -22,6 +22,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                                     fanInfo={fanInfo}
                                     warnCnt={warnCnt}
                                     left={true}
+                                    toastList={toastList}
                             />
                         )}
 
@@ -56,7 +57,9 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                                     fanInfo={fanInfo}
                                     warnCnt={warnCnt}
                                     right={true}
-                                    style={`rounded-[15px] `}/>)
+                                    style={`rounded-[15px]`}
+                                    toastList={toastList}
+                            />)
                         }
                     </div>
                     {!subscribedArtistInfo &&
