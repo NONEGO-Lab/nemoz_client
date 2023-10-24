@@ -24,7 +24,7 @@ const MainCallUtil = ({
                           warnHandler,
                           kickOutHandler,
                           setWarnCnt,
-                          sendLeftTimeHandler
+                          sendLeftTimeHandler,
                       }) => {
     const [isCallProcessing, setIsCallProcessing] = useState(false);
     const [isFirstCall, setIsFirstCall] = useState(true);

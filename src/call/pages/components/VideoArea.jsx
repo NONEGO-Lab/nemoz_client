@@ -1,9 +1,7 @@
 import React from 'react';
 import InnerCircleText from "../../../common/InnerCircleText";
-
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
-import StaffVideoArea from "./StaffVideoArea";
 
 const VideoArea = ({
                        userInfo,
@@ -19,10 +17,13 @@ const VideoArea = ({
                        muteHandler,
                        artistName,
                        warnCnt,
-                       imoticonToggle,
-                       setImoticonToggle,
+                       emoticonToggle,
+                       setEmoticonToggle,
                        toastList,
-                       onClickReactBtn
+                       onClickReactBtn,
+                       sendReactionHandler,
+                       removeToast,
+                       toasts
                    }) => {
 
 
@@ -37,6 +38,7 @@ const VideoArea = ({
     const age = fanInfo?.age
     const gender = fanInfo?.sex
     const letter = fanInfo?.letter
+    console.log(toasts, 'in Video Area')
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -64,10 +66,12 @@ const VideoArea = ({
                                                 warnCnt={warnCnt}
                                                 left={true}
                                                 muteHandler={muteHandler}
-                                                imoticonToggle={imoticonToggle}
-                                                setImoticonToggle={setImoticonToggle}
-                                                toastList={toastList}
+                                                emoticonToggle={emoticonToggle}
+                                                setEmoticonToggle={setEmoticonToggle}
+                                                toasts={toasts}
                                                 onClickReactBtn={onClickReactBtn}
+                                                sendReactionHandler={sendReactionHandler}
+                                                removeToast={removeToast}
                                                 style={`rounded-[15px]`}/>)
 
                                 )
@@ -81,10 +85,12 @@ const VideoArea = ({
                                                 left={true}
                                                 streamManager={subscribedFanInfo}
                                                 isStaff={isStaff}
-                                                imoticonToggle={imoticonToggle}
-                                                setImoticonToggle={setImoticonToggle}
-                                                toastList={toastList}
+                                                emoticonToggle={emoticonToggle}
+                                                setEmoticonToggle={setEmoticonToggle}
+                                                toasts={toasts}
                                                 onClickReactBtn={onClickReactBtn}
+                                                sendReactionHandler={sendReactionHandler}
+                                                removeToast={removeToast}
                                         />
                                     )
                                 )
@@ -122,10 +128,13 @@ const VideoArea = ({
                                 <Video2 streamManager={publisher} publisherAudio={publisherAudio}
                                         publisherVideo={publisherVideo} right={true}
                                         muteHandler={muteHandler} style={`rounded-[15px] `}
-                                        imoticonToggle={imoticonToggle}
-                                        setImoticonToggle={setImoticonToggle}
+                                        emoticonToggle={emoticonToggle}
+                                        setEmoticonToggle={setEmoticonToggle}
                                         toastList={toastList}
                                         onClickReactBtn={onClickReactBtn}
+                                        sendReactionHandler={sendReactionHandler}
+                                        removeToast={removeToast}
+                                        toasts={toasts}
                                 />)
 
                         )}
@@ -134,10 +143,13 @@ const VideoArea = ({
                                 <Video2 style={`rounded-[15px]`} right={true}
                                         streamManager={subscribedArtistInfo} isStaff={isStaff}
                                         isTestConnect={isTestConnect}
-                                        imoticonToggle={imoticonToggle}
-                                        setImoticonToggle={setImoticonToggle}
+                                        emoticonToggle={emoticonToggle}
+                                        setEmoticonToggle={setEmoticonToggle}
                                         toastList={toastList}
                                         onClickReactBtn={onClickReactBtn}
+                                        sendReactionHandler={sendReactionHandler}
+                                        removeToast={removeToast}
+                                        toasts={toasts}
                                 />
                             )
                         )}

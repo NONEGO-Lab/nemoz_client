@@ -6,8 +6,10 @@ import { notify } from "../../call/pages/components/notify";
 
 export const videoEvents = {
 
-  chatMessage: ({ msg, getChatFromSocket }) => {
-    getChatFromSocket(msg);
+  chatMessage: ({ msg, getChatFromSocket, addToast }) => {
+    console.log('in Video Event', msg)
+    addToast({ type: "reaction", msg });
+    // getChatFromSocket(msg);
   },
 
   joinRoom: ({ user, setStaffNoticeList }) => {
@@ -73,22 +75,24 @@ export const videoEvents = {
     dispatch(addTimer(time));
   },
 
-  notifyTime: ({ time, fan, setStaffNoticeList, userInfo }) => {
+  notifyTime: ({ time, fan, setStaffNoticeList, userInfo, addToast }) => {
     console.log('NOTI TIME', time, fan)
     let noticeData = { type: "time", msg: `${fan.fan_name}님에게 ${time}초 남았음을 알려주었습니다.` };
     setStaffNoticeList((prev) => [...prev, noticeData]);
-
+    addToast({ type: "time", msg: `${time}초 남았습니다.` });
     if(fan.fan_id.toString() === userInfo.id.toString()) {
       notify(time, "time");
     }
   },
 
-  warnUser: ({ user, count, role, notify, setStaffNoticeList,setWarnCnt }) => {
+  warnUser: ({ user, count, role, notify, setStaffNoticeList,setWarnCnt, addToast }) => {
     setWarnCnt(count)
     if(role === "fan") {
+      addToast({ type: "warn", msg: `$${count}회 경고 받았습니다.` });
       notify(`${count}회 경고 받았습니다.`, "warn");
     } else {
       notify(`경고를 주었습니다. (총 ${count}회)`, "warn");
+      addToast({ type: "warn", msg: `$${count}회 경고 주었습니다.` });
       let noticeData = { type: "warn", msg: ` ${user.fan_name}님에게 경고를 주었습니다. (총 ${count}회)` };
       setStaffNoticeList((prev) => [...prev, noticeData]);
     }

@@ -1,12 +1,10 @@
-import React, {useRef, useEffect, Fragment} from "react";
+import React, {useRef, useEffect, Fragment, useState} from "react";
 import InnerCircleText from "../../common/InnerCircleText";
 import {useSelector} from "react-redux";
 import {upper_imoticon_path, down_imoticon_path} from "../../common/imoticon_path";
-import {ToastContainer} from "react-toastify";
-import styled from "@emotion/styled";
-import 'react-toastify/dist/ReactToastify.css';
+import Toast from "../../shared/Toast";
 
-const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, imoticonToggle, setImoticonToggle, toastList, onClickReactBtn}) => {
+const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonToggle, setEmoticonToggle, onClickReactBtn, toasts, removeToast, sendReactionHandler}) => {
 
     const videoRef = useRef();
     const userInfo = useSelector(state => state.user.userInfo)
@@ -20,7 +18,7 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, imoticonTo
     }, [streamManager]);
 
 
-    console.log(toastList, 'toastList')
+    console.log(toasts, 'toasts')
     const currentRole = userInfo.role
 
     return (
@@ -47,29 +45,28 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, imoticonTo
                 {/*    <span className={"text-[16px] text-white mr-[12.5px] my-[15px]"}>경고를 1회 받았습니다.</span>*/}
                 {/*    <img src={"/images/popupClose.png"} className={"w-[10px] h-[10px] cursor-pointer"} alt={"close"} onClick={()=>alert('close chat')}/>*/}
                 {/*</div>*/}
-                <StyledToastContainer
-                    className="absolute"
-                    position="bottom-center"
-                    autoClose={false}
-                    hideProgressBar
-                />
+
+                    {toasts?.map((message, index) => (
+                        <Toast key={index} message={message} removeToast={removeToast} />
+                    ))}
+
             </div>
-            {(left && imoticonToggle) &&
+            {(left && emoticonToggle) &&
                 <div
                     className={"w-[390px] h-[200px] bg-white top-[61%] left-[15.5%] absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10"}>
                     <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center mr-[35px]`} key={i.name} onClick={()=>onClickReactBtn(i)}>
-                                <div className={"text-[31px]"}>{i.imo}</div>
+                            <div className={`flex flex-col items-center mr-[35px]`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor})}>
+                                <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
                         }
                     </div>
                     <div className={"flex"}>
                         {down_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>onClickReactBtn(i)}>
-                                <div className={"text-[31px]"}>{i.imo}</div>
+                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor})}>
+                                <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
 
@@ -103,29 +100,29 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, imoticonTo
                                      alt={"fullScreenIcon"} onClick={() => alert('풀화면')}/>
                                 :
                                 <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                                     alt={"emoticonIcon"} onClick={() => setImoticonToggle(prev => !prev)}/>
+                                     alt={"emoticonIcon"} onClick={() => setEmoticonToggle(prev => !prev)}/>
                             }
                         </div>
                     }
                 </div>
             </div>}
 
-            {(right && imoticonToggle) &&
+            {(right && emoticonToggle) &&
                 <div
                     className={"w-[390px] h-[200px] bg-white top-[61%] left-[64.5%] absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10"}>
                     <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col  items-center mr-[35px]`} key={i.name} onClick={()=>onClickReactBtn(i)}>
-                                <div className={"text-[31px]"}>{i.imo}</div>
+                            <div className={`flex flex-col  items-center mr-[35px]`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor})}>
+                                <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
                         }
                     </div>
                     <div className={"flex"}>
                         {down_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>onClickReactBtn(i)}>
-                                <div className={"text-[31px]"}>{i.imo}</div>
+                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor})}>
+                                <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
 
@@ -140,35 +137,20 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, imoticonTo
                 <div className={"flex items-center"}>
                     {currentRole === 'artist' ?
                         <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                             alt={"emoticonIcon"} onClick={() => setImoticonToggle(prev => !prev)}/>
+                             alt={"emoticonIcon"} onClick={() => setEmoticonToggle(prev => !prev)}/>
                         :
                         <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/fullScreenIcon.png"}
                              alt={"fullScreenIcon"} onClick={() => alert('풀화면')}/>
                     }
                 </div>
             </div>}
+
         </>
     )
 
 
 };
 
-/**
- *   <div className={"flex justify-center items-center bg-black bg-opacity-[0.15] rounded-[22.5px] w-[172.5px] ml-[78px] h-[45.5px]"}>
- *                     <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
- *                         <span className={"text-[34px]"}>🥲</span>를 받았습니다.
- *                     </span>
- *                     <img src={"/images/popupClose.png"} className={"w-[10px] h-[10px] cursor-pointer"} alt={"close"} onClick={()=>alert('close chat')}/>
- *                 </div>
- */
 
-const StyledToastContainer = styled(ToastContainer)`
-  .Toastify__toast {
-    //position: absolute;
-    background-color: black;
-    border-radius: 22.5px;
-    opacity: 0.15;
-    width: 172.5px;
-  }
-`
+
 export default Video2;

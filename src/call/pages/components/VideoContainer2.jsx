@@ -11,7 +11,6 @@ import {CallController as controller} from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
 import StaffVideoArea from "./StaffVideoArea";
 import Timer from "./Timer";
-import {ToastContainer} from "react-toastify";
 
 const VideoContainer2 = () => {
 
@@ -53,15 +52,20 @@ const VideoContainer2 = () => {
         warnCnt,
         kickOutHandler,
         setWarnCnt,
-        imoticonToggle,
-        setImoticonToggle,
-        sendLeftTimeHandler
+        emoticonToggle,
+        setEmoticonToggle,
+        sendLeftTimeHandler,
+        sendReactionHandler,
+        toasts,
+        setToasts,
+        addToast,
+        removeToast
     } = controller();
     const {getChatFromSocket,onClickReactBtn,onClickDeleteBtn} = useReaction();
 
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
-
+    console.log(toasts, 'in Video Container2')
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -90,7 +94,8 @@ const VideoContainer2 = () => {
                         roomInfo={roomInfo}
                         warnCnt={warnCnt}
                         publisher={publisher}
-                        toastList={toastList}
+                        toasts={toasts}
+                        removeToast={removeToast}
                     />
 
                     :
@@ -107,10 +112,12 @@ const VideoContainer2 = () => {
                         roomInfo = {roomInfo}
                         artistName={artist_name}
                         warnCnt={warnCnt}
-                        imoticonToggle={imoticonToggle}
-                        setImoticonToggle={setImoticonToggle}
-                        toastList={toastList}
-                        onClickReactBtn={onClickReactBtn}
+                        emoticonToggle={emoticonToggle}
+                        setEmoticonToggle={setEmoticonToggle}
+                        toasts={toasts}
+                        sendReactionHandler={sendReactionHandler}
+                        // onClickReactBtn={onClickReactBtn}
+                        removeToast={removeToast}
                     />
                 }
 
@@ -139,6 +146,10 @@ const VideoContainer2 = () => {
                     setWarnCnt={setWarnCnt}
                     kickOutHandler={kickOutHandler}
                     sendLeftTimeHandler={sendLeftTimeHandler}
+                    toasts={toasts}
+                    setToasts = {setToasts}
+                    addToast={addToast}
+                    removeToast={removeToast}
                 />
 
             </div>
