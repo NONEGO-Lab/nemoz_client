@@ -10,6 +10,7 @@ import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {roomApi} from "../../room/data/room_data";
 import {attendeeApi} from "../../fans/data/attendee_data";
 import {addTimer, clearSession} from "../../redux/modules/videoSlice";
+import {addToast as addToastRedux} from "../../redux/modules/toastSlice";
 import {videoEvents} from "../../socket/events/video_event";
 import {notify} from "../pages/components/notify";
 import {useVideo} from "./hooks/useVideo";
@@ -55,7 +56,7 @@ export const CallController = () => {
     const leftTimeRef = useRef(0);
     const [isLastFan, setIsLastFan] = useState(false)
     const [warnCnt, setWarnCnt] = useState(0);
-    const [emoticonToggle, setEmoticonToggle] = useState(false)
+    const [emoticonToggle, setEmoticonToggle] = useState({left:false, right:false})
     const [toasts, setToasts] = useState([]);
 
     let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
@@ -150,7 +151,6 @@ export const CallController = () => {
     }
 
     const getCurrentFanInfo = async () => {
-        console.log('GET CURRENt FAN INFO')
         let roomId = roomInfo.room_id;
         try {
             const result = await roomApi.getListOrder({eventId, roomId});
@@ -175,9 +175,7 @@ export const CallController = () => {
         newJoinMeet(newSessionInfo).then((sessionInfo) => {
             completeSession(sessionInfo);
         });
-        //nextFan detail 요청하기
         const detail = await attendeeApi.getFanDetail(nextFan.fan_id);
-        console.log('룰루랄라룰루랄라룰루랄라')
         setCurrentFan(detail);
         setWarnCnt(detail?.warning_count)
     };
@@ -221,8 +219,6 @@ export const CallController = () => {
         }
     }
     const warnHandler = async () => {
-        // 경고 api + 경고 socket
-
         if (subscribers.length === 0) return;
 
         if (window.confirm(`정말로 ${currentFan.fan_name}를 경고하시겠습니까?`)) {
@@ -231,7 +227,6 @@ export const CallController = () => {
             if (result.message === "Warning Count is Updated") {
                 sock.emit("warnUser", roomNum, currentFan, result.data.warning_count);
             }
-
             if (result.data.warning_count >= 3) {
                 requestKickOutApi();
             }
@@ -253,7 +248,7 @@ export const CallController = () => {
         let room = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
         let time = leftTimeRef.current;
         console.log("notifyTime", room, time, currentFan)
-        sock.emit("notifyTime", room, time, currentFan);
+        sock.emit("notifyTime", room, time);
     }
 
     const sendReactionHandler = (msg) => {
@@ -263,9 +258,8 @@ export const CallController = () => {
     }
 
     const addToast = (message) => {
-        console.log(message, 'addToast????')
-        setToasts([...toasts, message]);
-    };
+        dispatch(addToastRedux(message))
+    }
 
     const removeToast = () => {
         setToasts((prevToasts) => prevToasts.slice(1));
@@ -304,7 +298,6 @@ export const CallController = () => {
                 })
             }
             //현재 팬의 정보를 가져오는 것.
-            console.log('룰루랄라')
             getCurrentFanInfo();
         }
 
@@ -361,11 +354,8 @@ export const CallController = () => {
         }));
         sock.on("timerStart", (time) => videoEvents.timerStart({time, dispatch}));
         sock.on("leftTime", (currentTime) => videoEvents.leftTime({currentTime, userInfo, dispatch}));
-        sock.on("notifyTime", (time, fan) => videoEvents.notifyTime({
+        sock.on("notifyTime", (time) => videoEvents.notifyTime({
             time,
-            fan,
-            setStaffNoticeList,
-            userInfo,
             addToast
         }));
         sock.on("warnUser", (user, count) => videoEvents.warnUser({

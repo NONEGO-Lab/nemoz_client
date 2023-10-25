@@ -38,7 +38,7 @@ const VideoArea = ({
     const age = fanInfo?.age
     const gender = fanInfo?.sex
     const letter = fanInfo?.letter
-    console.log(toasts, 'in Video Area')
+
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}

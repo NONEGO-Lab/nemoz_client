@@ -61,11 +61,10 @@ const VideoContainer2 = () => {
         addToast,
         removeToast
     } = controller();
-    const {getChatFromSocket,onClickReactBtn,onClickDeleteBtn} = useReaction();
 
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
-    console.log(toasts, 'in Video Container2')
+
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
@@ -153,12 +152,7 @@ const VideoContainer2 = () => {
                 />
 
             </div>
-            {/*<ToastContainer*/}
-            {/*    className="absolute"*/}
-            {/*    position="bottom-center"*/}
-            {/*    autoClose={3000}*/}
-            {/*    hideProgressBar*/}
-            {/*/>*/}
+
         </SizeLayout>
     );
 };

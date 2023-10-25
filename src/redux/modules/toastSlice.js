@@ -27,13 +27,14 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     addToast: (state, action) => {
-      if(state.toastList.find((toast) => toast.id === action.payload) === undefined) {
-        state.toastList = [...state.toastList, action.payload];
-      }
-
+      state.toastList = [...state.toastList, action.payload];
+    },
+    removeToast:(state, action) =>{
+      console.log(action.payload)
+      state.toastList = state.toastList.filter((toast) => toast.msg.unique_id !== action.payload);
     },
     deleteToast: (state, action) => {
-      state.toastList = state.toastList.filter((toast) => toast.id !== action.payload);
+      state.toastList = state.toastList.slice(1)
     },
     clearToast: (state, action) => {
       state.toastList = [];
@@ -41,11 +42,12 @@ export const toastSlice = createSlice({
   },
   extraReducers: {
     [deleteToastAfter3s.fulfilled]: (state, action) => {
-      state.toastList = state.toastList.filter((toast) => toast.id !== action.payload);
+      // state.toastList = state.toastList.filter((toast) => toast.id !== action.payload);
+      state.toastList = state.toastList.slice(1)
     }
   }
 });
 
-export const { addToast, deleteToast, clearToast } = toastSlice.actions
+export const { addToast, deleteToast, clearToast , removeToast} = toastSlice.actions
 
 export default toastSlice.reducer
