@@ -5,8 +5,22 @@ import Toast from "../../shared/Toast";
 import {nanoid} from "nanoid";
 
 
-
-const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonToggle, setEmoticonToggle, onClickReactBtn, toasts, removeToast, sendReactionHandler}) => {
+const Video2 = ({
+                    streamManager,
+                    style,
+                    fanInfo,
+                    warnCnt,
+                    left,
+                    right,
+                    emoticonToggle,
+                    setEmoticonToggle,
+                    onClickReactBtn,
+                    toasts,
+                    removeToast,
+                    sendReactionHandler,
+                    isWebFullScreen,
+                    setIsWebFullScreen
+                }) => {
 
     const videoRef = useRef();
     const userInfo = useSelector(state => state.user.userInfo)
@@ -23,11 +37,19 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
 
     const currentRole = userInfo.role
 
-    const toggleEmoticon = (location) =>{
-        if(location === 'left'){
-            setEmoticonToggle({...emoticonToggle, left:!emoticonToggle.left})
-        }else{
-            setEmoticonToggle({...emoticonToggle, right:!emoticonToggle.right})
+    const toggleEmoticon = (location) => {
+        if (location === 'left') {
+            setEmoticonToggle({...emoticonToggle, left: !emoticonToggle.left})
+        } else {
+            setEmoticonToggle({...emoticonToggle, right: !emoticonToggle.right})
+        }
+
+    }
+
+    const toggleFullScreen = () =>{
+        setIsWebFullScreen(prev => !prev)
+        if((isWebFullScreen && emoticonToggle.left) || (!isWebFullScreen && emoticonToggle.left)){
+            setEmoticonToggle({...emoticonToggle, left: false})
         }
 
     }
@@ -41,18 +63,29 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
                     ref={videoRef}
                 />
             }
-            <div className={"w-[250px] h-[300px] absolute top-[31%] ml-[400px] flex flex-col justify-end overflow-y-hidden overflow-x-hidden"}>
-                    {toastList?.map((message, index) => (
-                        <Toast key={index} message={message} left={left} right={right}/>
-                    ))}
+
+            <div
+                className={`w-[250px] h-[300px] absolute top-[31%] flex flex-col justify-end overflow-y-hidden overflow-x-hidden ${isWebFullScreen? "ml-[1040px]":"ml-[400px]"}`}>
+                {toastList?.map((message, index) => (
+                    <Toast key={index} message={message} left={left} right={right} isWebFullScreen={isWebFullScreen}/>
+                ))}
             </div>
+
+
             {(emoticonToggle?.left) &&
                 <div
-                    className={"w-[390px] h-[200px] bg-white top-[61%] left-[15.5%] absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10"}>
+                    className={`w-[390px] h-[200px] bg-white absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10 ${isWebFullScreen?"top-[72.5%] left-[58%]" :"top-[61%] left-[15.5%] "}`}>
                     <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center mr-[35px]`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor, id:i.id, sender:currentRole, unique_id})}>
+                            <div className={`flex flex-col items-center mr-[35px]`} key={i.name}
+                                 onClick={() => sendReactionHandler({
+                                     emo: i.emo,
+                                     msg: i.kor,
+                                     id: i.id,
+                                     sender: currentRole,
+                                     unique_id
+                                 })}>
                                 <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
@@ -60,7 +93,14 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
                     </div>
                     <div className={"flex"}>
                         {down_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor, id:i.id, sender:currentRole, unique_id})}>
+                            <div className={`flex flex-col items-center ${idx === 0 ? "mr-[40px]" : "mr-[35px]"}`}
+                                 key={i.name} onClick={() => sendReactionHandler({
+                                emo: i.emo,
+                                msg: i.kor,
+                                id: i.id,
+                                sender: currentRole,
+                                unique_id
+                            })}>
                                 <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
@@ -91,8 +131,8 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
                     {currentRole !== 'artist' &&
                         <div className={"ml-[30px] flex items-center"}>
                             {currentRole === 'staff' ?
-                                <img className={"w-[30px] cursor-pointer"} src={"/images/fullScreenIcon.png"}
-                                     alt={"fullScreenIcon"} onClick={() => alert('풀화면')}/>
+                                <img className={"w-[30px] cursor-pointer"} src={isWebFullScreen ? "/images/halfScreenIcon.png":"/images/fullScreenIcon.png"}
+                                     alt={"fullScreenIcon"} onClick={()=>setIsWebFullScreen(prev => !prev)}/>
                                 :
                                 <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
                                      alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
@@ -104,11 +144,17 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
 
             {(right && emoticonToggle?.right) &&
                 <div
-                    className={"w-[390px] h-[200px] bg-white top-[61%] left-[64.5%] absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10"}>
-                    <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}/>
+                    className={`w-[390px] h-[200px] bg-white absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10 top-[61%] left-[64.5%]`}>
+                    <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"} alt={"boxTale"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col  items-center mr-[35px]`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor, id:i.id, sender:currentRole})}>
+                            <div className={`flex flex-col  items-center mr-[35px]`} key={i.name}
+                                 onClick={() => sendReactionHandler({
+                                     emo: i.emo,
+                                     msg: i.kor,
+                                     id: i.id,
+                                     sender: currentRole
+                                 })}>
                                 <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
@@ -116,7 +162,13 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
                     </div>
                     <div className={"flex"}>
                         {down_imoticon_path?.map((i, idx) =>
-                            <div className={`flex flex-col items-center ${idx===0?"mr-[40px]":"mr-[35px]"}`} key={i.name} onClick={()=>sendReactionHandler({emo:i.emo, msg:i.kor, id:i.id, sender:currentRole})}>
+                            <div className={`flex flex-col items-center ${idx === 0 ? "mr-[40px]" : "mr-[35px]"}`}
+                                 key={i.name} onClick={() => sendReactionHandler({
+                                emo: i.emo,
+                                msg: i.kor,
+                                id: i.id,
+                                sender: currentRole
+                            })}>
                                 <div className={"text-[31px]"}>{i.emo}</div>
                                 <span className={"text-[15px] font-medium text-[#444] whitespace-nowrap"}>{i.kor}</span>
                             </div>)
@@ -128,14 +180,20 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
             }
 
             {right && <div
-                className={`absolute w-[650px] mt-[-50px] flex items-center text-white justify-end z-100`}>
+                className={`absolute ${isWebFullScreen?"w-[1280px]":"w-[650px]"} mt-[-50px] flex items-center text-white justify-end z-100`}>
                 <div className={"flex items-center"}>
                     {currentRole === 'artist' ?
                         <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
                              alt={"emoticonIcon"} onClick={() => toggleEmoticon('right')}/>
                         :
-                        <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/fullScreenIcon.png"}
-                             alt={"fullScreenIcon"} onClick={() => alert('풀화면')}/>
+                        <>
+                            {isWebFullScreen && <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
+                                  alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>}
+
+                            <img className={"w-[30px] mr-[30px] cursor-pointer"}
+                                 src={isWebFullScreen ? "/images/halfScreenIcon.png" : "/images/fullScreenIcon.png"}
+                                 alt={"fullScreenIcon"} onClick={toggleFullScreen}/>
+                        </>
                     }
                 </div>
             </div>}
@@ -145,7 +203,6 @@ const Video2 = ({streamManager, style, fanInfo, warnCnt, left, right, emoticonTo
 
 
 };
-
 
 
 export default Video2;

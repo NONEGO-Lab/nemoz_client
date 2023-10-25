@@ -14,10 +14,7 @@ export const useMobileView = () => {
     sub: "default"
   });
 
-  const [isWebFullScreen, setIsWebFullScreen] = useState({
-    open: false,
-    type: ""
-  });
+  const [isWebFullScreen, setIsWebFullScreen] = useState(false);
 
   const webFullScreenSize = isWebFullScreen.open ? "w-[100%] flex justify-center" : "w-[calc(50%-10px)]";
   const webFullScreenSizeOther = isWebFullScreen.open ? "hidden" : "w-[calc(50%-10px)] flex";

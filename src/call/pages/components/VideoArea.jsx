@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import InnerCircleText from "../../../common/InnerCircleText";
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
@@ -23,7 +23,9 @@ const VideoArea = ({
                        onClickReactBtn,
                        sendReactionHandler,
                        removeToast,
-                       toasts
+                       toasts,
+                       isWebFullScreen, 
+                       setIsWebFullScreen
                    }) => {
 
 
@@ -38,11 +40,11 @@ const VideoArea = ({
     const age = fanInfo?.age
     const gender = fanInfo?.sex
     const letter = fanInfo?.letter
-
+    // const isWebFullScreen = true
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
-            <div className='w-[650px] text-center'>
+            <div className={`w-[650px] text-center ${isWebFullScreen?"hidden" : '' }`}>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
                             {`Fan ${username} (${age}세)`}
@@ -112,8 +114,8 @@ const VideoArea = ({
 
             {/* Artist or Staff Area */}
 
-            <div className='w-[650px]'>
-                <div className='flex justify-center items-center'>
+            <div className={`${isWebFullScreen? "w-[1300px]":"w-[650px]"}`}>
+                <div className={`flex justify-center items-center ${isWebFullScreen? 'hidden' : ''}`}>
                     <>
                         <img src="../images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
@@ -121,7 +123,7 @@ const VideoArea = ({
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
-                    <div className={`h-[368px] ${right(isFan, publisherVideo)}`}>
+                    <div className={`${isWebFullScreen?"h-[727px]":"h-[368px]"} ${right(isFan, publisherVideo)}`}>
 
                         {!isFan && (
                             publisher !== undefined && (
@@ -135,6 +137,8 @@ const VideoArea = ({
                                         sendReactionHandler={sendReactionHandler}
                                         removeToast={removeToast}
                                         toasts={toasts}
+                                        isWebFullScreen={isWebFullScreen}
+                                        setIsWebFullScreen={setIsWebFullScreen}
                                 />)
 
                         )}
@@ -150,6 +154,8 @@ const VideoArea = ({
                                         sendReactionHandler={sendReactionHandler}
                                         removeToast={removeToast}
                                         toasts={toasts}
+                                        isWebFullScreen={isWebFullScreen}
+                                        setIsWebFullScreen={setIsWebFullScreen}
                                 />
                             )
                         )}

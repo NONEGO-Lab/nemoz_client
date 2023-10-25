@@ -28,7 +28,6 @@ export const videoEvents = {
         /// fan이면 타이머 멈추기
         dispatch(addTimer(0));
       } else {
-        notify(userInfo, "leave");
         let noticeData = { type: "leave", msg: `${userInfo.username}님이 나가셨습니다` };
         setStaffNoticeList((prev) => [...prev, noticeData]);
       }
@@ -78,7 +77,7 @@ export const videoEvents = {
 
   },
 
-  warnUser: ({ user, count, role, notify, setStaffNoticeList,setWarnCnt, addToast }) => {
+  warnUser: ({count, role, setWarnCnt, addToast }) => {
     setWarnCnt(count)
     if(role === "fan"|| role === "member") {
       addToast({ type: "warn", msg: `${count}회 경고 받았습니다.`, id:nanoid(4)});

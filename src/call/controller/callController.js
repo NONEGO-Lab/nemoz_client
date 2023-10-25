@@ -339,7 +339,6 @@ export const CallController = () => {
         }));
         sock.on("leaveRoom", (num, userInfo) => videoEvents.leaveRoom({
             userInfo,
-            notify,
             setStaffNoticeList,
             dispatch
         }));
@@ -362,7 +361,6 @@ export const CallController = () => {
             user,
             count,
             role: userInfo.role,
-            notify,
             setStaffNoticeList,
             userInfo,
             setWarnCnt,

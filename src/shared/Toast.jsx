@@ -3,7 +3,7 @@ import {emoji_list} from "../common/imoticon_path";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteToastAfter3s, removeToast} from "../redux/modules/toastSlice";
 
-const Toast = ({message, left, right}) => {
+const Toast = ({message, left, right, isWebFullScreen}) => {
     // console.log('Toast!!', message)
     const dispatch = useDispatch()
     const {type, msg, id} = message
@@ -12,7 +12,7 @@ const Toast = ({message, left, right}) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             dispatch(deleteToastAfter3s())
-        }, 3000);
+        }, 300000);
 
         return () => {
             clearTimeout(timer);
@@ -37,7 +37,7 @@ const Toast = ({message, left, right}) => {
                 className={"flex justify-center items-center bg-black bg-opacity-[0.15] rounded-[22.5px] w-[172.5px] ml-[78px] h-[45.5px] mb-[10px]"}>
                 {left && <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
                                      <span
-                                         className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {left && msg.sender === 'member' ? '보냈습니다.' : "받았습니다."}
+                                         className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {left && msg.sender === 'member'? '보냈습니다.' : "받았습니다."}
                                  </span>}
                 {right &&
                     <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>

@@ -11,6 +11,7 @@ import {CallController as controller} from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
 import StaffVideoArea from "./StaffVideoArea";
 import Timer from "./Timer";
+import {useMobileView} from "../../controller/hooks/useMobileView";
 
 const VideoContainer2 = () => {
 
@@ -30,24 +31,11 @@ const VideoContainer2 = () => {
     const {
         roomInfo,
         leftTimeRef,
-        toastList,
         endRoom,
         outRoom,
-        showTime,
-        staffNoticeList,
         userInfo,
-        setIsOpenWaitingModal,
         currentFan,
         setCurrentFan,
-        setIsOpenAddUser,
-        fanDetailOpenHandler,
-        isOpenAddUser,
-        isOpenFanDetail,
-        waitingFanInfo,
-        setIsOpenFanDetail,
-        isOpenLeftTime,
-        toBack,
-        isOpenWaitingModal,
         warnHandler,
         warnCnt,
         kickOutHandler,
@@ -62,6 +50,11 @@ const VideoContainer2 = () => {
         removeToast
     } = controller();
 
+    const {
+        isMobile, changeMobVideoSize, isBigScreen, makeBigScreen, isWebFullScreen, setIsWebFullScreen,
+        isOpenMobileSetting, setOpenMobileSetting, webFullScreenSize, webFullScreenSizeOther
+    } = useMobileView();
+
     const {artist_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
 
@@ -69,26 +62,27 @@ const VideoContainer2 = () => {
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
             <div className={"bg-main_theme flex flex-col justify-center"}>
-                <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
-        <span>
-        <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon"/>
-        </span>
-                    <span className='ml-[10px]'>{eventName}</span>
-                </div>
+                {!isWebFullScreen && <>
+                    <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
+                <span>
+                <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon"/>
+                </span>
+                        <span className='ml-[10px]'>{eventName}</span>
+                    </div>
 
-                <div className='flex justify-center mb-[-30px]'>
+                    <div className='flex justify-center mb-[-30px]'>
                     <span
                         className='w-[125px] h-[30px] text-[16px] text-[#444] flex items-center justify-center'>
                         <Timer leftTimeRef={leftTimeRef}/>
                         <div className='w-[8px] h-[8px] rounded-full bg-[#02c5cb] ml-[6px]'/>
                     </span>
-                </div>
-
-                {isStaff?
+                    </div>
+                </>}
+                {isStaff ?
                     <StaffVideoArea
                         subscribedArtistInfo={subscribedArtistInfo}
                         subscribedFanInfo={subscribedFanInfo}
-                        artistName = {artist_name}
+                        artistName={artist_name}
                         fanInfo={currentFan}
                         roomInfo={roomInfo}
                         warnCnt={warnCnt}
@@ -108,7 +102,7 @@ const VideoContainer2 = () => {
                         subscribedFanInfo={subscribedFanInfo}
                         publisherVideo={audioMuteHandler}
                         publisherAudio={videoMuteHandler}
-                        roomInfo = {roomInfo}
+                        roomInfo={roomInfo}
                         artistName={artist_name}
                         warnCnt={warnCnt}
                         emoticonToggle={emoticonToggle}
@@ -117,14 +111,11 @@ const VideoContainer2 = () => {
                         sendReactionHandler={sendReactionHandler}
                         // onClickReactBtn={onClickReactBtn}
                         removeToast={removeToast}
+                        isWebFullScreen={isWebFullScreen}
+                        setIsWebFullScreen={setIsWebFullScreen}
                     />
                 }
 
-
-                {/*
-                    <div className={"bg-pink-600 h-[40%] flex justify-center items-center"}>
-                        <ReactionButton />
-                    </div> */}
 
                 {/* 기능 Component */}
                 <MainCallUtil
@@ -146,7 +137,7 @@ const VideoContainer2 = () => {
                     kickOutHandler={kickOutHandler}
                     sendLeftTimeHandler={sendLeftTimeHandler}
                     toasts={toasts}
-                    setToasts = {setToasts}
+                    setToasts={setToasts}
                     addToast={addToast}
                     removeToast={removeToast}
                 />
