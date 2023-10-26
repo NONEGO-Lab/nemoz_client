@@ -54,10 +54,14 @@ const MainCallUtil = ({
             navigate("/userlist");
         }
     }
+
+
     const nextCallConnect = async () => {
         // 첫 렌더링때는 이미 join 되어있는 상황이라, fan에게 socket 알람만 가면 된다.
+
         if (Object.keys(currentFan).length === 0) {
             alert("마지막 팬입니다.");
+            // 방종료 로직 meetEnd
             return;
         }
 
@@ -149,20 +153,10 @@ const MainCallUtil = ({
             dispatch(setIsError(true));
         }
     }
-    // const sendLeftTimeHandler = () => {
-    //
-    //     if (subscribers.length === 0) return;
-    //
-    //     // socket 으로 방에 있는 모든 사람들에게 남은 시간을 알려준다!
-    //     let room = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-    //     let time = leftTimeRef.current;
-    //     console.log("notifyTime", room, time, currentFan)
-    //     sock.emit("notifyTime", room, time, currentFan);
-    // }
+
 
     useEffect(() => {
         getFirstFanInfo();
-
         if (subscribers.length > 0) {
             setIsCallProcessing(true);
         }
@@ -186,6 +180,7 @@ const MainCallUtil = ({
         <div className={"flex justify-center items-center flex-row mt-[153px] mx-[110px]"}>
             {userInfo.role === 'staff' &&
                 <>
+                    {/* 팬 목록 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={routeToFanList}>
                         <div className={"w-[75px] cursor-pointer"}>
@@ -206,6 +201,7 @@ const MainCallUtil = ({
                             <div>{`ALRAM`}</div>
                         </div>
                     </div>
+
                     {/* 경고 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={warnHandler}>
@@ -216,6 +212,8 @@ const MainCallUtil = ({
                             <div>{`WARNING`}</div>
                         </div>
                     </div>
+
+                    {/* 강퇴 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={kickOutHandler}>
                         <div className={"w-[75px] cursor-pointer"}>
@@ -225,6 +223,8 @@ const MainCallUtil = ({
                             <div>{`OUT`}</div>
                         </div>
                     </div>
+
+                    {/* 다음 사람 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={nextCallConnect}>
                         <div className={"w-[75px] cursor-pointer"}>
@@ -234,6 +234,8 @@ const MainCallUtil = ({
                             <div>{`NEXT`}</div>
                         </div>
                     </div>
+
+                    {/* 나가기 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={() => outRoom(role)}>
                         <div className={"w-[75px] cursor-pointer"}>

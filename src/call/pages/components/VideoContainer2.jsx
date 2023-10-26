@@ -62,7 +62,8 @@ const VideoContainer2 = () => {
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
             <div className={"bg-main_theme flex flex-col justify-center"}>
-                {!isWebFullScreen && <>
+                {!isWebFullScreen &&
+                    <>
                     <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
                 <span>
                 <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon"/>

@@ -12,7 +12,7 @@ const Toast = ({message, left, right, isWebFullScreen}) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             dispatch(deleteToastAfter3s())
-        }, 300000);
+        }, 3000);
 
         return () => {
             clearTimeout(timer);
@@ -32,22 +32,35 @@ const Toast = ({message, left, right, isWebFullScreen}) => {
         )
     } else if (type === 'reaction') {
         return (
-
-            <div
-                className={"flex justify-center items-center bg-black bg-opacity-[0.15] rounded-[22.5px] w-[172.5px] ml-[78px] h-[45.5px] mb-[10px]"}>
-                {left && <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
+            isWebFullScreen ?
+                <div
+                    className={"flex justify-center items-center bg-black bg-opacity-[0.15] rounded-[22.5px] w-[172.5px] ml-[78px] h-[45.5px] mb-[10px]"}>
+                  <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
                                      <span
-                                         className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {left && msg.sender === 'member'? '보냈습니다.' : "받았습니다."}
+                                         className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {msg.sender === 'member' ? '보냈습니다.' : "받았습니다."}
+                                 </span>
+
+                    <img src={"/images/popupClose.png"} className={"w-[10px] h-[10px] cursor-pointer"} alt={"close"}
+                         onClick={() => dispatch(removeToast(msg.unique_id))}/>
+                </div>
+
+                :
+
+                <div
+                    className={"flex justify-center items-center bg-black bg-opacity-[0.15] rounded-[22.5px] w-[172.5px] ml-[78px] h-[45.5px] mb-[10px]"}>
+                    {left && <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
+                                     <span
+                                         className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {left && msg.sender === 'member' ? '보냈습니다.' : "받았습니다."}
                                  </span>}
-                {right &&
-                    <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
+                    {right &&
+                        <span className={"text-[16px] text-white mr-[12.5px] my-[15px] flex items-center"}>
                                      <span
                                          className={"text-[34px]"}>{targetEmoji(msg.id)}</span>를 {right && msg.sender === 'artist' ? '보냈습니다.' : "받았습니다."}
                                  </span>
-                }
-                <img src={"/images/popupClose.png"} className={"w-[10px] h-[10px] cursor-pointer"} alt={"close"}
-                     onClick={() => dispatch(removeToast(msg.unique_id))}/>
-            </div>
+                    }
+                    <img src={"/images/popupClose.png"} className={"w-[10px] h-[10px] cursor-pointer"} alt={"close"}
+                         onClick={() => dispatch(removeToast(msg.unique_id))}/>
+                </div>
 
         )
     } else {

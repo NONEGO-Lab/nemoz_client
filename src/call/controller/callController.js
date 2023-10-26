@@ -95,12 +95,8 @@ export const CallController = () => {
         console.log("!!!! out Room !!!!!!!~~~~~~~~")
         // 방을 단순히 나가는 용도로 사용
         try {
-            // 방에 팬만 1명 있으면 못 나가게 하기
-            // if(subscribers.length === 1 && subscribers[0].role === "fan") {
-            //   alert("방에 팬이 있어서 나갈 수 없습니다! 방 종료 해주세요!")
-            //   return;
-            // }
-            if (role === 'fan') {
+
+            if (role === 'fan' || role === 'member') {
                 alert('스태프 혹은 아티스트만 가능합니다')
                 return
             }

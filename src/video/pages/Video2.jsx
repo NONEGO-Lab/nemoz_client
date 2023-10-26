@@ -14,9 +14,6 @@ const Video2 = ({
                     right,
                     emoticonToggle,
                     setEmoticonToggle,
-                    onClickReactBtn,
-                    toasts,
-                    removeToast,
                     sendReactionHandler,
                     isWebFullScreen,
                     setIsWebFullScreen
@@ -130,13 +127,8 @@ const Video2 = ({
                     </div>}
                     {currentRole !== 'artist' &&
                         <div className={"ml-[30px] flex items-center"}>
-                            {currentRole === 'staff' ?
-                                <img className={"w-[30px] cursor-pointer"} src={isWebFullScreen ? "/images/halfScreenIcon.png":"/images/fullScreenIcon.png"}
-                                     alt={"fullScreenIcon"} onClick={()=>setIsWebFullScreen(prev => !prev)}/>
-                                :
-                                <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                                     alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
-                            }
+                            <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
+                                 alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
                         </div>
                     }
                 </div>
@@ -190,7 +182,7 @@ const Video2 = ({
                             {isWebFullScreen && <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
                                   alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>}
 
-                            <img className={"w-[30px] mr-[30px] cursor-pointer"}
+                            <img className={`w-[30px] mr-[30px] cursor-pointer ${currentRole === 'staff' ? 'hidden': ''}`}
                                  src={isWebFullScreen ? "/images/halfScreenIcon.png" : "/images/fullScreenIcon.png"}
                                  alt={"fullScreenIcon"} onClick={toggleFullScreen}/>
                         </>

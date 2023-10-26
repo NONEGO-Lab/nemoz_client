@@ -105,7 +105,7 @@ const TmpVideoContainer = () => {
             setOpenMobileSetting(false);
         }
     }
-    // console.log(subscriber, 'subscribersubscribersubscribersubscribersubscribersubscribersubscribersubscribersubscriber')
+
     useEffect(() => {
 
         if (subscriber !== undefined) {

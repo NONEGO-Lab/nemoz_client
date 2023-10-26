@@ -17,7 +17,7 @@ export const eventSlice = createSlice({
   initialState,
   reducers: {
     addEventInfo: (state, action) => {
-      state.eventName = action.payload.event_name;
+      state.eventName = action.payload.event_name||action.payload.title;
       // state.eventId = action.payload.event_id;
       state.fanIds = action.payload.target_fan_ids;
       state.artistIds = action.payload.target_artist_ids;

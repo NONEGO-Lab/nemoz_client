@@ -30,7 +30,6 @@ export const toastSlice = createSlice({
       state.toastList = [...state.toastList, action.payload];
     },
     removeToast:(state, action) =>{
-      console.log(action.payload)
       state.toastList = state.toastList.filter((toast) => toast.msg.unique_id !== action.payload);
     },
     deleteToast: (state, action) => {
