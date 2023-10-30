@@ -13,10 +13,7 @@ export const Layout = ({
                            _onClick,
                            _endClick,
                            endText,
-
-
                        }) => {
-
     return (
         <div className="w-[100%] m-[0 auto]">
             <Header/>
@@ -166,7 +163,6 @@ const EventListFilter = () => {
 
     useEffect(() => {
         const getEventListApi = async (userId) => {
-            //팬일 경우 바로 대기화면으로
             if (userInfo.role === "fan") {
                 navigate("/waitcall");
             }else{
@@ -197,10 +193,7 @@ const EventListFilter = () => {
                 return userInfo.id
             }
         }
-        // getEventListApi({userId: 10200})
         getEventListApi({userId: exractUserId(userInfo.role)})
-
-
     }, [eventId])
 
     return (

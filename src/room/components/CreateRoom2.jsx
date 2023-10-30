@@ -27,7 +27,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
     const userInfo = useSelector(state => state.user.userInfo)
-    console.log(userInfo,'????')
+
     // const getEventUsers = async () => {
     //     let page = 1;
     //     const response = await eventApi.getEventDetail({ page, eventId });
@@ -56,7 +56,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
 
         // let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
         let due_dt = startDate.replace("T", " ") + ":00"
-
+        console.log(userInfo)
         const result = await roomApi.createRoom({
             roomTitle,
             eventId: currentEventId,
@@ -73,8 +73,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
         if (result.message === "Room Created") {
             window.alert("방이 만들어졌습니다.");
             setOnModal();
-            getEventListApi({userId:10200});
-            // localStorage.setItem('eventId',eventId)
+            getEventListApi({userId:userInfo.id});
         }
     }
 

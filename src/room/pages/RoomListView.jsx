@@ -76,7 +76,8 @@ const RoomListView = () => {
                     roomArray?.map((num, index) => {
                         return (
 
-                            <span key={index} onClick={() => movePage(num)}
+                            <span key={index}
+                                  onClick={() => movePage(num)}
                                   className={`w-[35px] h-[35px] cursor-pointer rounded-full  ml-[20px] flex items-center justify-center
                                           ${currentPage === num ? "bg-[#01dfe0]" : "bg-white"}`}>
                 {num}
@@ -92,8 +93,6 @@ const RoomListView = () => {
             </div>
 
 
-            {/*{ isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
-                                          getRoomListApi={getRoomListApi}/> }*/}
             {isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
                                               getEventListApi={getEventListApi} eventList={eventList}/>}
             {currentRoom.room_id &&
@@ -115,7 +114,6 @@ const RoomListView = () => {
 export default RoomListView;
 
 const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList, navigate, dispatch}) => {
-
 
     const event_id = eventList.find(e => e.event_name === room.room_name)?.event_id
     dispatch(currentEvent(event_id))

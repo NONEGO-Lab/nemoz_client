@@ -7,18 +7,11 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
 
     let style = "w-[650px] h-[900px] rounded-[15px]  drop-shadow-md";
 
-    let itemList = [
-        {key: "이름", dataKey: "fan_name"},
-        {key: "성별", dataKey: "sex"},
-        {key: "나이", dataKey: "age"},
-        {key: "팬레터", dataKey: "letter"}
-    ];
-
     const [fanInfo, setFanInfo] = useState({});
 
     const getFanDetailApi = async () => {
         const result = await attendeeApi.getFanDetail(currentFanId, currentFanEventId);
-        setFanInfo(result.data);
+        setFanInfo(result);
     }
 
     useEffect(() => {
@@ -32,19 +25,14 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
                     Fan Info
                 </div>
                 <div>
-                    {/*{*/}
-                    {/*  itemList.map((value, idx) => {*/}
-                    {/*    return <FanDetailInto key={idx} value={value} fanInfo={fanInfo}/>*/}
-                    {/*  })*/}
-                    {/*}*/}
+
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
                         <div className={"text-[19px] min-w-[50px] text-[#444] ml-[77px] mr-[74px]"}>
                             이름
                         </div>
                         <div className={"text-[21px] text-[#444] font-[500]"}>
-                            {fanInfo.fan_name || '이름 없음'}
+                            {fanInfo.fan_name || '정보 없음'}
                         </div>
-
                     </div>
 
                     <div className={"bg-[#fff] min-h-[63px] flex items-center"}>
@@ -54,7 +42,6 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
                         <div className={"text-[21px] text-[#444] font-[500]"}>
                             {fanInfo.sex || '정보 없음'}
                         </div>
-
                     </div>
 
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
@@ -62,7 +49,7 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
                             나이
                         </div>
                         <div className={"text-[21px] text-[#444] font-[500]"}>
-                            {fanInfo.age || '나이 없음'}
+                            {fanInfo?.age || '나이 없음'}
                         </div>
 
                     </div>
@@ -76,7 +63,7 @@ const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
                     <div className={"bg-[#f0f0f0] min-h-[350px] flex"}>
                         <div
                             className={"text-[21px] font-[500] min-w-[50px] text-[#444] ml-[77px] mr-[74px] mt-[36px]"}>
-                            {fanInfo.letter}
+                            {fanInfo?.letter}
                         </div>
                     </div>
 

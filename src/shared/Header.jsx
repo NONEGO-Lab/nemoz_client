@@ -20,7 +20,6 @@ const Header = () => {
     const session = useSelector((state) => state.video.session);
     const {leaveSession} = useVideo();
     const currentLocation = () => window.location.pathname.split('/')[1]
-    // const isRoomList = currentLocation() === 'roomlist'
 
     return (
         <div
@@ -54,9 +53,7 @@ const Header = () => {
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/roomIcon.png"/>
                             </div>
-                            <div
-
-                                className={` ml-[10px] ${ currentLocation() === 'roomlist' ? 'font-bold' : ''}`}>
+                            <div className={` ml-[10px] ${ currentLocation() === 'roomlist' ? 'font-bold' : ''}`}>
                                 방목록
                             </div>
                             <div>
@@ -68,12 +65,10 @@ const Header = () => {
                         <div onClick={() => navigate("/userlist")}
                              className={'flex items-center ml-[56px] cursor-pointer hover:font-bold'}>
                             {currentLocation() !== 'roomlist' && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
-
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/participantsIcon.png"/>
                             </div>
                             <div
-
                                 className={`ml-[10px] ${ currentLocation() === 'roomlist' ? '' : 'font-bold'}`}>
                                 참가자 목록
                             </div>
@@ -81,13 +76,6 @@ const Header = () => {
 
                             </div>
                         </div>
-
-                        {/*임시 메뉴항목*/}
-                        {/*<div*/}
-                        {/*    onClick={() => navigate("/eventlist")}*/}
-                        {/*    className="cursor-pointer ml-4 text-pink-800 font-bold">*/}
-                        {/*    이벤트 목록*/}
-                        {/*</div>*/}
                     </AdminProvider>
 
                 </div>

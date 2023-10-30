@@ -95,11 +95,31 @@ export const CallController = () => {
         console.log("!!!! out Room !!!!!!!~~~~~~~~")
         // 방을 단순히 나가는 용도로 사용
         try {
+        console.log(role)
+            if(role === 'member'){
+                    const request = {
+                        ...leave_meet,
+                        user_info: {
+                            id: userInfo.id.toString(),
+                            role: userInfo.role,
+                        },
+                        type: 'leave',
+                        meet_name: sessionInfo.meetName,
+                        connection_id: connectionInfo.meet_id,
+                        connection_name: connectionInfo.connection_id,
+                        progress_time: leftTimeRef.current
+                    }
 
-            if (role === 'fan' || role === 'member') {
-                alert('스태프 혹은 아티스트만 가능합니다')
-                return
+                    const response = await meetApi.leaveMeet(request);
+
+                    if (response) {
+                        leaveSession();
+                        sock.emit("leaveRoom", roomNum, userInfo.username, navigate);
+                        // sock.emit("endMeet", roomNum);
+                        navigateByRole();
+                    }
             }
+
             const request = {
                 ...leave_meet,
                 user_info: {
@@ -117,14 +137,16 @@ export const CallController = () => {
             const response = await meetApi.leaveMeet(request);
 
             if (response) {
-                dispatch(clearSessionInfo());
                 leaveSession();
                 sock.emit("leaveRoom", roomNum, userInfo.username, navigate);
                 // sock.emit("endMeet", roomNum);
                 navigateByRole();
             }
+
+
         } catch (err) {
-            navigateByRole();
+            // navigateByRole();
+            console.error(err, 'in out room')
         }
     }
 
@@ -147,6 +169,7 @@ export const CallController = () => {
     }
 
     const getCurrentFanInfo = async () => {
+        console.log('get Current Fan Info in Call Controller')
         let roomId = roomInfo.room_id;
         try {
             const result = await roomApi.getListOrder({eventId, roomId});
@@ -175,7 +198,6 @@ export const CallController = () => {
         setCurrentFan(detail);
         setWarnCnt(detail?.warning_count)
     };
-
 
     const toBack = () => {
         navigate(-1);
@@ -214,6 +236,7 @@ export const CallController = () => {
 
         }
     }
+
     const warnHandler = async () => {
         if (subscribers.length === 0) return;
 
