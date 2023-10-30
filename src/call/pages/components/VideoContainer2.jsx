@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from "../../../shared/Header";
 import VideoArea from "./VideoArea";
 import {SizeLayout} from "../../../shared/Layout";
@@ -49,13 +49,13 @@ const VideoContainer2 = () => {
         addToast,
         removeToast
     } = controller();
-
+    const [toggleFanLetter, setToggleFanLetter] = useState(false)
     const {
         isMobile, changeMobVideoSize, isBigScreen, makeBigScreen, isWebFullScreen, setIsWebFullScreen,
         isOpenMobileSetting, setOpenMobileSetting, webFullScreenSize, webFullScreenSizeOther
     } = useMobileView();
 
-    const {artist_name} = roomInfo
+    const {artist_name, room_name} = roomInfo
     const isStaff = userInfo.role === 'staff'
 
     return (
@@ -68,7 +68,7 @@ const VideoContainer2 = () => {
                 <span>
                 <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon"/>
                 </span>
-                        <span className='ml-[10px]'>{eventName}</span>
+                        <span className='ml-[10px]'>{room_name}</span>
                     </div>
 
                     <div className='flex justify-center mb-[-30px]'>
@@ -89,6 +89,8 @@ const VideoContainer2 = () => {
                         warnCnt={warnCnt}
                         publisher={publisher}
                         toasts={toasts}
+                        toggleFanLetter={toggleFanLetter}
+                        setToggleFanLetter={setToggleFanLetter}
                         removeToast={removeToast}
                     />
 
@@ -114,6 +116,8 @@ const VideoContainer2 = () => {
                         removeToast={removeToast}
                         isWebFullScreen={isWebFullScreen}
                         setIsWebFullScreen={setIsWebFullScreen}
+                        toggleFanLetter={toggleFanLetter}
+                        setToggleFanLetter={setToggleFanLetter}
                     />
                 }
 

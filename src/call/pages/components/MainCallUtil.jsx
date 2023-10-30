@@ -177,7 +177,7 @@ const MainCallUtil = ({
 
 
     return (
-        <div className={"flex justify-center items-center flex-row mt-[153px] mx-[110px]"}>
+        <div className={"flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%]"}>
             {userInfo.role === 'staff' &&
                 <>
                     {/* 팬 목록 */}

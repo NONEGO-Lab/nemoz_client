@@ -118,30 +118,32 @@ export const CallController = () => {
                         // sock.emit("endMeet", roomNum);
                         navigateByRole();
                     }
+            }else{
+                const request = {
+                    ...leave_meet,
+                    user_info: {
+                        id: userInfo.id.toString(),
+                        role: userInfo.role,
+                    },
+                    type: 'leave',
+                    meet_name: sessionInfo.meetName,
+                    connection_id: connectionInfo.meet_id,
+                    connection_name: connectionInfo.connection_id,
+                    progress_time: leftTimeRef.current
+                }
+
+                console.log("request!!~~~~~~~~~", request);
+                const response = await meetApi.leaveMeet(request);
+
+                if (response) {
+                    leaveSession();
+                    sock.emit("leaveRoom", roomNum, userInfo.username, navigate);
+                    // sock.emit("endMeet", roomNum);
+                    navigateByRole();
+                }
             }
 
-            const request = {
-                ...leave_meet,
-                user_info: {
-                    id: userInfo.id.toString(),
-                    role: userInfo.role,
-                },
-                type: 'leave',
-                meet_name: sessionInfo.meetName,
-                connection_id: connectionInfo.meet_id,
-                connection_name: connectionInfo.connection_id,
-                progress_time: leftTimeRef.current
-            }
 
-            console.log("request!!~~~~~~~~~", request);
-            const response = await meetApi.leaveMeet(request);
-
-            if (response) {
-                leaveSession();
-                sock.emit("leaveRoom", roomNum, userInfo.username, navigate);
-                // sock.emit("endMeet", roomNum);
-                navigateByRole();
-            }
 
 
         } catch (err) {
