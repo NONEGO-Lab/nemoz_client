@@ -5,6 +5,7 @@ import {MobilePopup} from "../../shared/MobilePopup";
 import {WaitRoomController as controller} from "../controller/waitRoomController"
 import WaitingMents from "./components/WaitingMents";
 import {useSelector} from "react-redux";
+import ReactPlayer from "react-player";
 
 
 const WaitingRoom = () => {
@@ -27,9 +28,15 @@ const WaitingRoom = () => {
                             <div className={"min-h-[781px]"}>
                                 <img src={wait_url} alt={"waiting"}/>
                             </div> : <div className={"min-h-[781px] text-[36px] flex items-center justify-center"}>이벤트 대기중</div>
-                        : <video autoPlay loop>
-                            <source src={wait_url} type="video/mp4"/>
-                        </video>
+                        : <ReactPlayer
+                            width={"1366px"}
+                            height={"781px"}
+                            url={wait_url}
+                            // muted={true}
+                            playing={true}
+                            controls={true}
+
+                        />
                     }
 
                     <div className={"mt-[59px] mx-[66px] mb-[72px] flex"}>

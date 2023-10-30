@@ -5,7 +5,7 @@ import {clearSessionInfo} from "../../../redux/modules/commonSlice";
 import {sock} from "../../../socket/config";
 import {useDispatch, useSelector} from "react-redux";
 import {roomApi} from "../../../room/data/room_data";
-import {end_meet, leave_meet} from "../../../model/call/call_model";
+import {end_meet} from "../../../model/call/call_model";
 import {meetApi} from "../../data/call_data";
 import {attendeeApi} from "../../../fans/data/attendee_data";
 import {setError, setIsError} from "../../../redux/modules/errorSlice";
@@ -30,15 +30,13 @@ const MainCallUtil = ({
     const [isFirstCall, setIsFirstCall] = useState(true);
     const roomInfo = useSelector((state) => state.common.roomInfo);
     const sessionInfo = useSelector((state) => state.common.sessionInfo);
-    // const subscribers = useSelector((state) => state.video.subscribers);
     const userInfo = useSelector((state) => state.user.userInfo);
     const eventId = useSelector((state) => state.event.currentEventId);
     const {leaveSession, joinSession, publisherAudio, publisherVideo, currentEventId} = useVideo();
-    const connectionInfo = useSelector((state) => state.common.connectionInfo);
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+    let roomNum = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
     const routeToFanList = () => {
         if (role === 'fan' || role === 'member') {
@@ -69,22 +67,20 @@ const MainCallUtil = ({
             sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
             setIsFirstCall(false);
         } else {
-            /// 다음 팬 알리기
-            sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
+            await finishCurrentCall()
         }
-        setIsCallProcessing(true);
-        sock.emit("checkSessionState", roomNum, true);
+
     };
 
     const finishCurrentCall = async () => {
-        if (window.confirm("정말 통화를 종료하시겠습니까?")) {
             try {
                 let roomId = roomInfo.room_id;
-                let eventId = roomInfo.event_id
+                let eventId = roomInfo.event_id || roomInfo.event_id
                 const fanList = await roomApi.getListOrder({eventId, roomId});
                 const curFan = subscribers.find((sub) => sub['role'] === 'fan' || sub['role'] === 'member');
                 const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() === curFan.id.toString());
                 const nextFan = fanList[curFanIndex + 1];
+                console.log(nextFan, 'NEXT FAN In FINISH CALL FUNC')
                 const fanId = fanList[curFanIndex].fan_id;
                 const request = {
                     ...end_meet,
@@ -124,6 +120,10 @@ const MainCallUtil = ({
                         sock.emit("joinNextRoom", roomNum, newSessionInfo, otherStaffInfo['id'], nextFan);
                         sock.emit("joinRoom", roomNum, userInfo);
 
+                        sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
+                        setIsCallProcessing(true);
+                        sock.emit("checkSessionState", nextFan, roomNum, true);
+
                     } else {
                         console.log('마지막 팬 미팅 종료!')
                         setCurrentFan({});
@@ -137,7 +137,7 @@ const MainCallUtil = ({
                 dispatch(setError(err));
                 dispatch(setIsError(true));
             }
-        }
+
     };
 
     const getFirstFanInfo = async () => {

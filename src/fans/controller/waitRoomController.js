@@ -89,9 +89,7 @@ export const WaitRoomController = () => {
 
 
   useEffect(() => {
-    console.log('WAIT ROOM CONTROLLER')
     sock.on("joinTestSession", (data) => {
-    console.log('JOIN TEST SESSION', data)
       fanEvents.joinTestSession({
         data, userInfo, dispatch, setIsReadyTest
       })
@@ -99,7 +97,6 @@ export const WaitRoomController = () => {
 
     });
     sock.on("nextFanTurn", (nextFanInfo, sessionInfo, roomInfo) => {
-      console.log(nextFanInfo, 'nextFanInfonextFanInfo')
       fanEvents.nextFanTurn({
         nextFanInfo, sessionInfo, roomInfo, userInfo, dispatch, setIsAvailableCall
       });
