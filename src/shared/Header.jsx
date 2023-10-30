@@ -6,7 +6,6 @@ import {logout} from "../redux/modules/userSlice";
 import {useVideo} from "../call/controller/hooks/useVideo";
 import {sock} from "../socket/config";
 import {clearSessionInfo} from "../redux/modules/commonSlice";
-import {AdminProvider} from "../provider";
 
 
 const Header = () => {
@@ -20,7 +19,7 @@ const Header = () => {
     const session = useSelector((state) => state.video.session);
     const {leaveSession} = useVideo();
     const currentLocation = () => window.location.pathname.split('/')[1]
-
+    const isFan = userInfo.role === 'member'
     return (
         <div
             className="flex items-center justify-between bg-main_theme border-b-2 border-b-[#e0e0e0] border-header_under min-h-[55px] px-[40px] text-[#444444] ">
@@ -44,16 +43,16 @@ const Header = () => {
                 </div>
 
                 <div className={`${loginPage ? "hidden" : "flex"} text-[18px] `}>
-                    <AdminProvider>
-
+                    {!isFan && <>
                         {/*방목록*/}
                         <div onClick={() => navigate("/roomlist")}
                              className={'flex items-center cursor-pointer hover:font-bold'}>
-                            { currentLocation() === 'roomlist' && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
+                            {currentLocation() === 'roomlist' &&
+                                <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/roomIcon.png"/>
                             </div>
-                            <div className={` ml-[10px] ${ currentLocation() === 'roomlist' ? 'font-bold' : ''}`}>
+                            <div className={` ml-[10px] ${currentLocation() === 'roomlist' ? 'font-bold' : ''}`}>
                                 방목록
                             </div>
                             <div>
@@ -64,19 +63,20 @@ const Header = () => {
                         {/*참가자 목록*/}
                         <div onClick={() => navigate("/userlist")}
                              className={'flex items-center ml-[56px] cursor-pointer hover:font-bold'}>
-                            {currentLocation() !== 'roomlist' && <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
+                            {currentLocation() !== 'roomlist' &&
+                                <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
                             <div className={'w-[33px] ml-[11px]'}>
                                 <img alt='room-icon' src="../images/participantsIcon.png"/>
                             </div>
                             <div
-                                className={`ml-[10px] ${ currentLocation() === 'roomlist' ? '' : 'font-bold'}`}>
+                                className={`ml-[10px] ${currentLocation() === 'roomlist' ? '' : 'font-bold'}`}>
                                 참가자 목록
                             </div>
                             <div>
 
                             </div>
                         </div>
-                    </AdminProvider>
+                    </>}
 
                 </div>
             </div>
