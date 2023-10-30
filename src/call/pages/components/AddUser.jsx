@@ -1,141 +1,215 @@
-import React, { useState, useEffect } from "react";
-import { ModalFrameDepth } from "../../../modal/ModalFrame";
-import { Button, Input, Select, InputTime } from "../../../element";
-import { useForm } from "react-hook-form";
-import {eventApi} from "../../../event/data/event_data";
-import {useSelector} from "react-redux";
+import React, {useState, useEffect} from "react";
+import {ModalFrameDepth} from "../../../modal/ModalFrame";
+import {Controller, useForm} from "react-hook-form";
+import SelectBox, {components} from "react-select";
+import {roomApi} from "../../../room/data/room_data";
 
-const AddUser = ({ setOnModal }) => {
+const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
+    let style = "w-[650px] h-[900px] drop-shadow-md pt-[62px] pr-[60px] pb-[60px] pl-[58px]";
+    const targetFanList = eventList.find(e => e.event_id === eventId).target_fan_ids
+    const {register, handleSubmit, control} = useForm();
+    const [time, setTime] = useState({
+        hour: "",
+        min: "",
+        sec: "",
 
-  let style = "w-[600px] h-[500px] drop-shadow-md";
-  const eventId = useSelector((state) => state.event.eventId);
+    });
 
-  const { register, handleSubmit } = useForm();
-  const [time, setTime] = useState({
-    hour: "",
-    min: "",
-    sec: "",
+    const [fanOptionList, setFanOptionList] = useState([]);
+    const onSubmit = async (data) => {
+        //api 추가 되어야 함
+      const {selectedFan, reservedTime, reason } = data
 
-  });
+      const fanId = selectedFan.value
+      try{
 
-  const [fanOptionList, setFanOptionList] = useState([]);
+        const response = await roomApi.addFan({eventId, roomId, fanId, reservedTime, reason})
+      if(response){
+        console.log(response)
+      }
+      }catch (e) {
+        const msg = e.response.data.message
+        if(msg === 'Fan Information already existed in Waitings'){
+          alert('이미 존재하는 팬입니다.')
+           setOnModal()
+        }
+        console.error(msg)
+      }
 
-  const onSubmit = (data) => {
-    //api 추가 되어야 함
-    alert('api가 추가 필요');
-  }
 
-  const getEventUsers = async () => {
 
-    let page = 1;
-    const response = await eventApi.getEventList({ page, eventId });
-    const fanList = response.events[0].target_fan_ids;
-    console.log(response, '!!!!')
-    const fanOptions = fanList.map((fan) => fan.username);
-    setFanOptionList(fanOptions);
-  }
-
-  const timeOnChangeHandler = (e) => {
-    const { name, value } = e.target;
-    let time = parseInt(value);
-
-    if(time > 60 || time < 0) {
-      return;
     }
 
-    switch(name){
-      case "hour":
-        setTime((prev) => ({... prev, hour: value.toString()}));
-        break
-      case "min":
-        setTime((prev) => ({... prev, min: value.toString()}));
-        break
-      case "sec":
-        setTime((prev) => ({... prev, sec: value.toString()}));
-        break
-      default:
+    const timeOnChangeHandler = (e) => {
+        const {name, value} = e.target;
+        let time = parseInt(value);
+
+        if (time > 60 || time < 0) {
+            return;
+        }
+
+        switch (name) {
+            case "hour":
+                setTime((prev) => ({...prev, hour: value.toString()}));
+                break
+            case "min":
+                setTime((prev) => ({...prev, min: value.toString()}));
+                break
+            case "sec":
+                setTime((prev) => ({...prev, sec: value.toString()}));
+                break
+            default:
+        }
+
     }
 
-  }
+    useEffect(() => {
+        if (eventList.length >= 0) {
+            // const fanNameList = targetFanList.map(fan => fan.name)
+            const transformedArray = targetFanList.map(item => ({
+                value: item.no,
+                label: item.name
+            }));
+            console.log(transformedArray)
+            setFanOptionList(transformedArray)
+        }
+    }, [])
 
-  useEffect(()=>{
-    getEventUsers();
-  },[])
 
+    return (
+        <ModalFrameDepth setOnModal={setOnModal} style={style}>
+            <div className={"placeholder:text-[#646464]"}>
+          <span
+              className="font-bold text-[#444] text-[24px] ">
+            Add Fan
+          </span>
 
-  return (
-      <ModalFrameDepth setOnModal={setOnModal} style={style}>
-        <div>
-          <div
-              className="text-[32px] font-bold py-6 px-8">
-            참여자 추가하기
-          </div>
-          <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="px-10 text-[20px]">
-            <Select
-                register={register}
-                name={"userName"}
-                label={"참여자 선택"}
-                id={"users"}
-                placeholder={"참여자 선택"}
-                options={[...fanOptionList]}
-                width={"w-[400px]"}
-                marginBottom={"mb-[10px]"}
-            >
-            </Select>
-            <Input
-                register={register}
-                name={"addReason"}
-                label={"추가 사유"}
-                placeholder={"입력"}
-                width={"w-[400px]"}
-                marginBottom={"mb-[10px]"}
-            />
-            <div className="text-gray-400 text-[12px]">추가 시간</div>
-            <div className="w-[400px] flex items-center mt-2 border-2 rounded-[6px] border-gray-400 p-[10px]">
-              <InputTime
-                  _onChange={timeOnChangeHandler}
-                  _value={time}
-              />
-              {/*{*/}
-              {/*    ["hour","min","sec"].map((num, idx)=>{*/}
-              {/*        return (*/}
-              {/*            <div className={"text-[16px] text-gray-500 flex justify-center"}>*/}
-              {/*                <input*/}
-              {/*                    onChange={timeOnChangeHandler}*/}
-              {/*                    name={num}*/}
-              {/*                    tabIndex={idx + 1}*/}
-              {/*                    type={"number"}*/}
-              {/*                    className="outline-none w-[20px]"*/}
-              {/*                    value={time[num]}*/}
-              {/*                    placeholder={"00"}/>*/}
-              {/*                {idx !== 2 && <div>:</div>}*/}
-              {/*            </div>*/}
-              {/*        )*/}
-              {/*    })*/}
-              {/*}*/}
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="text-[20px] mt-[78px] text-[#646464]">
+
+                    <Controller
+                        name="selectedFan"
+                        control={control}
+                        render={({field}) =>
+                            <SelectBox
+                                {...field}
+                                options={fanOptionList}
+                                styles={customStyles}
+                                isSearchable={false}
+                                components={{DropdownIndicator, IndicatorSeparator: () => null}}
+                                placeholder={"Fan 선택하기"}
+                            />
+                        }
+                    />
+
+                    <input
+                        {...register("reservedTime", {
+                            required: true
+                        })}
+                        name={"reservedTime"}
+                        placeholder={"추가 할 시간을 입력하세요 (ex 00:03:00)"}
+                        className={"text-[#646464] w-full  border-b-2 border-b-[#c7c7c7] py-[10px] mb-[35px]"}
+                    />
+
+                  <div
+                      className={"w-full h-[185px] border-[1.5px] border-[#c7c7c7] px-[15px] py-[28.5px] mb-[230px]"}>
+              <textarea
+                  {...register("reason", {
+                    required: true
+                  })}
+                  name={"reason"}
+                  className={"w-full min-h-full resize-none"} placeholder={"추가 사유를 입력하세요"}/>
+                  </div>
+                </form>
+                <div className="flex justify-between w-full">
+                    <button
+                        className={"w-[140px] h-[50px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
+                        type={"submit"}
+                        onClick={handleSubmit(onSubmit)}
+                    >
+                        <span>+ ADD</span>
+                    </button>
+                    <button
+                        className={"w-[140px] h-[50px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
+                        onClick={setOnModal}
+                    >
+                        <span>X CANCEL</span>
+                    </button>
+
+                </div>
+
             </div>
-          </form>
-          <div className="absolute bottom-[30px] right-[20px]">
-            <Button
-                tabIndex={4}
-                type={"submit"}
-                _onClick={handleSubmit(onSubmit)}
-                margin={"mr-[15px]"}
-                width={"w-[120px]"}>
-              추가하기
-            </Button>
-            <Button
-                width={"w-[120px]"}
-                _onClick={setOnModal}>
-              취소
-            </Button>
-          </div>
-
-        </div>
-      </ModalFrameDepth>
-  )
+        </ModalFrameDepth>
+    )
 }
+
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    lineHeight: 'normal',
+    border: 'none',
+    borderBottom: '3px solid #c7c7c7',
+    paddingBottom: "33px",
+    boxShadow: '0 !important',
+    '&:hover': {
+      border: '0 !important'
+    },
+    marginBottom: '43.5px'
+  }),
+};
+
+const NemozDownIcon = () => {
+  return <img src="../images/arrowDown.png" className={`w-[20px] h-[11px]`}/>;
+};
+
+const DropdownIndicator = props => {
+  return (
+      <components.DropdownIndicator {...props}>
+        <NemozDownIcon/>
+      </components.DropdownIndicator>
+  );
+};
+
+// const MySelect = ({options}) => {
+//
+//     const customStyles = {
+//         control: (provided) => ({
+//             ...provided,
+//             lineHeight: 'normal',
+//             border: 'none',
+//             borderBottom: '3px solid #c7c7c7',
+//             paddingBottom: "33px",
+//             boxShadow: '0 !important',
+//             '&:hover': {
+//                 border: '0 !important'
+//             },
+//             marginBottom: '43.5px'
+//         }),
+//     };
+//
+//     const NemozDownIcon = () => {
+//         return <img src="../images/arrowDown.png" className={`w-[20px] h-[11px]`}/>;
+//     };
+//
+//     const DropdownIndicator = props => {
+//         return (
+//             <components.DropdownIndicator {...props}>
+//                 <NemozDownIcon/>
+//             </components.DropdownIndicator>
+//         );
+//     };
+//
+//     return (
+//         <SelectBox
+//             options={options}
+//             styles={customStyles}
+//             isSearchable={false}
+//             components={{DropdownIndicator, IndicatorSeparator: () => null}}
+//             placeholder={"Fan 선택하기"}
+//         />
+//     )
+// }
+
 
 export default AddUser;

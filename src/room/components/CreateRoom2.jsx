@@ -4,17 +4,12 @@ import {Input, Button, Select} from "../../element";
 import {useForm, Controller} from "react-hook-form";
 import {roomApi} from "../data/room_data";
 import SelectBox, {components} from 'react-select'
-import {eventApi} from "../../event/data/event_data";
 import {useSelector} from "react-redux";
 
-//@todo
-// 스탭, 팬등록 입력 X
-// 드롭다운 스타일 변경
 
 
 const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
-    const eventId = localStorage.getItem('eventId');
     const {register, handleSubmit, control, formState: {errors}, setError, onChange} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -28,19 +23,9 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
     const userInfo = useSelector(state => state.user.userInfo)
 
-    // const getEventUsers = async () => {
-    //     let page = 1;
-    //     const response = await eventApi.getEventDetail({ page, eventId });
-    //     // roomTitle선택할 때 event_no 세팅해준 후, 업데이트하기
-    //     setTargetFanIds(response.target_fan_ids);
-    //     setTargetArtistIds(response?.target_artist_ids);
-    //     setTargetStaffIds(response.target_staff_ids);
-    // }
     const {location, mimeType, fileName} = imgUrl;
     const onSubmit = async (data) => {
         const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
-
-
         let fanIdArray = [];
         fanIds.forEach((fan, idx) => {
             let data = {"fan_id": fan.value, "order": idx + 1};
@@ -56,7 +41,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
 
         // let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
         let due_dt = startDate.replace("T", " ") + ":00"
-        console.log(userInfo)
+
         const result = await roomApi.createRoom({
             roomTitle,
             eventId: currentEventId,
@@ -188,7 +173,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                     <div>
                         <input
                             {...register('time')}
-                            className={`bg-white text-[23px]  text-[#646464] w-[30px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            className={`bg-white text-[23px] text-[#646464] w-[100px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             name={"time"}
                             type={"number"}
                         >
@@ -232,17 +217,19 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                     <Controller
                         name="staffIds"
                         control={control}
-                        render={({field}) => <SelectBox
-                            {...field}
-                            styles={customStyles}
-                            width="100%"
-                            height="44px"
-                            placeholder="+"
-                            closeMenuOnSelect={false}
-                            components={{DropdownIndicator}}
-                            defaultValue={[]}
-                            isMulti
-                            options={valueMaker(targetStaffIds)}
+                        render={({field}) =>
+                            <SelectBox
+                                {...field}
+                                styles={customStyles}
+                                width="100%"
+                                height="44px"
+                                placeholder="+"
+                                closeMenuOnSelect={false}
+                                isSearchable={false}
+                                components={{DropdownIndicator}}
+                                defaultValue={[]}
+                                isMulti
+                                options={valueMaker(targetStaffIds)}
                         />}
                     />
                 </div>
@@ -264,6 +251,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                             placeholder="+"
                             closeMenuOnSelect={false}
                             components={{DropdownIndicator}}
+                            isSearchable={false}
                             defaultValue={[]}
                             isMulti
                             options={valueMaker(targetFanIds)}

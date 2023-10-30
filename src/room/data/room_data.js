@@ -65,5 +65,11 @@ export const roomApi = {
     const data = await instance.post("/room/reorder", req);
     return data.data;
   },
+  addFan: async ({eventId, roomId, fanId, reservedTime, reason}) =>{
+    const req = {event_id:eventId, room_id:roomId, fan_id:fanId, reserved_time: Number(reservedTime), reason:reason}
+    const data = await instance.post("/room/addfan", req)
+    return data.data
+
+  }
 
 }

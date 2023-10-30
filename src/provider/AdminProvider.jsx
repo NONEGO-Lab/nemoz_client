@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 const AdminProvider = ({ children }) => {
 
   const role = useSelector((state) => state.user.userInfo.role);
-
-  if(role !== 'fan')
+  console.log(role, '????')
+  if(role !== 'fan' || role !== 'member')
     return <Fragment>{children}</Fragment>
 }
 export default AdminProvider;
