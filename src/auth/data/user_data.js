@@ -28,7 +28,8 @@ export const userApi = {
                 type: userData.type,
             };
         } else {
-            const error = new Error(`{"code":"${data.data.code}", "errMsg":"${ERROR_CONSTANTS[data.data.code] || "알 수 없는 에러가 발생했습니다."}"}`)
+            const errorData = data.data.data;
+            const error = new Error(`{"code":"${errorData.code}", "errMsg":"${ERROR_CONSTANTS[errorData.code] || "알 수 없는 에러가 발생했습니다."}"}`)
             throw error
         }
 
