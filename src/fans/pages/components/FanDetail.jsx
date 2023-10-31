@@ -3,14 +3,14 @@ import {ModalFrameDepth} from "../../../modal/ModalFrame";
 import {Button} from "../../../element";
 import {attendeeApi} from "../../data/attendee_data";
 
-const FanDetail = ({setOnModal, currentFanId, currentFanEventId}) => {
+const FanDetail = ({setOnModal, currentFanId, eventId}) => {
 
     let style = "w-[650px] h-[900px] rounded-[15px]  drop-shadow-md";
 
     const [fanInfo, setFanInfo] = useState({});
 
     const getFanDetailApi = async () => {
-        const result = await attendeeApi.getFanDetail(currentFanId, currentFanEventId);
+        const result = await attendeeApi.getFanDetail(currentFanId, eventId);
         setFanInfo(result);
     }
 

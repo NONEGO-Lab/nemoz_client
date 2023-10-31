@@ -4,7 +4,8 @@ const initialState = {
   eventId: null,
   roomInfo: {},
   sessionInfo: {},
-  connectionInfo: {}
+  connectionInfo: {},
+  addFanModalToggle:null
 }
 
 
@@ -25,11 +26,14 @@ export const commonSlice = createSlice({
       state.sessionInfo = {};
       state.roomInfo = {};
     },
+    addFanModalToggle: (state, action) => {
+      state.addFanModalToggle = action.payload;
+    },
     commonReset: () => initialState
   }
 });
 
 export const { clearSessionInfo, addRoomInfo, addSessionInfo,
-  addConnectionInfo, commonReset } = commonSlice.actions
+  addConnectionInfo, commonReset, addFanModalToggle } = commonSlice.actions
 
 export default commonSlice.reducer

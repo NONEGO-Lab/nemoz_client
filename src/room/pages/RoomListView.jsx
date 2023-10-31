@@ -104,6 +104,7 @@ const RoomListView = () => {
                     addUserOpenHandler={addUserOpenHandler}/>
             }
             {!isEmptyCheck(currentFanInfo) && <FanDetail currentFanId={currentFanInfo["fan_id"]}
+                                                         eventId={currentRoom.event_id}
                                                          setOnModal={() => setCurrentFanInfo({})}/>}
             {isOpenAddUser && <AddUser eventList={eventList} currentRoom={currentRoom} eventId={currentRoom.event_id} roomId={currentRoom.room_id} setOnModal={() => setIsOpenAddUser(prev => !prev)}/>}
         </Layout>
