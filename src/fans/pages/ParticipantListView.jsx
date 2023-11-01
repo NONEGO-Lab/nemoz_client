@@ -89,7 +89,7 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
                     <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
                     {/* <span>{status.artist_name} 진행 중</span> */}
-                    <span>카리나 (에스파) 3집 미니앨범’Aespa World’ 영상 통화 진행 중</span>
+                    <span>{user.status.room_name}</span>
                 </div>
                 {/* 
                 is_tested 0 테스트전
@@ -120,12 +120,9 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
             </div>
             <div>
                 <button
-                    // onClick={() => {
-                    //     setOpenDeviceSetting(true)
-                    // }}
                     onClick={() => connectToTest(user)}
-                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${user.is_tested && "opacity-30"}`}
-                    disabled={user.is_tested}
+                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||((status.orders <0))) && "opacity-30"}`}
+                    disabled={user.is_tested || (status.orders <0)}
                 >
                     Test Call
                 </button>

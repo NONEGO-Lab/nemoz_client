@@ -128,7 +128,7 @@ export const useVideo = () => {
       meetId: sessionData.meet_id,
       meetName: sessionData.meet_name
     };
-    console.log('joinSession',sessionInfo)
+
     dispatch(addSessionInfo(sessionInfo));
 
     const token = await createToken({ roomId, sessionInfo });
@@ -287,13 +287,6 @@ export const useVideo = () => {
       subscriber["username"] = newUserData['username'];
 
       if(subscriber.role === 'fan' || subscriber.role==='member'){
-        /*
-      * @todo
-      * 회원 정보 API통신 후 GET
-      * */
-        subscriber["gender"] = '여'
-        subscriber["age"] = 20
-        subscriber["letter"] = '필요 정보 가져와야함'
         dispatch(subscribedFanInfo(subscriber))
       }
       else if(subscriber.role === 'artist'){

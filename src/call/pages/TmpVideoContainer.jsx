@@ -12,7 +12,6 @@ import {sock} from "../../socket/config";
 import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
 import {clearToast} from "../../redux/modules/toastSlice";
-import VideoArea from "./components/VideoArea";
 import TestVideoArea from "./components/TestVideoArea";
 
 const TmpVideoContainer = () => {
@@ -27,13 +26,12 @@ const TmpVideoContainer = () => {
     })
     const [isOpenMobileSetting, setOpenMobileSetting] = useState(false);
     const [mobileSettingType, setMobileSettingType] = useState("");
-
+    const [toggleFanLetter, setToggleFanLetter] = useState(false)
     const publisher = useSelector((state) => state.test.publisher);
     const publisherLoading = useSelector((state) => state.test.publisherLoading);
     const subscriber = useSelector((state) => state.test.subscriber);
     const subscriberLoading = useSelector((state) => state.test.subscriberLoading);
     const userInfo = useSelector((state) => state.user.userInfo);
-    const toastList = useSelector((state) => state.toast.toastList);
     const publisherVideo = useSelector((state) => state.test.publisherVideo);
     const publisherAudio = useSelector((state) => state.test.publisherAudio);
     const fanInfo = useSelector((state) => state.test.fanInfo);
@@ -43,7 +41,7 @@ const TmpVideoContainer = () => {
     const eventId = useSelector((state) => state.event.eventId);
     const eventName = useSelector(state => state.event.eventName)
     const sessionInfo = useSelector((state) => state.test.sessionInfo);
-    console.log(eventName, 'event Name?')
+
     const {
         createJoinSession, joinTestSession, preventBrowserBack,
         onbeforeunload, muteHandler
@@ -112,7 +110,6 @@ const TmpVideoContainer = () => {
             console.log('sub is not exist')
             return;
         }
-        console.log(userInfo.role, 'userInfo.role')
         if (userInfo.role !== "member") {
             // staff 이면,
             // test meet create -> join 까지 한다.
@@ -126,7 +123,6 @@ const TmpVideoContainer = () => {
             })
         } else {
             // fan 이면 socket으로 받은 test meet으로 testJoinMeet 한다.
-            console.log(userInfo, 'FAN USER INFO')
             joinTestSession().then(() => {
                 let roomNum = `${eventId}_test_${userInfo.id}`;
                 sock.emit("joinRoom", roomNum, userInfo);
@@ -197,11 +193,9 @@ const TmpVideoContainer = () => {
                     publisherVideo={publisherVideo}
                     publisherAudio={publisherAudio}
                     muteHandler={muteHandler}
+                    toggleFanLetter={toggleFanLetter}
+                    setToggleFanLetter={setToggleFanLetter}
                     isTestConnect={currentLocation() === 'test'} />
-                {/*                     
-                    <div className={"bg-pink-600 h-[40%] flex justify-center items-center"}>
-                        <ReactionButton />
-                    </div> */}
 
                 {/* 기능 Component */}
                 <TestCallUtil

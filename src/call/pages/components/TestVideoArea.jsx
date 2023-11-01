@@ -9,20 +9,23 @@ const TestVideoArea = ({
                            fanInfo,
                            publisher,
                            subscriber,
-                           subscribers,
                            isTestConnect,
                            publisherVideo,
                            publisherAudio,
-                           muteHandler
+                           muteHandler,
+                           toggleFanLetter,
+                           setToggleFanLetter
                        }) => {
 
-    const {age, fan_name, sex, message, name} = fanInfo
+    const {age, fan_name, sex, name} = fanInfo
     const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'member'
+    console.log(subscriber, 'subscriber')
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
+    const staffName = (role) => role === 'staff' ? (userInfo.name||'이름 없음') : (subscriber.username||'이름 없음')
 
     return (
         <div className={"flex flex-row justify-evenly"}>
@@ -30,7 +33,7 @@ const TestVideoArea = ({
             <div className='w-[650px] text-center'>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${fan_name || name} (${age}세)`}
+                            {`FAN ${fan_name || name} (${age}세)`}
                             <InnerCircleText gender={sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
@@ -61,12 +64,33 @@ const TestVideoArea = ({
                     {(isFan && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{"Fan 이름 나와야함"}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo.name}</span>
                         </div>}
 
-                    {message && <div className='text-center mt-[27px]'>
-                        {/* <image /> */}
-                        <span>{message}</span>
+                    {fanInfo?.letter && <div className='flex mt-[27px] w-full justify-center'>
+                        <div className={"w-[380px] justify-start items-center flex"}>
+                            <img src="../images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
+                                 onClick={() => setToggleFanLetter(prev => !prev)}/>
+                            {/*<div className={"ml-[13px] grow"}>{fanInfo?.letter}</div>*/}
+                            <div className={"ml-[13px] grow truncate"}>{fanInfo?.letter}</div>
+                            {toggleFanLetter &&
+
+                                <div
+                                    className={"w-[450px] min-h-[200px] bg-white z-10 fixed rounded-[15px] top-[65%] left-[195px]"}>
+                                    <img src={"../images/boxTale.png"} alt={"box-tail"}
+                                         className={"rotate-180 w-[14px] h-[16px] z-10 mt-[45.5px] fixed ml-[-10px]"}/>
+                                    <div className={`ml-[24.5px] mt-[24.5px] mr-[20px] mb-[28.5px] flex`}>
+                                <span className={"text-left min-w-[366.5px]"}>
+                                    {fanInfo?.letter}
+                                </span>
+                                        <img src={"../images/closeIcon.png"}
+                                             className={"w-[15px] h-[15px] ml-[24px] cursor-pointer"} alt={"close-icon"}
+                                             onClick={() => setToggleFanLetter(false)}/>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
                     </div>}
                 </div>
             </div>
@@ -78,7 +102,7 @@ const TestVideoArea = ({
                     <>
                         <img src="../images/staffIcon.png" alt='stafficon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
-                        <div className='text-[19px] font-medium'>{'스태프이름'}</div>
+                        <div className='text-[19px] font-medium'>{staffName(userInfo.role)}</div>
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -102,7 +126,7 @@ const TestVideoArea = ({
                     {role === 'staff' && !publisherVideo &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{"Staff 이름 나와야함"}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{staffName(userInfo.role)}</span>
                         </div>}
                 </div>
             </div>

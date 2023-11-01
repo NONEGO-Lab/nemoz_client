@@ -26,6 +26,7 @@ export const useTestVideo = () => {
   const connectInfo = useSelector((state) => state.test.connectInfo);
   const session = useSelector((state) => state.test.session);
   const publisher = useSelector((state) => state.test.publisher);
+  const subscriber = useSelector((state) => state.test.subscriber)
 
   let OV;
 
@@ -42,8 +43,9 @@ export const useTestVideo = () => {
     let userId = userInfo.id.toString();
     try {
       const response = await testApi.testJoin({
-        meetName, userId
+        meetName, userId, username:userInfo.username
       });
+
       dispatch(addConnectInfo(response.id))
       return response.token;
     } catch (err) {
@@ -112,7 +114,7 @@ export const useTestVideo = () => {
 
 
   const connectSession = async (token, _session, OV) => {
-    _session.connect(token)
+    _session.connect(token, userInfo)
         .then(() => connectWebCam(_session, OV))
         .catch((error) => {
           alert('There was an error connecting to the session1:', error.message);
@@ -154,7 +156,11 @@ export const useTestVideo = () => {
 
   const subscribeToStreamCreated = (_session) => {
     _session.on('streamCreated', (event) => {
+      let newUserData = JSON.parse(event.stream.connection.data.split("%/%")[0]);
       let subscriber = _session.subscribe(event.stream, undefined);
+      subscriber["role"] = newUserData['role'];
+      subscriber["id"] = newUserData['id']
+      subscriber["username"] = newUserData['username'];
       dispatch(addTestSubscriber(subscriber));
     });
   }

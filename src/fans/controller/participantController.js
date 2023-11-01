@@ -20,6 +20,7 @@ export const ParticipantController = () => {
   const roomArray = [...new Array(10)].map((_, i) => i + 1);
   const eventId = localStorage.getItem("eventId")
   const eventList = useSelector(state => state.event.eventList)
+
   const connectToTest = (user) => {
     dispatch(addTestFanInfo(user))
     dispatch(currentEvent(user.event_id))
