@@ -6,6 +6,7 @@ const initialState = {
   session: undefined,
   audioDevices: [],
   videoDevices: [],
+  audioOutputDevices:[],
 }
 
 
@@ -32,11 +33,14 @@ export const deviceSlice = createSlice({
     },
     addVideoDevice: (state, action) => {
       state.videoDevices = action.payload;
-    }
+    },
+    addAudioOutputDevices: (state, action) => {
+      state.audioOutputDevices = action.payload.map(audioOutpt =>({label: audioOutpt.label, deviceId: audioOutpt.deviceId}) )
+    },
   }
 });
 
 export const { addDeviceSessionInfo, addDevicePublisher, addDeviceSession,
-  clearDeviceSession, addAudioDevice, addVideoDevice } = deviceSlice.actions
+  clearDeviceSession, addAudioDevice, addVideoDevice, addAudioOutputDevices } = deviceSlice.actions
 
 export default deviceSlice.reducer

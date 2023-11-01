@@ -9,6 +9,8 @@ const initialState = {
   session: undefined,
   publisherAudio: true,
   publisherVideo: true,
+  subscriberAudio: true,
+  subscriberVideo: true,
   publisherLoading: true,
   subscriberLoading: true,
 }
@@ -42,6 +44,12 @@ export const testSlice = createSlice({
       state.publisherAudio = action.payload;
     },
     mutePublisherVideo: (state, action) => {
+      state.publisherVideo = action.payload;
+    },
+    muteSubscriberAudio: (state, action) => {
+      state.publisherAudio = action.payload;
+    },
+    muteSubscriberVideo: (state, action) => {
       state.publisherVideo = action.payload;
     },
     clearTestSession: () => initialState,

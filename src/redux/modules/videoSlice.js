@@ -91,6 +91,6 @@ export const { addPublisher, addSession, addSubscribers, clearSession, addTimer,
   mutePublisherAudio, mutePublisherVideo, deleteSubscribers, addVideoDevices,
   addAudioDevices, setConnectTest, disconnectSession, setIsCallFinished,
   subscribedFanInfo,
-  subscribedArtistInfo,isFanLoading,isArtistLoading } = videoSlice.actions
+  subscribedArtistInfo,isFanLoading,isArtistLoading, addAudioOutputDevices } = videoSlice.actions
 
 export default videoSlice.reducer

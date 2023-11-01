@@ -68,7 +68,7 @@ const ParticipantListView = () => {
         </div>
 
         {/* Modal */}
-        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} currentFanEventId={currentFanEventId}/>}
+        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} eventId={currentFanEventId}/>}
         {openDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
     </Layout>)
 }
@@ -109,6 +109,7 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
             <div>
                 <button
                     onClick={() => {
+                        console.log(user.event_id, '?')
                         setCurrentFanEventId(user.event_id)
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);

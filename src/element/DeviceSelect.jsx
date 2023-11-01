@@ -32,7 +32,7 @@ const DeviceSelect = (props) => {
 
                 {options.map((value, idx) => {
                     return (
-                        <option className={"bg-white"} key={idx} value={value}>
+                        <option className={"bg-white"} key={idx} value={value.deviceId}>
                             {/* {isVideo &&
                                 <div>
                                     <img  className="w-[27px] h-[27px]" src="../images/starIcon.png" alt="video" />
@@ -44,7 +44,7 @@ const DeviceSelect = (props) => {
                                     <div>오디오 설정</div>
                                 </div>
                             } */}
-                            {value}
+                            {value.label}
                         </option>
                     )
                 })

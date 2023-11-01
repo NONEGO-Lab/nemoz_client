@@ -16,20 +16,34 @@ const Video2 = ({
                     setEmoticonToggle,
                     sendReactionHandler,
                     isWebFullScreen,
-                    setIsWebFullScreen
+                    setIsWebFullScreen,
+                    deviceSetting
                 }) => {
 
     const videoRef = useRef();
     const userInfo = useSelector(state => state.user.userInfo)
     const toastList = useSelector(state => state.toast.toastList)
     const unique_id = nanoid(4)
+    const selectedAudioOutputDeviceId = localStorage.getItem("audioOutputId")
+
     useEffect(() => {
 
         if (streamManager.stream && !!videoRef.current) {
             streamManager.addVideoElement(videoRef.current);
         }
 
+        if (videoRef.current && !deviceSetting) {
+            videoRef.current.setSinkId(selectedAudioOutputDeviceId)
+                .then(() => {
+                    console.log(`Audio output set to ${selectedAudioOutputDeviceId}`);
+                })
+                .catch(error => {
+                    console.error('Error setting audio output: ', error);
+                });
+        }
+
     }, [streamManager]);
+
 
 
     const currentRole = userInfo.role

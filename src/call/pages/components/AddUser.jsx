@@ -20,15 +20,9 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
     const [fanOptionList, setFanOptionList] = useState([]);
     const dispatch = useDispatch()
     const onSubmit = async (data) => {
-        //api 추가 되어야 함
         const {selectedFan, reservedTime, reason} = data
-
         const fanId = selectedFan.value
-
-
-
         try {
-
             const response = await roomApi.addFan({eventId, roomId, fanId, reservedTime, reason})
             if (response) {
                 const msg = response.message

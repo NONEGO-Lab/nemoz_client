@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {OpenVidu} from "openvidu-browser";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addAudioDevice, addVideoDevice, clearDeviceSession, addDeviceSessionInfo,
-  addDeviceSession, addDevicePublisher } from "../../redux/modules/deviceSlice";
+  addDeviceSession, addDevicePublisher, addAudioOutputDevices } from "../../redux/modules/deviceSlice";
 import {testApi} from "../data/call_test_data";
 
 export const useDeviceTest = () => {
@@ -111,8 +111,8 @@ export const useDeviceTest = () => {
         let audioDevices = devices.filter((device) =>
             device.kind === "audioinput");
 
-        dispatch(addAudioDevice(videoDevices));
-        dispatch(addVideoDevice(audioDevices));
+        dispatch(addAudioDevice(audioDevices));
+        dispatch(addVideoDevice(videoDevices));
       })
     })
   }
@@ -130,6 +130,17 @@ export const useDeviceTest = () => {
     });
   }
 
+  useEffect(() => {
+    // Fetch available audio output devices and update the state
+    navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
+          dispatch(addAudioOutputDevices(audioOutputDevices))
+        })
+        .catch(error => {
+          console.error('Error enumerating audio output devices: ', error);
+        });
+  }, []);
 
   return {
     createJoinSession,
