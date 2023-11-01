@@ -78,6 +78,7 @@ export const useTestVideo = () => {
   //제일 처음에 session 만드는 역할(staff, artist)
   const createJoinSession = async () => {
     OV = new OpenVidu();
+    OV.enableProdMode();
     let _session = OV.initSession()
 
     subscribeToStreamCreated(_session);

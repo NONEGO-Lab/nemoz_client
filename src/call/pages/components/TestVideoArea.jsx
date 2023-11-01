@@ -21,7 +21,6 @@ const TestVideoArea = ({
     const {role, userId, uesrname} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'member'
-    console.log(subscriber, 'subscriber')
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
     const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
     const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"

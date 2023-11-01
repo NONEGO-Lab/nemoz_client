@@ -1,6 +1,6 @@
 import DeviceSelect from "element/DeviceSelect";
 import { ModalFrame } from "modal/ModalFrame";
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
 
     const endMeet = async () => {
         try {
-            console.log('end Meet in Device Setting', sessionInfo.meetName)
             const response = await testApi.testEnd(sessionInfo.meetName);
             if (response) {
                 dispatch(clearDeviceSession());
@@ -90,8 +89,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
         })
 
     }, [])
-
-
 
     return (
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>

@@ -107,7 +107,6 @@ const TmpVideoContainer = () => {
     useEffect(() => {
 
         if (subscriber !== undefined) {
-            console.log('sub is not exist')
             return;
         }
         if (userInfo.role !== "member") {

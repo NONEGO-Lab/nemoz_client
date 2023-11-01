@@ -80,7 +80,6 @@ const MainCallUtil = ({
                 const curFan = subscribers.find((sub) => sub['role'] === 'fan' || sub['role'] === 'member');
                 const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() === curFan.id.toString());
                 const nextFan = fanList[curFanIndex + 1];
-                console.log(nextFan, 'NEXT FAN In FINISH CALL FUNC')
                 const fanId = fanList[curFanIndex].fan_id;
                 const request = {
                     ...end_meet,
