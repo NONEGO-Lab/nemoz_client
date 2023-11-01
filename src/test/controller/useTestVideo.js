@@ -26,7 +26,6 @@ export const useTestVideo = () => {
   const connectInfo = useSelector((state) => state.test.connectInfo);
   const session = useSelector((state) => state.test.session);
   const publisher = useSelector((state) => state.test.publisher);
-  const subscriber = useSelector((state) => state.test.subscriber)
 
   let OV;
 

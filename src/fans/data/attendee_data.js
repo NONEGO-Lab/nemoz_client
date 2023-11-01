@@ -15,12 +15,12 @@ export const attendeeApi = {
     return data.data.data;
   },
 
-  testFan: async (eventId, fanId) => {
+  testFan: async (eventId, fanId, isTested) => {
     const data = await instance.get("/attendee/test", { params:
           {
             event_id: eventId,
             fan_id: fanId,
-            is_tested: 1,
+            is_tested: isTested,
           }
     });
     return data.data;

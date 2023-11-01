@@ -29,7 +29,7 @@ export const testApi = {
   },
 
   testEnd: async (meetName) => {
-    console.log('in test Meet Controller',meetName)
+
     const req = {meetName}
     console.log('hahaha', meetName)
     const key = Object.keys(req)

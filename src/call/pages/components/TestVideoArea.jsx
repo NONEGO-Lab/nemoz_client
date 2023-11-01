@@ -14,7 +14,9 @@ const TestVideoArea = ({
                            publisherAudio,
                            muteHandler,
                            toggleFanLetter,
-                           setToggleFanLetter
+                           setToggleFanLetter,
+                           setToggleNext,
+                           setIsSuccess
                        }) => {
 
     const {age, fan_name, sex, } = fanInfo
@@ -60,7 +62,7 @@ const TestVideoArea = ({
                                 )
                         }
                     </div>
-                    {!isFan && isTestConnect && <ConnectControl2/>}
+                    {!isFan && isTestConnect && <ConnectControl2 setToggleNext={setToggleNext} setIsSuccess={setIsSuccess}/>}
                     {(!isFan && !subscriber) || (isFan && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span

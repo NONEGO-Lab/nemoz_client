@@ -2,10 +2,95 @@ import React from 'react'
 import {disconnectSession} from "../../../redux/modules/videoSlice";
 import {clearSessionInfo} from "../../../redux/modules/commonSlice";
 import {useVideo} from "../../controller/hooks/useVideo";
+import {sock} from "../../../socket/config";
+import {testApi} from "../../../test/data/call_test_data";
+import {attendeeApi} from "../../../fans/data/attendee_data";
+import {addTestFanInfo} from "../../../redux/modules/testSlice";
 
 
-const TestCallUtil = ({ publisherAudio, publisherVideo, muteHandler, role, quitTest, isTest, dispatch, session, navigate }) => {
+const TestCallUtil = ({
+                          publisherAudio,
+                          publisherVideo,
+                          muteHandler,
+                          role,
+                          quitTest,
+                          toggletNext,
+                          fanInfo,
+                          session,
+                          navigate,
+                          isSuccess,
+                          setIsSuccess,
+                          dispatch,
+                          eventId,
+                          createJoinSession,
+                          userInfo
+                      }) => {
+    console.log(fanInfo,'ORIGINAL FANINFO')
+    const nextTestCallConnect = async () => {
 
+        if(isSuccess==='success') {
+            sock.emit("testSuccess", fanInfo, eventId);
+        }
+        if(isSuccess==='fail'){
+            sock.emit("testFail", fanInfo, eventId);
+        }
+
+        const response = await testApi.testEnd(session.meet_name);
+
+        if(response){
+            console.log('TEST END SUCCESS')
+            setIsSuccess(null)
+            // dispatch(clearSessionInfo())
+            const fanList = await attendeeApi.getAttendeeList(eventId, 1)
+            if(fanList){
+
+                const currentFanIndex = fanList.fan_lists.findIndex( f => f.fan_id === fanInfo.fan_id)
+                const nextFanInfo = fanList.fan_lists[currentFanIndex+1]
+                console.log(nextFanInfo, 'next_fan_id')
+                if(!!nextFanInfo){
+                    createJoinSession().then((sessionInfo) => {
+                        let data = {meetName: sessionInfo.meet_name, fanId: nextFanInfo.fan_id}
+                        sock.emit("joinTestSession", data);
+                        let roomNum = `${fanInfo.event_id}_test_${nextFanInfo.fan_id}`;
+                        dispatch(addTestFanInfo(nextFanInfo))
+                        sock.emit("joinRoom", roomNum, userInfo);
+                    })
+                    navigate(`/test/${eventId}_${nextFanInfo.fan_id}`)
+                }else{
+                    alert('모든 참가자와 테스트가 완료되었습니다.')
+                    navigate('/roomlist')
+                }
+            }
+
+
+
+
+
+        }else{
+            console.error('이게.. 아닌데..')
+        }
+        /*
+        *
+        * testEnd -> testCreate -> TestJoin -> ListOrder -> Socket
+        *
+        *
+        *
+        * */
+
+        // if (Object.keys(currentFan).length === 0) {
+        //     alert("마지막 팬입니다.");
+        //     // 방종료 로직 meetEnd
+        //     return;
+        // }
+        //
+        // if (isFirstCall) {
+        //     sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
+        //     setIsFirstCall(false);
+        // } else {
+        //     await finishCurrentCall()
+        // }
+
+    };
 
     return (
         <div className={"flex justify-center items-center flex-row mt-[153px] mx-[110px]"}>
@@ -30,14 +115,15 @@ const TestCallUtil = ({ publisherAudio, publisherVideo, muteHandler, role, quitT
                 </div>
             </div>
             {/* 다음 사람 */}
-            <div className={"flex flex-col text-[8px] items-center mr-[30px] "}>
-                <div className={`w-[75px] cursor-pointer`}  onClick={()=>alert('현재 방 종료 -> 새 방 오픈')}>
-                    <img src="../images/callOutNext.png" alt="next" />
+            {(role === 'staff') && <div className={"flex flex-col text-[8px] items-center mr-[30px] "}>
+                <div className={`w-[75px] cursor-pointer`} >
+                    {toggletNext ? <img src="../images/callOutNext.png" alt="next" onClick={nextTestCallConnect}/> :
+                        <img src="../images/callOutNextOff.png" alt="next"/>}
                 </div>
                 <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     {`NEXT`}
                 </span>
-            </div>
+            </div>}
 
             {/* 방 나가기 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px]"}>

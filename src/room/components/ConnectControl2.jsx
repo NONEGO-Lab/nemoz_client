@@ -7,17 +7,16 @@ import {clearTestSession} from "../../redux/modules/testSlice";
 import {sock} from "../../socket/config";
 
 
-const ConnectControl2 = () => {
+const ConnectControl2 = ({setToggleNext, setIsSuccess}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const fanInfo = useSelector((state) => state.test.fanInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
     const sessionInfo = useSelector((state) => state.test.sessionInfo);
-    const eventId = useSelector((state) => state.event.currentEventId);
+    const eventId = useSelector((state) => state.event.eventId);
 
     const finishTest = async () => {
-
         const response = await testApi.testEnd(sessionInfo.meet_name);
 
         // 종료되면 role에 따라 해산
@@ -31,19 +30,24 @@ const ConnectControl2 = () => {
 
     const successConnect = async () => {
         let fanId = fanInfo.fan_id;
-        attendeeApi.testFan(eventId, fanId).then((res) => {
+        attendeeApi.testFan(eventId, fanId, 1).then((res) => {
             if (res.message === "Test result Updated") {
                 sock.emit("testSuccess", fanInfo);
-                finishTest();
+                setToggleNext(true)
+                setIsSuccess('success')
             }
         })
     };
 
     const failConnect = () => {
-        //socket -> push 알람
-        sock.emit("testFail", fanInfo);
-        // test/end
-        finishTest();
+        let fanId = fanInfo.fan_id;
+        attendeeApi.testFan(eventId, fanId, 2).then((res) => {
+            if (res.message === "Test result Updated") {
+                sock.emit("testFail", fanInfo);
+                setToggleNext(true)
+                setIsSuccess('fail')
+            }
+        })
     };
 
     return (

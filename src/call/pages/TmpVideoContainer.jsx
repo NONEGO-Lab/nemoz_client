@@ -11,7 +11,6 @@ import {testApi} from "../../test/data/call_test_data";
 import {sock} from "../../socket/config";
 import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
-import {clearToast} from "../../redux/modules/toastSlice";
 import TestVideoArea from "./components/TestVideoArea";
 
 const TmpVideoContainer = () => {
@@ -46,8 +45,8 @@ const TmpVideoContainer = () => {
         createJoinSession, joinTestSession, preventBrowserBack,
         onbeforeunload, muteHandler
     } = useTestVideo();
-
-    const {getChatFromSocket} = useReaction();
+    const [toggletNext, setToggleNext] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(null)
     const quitTest = async () => {
         // quitTest 룸 넘버 확인
         if (window.confirm("정말 나가시겠습니까?")) {
@@ -102,7 +101,7 @@ const TmpVideoContainer = () => {
     }
 
     useEffect(() => {
-
+        console.log('HELLOOOOO')
         if (subscriber !== undefined) {
             return;
         }
@@ -128,15 +127,11 @@ const TmpVideoContainer = () => {
     }, []);
 
     useEffect(() => {
-        sock.on("chatMessage", (msg) => testEvents.chatMessage({msg, getChatFromSocket}));
-        sock.on("testFail", (fanInfo) => testEvents.testFail({fanInfo, userInfo, navigate}));
-        sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({fanInfo, userInfo, dispatch, navigate}));
-
+        sock.on("testFail", (fanInfo) => testEvents.testFail({fanInfo, userInfo, navigate, setToggleNext}));
+        sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({fanInfo, userInfo, dispatch, navigate,setToggleNext}));
         return () => {
-            sock.removeAllListeners("chatMessage");
             sock.removeAllListeners("testFail");
             sock.removeAllListeners("testSuccess");
-            dispatch(clearToast());
         }
     }, []);
 
@@ -191,7 +186,10 @@ const TmpVideoContainer = () => {
                     muteHandler={muteHandler}
                     toggleFanLetter={toggleFanLetter}
                     setToggleFanLetter={setToggleFanLetter}
-                    isTestConnect={currentLocation() === 'test'} />
+                    isTestConnect={currentLocation() === 'test'}
+                    setToggleNext={setToggleNext}
+                    setIsSuccess={setIsSuccess}
+                />
 
                 {/* 기능 Component */}
                 <TestCallUtil
@@ -202,7 +200,14 @@ const TmpVideoContainer = () => {
                     role={userInfo.role}
                     dispatch={dispatch}
                     navigate={navigate}
-                    isTest = {currentLocation() === 'test'}
+                    fanInfo={fanInfo}
+                    toggletNext = {toggletNext}
+                    isSuccess={isSuccess}
+                    setIsSuccess={setIsSuccess}
+                    eventId={eventId}
+                    session={sessionInfo}
+                    userInfo={userInfo}
+                    createJoinSession={createJoinSession}
                 />
 
             </div>
