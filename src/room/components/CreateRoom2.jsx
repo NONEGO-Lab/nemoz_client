@@ -223,11 +223,10 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                                 styles={customStyles}
                                 width="100%"
                                 height="44px"
-                                placeholder="+"
                                 closeMenuOnSelect={false}
                                 isSearchable={false}
-                                components={{DropdownIndicator}}
-                                defaultValue={[]}
+                                components={{DropdownIndicator, IndicatorSeparator: () => null }}
+                                placeholder={"Staff 등록"}
                                 isMulti
                                 options={valueMaker(targetStaffIds)}
                         />}
@@ -248,11 +247,10 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                             styles={customStyles}
                             width="100%"
                             height="44px"
-                            placeholder="+"
                             closeMenuOnSelect={false}
-                            components={{DropdownIndicator}}
+                            components={{DropdownIndicator, IndicatorSeparator: () => null}}
                             isSearchable={false}
-                            defaultValue={[]}
+                            placeholder={"Fan 등록"}
                             isMulti
                             options={valueMaker(targetFanIds)}
                         />
@@ -286,14 +284,11 @@ const customStyles = {
     }),
 
     control: (_, {selectProps: {}}) => ({
-        width: "100%", height: "44px", borderRadius: "7px", // border: '1px solid rgb(156, 163, 175, 1)',
+        width: "100%",
+        height: "44px",
+        borderRadius: "7px",
+        display:'flex'
         // padding: 2,
-
-
-    }),
-
-    indicatorsContainer: () => ({
-        display: "none"
     }),
 
     singleValue: (provided, state) => {
@@ -316,8 +311,14 @@ const customStyles = {
     })
 }
 
+const ArrowDownIcon = () => {
+    return <img src="../images/nemozPlusIcon.png" alt={"arrow-down"} className={`w-[20px] h-[20px]`}/>;
+};
+
 const DropdownIndicator = (props) => {
-    return (<components.DropdownIndicator {...props} />
+    return (<components.DropdownIndicator {...props}>
+            <ArrowDownIcon/>
+        </components.DropdownIndicator>
 
     )
 };
