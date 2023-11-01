@@ -122,8 +122,8 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
             <div>
                 <button
                     onClick={() => connectToTest(user)}
-                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||((status.orders <0))) && "opacity-30"}`}
-                    disabled={user.is_tested || (status.orders <0)}
+                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||(status.orders < 0)) && "opacity-30"}`}
+                    disabled={user.is_tested || (status.orders < 0)}
                 >
                     Test Call
                 </button>

@@ -13,6 +13,7 @@ const initialState = {
   subscriberVideo: true,
   publisherLoading: true,
   subscriberLoading: true,
+  toggleDeviceSetting: false,
 }
 
 
@@ -40,6 +41,9 @@ export const testSlice = createSlice({
     addTestSession: (state, action) => {
       state.session = action.payload;
     },
+    toggleDeviceSettingModal : (state, action) =>{
+      state.toggleDeviceSetting = action.payload
+    },
     mutePublisherAudio: (state, action) => {
       state.publisherAudio = action.payload;
     },
@@ -57,6 +61,6 @@ export const testSlice = createSlice({
 });
 
 export const { addTestSessionInfo, addConnectInfo, addTestFanInfo, clearTestSession, addTestPublisher,
-  addTestSubscriber, addTestSession, mutePublisherAudio, mutePublisherVideo } = testSlice.actions
+  addTestSubscriber, addTestSession, mutePublisherAudio, mutePublisherVideo, toggleDeviceSettingModal } = testSlice.actions
 
 export default testSlice.reducer

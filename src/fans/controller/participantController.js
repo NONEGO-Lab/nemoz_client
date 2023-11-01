@@ -5,7 +5,7 @@ import {addTestFanInfo, clearTestSession} from "../../redux/modules/testSlice";
 import {attendeeApi} from "../data/attendee_data";
 import {roomApi} from "../../room/data/room_data";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {currentEvent} from "../../redux/modules/eventSlice";
+import {addEventName, currentEvent, setEventIds} from "../../redux/modules/eventSlice";
 
 export const ParticipantController = () => {
   const navigate = useNavigate();
@@ -22,10 +22,13 @@ export const ParticipantController = () => {
   const eventList = useSelector(state => state.event.eventList)
 
   const connectToTest = (user) => {
+
     dispatch(addTestFanInfo(user))
-    dispatch(currentEvent(user.event_id))
+    dispatch(setEventIds({event_id : user.event_id}))
+    dispatch(addEventName(user.status.room_name))
+
     if(localStorage.getItem("isSetDevice") === "true"){
-      navigate(`/test/${user.fan_id}`);
+      navigate(`/test/${user.event_id}_${user.fan_id}`);
     } else {
       setOpenDeviceSetting(true)
     }

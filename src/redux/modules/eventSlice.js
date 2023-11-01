@@ -32,10 +32,13 @@ export const eventSlice = createSlice({
     },
     addEventList: (state, action) =>{
       state.eventList = action.payload.eventList
-    }
+    },
+    addEventName: (state, action) =>{
+      state.eventName = action.payload
+    },
   }
 });
 
-export const { addEventInfo, setEventIds, addEventList, currentEvent } = eventSlice.actions
+export const { addEventInfo, setEventIds, addEventList, currentEvent , addEventName} = eventSlice.actions
 
 export default eventSlice.reducer

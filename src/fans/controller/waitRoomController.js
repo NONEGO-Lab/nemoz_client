@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addTestFanInfo, clearTestSession} from "../../redux/modules/testSlice";
+import {addTestFanInfo, clearTestSession, toggleDeviceSettingModal} from "../../redux/modules/testSlice";
 import {attendeeApi} from "../data/attendee_data";
 import {useMediaQuery} from "react-responsive";
 import {useVideo} from "../../call/controller/hooks/useVideo";
@@ -11,6 +11,7 @@ import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {sock} from "../../socket/config";
 import {fanEvents} from "../../socket/events/fan_event";
 import {eventApi} from "../../event/data/event_data";
+import {addEventName, setEventIds} from "../../redux/modules/eventSlice";
 
 
 export const WaitRoomController = () => {
@@ -34,9 +35,12 @@ export const WaitRoomController = () => {
   const roomInfo = useSelector((state) => state.common.roomInfo);
   // const isConnectTestComplete = useSelector((state) => state.video.isConnectTestComplete);
   const isCallFinished = useSelector((state) => state.video.isCallFinished);
+  const toggleDeviceSetting = useSelector(state => state.test.toggleDeviceSetting)
 
   const connectTest = () => {
-    navigate(`/test/${userInfo.id}`);
+
+    dispatch(toggleDeviceSettingModal(true))
+    // navigate(`/test/${userInfo.id}`);
   };
 
   const goToArtistRoom = () => {
@@ -62,15 +66,14 @@ export const WaitRoomController = () => {
   const getMyWaitingInfo = async () => {
     try {
       // 팬 아이디로 이벤트 리스트 조회
-      const evnetList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
-      // const currentEventId = evnetList.event_data[0].no
-
-      setEventTitle(evnetList.event_data[0].title)
-      dispatch(addTestFanInfo(evnetList.memberInfo))
-      const targetEventId = 12
-      const response = await attendeeApi.waitFan(targetEventId, userInfo.id);
-
-      console.log(response)
+      const eventList = await  eventApi.getFanIncludedEventList({userId: userInfo.id})
+      const currentEventId = eventList.event_data[0].no
+      const currentEventTitle = eventList.event_data[0].title
+      setEventTitle(currentEventTitle)
+      dispatch(addEventName(currentEventTitle))
+      dispatch(addTestFanInfo(eventList.memberInfo))
+      dispatch(setEventIds({event_id: currentEventId}))
+      const response = await attendeeApi.waitFan(currentEventId, userInfo.id);
 
       if(response.message === "All meet is ended") {
         dispatch(setIsCallFinished());
@@ -129,6 +132,7 @@ export const WaitRoomController = () => {
     isAvailableCall,
     isReadyTest,
     isMobPopupOpen,
-    eventTitle
+    eventTitle,
+    toggleDeviceSetting
   }
 }

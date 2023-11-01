@@ -48,7 +48,6 @@ const TmpVideoContainer = () => {
     } = useTestVideo();
 
     const {getChatFromSocket} = useReaction();
-
     const quitTest = async () => {
         // quitTest 룸 넘버 확인
         if (window.confirm("정말 나가시겠습니까?")) {
@@ -67,8 +66,6 @@ const TmpVideoContainer = () => {
                 } catch (err) {
 
                 }
-
-
             } else {
                 const response = await testApi.testEnd(sessionInfo.meet_name);
                 if (response) {

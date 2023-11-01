@@ -246,7 +246,7 @@ const MainCallUtil = ({
                     </div>
                 </>
             }
-            {/* 팬 리스트 */}
+
             {userInfo.role !== 'staff' &&
                 <>
                     {/* 캠 토글 */}

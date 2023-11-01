@@ -9,6 +9,7 @@ import { useDeviceTest } from "test/controller/useDeviceTest";
 import { testApi } from "test/data/call_test_data";
 import Video2 from "video/pages/Video2";
 import { setError, setIsError } from "../../redux/modules/errorSlice";
+import {toggleDeviceSettingModal} from "../../redux/modules/testSlice";
 
 
 const DeviceSetting = ({ closeDeviceSetting }) => {
@@ -28,6 +29,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const audioDevices = useSelector((state) => state.device.audioDevices);
     const audioOutputDevices = useSelector((state) => state.device.audioOutputDevices);
     const eventName = useSelector(state => state.event.eventName)
+    const eventId = useSelector((state) => state.event.eventId);
 
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => ({label:audio.label, deviceId:audio.deviceId}));
@@ -73,18 +75,17 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     }
 
     const setDeviceHandler = async (data) => {
-
         //완료 버튼을 누르면, 장비 체크 여부 확인을 하고 연결 테스트 화면으로 넘어간다.
         setDefaultDevice(data);
-
         if (userInfo.role !== "fan") {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
-            navigate(`/test/${fanInfo.fan_id}`);
+            dispatch(toggleDeviceSettingModal(false))
+            navigate(`/test/${eventId}_${userInfo.id}`);
 
         } else {
             await endMeet();
-            navigate(`/test/${userInfo.id}`);
+            navigate(`/test/${eventId}_${fanInfo.fan_id}`);
 
 
         }

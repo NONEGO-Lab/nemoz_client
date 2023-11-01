@@ -171,7 +171,6 @@ export const CallController = () => {
     }
 
     const getCurrentFanInfo = async () => {
-        console.log('get Current Fan Info in Call Controller')
         let roomId = roomInfo.room_id;
         try {
             const result = await roomApi.getListOrder({eventId, roomId});

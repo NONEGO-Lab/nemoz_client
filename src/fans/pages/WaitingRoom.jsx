@@ -6,16 +6,18 @@ import {WaitRoomController as controller} from "../controller/waitRoomController
 import WaitingMents from "./components/WaitingMents";
 import {useSelector} from "react-redux";
 import ReactPlayer from "react-player";
+import DeviceSetting from "../../test/pages/DeviceSetting";
 
 
 const WaitingRoom = () => {
     const {
         isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,eventTitle,
-        closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen
+        closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen, toggleDeviceSetting
     } = controller();
 
     const wait_url = myWaitInfo?.waiting?.std_screen_url
     const isVideo = myWaitInfo?.waiting?.mimetype?.includes('video')
+
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
@@ -75,6 +77,7 @@ const WaitingRoom = () => {
                         </div>
                     </div>
                 </div>
+                {toggleDeviceSetting && <DeviceSetting/>}
             </SizeLayout>
         )
     } else {
