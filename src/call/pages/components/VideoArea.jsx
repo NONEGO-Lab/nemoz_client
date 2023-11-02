@@ -46,7 +46,7 @@ const VideoArea = ({
             <div className={`text-center w-[650px] ${isWebFullScreen?"hidden" : '' }`}>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${username} (${age}세)`}
+                            {`FAN ${username} (${age}세)`}
                             <InnerCircleText gender={gender} width={"w-[22px]"} height={"h-[22px]"}
                                              bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}

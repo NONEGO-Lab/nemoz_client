@@ -20,6 +20,7 @@ const Header = () => {
     const {leaveSession} = useVideo();
     const currentLocation = () => window.location.pathname.split('/')[1]
     const isFan = userInfo.role === 'member'
+    const routeByRole=() => isFan ? navigate('/'): navigate('/roomlist')
     return (
         <div
             className="flex items-center justify-between bg-main_theme border-b-2 border-b-[#e0e0e0] border-header_under min-h-[55px] px-[40px] text-[#444444] ">
@@ -31,10 +32,10 @@ const Header = () => {
                                 dispatch(disconnectSession());
                                 dispatch(clearSessionInfo());
                                 leaveSession();
-                                navigate("/")
+                                routeByRole()
                             }
                         } else {
-                            navigate("/");
+                            routeByRole()
                         }
 
                     }}

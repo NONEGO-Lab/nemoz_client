@@ -10,7 +10,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
             <div className='w-[650px] text-center'>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
-                            {`Fan ${fanInfo?.fan_name} (${fanInfo?.age}세)`}
+                            {`FAN ${fanInfo?.fan_name} (${fanInfo?.age}세)`}
                             <InnerCircleText gender={fanInfo?.sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
