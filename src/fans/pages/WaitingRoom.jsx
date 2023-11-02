@@ -7,12 +7,13 @@ import WaitingMents from "./components/WaitingMents";
 import {useSelector} from "react-redux";
 import ReactPlayer from "react-player";
 import DeviceSetting from "../../test/pages/DeviceSetting";
+import {toggleDeviceSettingModal} from "../../redux/modules/testSlice";
 
 
 const WaitingRoom = () => {
     const {
         isMobile, userInfo, isCallFinished, connectTest, goToArtistRoom,eventTitle,
-        closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen, toggleDeviceSetting
+        closePopup, fanLogout, myWaitInfo, isAvailableCall, isReadyTest, isMobPopupOpen, toggleDeviceSetting, closeDeviceSetting
     } = controller();
 
     const wait_url = myWaitInfo?.waiting?.std_screen_url
@@ -77,7 +78,7 @@ const WaitingRoom = () => {
                         </div>
                     </div>
                 </div>
-                {toggleDeviceSetting && <DeviceSetting/>}
+                {toggleDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
             </SizeLayout>
         )
     } else {

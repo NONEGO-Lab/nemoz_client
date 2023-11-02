@@ -33,7 +33,6 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
 
     let videoList = videoDevices.map((video) => video.label);
     let audioList = audioDevices.map((audio) => ({label:audio.label, deviceId:audio.deviceId}));
-
     let audioOuputList = audioOutputDevices.map((audio) => ({label:audio.label, deviceId:audio.deviceId}));
 
     const endMeet = async () => {
@@ -77,15 +76,15 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const setDeviceHandler = async (data) => {
         //완료 버튼을 누르면, 장비 체크 여부 확인을 하고 연결 테스트 화면으로 넘어간다.
         setDefaultDevice(data);
-        if (userInfo.role !== "fan") {
+        if (userInfo.role !=='member') {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
             dispatch(toggleDeviceSettingModal(false))
-            navigate(`/test/${eventId}_${userInfo.id}`);
+            navigate(`/test/${eventId}_${fanInfo.fan_id}`);
 
         } else {
             await endMeet();
-            navigate(`/test/${eventId}_${fanInfo.fan_id}`);
+            navigate(`/test/${eventId}_${userInfo.id}`);
 
 
         }

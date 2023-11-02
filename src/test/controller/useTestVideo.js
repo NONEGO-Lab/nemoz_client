@@ -23,9 +23,12 @@ export const useTestVideo = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const sessionInfo = useSelector((state) => state.test.sessionInfo);
-  const connectInfo = useSelector((state) => state.test.connectInfo);
+  const connectInfo = useSelector((state) => state.test.connectInfo); //connect_id
   const session = useSelector((state) => state.test.session);
   const publisher = useSelector((state) => state.test.publisher);
+
+  console.log(sessionInfo, 'sessionInfo')
+  console.log(connectInfo, 'connectInfo')
 
   let OV;
 
@@ -39,6 +42,7 @@ export const useTestVideo = () => {
   }
 
   const createTestToken = async (meetName) => {
+    console.log('CREATE TOKEN', meetName)
     let userId = userInfo.id.toString();
     try {
       const response = await testApi.testJoin({

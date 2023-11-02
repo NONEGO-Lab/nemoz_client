@@ -43,6 +43,10 @@ export const WaitRoomController = () => {
     // navigate(`/test/${userInfo.id}`);
   };
 
+  const closeDeviceSetting = () =>{
+    dispatch(toggleDeviceSettingModal(false))
+  }
+
   const goToArtistRoom = () => {
     navigate(`/video2/${roomInfo.room_id}`);
   }
@@ -133,6 +137,7 @@ export const WaitRoomController = () => {
     isReadyTest,
     isMobPopupOpen,
     eventTitle,
-    toggleDeviceSetting
+    toggleDeviceSetting,
+    closeDeviceSetting
   }
 }
