@@ -32,15 +32,15 @@ const Video2 = ({
             streamManager.addVideoElement(videoRef.current);
         }
 
-        if (videoRef.current && !deviceSetting) {
-            videoRef.current.setSinkId(selectedAudioOutputDeviceId)
-                .then(() => {
-                    console.log(`Audio output set to ${selectedAudioOutputDeviceId}`);
-                })
-                .catch(error => {
-                    console.error('Error setting audio output: ', error);
-                });
-        }
+        // if (videoRef.current && !deviceSetting) {
+        //     videoRef.current.setSinkId(selectedAudioOutputDeviceId)
+        //         .then(() => {
+        //             console.log(`Audio output set to ${selectedAudioOutputDeviceId}`);
+        //         })
+        //         .catch(error => {
+        //             console.error('Error setting audio output: ', error);
+        //         });
+        // }
 
     }, [streamManager]);
 
@@ -117,12 +117,24 @@ const Video2 = ({
                     </div>
                 </div>
             }
-            {(left && warnCnt > 0) && <div
-                className={"h-[50px] w-[650px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[31%]"}>
+
+            {(left && warnCnt > 0) &&
+
+                // <div
+                //     className={`h-[50px] w-[1300px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[7.5%]`}>
+                //     <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
+                //          alt={"warningIcon"}/>
+                //     <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
+                // </div>
+
+                <div
+                className={`h-[50px] w-[650px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[31.5%]`}>
                 <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
                      alt={"warningIcon"}/>
                 <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
-            </div>}
+            </div>
+
+            }
             {left && <div
                 className={`absolute w-[650px] mt-[-50px] flex items-center text-white justify-between z-100`}>
                 {left && <div className={"ml-[30px] flex items-center"}>
@@ -136,7 +148,7 @@ const Video2 = ({
                              alt={"warningIcon"}/>
                         <span className={"text-[24px] ml-[8.5px]"}>{warnCnt}</span>
                     </div>}
-                    {currentRole !== 'artist' &&
+                    {currentRole === 'member' &&
                         <div className={"ml-[30px] flex items-center"}>
                             <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
                                  alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>

@@ -7,7 +7,6 @@ export const videoEvents = {
 
   chatMessage: ({ msg, getChatFromSocket, addToast }) => {
     addToast({ type: "reaction", msg });
-    // getChatFromSocket(msg);
   },
 
   joinRoom: ({ user, setStaffNoticeList }) => {
@@ -24,7 +23,7 @@ export const videoEvents = {
 
   leaveRoom: ({ userInfo, notify, setStaffNoticeList, dispatch }) => {
     if(userInfo !== undefined) {
-      if(userInfo.role === "fan") {
+      if(userInfo.role === "member") {
         /// fan이면 타이머 멈추기
         dispatch(addTimer(0));
       } else {
@@ -43,7 +42,6 @@ export const videoEvents = {
   },
 
   kickOut: ({ fanInfo, userInfo, roomInfo, sessionInfo, navigate, eventId }) => {
-
     if(fanInfo.id.toString() === userInfo.id.toString()){
       /// 강퇴 당하는 팬이면, leaveRoom 찍고, 대기방으로 쫓겨나기
       let roomNum = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
@@ -72,7 +70,6 @@ export const videoEvents = {
   },
 
   notifyTime: ({ time,addToast }) => {
-    console.log('NOTI TIME', time)
     addToast({ type: "time", msg: `${time}초 남았습니다.`, id:nanoid(4) });
 
   },
@@ -95,11 +92,13 @@ export const videoEvents = {
   },
 
   lastMeet: ({ artistId, setCurrentFan, userInfo,
-               dispatch, clearSession, addTimer}) => {
+               dispatch, clearSession, addTimer, navigateByRole}) => {
+    console.log('LAST MMEETTTTT', artistId, userInfo.id)
     if(artistId.toString() === userInfo.id.toString()) {
       setCurrentFan({});
       dispatch(clearSession());
       dispatch(addTimer(0));
+      navigateByRole();
 
     }
   },

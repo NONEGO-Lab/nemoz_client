@@ -12,15 +12,15 @@ import MainCallUtil from "./MainCallUtil";
 import StaffVideoArea from "./StaffVideoArea";
 import Timer from "./Timer";
 import {useMobileView} from "../../controller/hooks/useMobileView";
+import WaitingList from "./WaitingList";
+import FanDetail from "../../../fans/pages/components/FanDetail";
+import AddUser from "./AddUser";
+import {RoomListController} from "../../../room/controller/roomListController";
 
 const VideoContainer2 = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const history = createBrowserHistory();
-
-
-    const eventName = useSelector(state => state.event.eventName)
     const subscribedArtistInfo = useSelector(state => state.video.subscribedArtistInfo)
     const subscribedFanInfo = useSelector(state => state.video.subscribedFanInfo)
 
@@ -47,8 +47,11 @@ const VideoContainer2 = () => {
         toasts,
         setToasts,
         addToast,
-        removeToast
+        removeToast,
+        toggleNext,
+        setToggleNext,
     } = controller();
+    const {addUserOpenHandler, fanDetailOpenHandler, setCurrentRoom, currentRoom, isEmptyCheck, setCurrentFanInfo, currentFanInfo, isOpenAddUser, setIsOpenAddUser,eventList} = RoomListController()
     const [toggleFanLetter, setToggleFanLetter] = useState(false)
     const {
         isMobile, changeMobVideoSize, isBigScreen, makeBigScreen, isWebFullScreen, setIsWebFullScreen,
@@ -145,10 +148,25 @@ const VideoContainer2 = () => {
                     setToasts={setToasts}
                     addToast={addToast}
                     removeToast={removeToast}
+                    setCurrentRoom={setCurrentRoom}
+                    roomInfo={roomInfo}
+                    toggleNext={toggleNext}
+                    setToggleNext={setToggleNext}
                 />
 
             </div>
-
+            {currentRoom.room_id &&
+                <WaitingList
+                    curRoomId={currentRoom.room_id}
+                    eventId={currentRoom.event_id}
+                    fanDetailOpenHandler={fanDetailOpenHandler}
+                    setOnModal={() => setCurrentRoom({})}
+                    addUserOpenHandler={addUserOpenHandler}/>
+            }
+            {!isEmptyCheck(currentFanInfo) && <FanDetail currentFanId={currentFanInfo["fan_id"]}
+                                                         eventId={currentRoom.event_id}
+                                                         setOnModal={() => setCurrentFanInfo({})}/>}
+            {isOpenAddUser && <AddUser eventList={eventList} currentRoom={currentRoom} eventId={currentRoom.event_id} roomId={currentRoom.room_id} setOnModal={() => setIsOpenAddUser(prev => !prev)}/>}
         </SizeLayout>
     );
 };

@@ -12,9 +12,7 @@ import {attendeeApi} from "../../fans/data/attendee_data";
 import {addTimer, clearSession} from "../../redux/modules/videoSlice";
 import {addToast as addToastRedux} from "../../redux/modules/toastSlice";
 import {videoEvents} from "../../socket/events/video_event";
-import {notify} from "../pages/components/notify";
 import {useVideo} from "./hooks/useVideo";
-import {useReaction} from "../../reaction/controller/useReaction";
 import {leave_meet} from "../../model/call/call_model";
 
 
@@ -25,7 +23,6 @@ export const CallController = () => {
         fanJoinSession, msgBeforeOut, onbeforeunload
     } = useVideo();
 
-    const {getChatFromSocket} = useReaction();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -58,6 +55,17 @@ export const CallController = () => {
     const [warnCnt, setWarnCnt] = useState(0);
     const [emoticonToggle, setEmoticonToggle] = useState({left:false, right:false})
     const [toasts, setToasts] = useState([]);
+
+    function setDefaultNextToggle(){
+        if(roomInfo.fan_joined !== 1 || (roomInfo?.fan_joined === 1 && roomInfo.fan_leaved === 1)){
+            return true
+        }
+        else if(roomInfo?.fan_joined === 1 && roomInfo.fan_leaved === 1){
+            return false
+        }
+    }
+
+    const [toggleNext, setToggleNext] = useState(setDefaultNextToggle())
 
     let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
     const navigateByRole = () => {
@@ -176,6 +184,7 @@ export const CallController = () => {
             const result = await roomApi.getListOrder({eventId, roomId});
             const currentFan = result.fan_orders.find((fan) => fan.orders === 1);
             const response = await attendeeApi.getFanDetail(currentFan.fan_id);
+            console.log('getCurrentFanInfo', response)
             setCurrentFan(response);
             setWarnCnt(response?.warning_count)
         } catch (err) {
@@ -190,12 +199,14 @@ export const CallController = () => {
     }
 
     const onlyJoinNewRoom = async (newSessionInfo, nextFan) => {
+        console.log('ONLY NEW JOIN ROOM', nextFan)
         dispatch(clearSession());
         dispatch(addTimer(0));
         newJoinMeet(newSessionInfo).then((sessionInfo) => {
             completeSession(sessionInfo);
         });
-        const detail = await attendeeApi.getFanDetail(nextFan.fan_id);
+        console.log(roomInfo.event_id,eventId, '????')
+        const detail = await attendeeApi.getFanDetail(nextFan.fan_id, roomInfo.event_id);
         setCurrentFan(detail);
         setWarnCnt(detail?.warning_count)
     };
@@ -393,7 +404,8 @@ export const CallController = () => {
             userInfo,
             dispatch,
             clearSession,
-            addTimer
+            addTimer,
+            navigateByRole
         }));
 
         return () => {
@@ -450,7 +462,9 @@ export const CallController = () => {
         toasts,
         setToasts,
         addToast,
-        removeToast
+        removeToast,
+        toggleNext,
+        setToggleNext,
     }
 
 }

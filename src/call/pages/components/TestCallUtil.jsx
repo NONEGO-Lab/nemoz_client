@@ -14,7 +14,7 @@ const TestCallUtil = ({
                           muteHandler,
                           role,
                           quitTest,
-                          toggletNext,
+                          toggleNext,
                           fanInfo,
                           session,
                           navigate,
@@ -89,7 +89,7 @@ const TestCallUtil = ({
             {/* 다음 사람 */}
             {(role === 'staff') && <div className={"flex flex-col text-[8px] items-center mr-[30px] "}>
                 <div className={`w-[75px] cursor-pointer`} >
-                    {toggletNext ? <img src="../images/callOutNext.png" alt="next" onClick={nextTestCallConnect}/> :
+                    {toggleNext ? <img src="../images/callOutNext.png" className={`cursor-pointer`} alt="next" onClick={nextTestCallConnect}/> :
                         <img src="../images/callOutNextOff.png" alt="next"/>}
                 </div>
                 <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>

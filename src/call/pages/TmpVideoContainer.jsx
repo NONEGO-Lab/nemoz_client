@@ -45,7 +45,7 @@ const TmpVideoContainer = () => {
         createJoinSession, joinTestSession, preventBrowserBack,
         onbeforeunload, muteHandler
     } = useTestVideo();
-    const [toggletNext, setToggleNext] = useState(false)
+    const [toggleNext, setToggleNext] = useState(false)
     const [isSuccess, setIsSuccess] = useState(null)
     const quitTest = async () => {
         // quitTest 룸 넘버 확인
@@ -200,7 +200,7 @@ const TmpVideoContainer = () => {
                     dispatch={dispatch}
                     navigate={navigate}
                     fanInfo={fanInfo}
-                    toggletNext = {toggletNext}
+                    toggleNext = {toggleNext}
                     isSuccess={isSuccess}
                     setIsSuccess={setIsSuccess}
                     eventId={eventId}

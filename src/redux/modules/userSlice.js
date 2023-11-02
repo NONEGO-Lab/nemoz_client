@@ -50,7 +50,8 @@ export const userSlice = createSlice({
   },
   extraReducers: {
     [loginUser.fulfilled]: (state, action) => {
-      localStorage.setItem("auth", action.payload.accessToken);
+      // localStorage.setItem("auth", action.payload.accessToken);
+      sessionStorage.setItem("auth", action.payload.accessToken)
       delete action.payload.accessToken;
       state.userInfo = action.payload;
 

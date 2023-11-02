@@ -44,7 +44,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
         if (result.message === "UPDATED") {
             alert("순서 저장 완료!");
         } else {
-            alert("순서 저장에 실패했습니다.");
+            alert(result.message);
         }
     }
 

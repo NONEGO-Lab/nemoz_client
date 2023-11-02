@@ -87,11 +87,11 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                             />)
                         }
                     </div>
-                    {!subscribedArtistInfo &&
+
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo.artist_name}</span>
-                        </div>}
+                        </div>
                 </div>
             </div>
         </div>);
