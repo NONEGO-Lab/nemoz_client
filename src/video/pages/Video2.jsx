@@ -44,8 +44,6 @@ const Video2 = ({
 
     }, [streamManager]);
 
-
-
     const currentRole = userInfo.role
 
     const toggleEmoticon = (location) => {
@@ -81,7 +79,6 @@ const Video2 = ({
                     <Toast key={index} message={message} left={left} right={right} isWebFullScreen={isWebFullScreen}/>
                 ))}
             </div>
-
 
             {(emoticonToggle?.left) &&
                 <div

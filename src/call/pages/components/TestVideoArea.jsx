@@ -70,12 +70,11 @@ const TestVideoArea = ({
                         </div>
                     }
 
-                    {fanInfo?.letter && <div className='flex mt-[27px] w-full justify-center'>
+                    {fanInfo?.message && <div className='flex mt-[27px] w-full justify-center'>
                         <div className={"w-[380px] justify-start items-center flex"}>
                             <img src="../images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
                                  onClick={() => setToggleFanLetter(prev => !prev)}/>
-                            {/*<div className={"ml-[13px] grow"}>{fanInfo?.letter}</div>*/}
-                            <div className={"ml-[13px] grow truncate"}>{fanInfo?.letter}</div>
+                            <div className={"ml-[13px] grow truncate"}>{fanInfo?.message}</div>
                             {toggleFanLetter &&
 
                                 <div
@@ -84,7 +83,7 @@ const TestVideoArea = ({
                                          className={"rotate-180 w-[14px] h-[16px] z-10 mt-[45.5px] fixed ml-[-10px]"}/>
                                     <div className={`ml-[24.5px] mt-[24.5px] mr-[20px] mb-[28.5px] flex`}>
                                 <span className={"text-left min-w-[366.5px]"}>
-                                    {fanInfo?.letter}
+                                    {fanInfo?.message}
                                 </span>
                                         <img src={"../images/closeIcon.png"}
                                              className={"w-[15px] h-[15px] ml-[24px] cursor-pointer"} alt={"close-icon"}

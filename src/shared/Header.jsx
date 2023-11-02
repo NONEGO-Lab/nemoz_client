@@ -6,6 +6,7 @@ import {logout} from "../redux/modules/userSlice";
 import {useVideo} from "../call/controller/hooks/useVideo";
 import {sock} from "../socket/config";
 import {clearSessionInfo} from "../redux/modules/commonSlice";
+import {clearLocalStorage} from "../utils";
 
 
 const Header = () => {
@@ -92,6 +93,7 @@ const Header = () => {
                         dispatch(videoReset());
                         dispatch(disconnectSession());
                         dispatch(clearSessionInfo());
+                        clearLocalStorage()
                         leaveSession();
                         sock.disconnect();
                         sock.offAny();

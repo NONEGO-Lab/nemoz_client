@@ -25,7 +25,7 @@ const TestCallUtil = ({
                           createJoinSession,
                           userInfo
                       }) => {
-    console.log(fanInfo,'ORIGINAL FANINFO')
+
     const nextTestCallConnect = async () => {
 
         if(isSuccess==='success') {
@@ -38,12 +38,9 @@ const TestCallUtil = ({
         const response = await testApi.testEnd(session.meet_name);
 
         if(response){
-            console.log('TEST END SUCCESS')
             setIsSuccess(null)
-            // dispatch(clearSessionInfo())
             const fanList = await attendeeApi.getAttendeeList(eventId, 1)
             if(fanList){
-
                 const currentFanIndex = fanList.fan_lists.findIndex( f => f.fan_id === fanInfo.fan_id)
                 const nextFanInfo = fanList.fan_lists[currentFanIndex+1]
                 console.log(nextFanInfo, 'next_fan_id')
@@ -62,34 +59,9 @@ const TestCallUtil = ({
                 }
             }
 
-
-
-
-
         }else{
             console.error('이게.. 아닌데..')
         }
-        /*
-        *
-        * testEnd -> testCreate -> TestJoin -> ListOrder -> Socket
-        *
-        *
-        *
-        * */
-
-        // if (Object.keys(currentFan).length === 0) {
-        //     alert("마지막 팬입니다.");
-        //     // 방종료 로직 meetEnd
-        //     return;
-        // }
-        //
-        // if (isFirstCall) {
-        //     sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
-        //     setIsFirstCall(false);
-        // } else {
-        //     await finishCurrentCall()
-        // }
-
     };
 
     return (
