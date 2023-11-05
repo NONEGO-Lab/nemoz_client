@@ -40,6 +40,7 @@ const VideoArea = ({
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
+    console.log(publisher, 'publisher')
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -158,6 +159,7 @@ const VideoArea = ({
                                         sendReactionHandler={sendReactionHandler}
                                         removeToast={removeToast}
                                         toasts={toasts}
+                                        warnCnt={warnCnt}
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
                                 />)
@@ -175,6 +177,7 @@ const VideoArea = ({
                                         sendReactionHandler={sendReactionHandler}
                                         removeToast={removeToast}
                                         toasts={toasts}
+                                        warnCnt={warnCnt}
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
                                 />

@@ -25,7 +25,6 @@ const Video2 = ({
     const toastList = useSelector(state => state.toast.toastList)
     const unique_id = nanoid(4)
     const selectedAudioOutputDeviceId = localStorage.getItem("audioOutputId")
-
     useEffect(() => {
 
         if (streamManager.stream && !!videoRef.current) {
@@ -45,7 +44,6 @@ const Video2 = ({
     }, [streamManager]);
 
     const currentRole = userInfo.role
-
     const toggleEmoticon = (location) => {
         if (location === 'left') {
             setEmoticonToggle({...emoticonToggle, left: !emoticonToggle.left})
@@ -119,21 +117,14 @@ const Video2 = ({
             }
 
             {(left && warnCnt > 0) &&
-
-                // <div
-                //     className={`h-[50px] w-[1300px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[7.5%]`}>
-                //     <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
-                //          alt={"warningIcon"}/>
-                //     <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
-                // </div>
-
+            <>
                 <div
-                className={`h-[50px] w-[650px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[31.5%]`}>
+                className={`h-[50px] w-[650px] top-[31.5%] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px]`}>
                 <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
                      alt={"warningIcon"}/>
                 <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
             </div>
-
+            </>
             }
             {left && <div
                 className={`absolute w-[650px] mt-[-50px] flex items-center text-white justify-between z-100`}>
@@ -193,6 +184,16 @@ const Video2 = ({
 
                 </div>
             }
+            {(right) &&
+                <>
+                    <div
+                        className={`h-[50px] w-[1297px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[7.5%] ${(isWebFullScreen && warnCnt>0) ? '':'hidden'}`}>
+                        <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
+                             alt={"warningIcon"}/>
+                        <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
+                    </div>
+                </>
+            }
 
             {right && <div
                 className={`absolute ${isWebFullScreen?"w-[1280px]":"w-[650px]"} mt-[-50px] flex items-center text-white justify-end z-100`}>
@@ -212,6 +213,8 @@ const Video2 = ({
                     }
                 </div>
             </div>}
+
+
 
         </>
     )
