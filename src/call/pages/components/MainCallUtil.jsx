@@ -27,7 +27,8 @@ const MainCallUtil = ({
                           sendLeftTimeHandler,
                           toggleNext,
                           setToggleNext,
-                          setCurrentRoom
+                          setCurrentRoom,
+                          custonStyle,
                       }) => {
     const [isCallProcessing, setIsCallProcessing] = useState(false);
     const [isFirstCall, setIsFirstCall] = useState(true);
@@ -41,6 +42,7 @@ const MainCallUtil = ({
     const navigate = useNavigate()
     let roomNum = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
+    let style = "flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%]";
     const routeToFanList = () => {
         if (role === 'fan' || role === 'member') {
             alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
@@ -193,7 +195,7 @@ const MainCallUtil = ({
 
     return (
         <div
-            className={"flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%]"}>
+            className={custonStyle ?? style}>
             {userInfo.role === 'staff' &&
                 <>
                     {/* 팬 목록 */}
