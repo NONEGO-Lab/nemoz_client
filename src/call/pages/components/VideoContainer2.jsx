@@ -208,6 +208,7 @@ const VideoContainer2 = () => {
             removeToast={removeToast}
             reserved_time={reserved_time}
             fanEnterNoti={fanEnterNoti}
+
           />
         ) : (
           <VideoArea
@@ -234,6 +235,7 @@ const VideoContainer2 = () => {
             setToggleFanLetter={setToggleFanLetter}
             reserved_time={reserved_time}
             fanEnterNoti={fanEnterNoti}
+            leftTimeRef={leftTimeRef}
           />
         )}
 

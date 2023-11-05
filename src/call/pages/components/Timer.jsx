@@ -7,7 +7,7 @@ import {sock} from "../../../socket/config";
 import {videoEvents} from "../../../socket/events/video_event";
 
 
-const Timer = ({type, leftTimeRef}) => {
+const Timer = ({type, leftTimeRef, inMeet}) => {
 
   const dispatch = useDispatch();
   const isMobile = useMediaQuery ({
@@ -58,6 +58,12 @@ const Timer = ({type, leftTimeRef}) => {
       sock.off("leftTime");
     }
   },[]);
+
+  if(inMeet){
+    return(
+        <div className={"text-[1.2rem] font-medium"}> {secondsToTime(meetingTime)}</div>
+    )
+  }
 
 
   return (

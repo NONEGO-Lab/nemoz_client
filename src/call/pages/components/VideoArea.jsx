@@ -29,16 +29,14 @@ const VideoArea = ({
                        toggleFanLetter,
                        setToggleFanLetter,
                        reserved_time,
-                       fanEnterNoti
+                       fanEnterNoti,
+                       leftTimeRef
                    }) => {
 
 
     const {role} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'fan' || role === 'member'
-    const left = (isFan, publisherVideo) => !isFan ? "" : publisherVideo ? "" : "hidden"
-    const right = (isFan, publisherVideo) => isFan ? "" : publisherVideo ? "" : "hidden"
-
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
@@ -168,6 +166,7 @@ const VideoArea = ({
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
                                         reserved_time={reserved_time}
+                                        leftTimeRef={leftTimeRef}
                                 />)
 
                         )}
@@ -188,6 +187,7 @@ const VideoArea = ({
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
                                         reserved_time={reserved_time}
+                                        leftTimeRef={leftTimeRef}
                                 />
                             )
                         )}

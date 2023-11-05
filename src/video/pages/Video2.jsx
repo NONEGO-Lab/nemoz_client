@@ -5,6 +5,7 @@ import Toast from "../../shared/Toast";
 import {nanoid} from "nanoid";
 import {subscribedFanInfo} from "../../redux/modules/videoSlice";
 import {timeToKorean} from "../../utils/convert";
+import {Timer} from "../../call/pages/components";
 
 
 const Video2 = ({
@@ -21,7 +22,8 @@ const Video2 = ({
                     setIsWebFullScreen,
                     deviceSetting,
                     reserved_time,
-                    fanEnterNoti
+                    fanEnterNoti,
+                    leftTimeRef
                 }) => {
 
     const videoRef = useRef();
@@ -57,9 +59,9 @@ const Video2 = ({
 
     }
 
-    const toggleFullScreen = () =>{
+    const toggleFullScreen = () => {
         setIsWebFullScreen(prev => !prev)
-        if((isWebFullScreen && emoticonToggle.left) || (!isWebFullScreen && emoticonToggle.left)){
+        if ((isWebFullScreen && emoticonToggle.left) || (!isWebFullScreen && emoticonToggle.left)) {
             setEmoticonToggle({...emoticonToggle, left: false})
         }
 
@@ -76,7 +78,7 @@ const Video2 = ({
             }
 
             <div
-                className={`w-[250px] h-[300px] absolute top-[31%] flex flex-col justify-end overflow-y-hidden overflow-x-hidden ${isWebFullScreen? "ml-[1040px]":"ml-[400px]"}`}>
+                className={`w-[250px] h-[300px] absolute top-[31%] flex flex-col justify-end overflow-y-hidden overflow-x-hidden ${isWebFullScreen ? "ml-[1040px]" : "ml-[400px]"}`}>
                 {toastList?.map((message, index) => (
                     <Toast key={index} message={message} left={left} right={right} isWebFullScreen={isWebFullScreen}/>
                 ))}
@@ -84,7 +86,7 @@ const Video2 = ({
 
             {(emoticonToggle?.left) &&
                 <div
-                    className={`w-[390px] h-[200px] bg-white absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10 ${isWebFullScreen?"top-[72.5%] left-[58%]" :"top-[61%] left-[15.5%] "}`}>
+                    className={`w-[390px] h-[200px] bg-white absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10 ${isWebFullScreen ? "top-[72.5%] left-[58%]" : "top-[61%] left-[15.5%] "}`}>
                     <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
@@ -121,24 +123,29 @@ const Video2 = ({
             }
 
             {(left && warnCnt > 0) &&
-            <>
-                <div
-                className={`h-[50px] w-[650px] top-[31.5%] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px]`}>
-                <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
-                     alt={"warningIcon"}/>
-                <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
-            </div>
-            </>
+                <>
+                    <div
+                        className={`h-[50px] w-[650px] top-[31.5%] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px]`}>
+                        <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
+                             alt={"warningIcon"}/>
+                        <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
+                    </div>
+                </>
             }
             {left && <div
                 className={`absolute w-[650px] mt-[-50px] flex items-center text-white justify-between z-100`}>
-                {left && <div className={`flex items-center ${fanEnterNoti?'mx-[30px] ':'hidden'}`}>
+                {left && (fanEnterNoti ? <div className={`flex items-center mx-[30px] `}>
 
                     <img className={"w-[22px] mr-[12px]"} src={"/images/screenIconChatroom.png"}
                          alt={"screenIconChatroom"}/>
-                    <span className={"whitespace-nowrap"}>{fanInfo?.fan_name}님, 연결되었습니다.(영상통화 <b>{timeToKorean(reserved_time)}</b>)</span>
-                </div>}
-                <div className={`flex items-center ${fanEnterNoti?"ml-[165px]":"ml-[30px]"}`}>
+                    <span
+                        className={"whitespace-nowrap"}>{fanInfo?.fan_name}님, 연결되었습니다.(영상통화 <b>{timeToKorean(reserved_time)}</b>)</span>
+                </div> : <div className={`flex items-center`}>
+
+                </div>)
+
+                }
+                <div className={`flex items-center ${fanEnterNoti ? "ml-[165px]" : "mx-[30px]"}`}>
                     {left && <div className={"flex items-center"}>
                         <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
                              alt={"warningIcon"}/>
@@ -156,7 +163,8 @@ const Video2 = ({
             {(right && emoticonToggle?.right) &&
                 <div
                     className={`w-[390px] h-[200px] bg-white absolute rounded-[15px] pt-[34px] pb-[36px] px-[40px] z-10 top-[61%] left-[64.5%]`}>
-                    <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"} alt={"boxTale"}/>
+                    <img src={"/images/boxTale.png"} className={"w-[16px] h-[14px] absolute left-[98%] top-[10%]"}
+                         alt={"boxTale"}/>
                     <div className={"flex"}>
                         {upper_imoticon_path?.map((i, idx) =>
                             <div className={`flex flex-col  items-center mr-[35px]`} key={i.name}
@@ -192,7 +200,7 @@ const Video2 = ({
             {(right) &&
                 <>
                     <div
-                        className={`h-[50px] w-[1297px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[7.5%] ${(isWebFullScreen && warnCnt>0) ? '':'hidden'}`}>
+                        className={`h-[50px] w-[1297px] bg-[#f00] absolute flex items-center justify-center opacity-[0.7] rounded-t-[15px] top-[7.5%] ${(isWebFullScreen && warnCnt > 0) ? '' : 'hidden'}`}>
                         <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
                              alt={"warningIcon"}/>
                         <span className={"text-[17px] ml-[10.5px] font-bold text-white"}>경고 ({warnCnt || 0}회)</span>
@@ -201,24 +209,45 @@ const Video2 = ({
             }
 
             {right && <div
-                className={`absolute ${isWebFullScreen?"w-[1280px]":"w-[650px]"} mt-[-50px] flex items-center text-white justify-end z-100`}>
-                <div className={"flex items-center"}>
+                className={`absolute ${isWebFullScreen ? "w-[1280px]" : "w-[650px]"} mt-[-50px] flex items-center text-white justify-end z-100`}>
+                <div className={`flex items-center ${isWebFullScreen ? 'w-full' : ''}`}>
                     {currentRole === 'artist' ?
                         <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
                              alt={"emoticonIcon"} onClick={() => toggleEmoticon('right')}/>
                         :
                         <>
-                            {isWebFullScreen && <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                                  alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>}
 
-                            <img className={`w-[30px] mr-[30px] cursor-pointer ${currentRole === 'staff' ? 'hidden': ''}`}
-                                 src={isWebFullScreen ? "/images/halfScreenIcon.png" : "/images/fullScreenIcon.png"}
-                                 alt={"fullScreenIcon"} onClick={toggleFullScreen}/>
+
+                            {isWebFullScreen &&
+                                <>
+                                    <div className="flex justify-between w-[100%]">
+                                        <div className={"flex items-center ml-[30px]"}>
+                                            <img src={"/images/leftTimeIcon.png"} className={"w-[30px] mr-[0.6rem]"}/>
+                                            <Timer inMeet={true} leftTimeRef={leftTimeRef}/>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <div className={"flex items-center"}>
+                                                <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
+                                                     alt={"warningIcon"}/>
+                                                <span className={"text-[24px] ml-[8.5px]"}>{warnCnt}</span>
+                                            </div>
+
+                                            <img className={"w-[30px] mx-[30px] cursor-pointer"}
+                                                 src={"/images/emoticonIcon.png"}
+                                                 alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
+                                        </div>
+                                    </div>
+                                </>
+                            }
+
+                            <img
+                                className={`w-[30px] mr-[30px] cursor-pointer ${currentRole === 'staff' ? 'hidden' : ''}`}
+                                src={isWebFullScreen ? "/images/halfScreenIcon.png" : "/images/fullScreenIcon.png"}
+                                alt={"fullScreenIcon"} onClick={toggleFullScreen}/>
                         </>
                     }
                 </div>
             </div>}
-
 
 
         </>

@@ -9,7 +9,7 @@ import {setError, setIsError} from "../../redux/modules/errorSlice";
 import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {roomApi} from "../../room/data/room_data";
 import {attendeeApi} from "../../fans/data/attendee_data";
-import {addTimer, clearSession} from "../../redux/modules/videoSlice";
+import {addTimer, clearSession, subscribedFanInfo} from "../../redux/modules/videoSlice";
 import {addToast as addToastRedux} from "../../redux/modules/toastSlice";
 import {videoEvents} from "../../socket/events/video_event";
 import {useVideo} from "./hooks/useVideo";
@@ -238,7 +238,9 @@ export const CallController = () => {
                 const response = await meetApi.leaveMeet(request);
                 if (response) {
                     sock.emit("kickOut", roomNum, fan_data?.user_info);
+                    dispatch(subscribedFanInfo({}))
                 }
+                dispatch()
             } catch (err) {
                 console.error(err)
                 dispatch(setError(err));
