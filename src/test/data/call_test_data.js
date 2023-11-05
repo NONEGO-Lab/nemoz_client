@@ -15,6 +15,7 @@ export const testApi = {
     };
 
     const data = await instance.post("/test/join", req);
+
     return {
       id: data.data.data.id,
       token: data.data.data.token
@@ -23,11 +24,14 @@ export const testApi = {
 
   testLeave: async (request) => {
     const data = await instance.post("/test/leave", request);
+
     return data.data.message === 'LEAVED';
   },
 
   testEnd: async (meetName) => {
+
     const req = {meetName}
+    console.log('hahaha', meetName)
     const key = Object.keys(req)
     const haveUnderBar = (text) => text.includes('_')
     console.log(req.meetName, '????')

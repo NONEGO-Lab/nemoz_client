@@ -53,7 +53,6 @@ export const useDeviceTest = () => {
   const createJoinSession = async () => {
 
     let OV = new OpenVidu();
-    OV.enableProdMode()
     let _session = OV.initSession()
 
     subscribeToStreamCreated(_session);
@@ -132,6 +131,7 @@ export const useDeviceTest = () => {
   }
 
   useEffect(() => {
+    // Fetch available audio output devices and update the state
     navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
