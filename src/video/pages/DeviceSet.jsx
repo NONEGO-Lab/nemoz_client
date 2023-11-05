@@ -31,15 +31,13 @@ const DeviceSet = () => {
         <div className="mt-10 m-auto w-[calc(100%-50px)]">
           <form>
             <Select
+                border={"border border-solid border-#444 rounded-lg"}
                 register={register}
                 options={videoList}
                 name={"videoDevices"}
-                label={"비디오 설정"}
+                label={<img src={"../images/callOutCameraOn.png"} className="w-[2rem]"/>}
                 placeholder={"입력..."}
                 width={"w-[100%]"}
-                height={"h-[45px]"}
-                marginBottom={"mb-[20px]"}
-
             />
             <Select
                 register={register}

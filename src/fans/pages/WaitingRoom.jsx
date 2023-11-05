@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import ReactPlayer from "react-player";
 import DeviceSetting from "../../test/pages/DeviceSetting";
 import MobileHeader from "shared/MobileHeader";
+import MobileDeviceSetting from "test/pages/MobileDeviceSetting";
 
 const WaitingRoom = () => {
   const {
@@ -205,7 +206,7 @@ const WaitingRoom = () => {
 
         {/* waiting status :: end call / waiting / goto connect test */}
 
-        {isMobPopupOpen &&
+        {/* {isMobPopupOpen &&
           (userInfo.isCallTested ? (
             isCallFinished ? (
               <MobilePopup type={"endCall"} closePopup={closePopup} />
@@ -222,7 +223,10 @@ const WaitingRoom = () => {
               closePopup={closePopup}
               isReadyTest={isReadyTest}
             />
-          ))}
+          ))} */}
+
+          {isMobPopupOpen && 
+          <MobileDeviceSetting closeDeviceSetting={closePopup} />}
       </div>
     );
   }
