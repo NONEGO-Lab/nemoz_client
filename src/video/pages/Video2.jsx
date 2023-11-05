@@ -3,6 +3,8 @@ import {useSelector} from "react-redux";
 import {upper_imoticon_path, down_imoticon_path} from "../../common/imoticon_path";
 import Toast from "../../shared/Toast";
 import {nanoid} from "nanoid";
+import {subscribedFanInfo} from "../../redux/modules/videoSlice";
+import {timeToKorean} from "../../utils/convert";
 
 
 const Video2 = ({
@@ -17,7 +19,9 @@ const Video2 = ({
                     sendReactionHandler,
                     isWebFullScreen,
                     setIsWebFullScreen,
-                    deviceSetting
+                    deviceSetting,
+                    reserved_time,
+                    fanEnterNoti
                 }) => {
 
     const videoRef = useRef();
@@ -60,7 +64,7 @@ const Video2 = ({
         }
 
     }
-
+    console.log(fanEnterNoti, 'fanEnterNotifanEnterNotifanEnterNoti')
     return (
         <>
             {
@@ -128,12 +132,13 @@ const Video2 = ({
             }
             {left && <div
                 className={`absolute w-[650px] mt-[-50px] flex items-center text-white justify-between z-100`}>
-                {left && <div className={"ml-[30px] flex items-center"}>
+                {left && <div className={`flex items-center ${fanEnterNoti?'mx-[30px] ':'hidden'}`}>
+
                     <img className={"w-[22px] mr-[12px]"} src={"/images/screenIconChatroom.png"}
                          alt={"screenIconChatroom"}/>
-                    <span className={"whitespace-nowrap"}>{fanInfo.fan_name}님, 연결되었습니다.(영상통화 <b>1분30초</b>)</span>
+                    <span className={"whitespace-nowrap"}>{fanInfo?.fan_name}님, 연결되었습니다.(영상통화 <b>{timeToKorean(reserved_time)}</b>)</span>
                 </div>}
-                <div className={"flex items-center ml-[165px] mr-[30px]"}>
+                <div className={`flex items-center ${fanEnterNoti?"ml-[165px]":"ml-[30px]"}`}>
                     {left && <div className={"flex items-center"}>
                         <img className={"w-[30px]"} src={"/images/warningIconInScreen.png"}
                              alt={"warningIcon"}/>

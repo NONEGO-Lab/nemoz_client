@@ -43,3 +43,13 @@ export const secondsToMins = (sec) => {
   if (sec < 60) return 1
   return Math.floor(sec / 60);
 }
+
+export const timeToKorean = (time) =>{
+  const min = Math.floor(time / 60)
+  const sec = time %60
+  if(min <=0){
+    return `${sec}초`
+  }else{
+    return `${min}분 ${sec}초`
+  }
+}

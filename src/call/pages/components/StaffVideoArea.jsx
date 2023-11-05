@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import Video2 from "../../../video/pages/Video2";
 import InnerCircleText from "../../../common/InnerCircleText";
 
-const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt, toasts, removeToast, toggleFanLetter, setToggleFanLetter}) => {
-
+const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt, toasts, removeToast, toggleFanLetter, setToggleFanLetter, reserved_time, fanEnterNoti}) => {
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -25,12 +24,15 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                                     left={true}
                                     toasts={toasts}
                                     removeToast={removeToast}
+                                    reserved_time={reserved_time}
+                                    fanEnterNoti={fanEnterNoti}
                             />
                         )}
 
                     </div>
 
-                    {!subscribedFanInfo &&<div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
+                    {!subscribedFanInfo &&
+                        <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo?.fan_name}</span>
                     </div>}
@@ -84,14 +86,14 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                                     style={`rounded-[15px]`}
                                     toasts={toasts}
                                     removeToast={removeToast}
+                                    reserved_time={reserved_time}
                             />)
                         }
                     </div>
-
-                        <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
+                    {!subscribedArtistInfo && <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo.artist_name}</span>
-                        </div>
+                    </div>}
                 </div>
             </div>
         </div>);

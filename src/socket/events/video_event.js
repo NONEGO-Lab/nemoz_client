@@ -9,9 +9,17 @@ export const videoEvents = {
     addToast({ type: "reaction", msg });
   },
 
-  joinRoom: ({ user, setStaffNoticeList }) => {
-    let noticeData = { type: "join", msg: `${user.username}님이 들어오셨습니다.`};
-    setStaffNoticeList((prev) => [...prev, noticeData]);
+  joinRoom: ({ user,addToast, setFanEnterNoti }) => {
+    if(user.role === 'member'){
+      setFanEnterNoti(true)
+      // fanEnterNoti({ type: "time", join: `${user.username}님이 들어오셨습니다.`, id:nanoid(4) });
+      setFanEnterNoti(true)
+      setTimeout(()=>{
+        setFanEnterNoti(false)
+      },3000)
+
+    }
+
   },
 
   joinNextRoom: ({ newSessionInfo, userId, nextFan, userInfo, onlyJoinNewRoom }) => {
@@ -21,11 +29,12 @@ export const videoEvents = {
 
   },
 
-  leaveRoom: ({ userInfo, notify, setStaffNoticeList, dispatch }) => {
+  leaveRoom: ({ userInfo, notify, setStaffNoticeList, dispatch, setFanEnterNoti }) => {
     if(userInfo !== undefined) {
       if(userInfo.role === "member") {
         /// fan이면 타이머 멈추기
         dispatch(addTimer(0));
+        setFanEnterNoti(false)
       } else {
         let noticeData = { type: "leave", msg: `${userInfo.username}님이 나가셨습니다` };
         setStaffNoticeList((prev) => [...prev, noticeData]);

@@ -58,6 +58,7 @@ const VideoContainer2 = () => {
     removeToast,
     toggleNext,
     setToggleNext,
+      fanEnterNoti
   } = controller();
   const {
     addUserOpenHandler,
@@ -85,7 +86,7 @@ const VideoContainer2 = () => {
     webFullScreenSizeOther,
   } = useMobileView();
 
-  const { artist_name, room_name } = roomInfo;
+  const { artist_name, room_name, reserved_time } = roomInfo;
   const isStaff = userInfo.role === "staff";
   let isFullScrennMobile = true;
   if (isMobile) {
@@ -205,6 +206,8 @@ const VideoContainer2 = () => {
             toggleFanLetter={toggleFanLetter}
             setToggleFanLetter={setToggleFanLetter}
             removeToast={removeToast}
+            reserved_time={reserved_time}
+            fanEnterNoti={fanEnterNoti}
           />
         ) : (
           <VideoArea
@@ -229,6 +232,8 @@ const VideoContainer2 = () => {
             setIsWebFullScreen={setIsWebFullScreen}
             toggleFanLetter={toggleFanLetter}
             setToggleFanLetter={setToggleFanLetter}
+            reserved_time={reserved_time}
+            fanEnterNoti={fanEnterNoti}
           />
         )}
 

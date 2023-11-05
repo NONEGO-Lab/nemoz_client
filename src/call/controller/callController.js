@@ -55,7 +55,7 @@ export const CallController = () => {
     const [warnCnt, setWarnCnt] = useState(0);
     const [emoticonToggle, setEmoticonToggle] = useState({left:false, right:false})
     const [toasts, setToasts] = useState([]);
-
+    const [fanEnterNoti, setFanEnterNoti] = useState(false)
     function setDefaultNextToggle(){
         if(roomInfo.fan_joined !== 1 || (roomInfo?.fan_joined === 1 && roomInfo.fan_leaved === 1)){
             return true
@@ -360,7 +360,7 @@ export const CallController = () => {
     useEffect(() => {
         console.log('VIDEO SOCKET ON')
         sock.on("chatMessage", (msg) => videoEvents.chatMessage({msg, addToast}));
-        sock.on("joinRoom", (user) => videoEvents.joinRoom({user, setStaffNoticeList}));
+        sock.on("joinRoom", (user) => videoEvents.joinRoom({user, addToast, setFanEnterNoti}));
         sock.on("joinNextRoom", (num, newSessionInfo, userId, nextFan) => videoEvents.joinNextRoom({
             newSessionInfo,
             userId,
@@ -371,7 +371,8 @@ export const CallController = () => {
         sock.on("leaveRoom", (num, userInfo) => videoEvents.leaveRoom({
             userInfo,
             setStaffNoticeList,
-            dispatch
+            dispatch,
+            setFanEnterNoti
         }));
         sock.on("endMeet", () => videoEvents.endMeet({userInfo, navigate}));
         sock.on("kickOut", (fanInfo) => videoEvents.kickOut({
@@ -465,6 +466,7 @@ export const CallController = () => {
         removeToast,
         toggleNext,
         setToggleNext,
+        fanEnterNoti, setFanEnterNoti,
     }
 
 }

@@ -27,7 +27,9 @@ const VideoArea = ({
                        isWebFullScreen, 
                        setIsWebFullScreen,
                        toggleFanLetter,
-                       setToggleFanLetter
+                       setToggleFanLetter,
+                       reserved_time,
+                       fanEnterNoti
                    }) => {
 
 
@@ -40,7 +42,7 @@ const VideoArea = ({
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
-    console.log(publisher, 'publisher')
+    console.log(warnCnt, 'publisher')
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
@@ -55,7 +57,7 @@ const VideoArea = ({
                         </span>
                 <div className={"flex flex-col mt-[24px]"}>
                     <div
-                        className={`h-[368px] ${left(isFan, publisherVideo)}`}>
+                        className={`h-[368px] ${(!isFan && !subscribedFanInfo) || (isFan && !publisher) ? 'hidden': ''}`}>
 
                         {
                             isFan ?
@@ -75,6 +77,8 @@ const VideoArea = ({
                                                 onClickReactBtn={onClickReactBtn}
                                                 sendReactionHandler={sendReactionHandler}
                                                 removeToast={removeToast}
+                                                reserved_time={reserved_time}
+                                                fanEnterNoti={fanEnterNoti}
                                                 style={`rounded-[15px]`}/>)
 
                                 )
@@ -93,14 +97,15 @@ const VideoArea = ({
                                                 toasts={toasts}
                                                 onClickReactBtn={onClickReactBtn}
                                                 sendReactionHandler={sendReactionHandler}
-                                                removeToast={removeToast}
+                                                reserved_time={reserved_time}
+                                                fanEnterNoti={fanEnterNoti}
                                         />
                                     )
                                 )
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2/>}
-                    {((isFan && !publisherVideo) || (role === 'artist' && !subscribedFanInfo)) &&
+                    { (role === 'artist' && !subscribedFanInfo) &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
@@ -145,7 +150,7 @@ const VideoArea = ({
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
-                    <div className={`${isWebFullScreen?"h-[727px]":"h-[368px]"} ${right(isFan, publisherVideo)}`}>
+                    <div className={`${isWebFullScreen?"h-[727px]":"h-[368px]"} ${(isFan && !subscribedArtistInfo) || (!isFan && !publisher) ? 'hidden': ''}`}>
 
                         {!isFan && (
                             publisher !== undefined && (
@@ -162,13 +167,15 @@ const VideoArea = ({
                                         warnCnt={warnCnt}
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
+                                        reserved_time={reserved_time}
                                 />)
 
                         )}
                         {isFan && (
                             subscribedArtistInfo !== undefined && (
                                 <Video2 style={`rounded-[15px]`} right={true}
-                                        streamManager={subscribedArtistInfo} isStaff={isStaff}
+                                        streamManager={subscribedArtistInfo}
+                                        isStaff={isStaff}
                                         isTestConnect={isTestConnect}
                                         emoticonToggle={emoticonToggle}
                                         setEmoticonToggle={setEmoticonToggle}
@@ -180,6 +187,7 @@ const VideoArea = ({
                                         warnCnt={warnCnt}
                                         isWebFullScreen={isWebFullScreen}
                                         setIsWebFullScreen={setIsWebFullScreen}
+                                        reserved_time={reserved_time}
                                 />
                             )
                         )}
