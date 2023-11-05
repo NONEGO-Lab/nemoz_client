@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* index.css */
+
+@import url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/css/NotoSansCJKkr.css');
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: condensed;
+  src: url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/fonts/NotoSansCJKkr-');
+}
+
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -1.2px;
+}
+
+@media only screen and (max-device-width: 844px) {
+  /* Styles */
+  body{
+    min-width: 100vw !important;
+  }
+}
+
 body {
   min-width: 1366px;
   background-color: #f0f0f0;
