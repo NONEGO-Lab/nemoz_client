@@ -16,16 +16,17 @@ import {currentEvent} from "../../redux/modules/eventSlice";
 const RoomListView = () => {
 
     const {
-        roomList, setIsOpenRoomCreate, roomArray, movePage,
+        roomList, setIsOpenRoomCreate, movePage,
         isOpenRoomCreate, currentRoom, fanDetailOpenHandler, addUserOpenHandler, setCurrentRoom,
         isEmptyCheck, currentPage, currentFanInfo, isOpenAddUser, setIsOpenAddUser, endRoomApi,
-        setCurrentFanInfo, userInfo, getEventListApi
+        setCurrentFanInfo, userInfo, getEventListApi, totalPage
     } = controller();
     const eventList = useSelector(state => state.event.eventList)
 
     const role = useSelector((state) => state.user.userInfo.role);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const page = [...new Array(totalPage)].map((_, i) => i + 1) || []
     return (
         <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)}
                 >
@@ -70,10 +71,8 @@ const RoomListView = () => {
 
             {/* page */}
             <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
-                {/*<span onClick={() => movePage(currentPage - 1)}*/}
-                {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
                 {
-                    roomArray?.map((num, index) => {
+                    page?.map((num, index) => {
                         return (
 
                             <span key={index}
@@ -86,10 +85,7 @@ const RoomListView = () => {
                         )
                     })
                 }
-                {/*<div onClick={() => movePage(currentPage + 1)}>*/}
-                {/*  <span className="cursor-pointer mr-2">다음</span>*/}
-                {/*  <span className="cursor-pointer"> {">"} </span>*/}
-                {/*</div>*/}
+
             </div>
 
 

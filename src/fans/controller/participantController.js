@@ -10,8 +10,8 @@ import {addEventName, currentEvent, setEventIds} from "../../redux/modules/event
 export const ParticipantController = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1)
   const [attendeeList, setAttendeeList] = useState([]);
   const [isOpenFanDetail, setIsOpenFanDetail] = useState(false);
   const [currentFanId, setCurrentFanId] = useState();
@@ -35,8 +35,6 @@ export const ParticipantController = () => {
 
   };
 
-
-
   const setOnModal = () => {
     setIsOpenFanDetail(false);
     setCurrentFanId();
@@ -51,6 +49,7 @@ export const ParticipantController = () => {
     try {
       const result = await attendeeApi.getAttendeeList(eventId, page);
       setAttendeeList(result.fan_lists);
+      setTotalPage(result.paging.total_page)
     } catch (err) {
       // dispatch(setError(err));
       // dispatch(setIsError(true));
@@ -59,10 +58,10 @@ export const ParticipantController = () => {
 
   useEffect(()=> {
     if(eventList?.length>0){
-      getAttendeeListApi(eventId,1);
+      getAttendeeListApi(eventId,currentPage);
     }
     dispatch(clearTestSession());
-  },[eventList, eventId])
+  },[eventList, eventId, currentPage])
 
 
   const movePage = async (num) => {
@@ -72,7 +71,7 @@ export const ParticipantController = () => {
     }
 
     setCurrentPage(num);
-    await getAttendeeListApi(num);
+    await getAttendeeListApi(eventId, num);
   }
 
   return {
@@ -90,6 +89,7 @@ export const ParticipantController = () => {
     setOnModal,
     openDeviceSetting, 
     setOpenDeviceSetting,
-    closeDeviceSetting
+    closeDeviceSetting,
+    totalPage
   }
 }

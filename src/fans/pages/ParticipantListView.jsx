@@ -21,9 +21,10 @@ const ParticipantListView = () => {
         setOnModal,
         openDeviceSetting,
         setOpenDeviceSetting,
-        closeDeviceSetting
+        closeDeviceSetting,
+        totalPage
     } = controller();
-
+    const page = [...new Array(totalPage)].map((_, i) => i + 1) || []
     return (<Layout title={"참가자 목록"} isParticipantsList={true}>
         {/*table 뷰*/}
         <div>
@@ -49,7 +50,7 @@ const ParticipantListView = () => {
         <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
             {/*<span onClick={() => movePage(currentPage - 1)}*/}
             {/*      className="cursor-pointer mr-2"> {"<"} </span>*/}
-            {roomArray.map((num, index) => {
+            {page.map((num, index) => {
                 return (
 
                     <span key={index} onClick={() => movePage(num)}

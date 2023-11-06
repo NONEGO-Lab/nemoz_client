@@ -8,11 +8,10 @@ import {useNavigate} from "react-router-dom";
 
 
 export const RoomListController = () => {
-    const roomArray = [...new Array(10)].map((_, i) => i + 1);
     const dispatch = useDispatch();
-
     const [roomList, setRoomList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1)
     const [currentRoom, setCurrentRoom] = useState({});
     const [isOpenRoomCreate, setIsOpenRoomCreate] = useState(false);
     const [currentFanInfo, setCurrentFanInfo] = useState({});
@@ -86,14 +85,16 @@ export const RoomListController = () => {
         }
 
         setCurrentPage(num);
-        await eventApi.getEventList({userId:userInfo.id})
+        await roomApi.getRoomList(eventId, currentPage)
     }
 
     useEffect(() => {
-        if (eventList?.length > 0) {
+        if (eventList?.length > 0 && eventId) {
             const getRoomListApi = async (eventId) => {
                 try {
-                    const result = await roomApi.getRoomList(eventId, 1);
+                    const result = await roomApi.getRoomList(eventId, currentPage);
+                    const total = result.data.total_page
+                    setTotalPage(total)
                     setRoomList(result.data?.room_data?.slice(0, 10));
                 } catch (err) {
                     dispatch(setError(err));
@@ -102,13 +103,12 @@ export const RoomListController = () => {
             }
             getRoomListApi(eventId)
         }
-    }, [eventList, dispatch, eventId]);
+    }, [eventList, dispatch, eventId, currentPage]);
 
 
     return {
         roomList,
         setIsOpenRoomCreate,
-        roomArray,
         movePage,
         isOpenRoomCreate,
         currentRoom,
@@ -124,6 +124,7 @@ export const RoomListController = () => {
         getEventListApi,
         setCurrentFanInfo,
         userInfo,
-        eventList
+        eventList,
+        totalPage
     }
 }

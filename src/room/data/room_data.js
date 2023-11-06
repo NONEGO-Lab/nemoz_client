@@ -7,7 +7,7 @@ export const roomApi = {
   getRoomList: async (event_id, page) => {
     if(Array.isArray(event_id)){event_id = event_id.join()
     }
-    const data = await instance.get("/room/list", { params: { event_id : event_id, page_size: 20, current_page: page } });
+    const data = await instance.get("/room/list", { params: { event_id : event_id, page_size: 10, current_page: page } });
     return data.data;
   },
 
