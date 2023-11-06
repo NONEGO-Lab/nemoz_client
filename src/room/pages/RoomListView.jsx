@@ -22,7 +22,6 @@ const RoomListView = () => {
         setCurrentFanInfo, userInfo, getEventListApi, totalPage
     } = controller();
     const eventList = useSelector(state => state.event.eventList)
-
     const role = useSelector((state) => state.user.userInfo.role);
     const navigate = useNavigate();
     const dispatch = useDispatch();

@@ -10,15 +10,9 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
     let style = "w-[650px] h-[900px] drop-shadow-md pt-[62px] pr-[60px] pb-[60px] pl-[58px]";
     const targetFanList = eventList.find(e => e.event_id === eventId).target_fan_ids
     const {register, handleSubmit, control} = useForm();
-    const [time, setTime] = useState({
-        hour: "",
-        min: "",
-        sec: "",
-
-    });
-
     const [fanOptionList, setFanOptionList] = useState([]);
     const dispatch = useDispatch()
+
     const onSubmit = async (data) => {
         const {selectedFan, reservedTime, reason} = data
         const fanId = selectedFan.value
@@ -40,10 +34,7 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
             }
             console.error(msg)
         }
-
-
     }
-
 
 
     useEffect(() => {

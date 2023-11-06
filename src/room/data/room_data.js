@@ -40,8 +40,6 @@ export const roomApi = {
     let formData = new FormData();
     formData.append("event_id", eventId);
     formData.append("file", file);
-
-
     const data = await instance.post("/room/uploadscreen", formData, {
       headers: {
         "Content-Type": "multipart/form-data"

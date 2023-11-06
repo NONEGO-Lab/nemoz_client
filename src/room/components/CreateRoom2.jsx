@@ -14,16 +14,16 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
     });
-    // const [time, setTime] = useState(0);
 
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
-    const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0].name || []);
     const [targetArtistFullInfo, setTargetArtistFullInfo] = useState(eventList.map(e => e.target_artist_ids));
+    const [targetArtistIds, setTargetArtistIds] = useState(Array(eventList.map(e =>e.target_artist_ids)[0][0].name));
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
     const userInfo = useSelector(state => state.user.userInfo)
 
     const {location, mimeType, fileName} = imgUrl;
+
     const onSubmit = async (data) => {
         const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
         let fanIdArray = [];
@@ -32,14 +32,12 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
             fanIdArray.push(data);
         });
 
-
-        let artistId = targetArtistFullInfo.find((ar) => ar.name === selectArtist)?.no;
+        let artistId = targetArtistFullInfo.flat().find((ar) => ar.name === selectArtist)?.no;
 
         if (artistId === undefined) {
             artistId = targetArtistFullInfo[0].no;
         }
 
-        // let reserved_time = (Number(time.hour) * 60 * 60) + (Number(time.min) * 60) + Number(time.sec)
         let due_dt = startDate.replace("T", " ") + ":00"
 
         const result = await roomApi.createRoom({
@@ -65,33 +63,6 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     const valueMaker = useCallback((array) => array.map(({no: value, name: label, ...rest}) => ({
         label, value, ...rest
     })), [])
-
-    // const timeOnChangeHandler = useCallback((e) => {
-    //     const {name, value} = e.target;
-    //
-    //     let check = /^[0-9]+$/;
-    //     if (!check.test(value)) return;
-    //
-    //     let time = parseInt(value);
-    //
-    //     if (time > 60 || time < 0) {
-    //         return;
-    //     }
-    //
-    //     switch (name) {
-    //         case "hour":
-    //             setTime((prev) => ({...prev, hour: value.toString()}));
-    //             break
-    //         case "min":
-    //             setTime((prev) => ({...prev, min: value.toString()}));
-    //             break
-    //         case "sec":
-    //             setTime((prev) => ({...prev, sec: value.toString()}));
-    //             break
-    //         default:
-    //     }
-    //
-    // }, [time])
 
 
     const onChangeFile = async (e) => {

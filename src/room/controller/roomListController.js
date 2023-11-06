@@ -55,11 +55,6 @@ export const RoomListController = () => {
 
 
     const endRoomApi = async (room, userId) => {
-        let roomNum = `${currentEventId}_${room.room_id}_${room.meet_id}`;
-        // if(room.meet_id !== ""){
-        //     alert("현재 진행중인 영상통화가 있습니다");
-        //     return;
-        // };
         if (window.confirm("정말 종료하시겠습니까?")) {
             try {
                 const result = await roomApi.endRoom(room.room_id);
