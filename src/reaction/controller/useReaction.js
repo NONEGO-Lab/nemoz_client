@@ -18,7 +18,6 @@ export const useReaction = () => {
 
 
   const onClickReactBtn = (button) => {
-    console.log(button)
     count.current += 1;
     let newButton = {
       id: count.current,
@@ -32,16 +31,8 @@ export const useReaction = () => {
     } else {
       num = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
     }
-    console.log(num)
-    console.log(newButton)
     sock.emit("chatMessage", num, newButton);
 
-    // meetId랑 content 보내야 함. 즉 함수 보낼때 meetId도 같이 보내야 함!
-    // const result = await meetApi.addHistoryMeet();
-    // if(result !== "History Added"){
-    //     alert("리액션 보내는데 실패했습니다.");
-    //     return;
-    // }
   }
 
   const onClickDeleteBtn = (id) => {

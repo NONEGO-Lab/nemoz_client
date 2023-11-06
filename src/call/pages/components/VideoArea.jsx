@@ -40,7 +40,7 @@ const VideoArea = ({
     const username = fanInfo?.fan_name
     const age = fanInfo?.age
     const gender = fanInfo?.sex
-    console.log(warnCnt, 'publisher')
+
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}

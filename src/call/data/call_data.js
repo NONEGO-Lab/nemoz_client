@@ -35,12 +35,12 @@ export const meetApi = {
   },
 
 
-  // Todo: reaction data로 옮겨야 함
-  addHistoryMeet: async (meetId, content) => {
+  addHistoryMeet: async (meetId, content, userId) => {
     let req = {
       meet_id: meetId,
       type: "reaction",
-      content: content
+      content: content,
+      user_id: userId
       //love_ico
     }
     const data = await instance.post("/meet/history", req);

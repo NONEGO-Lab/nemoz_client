@@ -31,10 +31,8 @@ export const testApi = {
   testEnd: async (meetName) => {
 
     const req = {meetName}
-    console.log('hahaha', meetName)
     const key = Object.keys(req)
     const haveUnderBar = (text) => text.includes('_')
-    console.log(req.meetName, '????')
     if(!haveUnderBar(key[0])){
       req.meet_name = req.meetName
       delete req.meetName

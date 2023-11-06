@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteToastAfter3s, removeToast} from "../redux/modules/toastSlice";
 
 const Toast = ({message, left, right, isWebFullScreen}) => {
-    // console.log('Toast!!', message)
     const dispatch = useDispatch()
     const {type, msg, id} = message
     const targetEmoji = (id) => emoji_list.find(e => e.id === id).emo

@@ -80,13 +80,11 @@ export const useDeviceTest = () => {
     _session.connect(token)
         .then(() => connectWebCam(_session, OV))
         .catch((error) => {
-          alert('There was an error connecting to the session1:', error.message);
-          console.log('There was an error connecting to the session1:', error.code, error.message)
+          console.error('There was an error connecting to the session1:', error.code, error.message)
         })
   }
 
   const connectWebCam = async (_session, OV) => {
-
     let publisher = await OV.initPublisherAsync(undefined, {
       audioSource: undefined, // The source of audio. If undefined default microphone
       videoSource: undefined, // The source of video. If undefined default webcam
@@ -113,7 +111,7 @@ export const useDeviceTest = () => {
 
         dispatch(addAudioDevice(audioDevices));
         dispatch(addVideoDevice(videoDevices));
-      })
+      }).catch((e) => console.error(`SOMETHING WRONG WITH CONNECTED DEVICE`, e))
     })
   }
 
@@ -131,7 +129,6 @@ export const useDeviceTest = () => {
   }
 
   useEffect(() => {
-    // Fetch available audio output devices and update the state
     navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');

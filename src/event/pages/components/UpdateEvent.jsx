@@ -47,11 +47,7 @@ const UpdateEvent = () => {
     getEventDetail();
   },[])
 
-  console.log("newEventInfo::::", newEventInfo);
-
-
   const valueMaker = (array) => {
-
     array?.map((el) => {
       el.value = el.username;
       el.label = el.username;

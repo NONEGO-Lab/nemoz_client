@@ -9,11 +9,11 @@ import {setError, setIsError} from "../../redux/modules/errorSlice";
 import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {roomApi} from "../../room/data/room_data";
 import {attendeeApi} from "../../fans/data/attendee_data";
-import {addTimer, clearSession, subscribedFanInfo} from "../../redux/modules/videoSlice";
+import {addTimer, clearSession, setIsCallFinished, subscribedFanInfo} from "../../redux/modules/videoSlice";
 import {addToast as addToastRedux} from "../../redux/modules/toastSlice";
 import {videoEvents} from "../../socket/events/video_event";
 import {useVideo} from "./hooks/useVideo";
-import {leave_meet} from "../../model/call/call_model";
+import {end_meet, leave_meet} from "../../model/call/call_model";
 
 
 export const CallController = () => {
@@ -100,10 +100,7 @@ export const CallController = () => {
     }
 
     const outRoom = async (role) => {
-        console.log("!!!! out Room !!!!!!!~~~~~~~~")
-        // 방을 단순히 나가는 용도로 사용
         try {
-        console.log(role)
             if(role === 'member'){
                     const request = {
                         ...leave_meet,
@@ -139,8 +136,6 @@ export const CallController = () => {
                     connection_name: connectionInfo.connection_id,
                     progress_time: leftTimeRef.current
                 }
-
-                console.log("request!!~~~~~~~~~", request);
                 const response = await meetApi.leaveMeet(request);
 
                 if (response) {
@@ -184,7 +179,6 @@ export const CallController = () => {
             const result = await roomApi.getListOrder({eventId, roomId});
             const currentFan = result.fan_orders.find((fan) => fan.orders === 1);
             const response = await attendeeApi.getFanDetail(currentFan.fan_id);
-            console.log('getCurrentFanInfo', response)
             setCurrentFan(response);
             setWarnCnt(response?.warning_count)
         } catch (err) {
@@ -199,13 +193,11 @@ export const CallController = () => {
     }
 
     const onlyJoinNewRoom = async (newSessionInfo, nextFan) => {
-        console.log('ONLY NEW JOIN ROOM', nextFan)
         dispatch(clearSession());
         dispatch(addTimer(0));
         newJoinMeet(newSessionInfo).then((sessionInfo) => {
             completeSession(sessionInfo);
         });
-        console.log(roomInfo.event_id,eventId, '????')
         const detail = await attendeeApi.getFanDetail(nextFan.fan_id, roomInfo.event_id);
         setCurrentFan(detail);
         setWarnCnt(detail?.warning_count)
@@ -214,6 +206,72 @@ export const CallController = () => {
     const toBack = () => {
         navigate(-1);
     }
+
+    const finishCurrentCall = async () => {
+        try {
+            let roomId = roomInfo.room_id;
+            let eventId = roomInfo.event_id || roomInfo.event_id
+            const fanList = await roomApi.getListOrder({eventId, roomId});
+            let curFan = subscribers.find((sub) => sub['role'] === 'fan' || sub['role'] === 'member');
+            if(!curFan){
+                curFan = fanList[0]
+            }
+            const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() ===(curFan.fan_id || curFan.id).toString());
+            const nextFan = fanList[curFanIndex + 1];
+            const fanId = fanList[curFanIndex].fan_id;
+            const request = {
+                ...end_meet,
+                meet_id: sessionInfo.meetId,
+                meet_name: sessionInfo.meetName,
+                room_id: roomId,
+                event_id: eventId,
+                fan_id: fanId
+            }
+            const result = await meetApi.endMeet(request);
+            if (result) {
+                leaveSession();
+                dispatch(setIsCallFinished());
+                dispatch(addTimer(null));
+
+                // sock.emit("leaveRoom", roomNum, userInfo);
+                sock.emit("callFinish", currentFan);
+                sock.emit("checkSessionState", roomNum, false);
+                setWarnCnt(0)
+
+                // 다음 팬이 있으면, 팬 정보 가져오고, 새 session을 열어준다.
+                if (nextFan !== undefined) {
+                    const detail = await attendeeApi.getFanDetail(nextFan.fan_id, eventId);
+                    setCurrentFan(detail);
+
+                    // 대기열에 있는 팬들의 대기열 업데이트 필요
+                    const waitFans = fanList.slice(curFanIndex + 2);
+                    sock.emit("updateWaitOrder", waitFans);
+
+                    // 방에 있는 artist or staff 에게도 알려줘야 함!
+                    const newSessionInfo = await joinSession(roomId);
+                    setSearchParams({meetName: newSessionInfo.meetName});
+                    let roomNum = `${eventId}_${roomId}_${newSessionInfo.meetId}`;
+
+                    const otherStaffInfo = subscribers.find((sub) => sub['id'].toString() !== userInfo.id.toString());
+                    sock.emit("joinNextRoom", roomNum, newSessionInfo, otherStaffInfo['id'], nextFan);
+                    sock.emit("joinRoom", roomNum, userInfo);
+                    sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
+                    sock.emit("checkSessionState", nextFan, roomNum, true);
+
+                    setToggleNext(true)
+                } else {
+                    alert('모든 팬과 미팅이 끝났습니다.')
+                    navigateByRole()
+                }
+
+            }
+        } catch (err) {
+            dispatch(setError(err));
+            dispatch(setIsError(true));
+        }
+
+    };
+
 
     const requestKickOutApi = async () => {
         const result = await attendeeApi.banFan({id: connectionInfo.meet_id, userId: userInfo.id});
@@ -237,10 +295,8 @@ export const CallController = () => {
             try {
                 const response = await meetApi.leaveMeet(request);
                 if (response) {
-                    sock.emit("kickOut", roomNum, fan_data?.user_info);
-                    dispatch(subscribedFanInfo({}))
+                    sock.emit("kickOut", roomNum, fan_data?.user_info, dispatch, setWarnCnt);
                 }
-                dispatch()
             } catch (err) {
                 console.error(err)
                 dispatch(setError(err));
@@ -274,20 +330,25 @@ export const CallController = () => {
     }
 
     const sendLeftTimeHandler = (subscribers, leftTimeRef) => {
-        console.log('noti Time Left')
         if (subscribers.length === 0) return;
-
-        // socket 으로 방에 있는 모든 사람들에게 남은 시간을 알려준다!
         let room = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
         let time = leftTimeRef.current;
-        console.log("notifyTime", room, time, currentFan)
         sock.emit("notifyTime", room, time);
     }
 
     const sendReactionHandler = (msg) => {
         let room = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-        console.log('sendReact', room, msg)
         sock.emit("chatMessage", room, msg)
+        addReactHistory(sessionInfo.meetId, msg.msg)
+    }
+
+    const addReactHistory = async (meetId, msg) =>{
+        const result = await meetApi.addHistoryMeet(meetId, msg, userInfo.id)
+        try{
+            return result.message === 'History Added'
+        }catch (e) {
+            console.error(e)
+        }
     }
 
     const addToast = (message) => {
@@ -360,7 +421,6 @@ export const CallController = () => {
 
 
     useEffect(() => {
-        console.log('VIDEO SOCKET ON')
         sock.on("chatMessage", (msg) => videoEvents.chatMessage({msg, addToast}));
         sock.on("joinRoom", (user) => videoEvents.joinRoom({user, addToast, setFanEnterNoti}));
         sock.on("joinNextRoom", (num, newSessionInfo, userId, nextFan) => videoEvents.joinNextRoom({
@@ -383,7 +443,9 @@ export const CallController = () => {
             roomInfo,
             sessionInfo,
             navigate,
-            eventId
+            eventId,
+            dispatch,
+            setWarnCnt
         }));
         sock.on("timerStart", (time) => videoEvents.timerStart({time, dispatch}));
         sock.on("leftTime", (currentTime) => videoEvents.leftTime({currentTime, userInfo, dispatch}));
@@ -458,6 +520,7 @@ export const CallController = () => {
         warnCnt,
         setWarnCnt,
         kickOutHandler,
+        finishCurrentCall,
         emoticonToggle,
         setEmoticonToggle,
         sendLeftTimeHandler,

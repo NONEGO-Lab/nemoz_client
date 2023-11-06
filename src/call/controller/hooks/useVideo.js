@@ -152,7 +152,6 @@ export const useVideo = () => {
       meetId: roomInfo.meet_id,
       meetName: roomInfo.meet_name
     }
-    console.log('onlyJoin', sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
 
     const result = await createToken({ roomId: roomInfo.room_id, sessionInfo });
@@ -169,7 +168,6 @@ export const useVideo = () => {
         meetId: sessionData.meet_id,
         meetName: sessionData.meet_name
       };
-      console.log('noResult onlyJoin', sessionInfo)
       dispatch(addSessionInfo(sessionInfo));
 
       const token = await createToken({ roomId, sessionInfo });
@@ -193,7 +191,6 @@ export const useVideo = () => {
       meetId: newSessionInfo.meetId,
       meetName: newSessionInfo.meetName
     }
-    console.log('newJoinMeet', sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
 
     const token = await createToken({ roomId: roomInfo.room_id, sessionInfo });
@@ -205,21 +202,18 @@ export const useVideo = () => {
 
   // fan이 조인할 때,
   const fanJoinSession = async ({ roomId, sessionInfo }) => {
-    console.log('FAN IS JOIN')
     let OV = new OpenVidu();
     let _session = OV.initSession();
     OV.enableProdMode()
     subscribeToStreamCreated(_session);
     subscribeToStreamDestroyed(_session);
-    console.log(_session)
-    console.log(sessionInfo)
     dispatch(addSessionInfo(sessionInfo));
     dispatch(addSession(_session));
 
     await createToken({ roomId, sessionInfo })
         .then((token) => connectSession(token, _session, OV))
         .catch((error) =>
-            console.log('There was an error connecting to the session2:', error, error.message)
+            console.error('There was an error connecting to the session2:', error, error.message)
         );
 
     return sessionInfo;
@@ -231,12 +225,11 @@ export const useVideo = () => {
     _session.connect(token, userInfo)
         .then(() => connectWebCam(_session, OV))
         .catch((error) => {
-          console.log('There was an error connecting to the session1:', error.code, error.message)
+          console.error('There was an error connecting to the session1:', error.code, error.message)
         })
   }
 
   const connectWebCam = async (_session, OV) => {
-
     let publisher = await OV.initPublisherAsync(undefined, {
       audioSource: undefined, // The source of audio. If undefined default microphone
       videoSource: undefined, // The source of video. If undefined default webcam
@@ -256,7 +249,6 @@ export const useVideo = () => {
         dispatch(addSession(_session))
 
         let devices = await OV.getDevices();
-
         let videoDevices = devices.filter((device) => device.kind === "videoinput");
         let audioDevices = devices.filter((device) => device.kind === "audioinput");
 
@@ -264,7 +256,9 @@ export const useVideo = () => {
         dispatch(addAudioDevices(audioDevices));
 
 
-      })
+      }).catch((e) => console.error(`something wrong with connected dvices`, e)
+
+      )
     })
   }
 

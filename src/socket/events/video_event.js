@@ -1,6 +1,6 @@
 import React from "react";
 import { sock } from "../config";
-import { addTimer, disconnectSession, setIsCallFinished } from "../../redux/modules/videoSlice";
+import {addTimer, disconnectSession, setIsCallFinished, subscribedFanInfo} from "../../redux/modules/videoSlice";
 import { clearSessionInfo } from "../../redux/modules/commonSlice";
 import {nanoid} from "nanoid";
 export const videoEvents = {
@@ -50,12 +50,15 @@ export const videoEvents = {
     }
   },
 
-  kickOut: ({ fanInfo, userInfo, roomInfo, sessionInfo, navigate, eventId }) => {
+  kickOut: ({ fanInfo, userInfo, roomInfo, sessionInfo, navigate, eventId, dispatch, setWarnCnt }) => {
     if(fanInfo.id.toString() === userInfo.id.toString()){
       /// 강퇴 당하는 팬이면, leaveRoom 찍고, 대기방으로 쫓겨나기
       let roomNum = `${eventId||roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
       sock.emit("leaveRoom", roomNum, fanInfo, navigate);
       navigate("/waitcall");
+    }else{
+      setWarnCnt(0)
+      dispatch(subscribedFanInfo({}))
     }
   },
 
@@ -102,7 +105,6 @@ export const videoEvents = {
 
   lastMeet: ({ artistId, setCurrentFan, userInfo,
                dispatch, clearSession, addTimer, navigateByRole}) => {
-    console.log('LAST MMEETTTTT', artistId, userInfo.id)
     if(artistId.toString() === userInfo.id.toString()) {
       setCurrentFan({});
       dispatch(clearSession());

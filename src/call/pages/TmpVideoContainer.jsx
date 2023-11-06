@@ -101,7 +101,6 @@ const TmpVideoContainer = () => {
     }
 
     useEffect(() => {
-        console.log('HELLOOOOO')
         if (subscriber !== undefined) {
             return;
         }

@@ -118,7 +118,7 @@ export const useTestVideo = () => {
         .then(() => connectWebCam(_session, OV))
         .catch((error) => {
           alert('There was an error connecting to the session1:', error.message);
-          console.log('There was an error connecting to the session1:', error.code, error.message)
+          console.error('There was an error connecting to the session1:', error.code, error.message)
         })
   }
 

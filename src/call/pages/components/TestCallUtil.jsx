@@ -43,7 +43,6 @@ const TestCallUtil = ({
             if(fanList){
                 const currentFanIndex = fanList.fan_lists.findIndex( f => f.fan_id === fanInfo.fan_id)
                 const nextFanInfo = fanList.fan_lists[currentFanIndex+1]
-                console.log(nextFanInfo, 'next_fan_id')
                 if(!!nextFanInfo){
                     createJoinSession().then((sessionInfo) => {
                         let data = {meetName: sessionInfo.meet_name, fanId: nextFanInfo.fan_id}

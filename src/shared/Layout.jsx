@@ -189,7 +189,6 @@ const EventListFilter = () => {
                 return userInfo.id
             }
             else{
-                console.log('Dummy Id')
                 return userInfo.id
             }
         }

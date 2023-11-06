@@ -7,7 +7,6 @@ export const fanEvents = {
 
   joinTestSession: ({ data, userInfo, dispatch, setIsReadyTest }) => {
     if(data.fanId.toString() === userInfo.id.toString()) {
-      console.log('data', data)
       let sessionInfo = { meetName: data.meetName };
       dispatch(addTestSessionInfo(sessionInfo));
       setIsReadyTest(true);

@@ -34,7 +34,7 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                     {!subscribedFanInfo &&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo?.fan_name}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
                     </div>}
 
                     {fanInfo?.letter && <div className='flex mt-[27px] w-full justify-center'>

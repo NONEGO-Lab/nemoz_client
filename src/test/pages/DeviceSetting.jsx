@@ -81,7 +81,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
             dispatch(toggleDeviceSettingModal(false))
-            navigate(`/test/${eventId}_${userInfo.id}`);
+            navigate(`/test/${eventId}_${fanInfo.fan_id}`);
 
         } else {
             await endMeet();

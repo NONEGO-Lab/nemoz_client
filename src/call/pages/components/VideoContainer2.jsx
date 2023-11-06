@@ -56,6 +56,7 @@ const VideoContainer2 = () => {
     setToasts,
     addToast,
     removeToast,
+    finishCurrentCall,
     toggleNext,
     setToggleNext,
       fanEnterNoti
@@ -157,6 +158,7 @@ const VideoContainer2 = () => {
               roomInfo={roomInfo}
               toggleNext={toggleNext}
               setToggleNext={setToggleNext}
+              finishCurrentCall={finishCurrentCall}
             />
           </div>
         </div>
@@ -227,7 +229,6 @@ const VideoContainer2 = () => {
             setEmoticonToggle={setEmoticonToggle}
             toasts={toasts}
             sendReactionHandler={sendReactionHandler}
-            // onClickReactBtn={onClickReactBtn}
             removeToast={removeToast}
             isWebFullScreen={isWebFullScreen}
             setIsWebFullScreen={setIsWebFullScreen}
@@ -266,6 +267,7 @@ const VideoContainer2 = () => {
           roomInfo={roomInfo}
           toggleNext={toggleNext}
           setToggleNext={setToggleNext}
+          finishCurrentCall={finishCurrentCall}
         />
       </div>
       {currentRoom.room_id && (

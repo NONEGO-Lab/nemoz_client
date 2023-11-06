@@ -26,7 +26,7 @@ export const MobilePopup = ({ closePopup, type, makeBigScreen, showTime, isReady
       }
 
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 

@@ -29,35 +29,19 @@ const MainCallUtil = ({
                           setToggleNext,
                           setCurrentRoom,
                           custonStyle,
+                          finishCurrentCall,
                       }) => {
-    const [isCallProcessing, setIsCallProcessing] = useState(false);
     const [isFirstCall, setIsFirstCall] = useState(true);
     const roomInfo = useSelector((state) => state.common.roomInfo);
     const sessionInfo = useSelector((state) => state.common.sessionInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
     const eventId = useSelector((state) => state.event.currentEventId);
-    const {leaveSession, joinSession, publisherAudio, publisherVideo, currentEventId} = useVideo();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const {publisherAudio, publisherVideo, currentEventId} = useVideo();
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+
     let roomNum = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
     let style = "flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%]";
-    const routeToFanList = () => {
-        if (role === 'fan' || role === 'member') {
-            alert("스태프 혹은 아티스트만 이용하실 수 있습니다.")
-            return
-        }
-        if (session) {
-            dispatch(disconnectSession());
-            dispatch(clearSessionInfo());
-            leaveSession();
-            navigate("/userlist")
-        } else {
-            navigate("/userlist");
-        }
-    }
-
 
     const nextCallConnect = async () => {
         if (role === 'member') {
@@ -76,121 +60,43 @@ const MainCallUtil = ({
 
         } else {
             /// 다음 팬 알리기
-            console.log('NEXT FAN', currentFan, sessionInfo, roomInfo)
             sock.emit("nextCallReady", currentFan, sessionInfo, roomInfo);
         }
         setToggleNext(prev => !prev)
-        setIsCallProcessing(true);
         sock.emit("checkSessionState", roomNum, true);
     };
 
-    const finishCurrentCall = async () => {
-        console.log('연결끊기')
-        try {
-            let roomId = roomInfo.room_id;
-            let eventId = roomInfo.event_id || roomInfo.event_id
-            const fanList = await roomApi.getListOrder({eventId, roomId});
 
-            let curFan = subscribers.find((sub) => sub['role'] === 'fan' || sub['role'] === 'member');
-            if(!curFan){
-                curFan = fanList[0]
-            }
-            const curFanIndex = fanList.findIndex((fan) => fan.fan_id.toString() ===(curFan.fan_id || curFan.id).toString());
-            const nextFan = fanList[curFanIndex + 1];
-            const fanId = fanList[curFanIndex].fan_id;
-            const request = {
-                ...end_meet,
-                meet_id: sessionInfo.meetId,
-                meet_name: sessionInfo.meetName,
-                room_id: roomId,
-                event_id: eventId,
-                fan_id: fanId
-            }
-            const result = await meetApi.endMeet(request);
-            if (result) {
-                leaveSession();
-                setIsCallProcessing(false);
-                dispatch(setIsCallFinished());
-                dispatch(addTimer(null));
-
-                // sock.emit("leaveRoom", roomNum, userInfo);
-                sock.emit("callFinish", currentFan);
-                sock.emit("checkSessionState", roomNum, false);
-
-
-                // 다음 팬이 있으면, 팬 정보 가져오고, 새 session을 열어준다.
-                if (nextFan !== undefined) {
-                    const detail = await attendeeApi.getFanDetail(nextFan.fan_id, eventId);
-                    setCurrentFan(detail);
-
-                    // 대기열에 있는 팬들의 대기열 업데이트 필요
-                    const waitFans = fanList.slice(curFanIndex + 2);
-                    sock.emit("updateWaitOrder", waitFans);
-
-                    // 방에 있는 artist or staff 에게도 알려줘야 함!
-                    const newSessionInfo = await joinSession(roomId);
-                    setSearchParams({meetName: newSessionInfo.meetName});
-                    let roomNum = `${eventId}_${roomId}_${newSessionInfo.meetId}`;
-
-                    const otherStaffInfo = subscribers.find((sub) => sub['id'].toString() !== userInfo.id.toString());
-                    sock.emit("joinNextRoom", roomNum, newSessionInfo, otherStaffInfo['id'], nextFan);
-                    sock.emit("joinRoom", roomNum, userInfo);
-
-                    sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
-                    setIsCallProcessing(true);
-                    sock.emit("checkSessionState", nextFan, roomNum, true);
-                    setToggleNext(true)
-                } else {
-                    alert('모든 팬과 미팅이 끝났습니다.')
-                    setCurrentFan({});
-                    console.log(subscribers, 'Last Fan Meeting')
-                    const otherStaffInfo = subscribers.find((sub) => sub['role']==='artist');
-                    sock.emit("lastMeet", otherStaffInfo['id']);
-                    navigate("/roomlist")
-                }
-
-            }
-        } catch (err) {
-            dispatch(setError(err));
-            dispatch(setIsError(true));
-        }
-
-    };
-
-    const getFirstFanInfo = async () => {
+    const getFirstFanInfo = async (role) => {
         let roomId = roomInfo.room_id;
         let eventId = roomInfo.event_id
-        try {
-            const result = await roomApi.getListOrder({eventId: currentEventId || eventId, roomId});
-            const detail = await attendeeApi.getFanDetail(result[0].fan_id, eventId);
-            setCurrentFan(detail);
-            setWarnCnt(detail?.warning_count)
-        } catch (err) {
-            dispatch(setError(err));
-            dispatch(setIsError(true));
+        if(role==='member'){
+            try {
+                const detail = await attendeeApi.getFanDetail(userInfo.id, eventId);
+                setCurrentFan(detail);
+                setWarnCnt(detail?.warning_count)
+            } catch (err) {
+                dispatch(setError(err));
+                dispatch(setIsError(true));
+            }
+        }else{
+            try {
+                const result = await roomApi.getListOrder({eventId: currentEventId || eventId, roomId});
+                const detail = await attendeeApi.getFanDetail(result[0].fan_id, eventId);
+                setCurrentFan(detail);
+                setWarnCnt(detail?.warning_count)
+            } catch (err) {
+                dispatch(setError(err));
+                dispatch(setIsError(true));
+            }
         }
+
     }
 
 
     useEffect(() => {
-        getFirstFanInfo();
-        if (subscribers.length > 0) {
-            setIsCallProcessing(true);
-        }
-
+        getFirstFanInfo(userInfo.role);
     }, []);
-
-    useEffect(() => {
-        sock.on("checkSessionState", (bool) => {
-            setIsCallProcessing(bool);
-        })
-
-        return () => {
-            sock.off("checkSessionState", (bool) => {
-                setIsCallProcessing(bool);
-            })
-        }
-    }, [])
 
 
     return (

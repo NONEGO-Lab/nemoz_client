@@ -184,7 +184,6 @@ const ConnectTest = () => {
     // window.removeEventListener("beforeunload", onbeforeunload);
     // window.removeEventListener('popstate', onbeforeunload);
     history.listen((location) => {
-      console.log("location!!!!!: ", location);
       if(history.action === "POP") {
         //뒤로가기일 경우
         onbeforeunload();

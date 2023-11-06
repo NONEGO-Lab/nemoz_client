@@ -34,9 +34,6 @@ export const attendeeApi = {
 
   //강퇴
   banFan: async ({id, userId}) => {
-    console.log(
-        '진짜나가라'
-    )
     const data = await instance.get("/attendee/ban", { params : {
       conn_id: id,
       userid: userId

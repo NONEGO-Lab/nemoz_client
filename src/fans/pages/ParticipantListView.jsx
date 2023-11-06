@@ -110,7 +110,6 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
             <div>
                 <button
                     onClick={() => {
-                        console.log(user.event_id, '?')
                         setCurrentFanEventId(user.event_id)
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);

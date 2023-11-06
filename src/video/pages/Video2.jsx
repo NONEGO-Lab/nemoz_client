@@ -37,15 +37,14 @@ const Video2 = ({
             streamManager.addVideoElement(videoRef.current);
         }
 
-        // if (videoRef.current && !deviceSetting) {
-        //     videoRef.current.setSinkId(selectedAudioOutputDeviceId)
-        //         .then(() => {
-        //             console.log(`Audio output set to ${selectedAudioOutputDeviceId}`);
-        //         })
-        //         .catch(error => {
-        //             console.error('Error setting audio output: ', error);
-        //         });
-        // }
+        if (videoRef.current && deviceSetting) {
+            videoRef.current.setSinkId(selectedAudioOutputDeviceId)
+                .then(() => {
+                })
+                .catch(error => {
+                    console.error('Error setting audio output: ', error);
+                });
+        }
 
     }, [streamManager]);
 
@@ -66,7 +65,6 @@ const Video2 = ({
         }
 
     }
-    console.log(fanEnterNoti, 'fanEnterNotifanEnterNotifanEnterNoti')
     return (
         <>
             {
