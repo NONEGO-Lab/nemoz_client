@@ -132,7 +132,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
             <DeviceSelect
               label={
                 <img
-                  src="../images/micIcon.png"
+                  src="/images/micIcon.png"
                   className="w-[19px] h-[28px] mr-[2px]"
                 />
               }
@@ -146,7 +146,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
             <DeviceSelect
               label={
                 <img
-                  src="../images/soundIcon.png"
+                  src="/images/soundIcon.png"
                   className="w-[27px] h-[23px] mr-[2px]"
                 />
               }

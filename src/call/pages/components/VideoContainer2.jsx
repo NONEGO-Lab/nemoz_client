@@ -16,6 +16,7 @@ import WaitingList from "./WaitingList";
 import FanDetail from "../../../fans/pages/components/FanDetail";
 import AddUser from "./AddUser";
 import { RoomListController } from "../../../room/controller/roomListController";
+import VideoForMobile from "../../../video/pages/VideoForMobile";
 
 const VideoContainer2 = () => {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ const VideoContainer2 = () => {
 
   const { artist_name, room_name, reserved_time } = roomInfo;
   const isStaff = userInfo.role === "staff";
-  let isFullScrennMobile = true;
+  let isFullScrennMobile = false;
   if (isMobile) {
     return (
       <>
@@ -111,7 +112,15 @@ const VideoContainer2 = () => {
           ) : (
             <div>
               <div className="bg-[yellow] w-[100vw] h-[80vw]">
-                {/* 비디오 코드.. */}
+               {publisher !== undefined &&
+                  <VideoForMobile
+                      streamManager={publisher}
+                      publisherAudio={publisherAudio}
+                      publisherVideo={publisherVideo}
+                  />
+              }
+
+
               </div>
               <div className="bg-[green] w-[100vw] h-[80vw]">
                 {/* 비디오 코드.. */}

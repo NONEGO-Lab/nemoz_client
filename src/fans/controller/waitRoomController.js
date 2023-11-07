@@ -28,7 +28,7 @@ export const WaitRoomController = () => {
   const [isAvailableCall, setIsAvailableCall] = useState(false);
   const [isReadyTest, setIsReadyTest] = useState(false);
   const [myWaitInfo, setMyWaitInfo] = useState({});
-  const [isMobPopupOpen, setIsMobPopupOpen] = useState(true);
+  const [isMobPopupOpen, setIsMobPopupOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState(null)
 
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -38,7 +38,7 @@ export const WaitRoomController = () => {
   const toggleDeviceSetting = useSelector(state => state.test.toggleDeviceSetting)
 
   const connectTest = () => {
-
+    console.log('gogogo')
     dispatch(toggleDeviceSettingModal(true))
     // navigate(`/test/${userInfo.id}`);
   };
