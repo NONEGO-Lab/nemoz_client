@@ -170,6 +170,7 @@ const TmpVideoContainer = () => {
                                     setIsFullScreenMobile={setIsFullScreenMobile}
                                     isFullScreenMobile={isFullScreenMobile}
                                     reserved_time={subscriber}
+                                    fanInfo={fanInfo}
                                     isTest = {true}
                                 />
                             }
@@ -181,6 +182,7 @@ const TmpVideoContainer = () => {
                                     publisherAudio={publisherAudio}
                                     publisherVideo={publisherVideo}
                                     setIsFullScreenMobile={setIsFullScreenMobile}
+                                    fanInfo={fanInfo}
                                     isTest = {true}
                                 />
                             }

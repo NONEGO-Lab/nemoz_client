@@ -91,6 +91,11 @@ const VideoContainer2 = () => {
   const { artist_name, room_name, reserved_time } = roomInfo;
   const isStaff = userInfo.role === "staff";
   const [isFullScreenMobile, setIsFullScreenMobile] = useState(false);
+  const rotateStyle = {
+    transform: "translate(-100%, -50%) rotate(90deg)",
+    transformOrigin: "bottom right",
+    marginTop: '160vw'
+  }
   if (isMobile) {
     return (
       <>
@@ -108,14 +113,17 @@ const VideoContainer2 = () => {
 
           {/* mobile videos */}
           {isFullScreenMobile ? (
-            <div className="w-[100vw] h-[100vh] ">
+            <div className="w-[100vh] h-[100vw] " style={rotateStyle}>
               {subscribedArtistInfo !== undefined &&
                   <VideoForMobile
                       streamManager={subscribedArtistInfo}
+                      fanInfo={currentFan}
                       publisherAudio={publisherAudio}
                       publisherVideo={publisherVideo}
                       isFullScreenMobile={isFullScreenMobile}
                       setIsFullScreenMobile={setIsFullScreenMobile}
+                      leftTimeRef={leftTimeRef}
+                      roomInfo={roomInfo}
                   />
               }
             </div>
@@ -130,6 +138,8 @@ const VideoContainer2 = () => {
                         setIsFullScreenMobile={setIsFullScreenMobile}
                         isFullScreenMobile={isFullScreenMobile}
                         reserved_time={reserved_time}
+                        leftTimeRef={leftTimeRef}
+                        roomInfo={roomInfo}
                     />
                 }
               </div>
@@ -145,6 +155,8 @@ const VideoContainer2 = () => {
                       fanEnterNoti={fanEnterNoti}
                       setIsFullScreenMobile={setIsFullScreenMobile}
                       reserved_time={reserved_time}
+                      leftTimeRef={leftTimeRef}
+                      roomInfo={roomInfo}
                   />
               }
               </div>
@@ -156,7 +168,7 @@ const VideoContainer2 = () => {
             style={
               isFullScreenMobile
                 ? {
-                    margin: "-50vw 0",
+                    margin: "-110vw 0",
                     transform: "translate(-100%, -50%) rotate(90deg)",
                     transformOrigin: "bottom right",
                   }
@@ -165,7 +177,7 @@ const VideoContainer2 = () => {
           >
 
             <MainCallUtil
-              customStyle="flex justify-center items-center flex-row absolute bottom-[1rem] w-[100vw]"
+              customStyle="flex justify-center items-center flex-row absolute bottom-[1rem] w-[100vw] text-white"
               isFullScreenMobile={isFullScreenMobile}
               audioMuteHandler={audioMuteHandler}
               videoMuteHandler={videoMuteHandler}

@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, Fragment} from "react";
+import React, {useRef, useEffect, Fragment, useState} from "react";
 import {useSelector} from "react-redux";
 import {upper_imoticon_path, down_imoticon_path} from "../../common/imoticon_path";
 import Toast from "../../shared/Toast";
@@ -29,8 +29,12 @@ const Video2 = ({
     const videoRef = useRef();
     const userInfo = useSelector(state => state.user.userInfo)
     const toastList = useSelector(state => state.toast.toastList)
+    const fanRotateScreen = useSelector(state => state.video.rotateFanScreen)
     const unique_id = nanoid(4)
     const selectedAudioOutputDeviceId = localStorage.getItem("audioOutputId")
+    const [fanRotate, setFanRotate] = useState(false)
+    const vStyle = {transform:'rotate(90deg)', width:'368px', height:'650px', margin:'-140px 0 -10vw 141px '}
+
     useEffect(() => {
 
         if (streamManager.stream && !!videoRef.current) {
@@ -72,6 +76,7 @@ const Video2 = ({
                     className={`object-contain h-[100%] w-full ${style} scale-x-[-1] `}
                     autoPlay
                     ref={videoRef}
+                    style={(left&&fanRotateScreen)? vStyle : null}
                 />
             }
 

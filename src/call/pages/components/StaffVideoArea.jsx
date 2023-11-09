@@ -3,10 +3,11 @@ import Video2 from "../../../video/pages/Video2";
 import InnerCircleText from "../../../common/InnerCircleText";
 
 const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt, toasts, removeToast, toggleFanLetter, setToggleFanLetter, reserved_time, fanEnterNoti}) => {
+
     return (
         <div className={"flex flex-row justify-evenly"}>
             {/* Fan Area */}
-            <div className='w-[650px] text-center'>
+            <div className={`w-[650px] text-center`}>
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
                             {`FAN ${fanInfo?.fan_name} (${fanInfo?.age}세)`}

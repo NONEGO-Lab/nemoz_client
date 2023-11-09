@@ -42,7 +42,7 @@ const MainCallUtil = ({
 
     let roomNum = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
-    let style = "flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%]";
+    let style = "flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%] text-white";
 
     const nextCallConnect = async () => {
         if (role === 'member') {
@@ -99,7 +99,7 @@ const MainCallUtil = ({
         getFirstFanInfo(userInfo.role);
     }, []);
 
-
+    const iconSize = isFullScreenMobile ? 'w-[60px]' : 'w-[75px]'
     return (
         <div
             className={customStyle ?? style}>
@@ -190,7 +190,7 @@ const MainCallUtil = ({
                     {/* 캠 토글 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={videoMuteHandler}>
-                        <div className={"w-[75px] h-[75px] cursor-pointer"}>
+                        <div className={`${iconSize} cursor-pointer`}>
                             {publisherVideo ? <img src="../images/callOutCameraOn.png" alt="cam-on"/> :
                                 <img src="../images/callOutCameraOff.png" alt="cam-off"/>}
                         </div>
@@ -201,7 +201,7 @@ const MainCallUtil = ({
                     {/* 마이크 토글 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={audioMuteHandler}>
-                        <div className={"w-[75px] h-[75px] cursor-pointer"}>
+                        <div className={`${iconSize} cursor-pointer`}>
                             {publisherAudio ? <img src="../images/callOutMicOn.png" alt="mic-on"/> :
                                 <img src="../images/callOutMicOff.png" alt="mic-off"/>}
                         </div>
@@ -224,7 +224,7 @@ const MainCallUtil = ({
                         </div>}
                     {/* 방 나가기 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
-                        <div className={"w-[75px] cursor-pointer"} onClick={() => outRoom(role)}>
+                        <div className={`${iconSize} cursor-pointer`} onClick={() => outRoom(role)}>
                             <img src="../images/callOutQuit.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>

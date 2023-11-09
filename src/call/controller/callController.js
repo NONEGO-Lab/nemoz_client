@@ -472,6 +472,7 @@ export const CallController = () => {
             addTimer,
             navigateByRole
         }));
+        sock.on("rotateFan", (rotateState) => videoEvents.rotateFan({rotateState, dispatch}))
 
         return () => {
             sock.off("chatMessage");
@@ -486,6 +487,7 @@ export const CallController = () => {
             sock.off("warnUser");
             sock.off("callFinish");
             sock.off("lastMeet");
+            sock.off("rotateFan");
         }
 
     }, [])

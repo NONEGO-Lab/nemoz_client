@@ -1,6 +1,10 @@
 import React from "react";
 import { sock } from "../config";
-import {addTimer, disconnectSession, setIsCallFinished, subscribedFanInfo} from "../../redux/modules/videoSlice";
+import {
+  addTimer,
+  subscribedFanInfo,
+  toggleRotateFan
+} from "../../redux/modules/videoSlice";
 import { clearSessionInfo } from "../../redux/modules/commonSlice";
 import {nanoid} from "nanoid";
 export const videoEvents = {
@@ -113,4 +117,9 @@ export const videoEvents = {
 
     }
   },
+
+  rotateFan: ({ rotateState, dispatch }) => {
+    dispatch(toggleRotateFan(rotateState))
+    }
+  ,
 };

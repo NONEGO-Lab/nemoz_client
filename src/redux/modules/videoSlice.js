@@ -14,7 +14,8 @@ const initialState = {
   subscribedFanInfo: undefined,
   subscribedArtistInfo: undefined,
   isFanLoading: false,
-  isArtistLoading: true
+  isArtistLoading: true,
+  rotateFanScreen:false,
 }
 
 
@@ -82,6 +83,9 @@ export const videoSlice = createSlice({
     setConnectTest: (state, action) => {
       state.isConnectTestComplete = true;
     },
+    toggleRotateFan:(state, action)=>{
+      state.rotateFanScreen = action.payload
+    },
 
     videoReset: () => initialState,
   }
@@ -91,6 +95,6 @@ export const { addPublisher, addSession, addSubscribers, clearSession, addTimer,
   mutePublisherAudio, mutePublisherVideo, deleteSubscribers, addVideoDevices,
   addAudioDevices, setConnectTest, disconnectSession, setIsCallFinished,
   subscribedFanInfo,
-  subscribedArtistInfo,isFanLoading,isArtistLoading, addAudioOutputDevices } = videoSlice.actions
+  subscribedArtistInfo,isFanLoading,isArtistLoading, addAudioOutputDevices, toggleRotateFan } = videoSlice.actions
 
 export default videoSlice.reducer

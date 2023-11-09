@@ -8,7 +8,6 @@ import {videoEvents} from "../../../socket/events/video_event";
 
 
 const Timer = ({type, leftTimeRef, inMeet}) => {
-
   const dispatch = useDispatch();
   const isMobile = useMediaQuery ({
     query : "(max-width: 600px)"
@@ -28,18 +27,21 @@ const Timer = ({type, leftTimeRef, inMeet}) => {
   }, delay);
 
   useEffect(() => {
-    if(timer === 0) {
+    if (timer === 0) {
       return;
     }
 
-    if(timer === null) {
+    if (timer === null) {
       setMeetingTime(0);
       return;
     }
 
-    setMeetingTime(timer);
-
-  },[timer])
+    if (leftTimeRef.current > 0) {
+      setMeetingTime(leftTimeRef.current);
+    } else {
+      setMeetingTime(timer);
+    }
+  }, [timer]);
 
 
   useEffect(() => {
@@ -61,7 +63,7 @@ const Timer = ({type, leftTimeRef, inMeet}) => {
 
   if(inMeet){
     return(
-        <div className={"text-[1.2rem] font-medium"}> {secondsToTime(meetingTime)}</div>
+        <div className={`text-[1.2rem] font-medium text-white`}> {secondsToTime(meetingTime)}</div>
     )
   }
 

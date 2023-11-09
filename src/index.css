@@ -1,10 +1,10 @@
+@import url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/css/NotoSansCJKkr.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* index.css */
-
-@import url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/css/NotoSansCJKkr.css');
 
 @font-face {
   font-family: 'Noto Sans KR';
@@ -42,8 +42,4 @@ code {
     monospace;
 }
 
-/*#root {*/
-/*  width: 1366px;*/
-/*  min-height: 1024px;*/
-/*  margin: auto 0;*/
-/*}*/
+
