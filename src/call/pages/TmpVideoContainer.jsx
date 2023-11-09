@@ -12,6 +12,8 @@ import {sock} from "../../socket/config";
 import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
 import TestVideoArea from "./components/TestVideoArea";
+import VideoForMobile from "../../video/pages/VideoForMobile";
+import {useMobileView} from "../controller/hooks/useMobileView";
 
 const TmpVideoContainer = () => {
 
@@ -20,9 +22,7 @@ const TmpVideoContainer = () => {
     const dispatch = useDispatch();
     const history = createBrowserHistory();
 
-    const isMobile = useMediaQuery({
-        query: "(max-width: 600px)"
-    })
+
     const [isOpenMobileSetting, setOpenMobileSetting] = useState(false);
     const [mobileSettingType, setMobileSettingType] = useState("");
     const [toggleFanLetter, setToggleFanLetter] = useState(false)
@@ -45,6 +45,16 @@ const TmpVideoContainer = () => {
         createJoinSession, joinTestSession, preventBrowserBack,
         onbeforeunload, muteHandler
     } = useTestVideo();
+    const {
+        isMobile,
+        changeMobVideoSize,
+        isBigScreen,
+        makeBigScreen,
+        isWebFullScreen,
+        setIsWebFullScreen,
+        webFullScreenSize,
+        webFullScreenSizeOther,
+    } = useMobileView();
     const [toggleNext, setToggleNext] = useState(false)
     const [isSuccess, setIsSuccess] = useState(null)
     const quitTest = async () => {
@@ -76,29 +86,7 @@ const TmpVideoContainer = () => {
         }
     }
 
-    // video Size 관련
-    const [isBigScreen, setIsBigScreen] = useState({
-        pub: "default",
-        sub: "default"
-    });
 
-    const [isWebFullScreen, setIsWebFullScreen] = useState(false);
-    const [showBtn, setShowBtn] = useState(false)
-    const makeBigScreen = (type) => {
-        if (type === "half") {
-            setIsBigScreen({
-                pub: "default",
-                sub: "default"
-            })
-            setOpenMobileSetting(false);
-        } else {
-            setIsBigScreen({
-                pub: "small",
-                sub: "large"
-            })
-            setOpenMobileSetting(false);
-        }
-    }
 
     useEffect(() => {
         if (subscriber !== undefined) {
@@ -109,6 +97,7 @@ const TmpVideoContainer = () => {
             // test meet create -> join 까지 한다.
             // create, join 하고 나온 방을 socket 으로 보낸다!
             createJoinSession().then((sessionInfo) => {
+                console.log('socksock', sock.connected)
                 let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
                 sock.emit("joinTestSession", data);
                 let roomNum = `${fanInfo.event_id}_test_${fanInfo.fan_id}`;
@@ -126,8 +115,8 @@ const TmpVideoContainer = () => {
     }, []);
 
     useEffect(() => {
-        sock.on("testFail", (fanInfo) => testEvents.testFail({fanInfo, userInfo, navigate, setToggleNext}));
-        sock.on("testSuccess", (fanInfo) => testEvents.testSuccess({fanInfo, userInfo, dispatch, navigate,setToggleNext}));
+        sock.on("testFail", (fanInfo, eventId) => testEvents.testFail({fanInfo, userInfo, navigate, setToggleNext, eventId}));
+        sock.on("testSuccess", (fanInfo, eventId) => testEvents.testSuccess({fanInfo, userInfo, dispatch, navigate,setToggleNext, eventId}));
         return () => {
             sock.removeAllListeners("testFail");
             sock.removeAllListeners("testSuccess");
@@ -156,6 +145,70 @@ const TmpVideoContainer = () => {
 
     }, [session])
 
+
+    const [isFullScreenMobile, setIsFullScreenMobile] = useState(false);
+    if (isMobile) {
+        return (
+            <>
+                <div className="w-[100vw] h-[100vh] absolute left-0 top-0">
+                    {/* mobile header */}
+                    <div className="w-[100%] h-[56px] flex justify-start p-[1rem] items-center">
+                        <img
+                            className="w-[15px] h-[25px] mr-[1.2rem]"
+                            src="/images/leftArrowIcon.png"
+                        />
+                        <h1 className="text-[1.2rem] font-[600]">{eventName}</h1>
+                    </div>
+
+                    <div>
+                        <div className="w-[100vw] h-[80vw] relative">
+                            {subscriber !== undefined &&
+                                <VideoForMobile
+                                    streamManager={subscriber}
+                                    publisherAudio={publisherAudio}
+                                    publisherVideo={publisherVideo}
+                                    setIsFullScreenMobile={setIsFullScreenMobile}
+                                    isFullScreenMobile={isFullScreenMobile}
+                                    reserved_time={subscriber}
+                                    isTest = {true}
+                                />
+                            }
+                        </div>
+                        <div className=" w-[100vw] h-[80vw] relative">
+                            {publisher !== undefined &&
+                                <VideoForMobile
+                                    streamManager={publisher}
+                                    publisherAudio={publisherAudio}
+                                    publisherVideo={publisherVideo}
+                                    setIsFullScreenMobile={setIsFullScreenMobile}
+                                    isTest = {true}
+                                />
+                            }
+                        </div>
+                    </div>
+                    <TestCallUtil
+                        customStyle="flex justify-center items-center flex-row absolute bottom-[1rem] w-[100vw]"
+                        publisherAudio={publisherAudio}
+                        publisherVideo={publisherVideo}
+                        muteHandler={muteHandler}
+                        quitTest={quitTest}
+                        role={userInfo.role}
+                        dispatch={dispatch}
+                        navigate={navigate}
+                        fanInfo={fanInfo}
+                        toggleNext = {toggleNext}
+                        isSuccess={isSuccess}
+                        setIsSuccess={setIsSuccess}
+                        eventId={eventId}
+                        session={sessionInfo}
+                        userInfo={userInfo}
+                        createJoinSession={createJoinSession}
+                    />
+                </div>
+                    </>)}
+
+
+if(!isMobile)
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>

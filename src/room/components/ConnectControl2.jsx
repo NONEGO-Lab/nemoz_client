@@ -32,7 +32,7 @@ const ConnectControl2 = ({setToggleNext, setIsSuccess}) => {
         let fanId = fanInfo.fan_id;
         attendeeApi.testFan(eventId, fanId, 1).then((res) => {
             if (res.message === "Test result Updated") {
-                sock.emit("testSuccess", fanInfo);
+                sock.emit("testSuccess", fanInfo, eventId);
                 setToggleNext(true)
                 setIsSuccess('success')
             }
@@ -43,7 +43,7 @@ const ConnectControl2 = ({setToggleNext, setIsSuccess}) => {
         let fanId = fanInfo.fan_id;
         attendeeApi.testFan(eventId, fanId, 2).then((res) => {
             if (res.message === "Test result Updated") {
-                sock.emit("testFail", fanInfo);
+                sock.emit("testFail", fanInfo, eventId);
                 setToggleNext(true)
                 setIsSuccess('fail')
             }

@@ -23,11 +23,12 @@ const TestCallUtil = ({
                           dispatch,
                           eventId,
                           createJoinSession,
-                          userInfo
+                          userInfo,
+                          customStyle
                       }) => {
 
     const nextTestCallConnect = async () => {
-
+         console.log(eventId, 'eventId')
         if(isSuccess==='success') {
             sock.emit("testSuccess", fanInfo, eventId);
         }
@@ -62,9 +63,9 @@ const TestCallUtil = ({
             console.error('이게.. 아닌데..')
         }
     };
-
+    const style = "flex justify-center items-center flex-row mt-[153px] mx-[110px]"
     return (
-        <div className={"flex justify-center items-center flex-row mt-[153px] mx-[110px]"}>
+        <div className={customStyle ?? style}>
             {/* 캠 토글 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => muteHandler("video", publisherVideo)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
@@ -105,10 +106,6 @@ const TestCallUtil = ({
                     <div>{`QUIT`}</div>
                 </div>
             </div>
-
-
-
-
         </div>
     )
 }

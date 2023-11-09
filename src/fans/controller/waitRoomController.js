@@ -38,7 +38,6 @@ export const WaitRoomController = () => {
   const toggleDeviceSetting = useSelector(state => state.test.toggleDeviceSetting)
 
   const connectTest = () => {
-    console.log('gogogo')
     dispatch(toggleDeviceSettingModal(true))
     // navigate(`/test/${userInfo.id}`);
   };
@@ -59,6 +58,7 @@ export const WaitRoomController = () => {
     sock.disconnect();
     sock.offAny();
     dispatch(videoReset());
+    sessionStorage.clear()
     navigate("/");
   }
 

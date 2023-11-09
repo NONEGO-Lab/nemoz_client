@@ -42,6 +42,7 @@ export const userSlice = createSlice({
     logout: (state, action) => {
       state.userInfo = {};
       localStorage.removeItem("auth");
+      sessionStorage.clear()
       state.isLogin = false;
     },
     updateUserTestValue: (state, action) => {

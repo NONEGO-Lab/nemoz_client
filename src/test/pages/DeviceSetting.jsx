@@ -20,7 +20,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
 
     const { register, watch, handleSubmit } = useForm();
-    const { createJoinSession, msgBeforeOut } = useDeviceTest();
+    const { createJoinSession } = useDeviceTest();
     const publisher = useSelector((state) => state.device.publisher);
     const sessionInfo = useSelector((state) => state.device.sessionInfo);
     const userInfo = useSelector((state) => state.user.userInfo);
@@ -30,8 +30,8 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const audioOutputDevices = useSelector((state) => state.device.audioOutputDevices);
     const eventName = useSelector(state => state.event.eventName)
     const eventId = useSelector((state) => state.event.eventId);
-
-    let videoList = videoDevices.map((video) => video.label);
+    // let videoList = videoDevices.map((video) => video.label);
+    const userRole = userInfo.role
     let audioList = audioDevices.map((audio) => ({label:audio.label, deviceId:audio.deviceId}));
 
     let audioOuputList = audioOutputDevices.map((audio) => ({label:audio.label, deviceId:audio.deviceId}));
@@ -81,7 +81,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
             localStorage.setItem("isSetDevice", "true");
             await endMeet();
             dispatch(toggleDeviceSettingModal(false))
-            navigate(`/test/${eventId}_${fanInfo.fan_id}`);
+            navigate(`/test/${eventId}_${userRole !=='member' ?fanInfo.fan_id : userInfo.id}`);
 
         } else {
             await endMeet();

@@ -90,40 +90,63 @@ const VideoContainer2 = () => {
 
   const { artist_name, room_name, reserved_time } = roomInfo;
   const isStaff = userInfo.role === "staff";
-  let isFullScrennMobile = false;
+  const [isFullScreenMobile, setIsFullScreenMobile] = useState(false);
   if (isMobile) {
     return (
       <>
         <div className="w-[100vw] h-[100vh] absolute left-0 top-0">
           {/* mobile header */}
-          {isFullScrennMobile ? null : (
+          {isFullScreenMobile ? null : (
             <div className="w-[100%] h-[56px] flex justify-start p-[1rem] items-center">
               <img
                 className="w-[15px] h-[25px] mr-[1.2rem]"
-                src="../images/leftArrowIcon.png"
+                src="/images/leftArrowIcon.png"
               />
-              <h1 className="text-[1.2rem] font-[600]">매칭 제목</h1>
+              <h1 className="text-[1.2rem] font-[600]">{roomInfo.room_name}</h1>
             </div>
           )}
 
           {/* mobile videos */}
-          {isFullScrennMobile ? (
-            <div className="bg-[yellow] w-[100vw] h-[100vh] ">texttest</div>
+          {isFullScreenMobile ? (
+            <div className="w-[100vw] h-[100vh] ">
+              {subscribedArtistInfo !== undefined &&
+                  <VideoForMobile
+                      streamManager={subscribedArtistInfo}
+                      publisherAudio={publisherAudio}
+                      publisherVideo={publisherVideo}
+                      isFullScreenMobile={isFullScreenMobile}
+                      setIsFullScreenMobile={setIsFullScreenMobile}
+                  />
+              }
+            </div>
           ) : (
             <div>
-              <div className="bg-[yellow] w-[100vw] h-[80vw]">
+              <div className="w-[100vw] h-[80vw] relative">
+                {subscribedArtistInfo !== undefined &&
+                    <VideoForMobile
+                        streamManager={subscribedArtistInfo}
+                        publisherAudio={publisherAudio}
+                        publisherVideo={publisherVideo}
+                        setIsFullScreenMobile={setIsFullScreenMobile}
+                        isFullScreenMobile={isFullScreenMobile}
+                        reserved_time={reserved_time}
+                    />
+                }
+              </div>
+              <div className=" w-[100vw] h-[80vw] relative">
                {publisher !== undefined &&
                   <VideoForMobile
                       streamManager={publisher}
                       publisherAudio={publisherAudio}
                       publisherVideo={publisherVideo}
+                      fanInfo = {currentFan}
+                      sendReactionHandler={sendReactionHandler}
+                      warnCnt={warnCnt}
+                      fanEnterNoti={fanEnterNoti}
+                      setIsFullScreenMobile={setIsFullScreenMobile}
+                      reserved_time={reserved_time}
                   />
               }
-
-
-              </div>
-              <div className="bg-[green] w-[100vw] h-[80vw]">
-                {/* 비디오 코드.. */}
               </div>
             </div>
           )}
@@ -131,7 +154,7 @@ const VideoContainer2 = () => {
           {/* action buttons ... */}
           <div
             style={
-              isFullScrennMobile
+              isFullScreenMobile
                 ? {
                     margin: "-50vw 0",
                     transform: "translate(-100%, -50%) rotate(90deg)",
@@ -140,8 +163,10 @@ const VideoContainer2 = () => {
                 : {}
             }
           >
+
             <MainCallUtil
-              custonStyle="flex justify-center items-center flex-row absolute bottom-[1rem] w-[100vw]"
+              customStyle="flex justify-center items-center flex-row absolute bottom-[1rem] w-[100vw]"
+              isFullScreenMobile={isFullScreenMobile}
               audioMuteHandler={audioMuteHandler}
               videoMuteHandler={videoMuteHandler}
               quitTest={false}
@@ -189,7 +214,7 @@ const VideoContainer2 = () => {
               <span>
                 <img
                   className="w-[30px] h-[30px]"
-                  src="../images/roomIcon.png"
+                  src="/images/roomIcon.png"
                   alt="room-icon"
                 />
               </span>

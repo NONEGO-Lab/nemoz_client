@@ -28,8 +28,9 @@ const MainCallUtil = ({
                           toggleNext,
                           setToggleNext,
                           setCurrentRoom,
-                          custonStyle,
+                          customStyle,
                           finishCurrentCall,
+                          isFullScreenMobile,
                       }) => {
     const [isFirstCall, setIsFirstCall] = useState(true);
     const roomInfo = useSelector((state) => state.common.roomInfo);
@@ -101,7 +102,8 @@ const MainCallUtil = ({
 
     return (
         <div
-            className={custonStyle ?? style}>
+            className={customStyle ?? style}>
+
             {userInfo.role === 'staff' &&
                 <>
                     {/* 팬 목록 */}
@@ -230,6 +232,7 @@ const MainCallUtil = ({
                         </div>
                     </div>
                 </>}
+
         </div>
     );
 };

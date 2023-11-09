@@ -37,8 +37,8 @@ export const ParticipantController = () => {
 
   const setOnModal = () => {
     setIsOpenFanDetail(false);
-    setCurrentFanId();
-    setCurrentFanEventId();
+    setCurrentFanId(null);
+    setCurrentFanEventId(null);
   }
 
   const closeDeviceSetting = () => {

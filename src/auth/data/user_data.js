@@ -1,6 +1,7 @@
 import {instance} from "../../shared/config";
 import {user_auth, user_common} from "../../model/user/common";
 import {ERROR_CONSTANTS} from "../../shared/constants/ERRORS";
+import {sock} from "../../socket/config";
 
 
 export const userApi = {
@@ -60,8 +61,13 @@ export const userApi = {
             type: userData.type,
         }
 
-        if (userData.role === 'fan') {
+        if (userData.role === 'member') {
             tmpUserData['isCallTested'] = userData.is_tested !== 0;
+            if(!sock.connect().connected && sessionStorage.getItem('auth')){
+                console.log(userData)
+                console.log('영차',  userData.memberNo)
+                sock.emit('join', userData.memberNo)
+            }
         }
 
         return tmpUserData;
