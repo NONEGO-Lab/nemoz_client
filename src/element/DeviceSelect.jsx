@@ -31,19 +31,26 @@ const DeviceSelect = (props) => {
                 defaultValue={defaultValue}
 
             >
-                {options.length <=0 ?
-                    <option className={"bg-white"} disabled={true}> 모바일에선 못고름</option>
-                    :
-                    options.map((value, idx) => {
-                            return (
-                                <option className={"bg-white"} key={idx} value={value.deviceId}>
-                                    {value.label}
-                                </option>
-                            )
-                        })
 
+                {options.map((value, idx) => {
+                    return (
+                        <option className={"bg-white"} key={idx} value={value.deviceId}>
+                            {/* {isVideo &&
+                                <div>
+                                    <img  className="w-[27px] h-[27px]" src="../images/starIcon.png" alt="video" />
+                                    <div>비디오 설정</div>
+                                </div>}
+                            {isAudio &&
+                                <div>
+                                    <img src="../images/starIcon.png" alt="video" className="w-[27px] h-[27px]" />
+                                    <div>오디오 설정</div>
+                                </div>
+                            } */}
+                            {value.label}
+                        </option>
+                    )
+                })
                 }
-
             </select>
         </div>
     )

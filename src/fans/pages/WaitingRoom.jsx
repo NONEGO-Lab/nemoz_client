@@ -212,59 +212,7 @@ const WaitingRoom = () => {
                         </button>
                     )
                 }
-
-                {/*{myWaitInfo.fan_info.is_tested !== 1 && myWaitInfo.fan_info.is_tested !== 0 && (*/}
-                {/*    <button*/}
-                {/*        onClick={() => {*/}
-                {/*            fanLogout();*/}
-                {/*        }}*/}
-                {/*        className={`w-[100%] min-h-[50px] rounded-[10px] text-[1.2rem] cursor-pointer  text-white font-medium ${"bg-[#00cace]"} flex items-center justify-center`}*/}
-                {/*    >*/}
-                {/*        나가기*/}
-                {/*    </button>*/}
-                {/*)}*/}
-
-
               </div>
-
-
-
-
-                    {/*{userInfo.isCallTested && !userInfo.isCallFinished && (*/}
-                    {/*    <button*/}
-                    {/*        disabled={!isAvailableCall}*/}
-                    {/*        onClick={goToArtistRoom}*/}
-                    {/*        className={`w-[100%] min-h-[50px] rounded-[10px] text-[1.2rem] cursor-pointer  text-white font-medium ${*/}
-                    {/*            isAvailableCall ? "bg-[#00cace]" : "bg-[#c8c8c8]"*/}
-                    {/*        } flex items-center justify-center`}*/}
-                    {/*    >*/}
-                    {/*        통화 시작*/}
-                    {/*    </button>*/}
-                    {/*)}*/}
-
-                {/*</div>*/}
-
-                {/* waiting status :: end call / waiting / goto connect test */}
-
-                {/* {isMobPopupOpen &&
-          (userInfo.isCallTested ? (
-            isCallFinished ? (
-              <MobilePopup type={"endCall"} closePopup={closePopup} />
-            ) : (
-              <MobilePopup
-                type={"waiting"}
-                closePopup={closePopup}
-                isAvailableCall={isAvailableCall}
-              />
-            )
-          ) : (
-            <MobilePopup
-              type={"goToConnectTest"}
-              closePopup={closePopup}
-              isReadyTest={isReadyTest}
-            />
-          ))} */}
-
                 {toggleDeviceSetting &&
                     <MobileDeviceSetting closeDeviceSetting={closePopup}/>}
             </div>

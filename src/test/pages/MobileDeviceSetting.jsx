@@ -48,7 +48,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
       const response = await testApi.testEnd(sessionInfo.meetName);
       if (response) {
         dispatch(clearDeviceSession());
-        closeDeviceSetting();
+        dispatch(toggleDeviceSettingModal(false));
       } else {
         alert("미팅이 종료되지 않았습니다.");
       }
@@ -87,7 +87,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
   const setDeviceHandler = async (data) => {
     //완료 버튼을 누르면, 장비 체크 여부 확인을 하고 연결 테스트 화면으로 넘어간다.
     setDefaultDevice(data);
-    if (userInfo.role !== "fan") {
+    if (userInfo.role !== "member") {
       localStorage.setItem("isSetDevice", "true");
       await endMeet();
       dispatch(toggleDeviceSettingModal(false));
@@ -107,7 +107,6 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
     <ModalFrame setOnModal={closeDeviceSetting} style={style}>
       <div className="flex flex-col justify-center ">
         <div className="flex justify-between items-center">
-          <div></div>
           <img
             className={"w-[20px] h-[20px] mt-[2rem] cursor-pointer"}
             src={"../images/closeIcon.png"}
@@ -117,6 +116,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
         </div>
         <div className="mt-[40px]">
           <div className="text-[1.2rem] font-medium">{eventName}</div>
+          {/*<div className="text-[1.2rem] font-medium">{eventName}</div>*/}
           <div className="w-[100vw] h-[75vw] mx-[-2rem] my-[2rem] flex justify-center bg-[#eee]">
             {publisher !== undefined && (
               <Video2

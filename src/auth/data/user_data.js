@@ -56,11 +56,13 @@ export const userApi = {
             type: userData.type,
         }
 
+        if(!sock.connect().connected && sessionStorage.getItem('auth')){
+            sock.emit('join', userData.memberNo || userData.artistNo || userData.staffNo)
+        }
+
         if (userData.role === 'member') {
             tmpUserData['isCallTested'] = userData.is_tested !== 0;
-            if(!sock.connect().connected && sessionStorage.getItem('auth')){
-                sock.emit('join', userData.memberNo)
-            }
+
         }
 
         return tmpUserData;

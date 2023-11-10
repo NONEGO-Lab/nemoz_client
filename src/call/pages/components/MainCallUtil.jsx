@@ -76,7 +76,7 @@ const MainCallUtil = ({
             }
         }else{
             try {
-                const result = await roomApi.getListOrder({eventId: currentEventId || eventId, roomId});
+                const result = await roomApi.getListOrder({eventId, roomId});
                 const detail = await attendeeApi.getFanDetail(result[0].fan_id, eventId);
                 setCurrentFan(detail);
                 setWarnCnt(detail?.warning_count)

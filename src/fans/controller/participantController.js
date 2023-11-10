@@ -43,6 +43,7 @@ export const ParticipantController = () => {
 
   const closeDeviceSetting = () => {
     setOpenDeviceSetting(false)
+
   }
 
   const getAttendeeListApi = async (eventId, page) => {
