@@ -64,8 +64,6 @@ export const userApi = {
         if (userData.role === 'member') {
             tmpUserData['isCallTested'] = userData.is_tested !== 0;
             if(!sock.connect().connected && sessionStorage.getItem('auth')){
-                console.log(userData)
-                console.log('영차',  userData.memberNo)
                 sock.emit('join', userData.memberNo)
             }
         }

@@ -50,16 +50,11 @@ const VideoForMobile = ({
         setToggleMobileFanLetter(false)
     }
     const onClickMobileFullScreen = () =>{
-        console.log('??')
-        console.log(roomInfo, 'roomInfo')
-
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
-
         sock.emit('rotateFan', roomNum, true)
         setIsFullScreenMobile(true)
     }
     const onClickMobileHalfScreen = () =>{
-        console.log('tldnjsgkrp?')
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
         sock.emit('rotateFan', roomNum, false)
         setIsFullScreenMobile(false)

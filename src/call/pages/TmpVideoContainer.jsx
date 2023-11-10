@@ -97,11 +97,9 @@ const TmpVideoContainer = () => {
             // test meet create -> join 까지 한다.
             // create, join 하고 나온 방을 socket 으로 보낸다!
             createJoinSession().then((sessionInfo) => {
-                console.log('socksock', sock.connected)
                 let data = {meetName: sessionInfo.meet_name, fanId: fanInfo.fan_id}
                 sock.emit("joinTestSession", data);
                 let roomNum = `${fanInfo.event_id}_test_${fanInfo.fan_id}`;
-
                 sock.emit("joinRoom", roomNum, userInfo);
             })
         } else {

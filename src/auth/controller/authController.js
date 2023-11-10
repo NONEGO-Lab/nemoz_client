@@ -38,7 +38,6 @@ export const AuthController = (setError, setValue, setShowPwdError) => {
             if (!sock.connected) {
                 sock.connect();
             }
-            console.log('JOIN')
             sock.emit("join", result.payload.memberNo || result.payload.adminNo);
             result.payload.memberNo ? navigate("/waitcall") : navigate("/roomlist");
 

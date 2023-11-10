@@ -28,7 +28,6 @@ const TestCallUtil = ({
                       }) => {
 
     const nextTestCallConnect = async () => {
-         console.log(eventId, 'eventId')
         if(isSuccess==='success') {
             sock.emit("testSuccess", fanInfo, eventId);
         }
