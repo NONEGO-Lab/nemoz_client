@@ -255,7 +255,7 @@ export const CallController = () => {
                     const otherStaffInfo = subscribers.find((sub) => sub['id'].toString() !== userInfo.id.toString());
                     sock.emit("joinNextRoom", roomNum, newSessionInfo, otherStaffInfo['id'], nextFan);
                     sock.emit("joinRoom", roomNum, userInfo);
-                    sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
+                    // sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
                     sock.emit("checkSessionState", nextFan, roomNum, true);
 
                     setToggleNext(true)
