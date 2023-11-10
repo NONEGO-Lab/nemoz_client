@@ -18,7 +18,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
         originalWaitingList.current = result?.data;
     }
 
-    const style = "w-[650px] min-h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
+    const style = "w-[650px] h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
     const addFanModal = useSelector(state => state.common.addFanModalToggle)
 
     const [waitingList, setWaitingList] = useState([]);
@@ -57,7 +57,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
     return (
         <ModalFrame setOnModal={setOnModal} style={style}>
 
-            <div className="flex justify-between items-center mt-[60px] mb-[40px] mx-[60px]">
+            <div className="flex justify-between items-center mt-[60px] mb-[40px] mx-[60px] ">
                 <div className={"text-[24px] font-[600] text-[#444]"}>Fan List</div>
 
                 <img className={"w-20px h-[20px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
@@ -132,6 +132,8 @@ const containerStyles = {
     display: 'flex',
     flexDirection: 'column',
     width: "100%",
+    maxHeight: "625px",
+    overflowY: "scroll"
 };
 
 
@@ -157,7 +159,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
 
     const styles = {
         width: '650px',
-        height: '62.5px',
+        minHeight: '62.5px',
         backgroundColor: `${index % 2 === 0 ? "#f0f0f0" : "#e9e9e9"}`,
         display: 'flex',
         justifyContent: 'center',

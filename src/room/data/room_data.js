@@ -51,8 +51,12 @@ export const roomApi = {
   getListOrder: async ({eventId, roomId}) => {
     const data = await instance.get("/room/listorder",
         { params: { event_id : eventId, room_id: roomId } });
+    // const tmpFans = Array.from({ length: 30 }, (_, index) => ({ fan_id:10200+index,fan_name:`fan${index+1}`,orders: index+1,status:index%2 === 0 ? 'in progress':'waiting' }));
+    // return tmpFans
     return data.data.data.fan_orders
+
   },
+
 
   updateListOrder: async (eventId, roomId, fanIds) => {
     let req = {
