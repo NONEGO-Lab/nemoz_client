@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../../../element";
 import { useDispatch, useSelector } from "react-redux";
 import { attendeeApi } from "../../../fans/data/attendee_data";
@@ -67,8 +67,6 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
 
     if(subscribers.length === 0) return;
 
-    let roomId = roomInfo.room_id;
-
     if(window.confirm(`정말로 ${currentFan.fan_name}씨를 강퇴하시겠습니까?`)){
       requestKickOutApi();
     }
@@ -76,7 +74,6 @@ const SettingBar = ({ setIsOpenWaitingModal, currentFan, leftTimeRef }) => {
 
   const warnHandler = async () => {
     // 경고 api + 경고 socket
-
     if(subscribers.length === 0) return;
 
     if(window.confirm(`정말로 ${currentFan.fan_name}를 경고하시겠습니까?`)){

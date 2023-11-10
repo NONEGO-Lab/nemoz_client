@@ -1,4 +1,3 @@
-import React from "react";
 import {OpenVidu} from "openvidu-browser";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -9,8 +8,6 @@ import {
   addVideoDevices,
   clearSession,
   deleteSubscribers,
-  disconnectSession,
-  isFanLoading,
   mutePublisherAudio,
   mutePublisherVideo, subscribedArtistInfo, subscribedFanInfo
 } from "../../../redux/modules/videoSlice";
@@ -25,18 +22,14 @@ export const useVideo = () => {
   const navigate = useNavigate();
 
   const userInfo = useSelector((state) => state.user.userInfo);
-
   const roomInfo = useSelector((state) => state.common.roomInfo);
   const sessionInfo = useSelector((state) => state.common.sessionInfo);
   const connectionInfo = useSelector((state) => state.common.connectionInfo);
-
   const publisher = useSelector((state) => state.video.publisher);
   const subscribers = useSelector((state) => state.video.subscribers);
   const session = useSelector((state) => state.video.session);
   const publisherAudio = useSelector((state) => state.video.publisherAudio);
   const publisherVideo = useSelector((state) => state.video.publisherVideo);
-
-  const eventId = useSelector((state) => state.event.eventId);
   const currentEventId = useSelector((state) => state.event.currentEventId);
 
 
@@ -62,7 +55,6 @@ export const useVideo = () => {
       meet_id: sessionInfo.meetId,
       meet_name: sessionInfo.meetName,
       id: userInfo.id,
-      // userid: userInfo.userId,
       userid: userInfo.username,
       role: userInfo.role
     }
@@ -76,7 +68,6 @@ export const useVideo = () => {
         //create session으로 새로 session 만들어준다.
         return null;
       }
-
       // dispatch(setError(err));
       // dispatch(setIsError(true));
     }

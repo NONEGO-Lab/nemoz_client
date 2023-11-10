@@ -41,7 +41,6 @@ export const meetApi = {
       type: "reaction",
       content: content,
       user_id: userId
-      //love_ico
     }
     const data = await instance.post("/meet/history", req);
     return data.data;

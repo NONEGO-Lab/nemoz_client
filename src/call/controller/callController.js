@@ -1,15 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useMediaQuery} from "react-responsive";
+import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {meetApi} from "../data/call_data";
 import {sock} from "../../socket/config";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {clearSessionInfo} from "../../redux/modules/commonSlice";
 import {roomApi} from "../../room/data/room_data";
 import {attendeeApi} from "../../fans/data/attendee_data";
-import {addTimer, clearSession, setIsCallFinished, subscribedFanInfo} from "../../redux/modules/videoSlice";
+import {addTimer, clearSession, setIsCallFinished} from "../../redux/modules/videoSlice";
 import {addToast as addToastRedux} from "../../redux/modules/toastSlice";
 import {videoEvents} from "../../socket/events/video_event";
 import {useVideo} from "./hooks/useVideo";
@@ -20,7 +18,7 @@ export const CallController = () => {
 
     const {
         joinSession, onlyJoin, newJoinMeet, leaveSession,
-        fanJoinSession, msgBeforeOut, onbeforeunload
+        fanJoinSession,  onbeforeunload
     } = useVideo();
 
 
@@ -394,13 +392,6 @@ export const CallController = () => {
             //현재 팬의 정보를 가져오는 것.
             getCurrentFanInfo();
         }
-
-
-        //Fixme: 나갈때, 나가는 leave api가 두번 실행되는거 고민하기
-
-        // return () => {
-        //   msgBeforeOut();
-        // }
 
     }, []);
 

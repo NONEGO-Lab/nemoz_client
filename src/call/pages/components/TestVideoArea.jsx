@@ -1,5 +1,4 @@
 import React from 'react';
-import StaffVideoArea from "./StaffVideoArea";
 import InnerCircleText from "../../../common/InnerCircleText";
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
@@ -20,7 +19,7 @@ const TestVideoArea = ({
                        }) => {
 
     const {age, fan_name, sex, } = fanInfo
-    const {role, userId, username} = userInfo
+    const {role, username} = userInfo
     const isStaff = role === 'staff'
     const isFan = role === 'member'
     // const screenName = (userInfo) => userInfo.role === 'staff' ? staff_name : artist_name
@@ -63,7 +62,7 @@ const TestVideoArea = ({
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2 setToggleNext={setToggleNext} setIsSuccess={setIsSuccess}/>}
-                    {(!isFan && !subscriber) || (isFan && !publisherVideo)&&
+                    {((!isFan && !subscriber) || (isFan && !publisherVideo))&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{isFan? username:fan_name}</span>
@@ -72,7 +71,7 @@ const TestVideoArea = ({
 
                     {fanInfo?.message && <div className='flex mt-[27px] w-full justify-center'>
                         <div className={"w-[380px] justify-start items-center flex"}>
-                            <img src="../images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
+                            <img src="/images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"} alt={"FanLetter"}
                                  onClick={() => setToggleFanLetter(prev => !prev)}/>
                             <div className={"ml-[13px] grow truncate"}>{fanInfo?.message}</div>
                             {toggleFanLetter &&
@@ -102,7 +101,7 @@ const TestVideoArea = ({
             <div className='w-[650px]'>
                 <div className='flex justify-center items-center'>
                     <>
-                        <img src="../images/staffIcon.png" alt='stafficon'
+                        <img src="/images/staffIcon.png" alt='stafficon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
                         <div className='text-[19px] font-medium'>{staffName(userInfo.role)}</div>
                     </>

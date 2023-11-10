@@ -6,10 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {createBrowserHistory} from "history";
 import {useTestVideo} from "../../test/controller/useTestVideo";
-import {useReaction} from "../../reaction/controller/useReaction";
 import {testApi} from "../../test/data/call_test_data";
 import {sock} from "../../socket/config";
-import {useMediaQuery} from "react-responsive";
 import {testEvents} from "../../socket/events/test_event";
 import TestVideoArea from "./components/TestVideoArea";
 import VideoForMobile from "../../video/pages/VideoForMobile";
@@ -22,14 +20,9 @@ const TmpVideoContainer = () => {
     const dispatch = useDispatch();
     const history = createBrowserHistory();
 
-
-    const [isOpenMobileSetting, setOpenMobileSetting] = useState(false);
-    const [mobileSettingType, setMobileSettingType] = useState("");
     const [toggleFanLetter, setToggleFanLetter] = useState(false)
     const publisher = useSelector((state) => state.test.publisher);
-    const publisherLoading = useSelector((state) => state.test.publisherLoading);
     const subscriber = useSelector((state) => state.test.subscriber);
-    const subscriberLoading = useSelector((state) => state.test.subscriberLoading);
     const userInfo = useSelector((state) => state.user.userInfo);
     const publisherVideo = useSelector((state) => state.test.publisherVideo);
     const publisherAudio = useSelector((state) => state.test.publisherAudio);
@@ -42,18 +35,11 @@ const TmpVideoContainer = () => {
     const sessionInfo = useSelector((state) => state.test.sessionInfo);
 
     const {
-        createJoinSession, joinTestSession, preventBrowserBack,
+        createJoinSession, joinTestSession,
         onbeforeunload, muteHandler
     } = useTestVideo();
     const {
         isMobile,
-        changeMobVideoSize,
-        isBigScreen,
-        makeBigScreen,
-        isWebFullScreen,
-        setIsWebFullScreen,
-        webFullScreenSize,
-        webFullScreenSizeOther,
     } = useMobileView();
     const [toggleNext, setToggleNext] = useState(false)
     const [isSuccess, setIsSuccess] = useState(null)
@@ -123,17 +109,9 @@ const TmpVideoContainer = () => {
 
 
     useEffect(() => {
-
         if (session === undefined) {
             return;
         }
-
-        // window.addEventListener("beforeunload", onbeforeunload);
-        // window.addEventListener("popstate", onbeforeunload);
-        //
-        // return () => {
-        //     window.removeEventListener("beforeunload", onbeforeunload);
-        //     window.removeEventListener('popstate', onbeforeunload);
         history.listen((location) => {
             if (history.action === "POP") {
                 //뒤로가기일 경우
@@ -154,6 +132,7 @@ const TmpVideoContainer = () => {
                         <img
                             className="w-[15px] h-[25px] mr-[1.2rem]"
                             src="/images/leftArrowIcon.png"
+                            alt={"leftArrow"}
                         />
                         <h1 className="text-[1.2rem] font-[600]">{eventName}</h1>
                     </div>
@@ -215,7 +194,7 @@ if(!isMobile)
             <div className={"bg-main_theme flex flex-col justify-center"}>
                 <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
                     <span>
-                        <img className='w-[30px] h-[30px]' src="../images/roomIcon.png" alt="room-icon"/>
+                        <img className='w-[30px] h-[30px]' src="/images/roomIcon.png" alt="room-icon"/>
                     </span>
                     <span className='ml-[10px]'>{eventName}</span>
                 </div>

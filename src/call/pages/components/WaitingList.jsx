@@ -30,7 +30,6 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
     };
 
     const resetOrder = () => {
-        // setWaitingList(originalWaitingList.current);
         getWaitingListApi(eventId, roomId);
     }
 

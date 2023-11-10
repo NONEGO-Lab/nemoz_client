@@ -1,8 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Video2 from "../../../video/pages/Video2";
 import InnerCircleText from "../../../common/InnerCircleText";
 
-const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomInfo, warnCnt, toasts, removeToast, toggleFanLetter, setToggleFanLetter, reserved_time, fanEnterNoti}) => {
+const StaffVideoArea = ({
+                            subscribedArtistInfo,
+                            subscribedFanInfo,
+                            fanInfo,
+                            roomInfo,
+                            warnCnt,
+                            toasts,
+                            removeToast,
+                            toggleFanLetter,
+                            setToggleFanLetter,
+                            reserved_time,
+                            fanEnterNoti
+                        }) => {
 
     return (
         <div className={"flex flex-row justify-evenly"}>
@@ -11,7 +23,8 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                         <span
                             className='text-[19px] font-medium flex justify-center items-center'>
                             {`FAN ${fanInfo?.fan_name} (${fanInfo?.age}세)`}
-                            <InnerCircleText gender={fanInfo?.sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
+                            <InnerCircleText gender={fanInfo?.sex} width={"w-[22px]"} height={"h-[22px]"}
+                                             bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
                                              fontWeight={"font-normal"}/></span>
                 <div className={"flex flex-col mt-[24px]"}>
@@ -36,13 +49,13 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{fanInfo?.fan_name}</span>
-                    </div>}
+                        </div>}
 
                     {fanInfo?.letter && <div className='flex mt-[27px] w-full justify-center'>
                         <div className={"w-[380px] justify-start items-center flex"}>
-                            <img src="../images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
+                            <img src="/images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
+                                 alt={"fanLetter"}
                                  onClick={() => setToggleFanLetter(prev => !prev)}/>
-                            {/*<div className={"ml-[13px] grow"}>{fanInfo?.letter}</div>*/}
                             <div className={"ml-[13px] grow truncate"}>{fanInfo?.letter}</div>
                             {toggleFanLetter &&
 
@@ -71,15 +84,15 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
             <div className='w-[650px]'>
                 <div className='flex justify-center items-center'>
                     <>
-                        <img src="../images/starIcon.png" alt='staricon'
+                        <img src="/images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
-                        <div className='text-[19px] font-medium'>{subscribedArtistInfo?.username || roomInfo.artist_name}</div>
+                        <div
+                            className='text-[19px] font-medium'>{subscribedArtistInfo?.username || roomInfo.artist_name}</div>
                     </>
                 </div>
                 <div className={"flex flex-col mt-[24px]"}>
                     <div className={`h-[368px] ${subscribedArtistInfo ? "" : "hidden"}`}>
-                        {/*{isArtistLoading && <div>Loading...</div>}*/}
-                        {subscribedArtistInfo&& (
+                        {subscribedArtistInfo && (
                             <Video2 streamManager={subscribedArtistInfo}
                                     fanInfo={fanInfo}
                                     warnCnt={warnCnt}
@@ -91,10 +104,11 @@ const StaffVideoArea = ({subscribedArtistInfo,subscribedFanInfo, fanInfo, roomIn
                             />)
                         }
                     </div>
-                    {!subscribedArtistInfo && <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
+                    {!subscribedArtistInfo &&
+                        <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{roomInfo.artist_name}</span>
-                    </div>}
+                        </div>}
                 </div>
             </div>
         </div>);

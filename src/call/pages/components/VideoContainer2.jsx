@@ -4,8 +4,6 @@ import VideoArea from "./VideoArea";
 import { SizeLayout } from "../../../shared/Layout";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createBrowserHistory } from "history";
-import { useReaction } from "../../../reaction/controller/useReaction";
 import { useVideo } from "../../controller/hooks/useVideo";
 import { CallController as controller } from "../../controller/callController";
 import MainCallUtil from "./MainCallUtil";
@@ -77,15 +75,8 @@ const VideoContainer2 = () => {
   const [toggleFanLetter, setToggleFanLetter] = useState(false);
   const {
     isMobile,
-    changeMobVideoSize,
-    isBigScreen,
-    makeBigScreen,
     isWebFullScreen,
     setIsWebFullScreen,
-    isOpenMobileSetting,
-    setOpenMobileSetting,
-    webFullScreenSize,
-    webFullScreenSizeOther,
   } = useMobileView();
 
   const { artist_name, room_name, reserved_time } = roomInfo;
@@ -106,6 +97,7 @@ const VideoContainer2 = () => {
               <img
                 className="w-[15px] h-[25px] mr-[1.2rem]"
                 src="/images/leftArrowIcon.png"
+                alt={"leftArrow"}
               />
               <h1 className="text-[1.2rem] font-[600]">{roomInfo.room_name}</h1>
             </div>

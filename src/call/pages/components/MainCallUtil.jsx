@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useVideo} from "../../controller/hooks/useVideo";
-import {addTimer, disconnectSession, setIsCallFinished} from "../../../redux/modules/videoSlice";
-import {clearSessionInfo} from "../../../redux/modules/commonSlice";
 import {sock} from "../../../socket/config";
 import {useDispatch, useSelector} from "react-redux";
 import {roomApi} from "../../../room/data/room_data";
-import {end_meet} from "../../../model/call/call_model";
-import {meetApi} from "../../data/call_data";
 import {attendeeApi} from "../../../fans/data/attendee_data";
 import {setError, setIsError} from "../../../redux/modules/errorSlice";
-import {useNavigate, useSearchParams} from "react-router-dom";
 
 const MainCallUtil = ({
                           audioMuteHandler,
@@ -17,7 +12,6 @@ const MainCallUtil = ({
                           role,
                           currentFan,
                           setCurrentFan,
-                          session,
                           subscribers,
                           outRoom,
                           leftTimeRef,
@@ -121,7 +115,7 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={() => sendLeftTimeHandler(subscribers, leftTimeRef)}>
                         <div className={"w-[75px] cursor-pointer"}>
-                            <img src="../images/staffAlramIcon.png" alt="close"/>
+                            <img src="/images/staffAlramIcon.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`ALRAM`}</div>
@@ -132,7 +126,7 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={warnHandler}>
                         <div className={"w-[75px] cursor-pointer"}>
-                            <img src="../images/staffWarningIcon.png" alt="close"/>
+                            <img src="/images/staffWarningIcon.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`WARNING`}</div>
@@ -143,7 +137,7 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={kickOutHandler}>
                         <div className={"w-[75px] cursor-pointer"}>
-                            <img src="../images/staffOutIcon.png" alt="close"/>
+                            <img src="/images/staffOutIcon.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`OUT`}</div>
@@ -154,7 +148,7 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={finishCurrentCall}>
                         <div className={"w-[75px] cursor-pointer"}>
-                            <img src="../images/callOutQuit.png" alt="disconnect"/>
+                            <img src="/images/callOutQuit.png" alt="disconnect"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`DISCONNECT`}</div>
@@ -164,9 +158,9 @@ const MainCallUtil = ({
                     {/* 다음 사람 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}>
                         {toggleNext ?
-                            <img src="../images/callOutNext.png" className={`cursor-pointer`} alt="next"
+                            <img src="/images/callOutNext.png" className={`cursor-pointer`} alt="next"
                                  onClick={nextCallConnect}/>
-                            : <img src="../images/callOutNextOff.png" alt="next"/>}
+                            : <img src="/images/callOutNextOff.png" alt="next"/>}
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`NEXT`}</div>
                         </div>
@@ -176,7 +170,7 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={() => outRoom(role)}>
                         <div className={"w-[75px] cursor-pointer"}>
-                            <img src="../images/callOutRoomEnd.png" alt="close"/>
+                            <img src="/images/callOutRoomEnd.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`QUIT`}</div>
@@ -191,8 +185,8 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={videoMuteHandler}>
                         <div className={`${iconSize} cursor-pointer`}>
-                            {publisherVideo ? <img src="../images/callOutCameraOn.png" alt="cam-on"/> :
-                                <img src="../images/callOutCameraOff.png" alt="cam-off"/>}
+                            {publisherVideo ? <img src="/images/callOutCameraOn.png" alt="cam-on"/> :
+                                <img src="/images/callOutCameraOff.png" alt="cam-off"/>}
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`CAM`}</div>
@@ -202,8 +196,8 @@ const MainCallUtil = ({
                     <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
                          onClick={audioMuteHandler}>
                         <div className={`${iconSize} cursor-pointer`}>
-                            {publisherAudio ? <img src="../images/callOutMicOn.png" alt="mic-on"/> :
-                                <img src="../images/callOutMicOff.png" alt="mic-off"/>}
+                            {publisherAudio ? <img src="/images/callOutMicOn.png" alt="mic-on"/> :
+                                <img src="/images/callOutMicOff.png" alt="mic-off"/>}
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`MIC`}</div>
@@ -214,9 +208,9 @@ const MainCallUtil = ({
                         <div className={"flex flex-col text-[8px] items-center  mr-[30px]"}>
                             <div className={`w-[75px]`}>
                                 {toggleNext ?
-                                    <img src="../images/callOutNext.png" className={`cursor-pointer`} alt="next"
+                                    <img src="/images/callOutNext.png" className={`cursor-pointer`} alt="next"
                                          onClick={nextCallConnect}/>
-                                    : <img src="../images/callOutNextOff.png" alt="next"/>}
+                                    : <img src="/images/callOutNextOff.png" alt="next"/>}
                             </div>
                             <span className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     {`NEXT`}
@@ -225,7 +219,7 @@ const MainCallUtil = ({
                     {/* 방 나가기 */}
                     <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
                         <div className={`${iconSize} cursor-pointer`} onClick={() => outRoom(role)}>
-                            <img src="../images/callOutQuit.png" alt="close"/>
+                            <img src="/images/callOutQuit.png" alt="close"/>
                         </div>
                         <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                             <div>{`QUIT`}</div>

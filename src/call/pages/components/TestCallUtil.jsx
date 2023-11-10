@@ -1,7 +1,4 @@
 import React from 'react'
-import {disconnectSession} from "../../../redux/modules/videoSlice";
-import {clearSessionInfo} from "../../../redux/modules/commonSlice";
-import {useVideo} from "../../controller/hooks/useVideo";
 import {sock} from "../../../socket/config";
 import {testApi} from "../../../test/data/call_test_data";
 import {attendeeApi} from "../../../fans/data/attendee_data";
@@ -59,7 +56,7 @@ const TestCallUtil = ({
             }
 
         }else{
-            console.error('이게.. 아닌데..')
+            console.error('error in next Call Connect')
         }
     };
     const style = "flex justify-center items-center flex-row mt-[153px] mx-[110px]"
@@ -68,7 +65,7 @@ const TestCallUtil = ({
             {/* 캠 토글 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => muteHandler("video", publisherVideo)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    {publisherVideo ? <img src="../images/callOutCameraOn.png" alt="cam-on" /> : <img src="../images/callOutCameraOff.png" alt="cam-off" />}
+                    {publisherVideo ? <img src="/images/callOutCameraOn.png" alt="cam-on" /> : <img src="../images/callOutCameraOff.png" alt="cam-off" />}
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`CAM`}</div>
@@ -78,7 +75,7 @@ const TestCallUtil = ({
             {/* 마이크 토글 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"} onClick={() => muteHandler("audio", publisherAudio)}>
                 <div className={"w-[75px] h-[75px] cursor-pointer"}>
-                    {publisherAudio ? <img src="../images/callOutMicOn.png" alt="mic-on" /> : <img src="../images/callOutMicOff.png" alt="mic-off" />}
+                    {publisherAudio ? <img src="../images/callOutMicOn.png" alt="mic-on" /> : <img src="/images/callOutMicOff.png" alt="mic-off" />}
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`MIC`}</div>
@@ -88,8 +85,8 @@ const TestCallUtil = ({
             {/* 다음 사람 */}
             {(role === 'staff') && <div className={"flex flex-col text-[8px] items-center mr-[30px] "}>
                 <div className={`w-[75px] cursor-pointer`} >
-                    {toggleNext ? <img src="../images/callOutNext.png" className={`cursor-pointer`} alt="next" onClick={nextTestCallConnect}/> :
-                        <img src="../images/callOutNextOff.png" alt="next"/>}
+                    {toggleNext ? <img src="/images/callOutNext.png" className={`cursor-pointer`} alt="next" onClick={nextTestCallConnect}/> :
+                        <img src="/images/callOutNextOff.png" alt="next"/>}
                 </div>
                 <span className={"mt-[20px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     {`NEXT`}
@@ -99,7 +96,7 @@ const TestCallUtil = ({
             {/* 방 나가기 */}
             <div className={"flex flex-col text-[8px] items-center w-[75px]"}>
                 <div className={"w-[75px] cursor-pointer"} onClick={()=>quitTest()}>
-                    <img src="../images/callOutQuit.png" alt="close"/>
+                    <img src="/images/callOutQuit.png" alt="close"/>
                 </div>
                 <div className={"mt-[10px] flex flex-col items-center text-[#848484] text-[12px]"}>
                     <div>{`QUIT`}</div>

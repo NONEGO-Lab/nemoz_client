@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import InnerCircleText from "../../../common/InnerCircleText";
 import Video2 from "../../../video/pages/Video2";
 import ConnectControl2 from "../../../room/components/ConnectControl2";
@@ -7,10 +7,8 @@ const VideoArea = ({
                        userInfo,
                        fanInfo,
                        publisher,
-                       subscriber,
                        subscribedFanInfo,
                        subscribedArtistInfo,
-                       subscribers,
                        isTestConnect,
                        publisherVideo,
                        publisherAudio,
@@ -111,9 +109,8 @@ const VideoArea = ({
 
                     {fanInfo?.letter && <div className='flex mt-[27px] w-full justify-center'>
                         <div className={"w-[380px] justify-start items-center flex"}>
-                            <img src="../images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"}
+                            <img src="/images/callOutFanLetter.png" className={"w-[24.5px] cursor-pointer"} alt={"fanLetter"}
                                  onClick={() => setToggleFanLetter(prev => !prev)}/>
-                            {/*<div className={"ml-[13px] grow"}>{fanInfo?.letter}</div>*/}
                             <div className={"ml-[13px] grow truncate"}>{fanInfo?.letter}</div>
                             {toggleFanLetter &&
 
@@ -142,7 +139,7 @@ const VideoArea = ({
             <div className={` text-center ${isWebFullScreen? "w-[1300px]":"w-[650px]"}`}>
                 <div className={`flex justify-center items-center ${isWebFullScreen? 'hidden' : ''}`}>
                     <>
-                        <img src="../images/starIcon.png" alt='staricon'
+                        <img src="/images/starIcon.png" alt='staricon'
                              className='w-[24px] h-[24px] mr-[7px]'/>
                         <div className='text-[19px] font-medium'>{artistName}</div>
                     </>
