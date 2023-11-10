@@ -12,12 +12,7 @@ export const userApi = {
             const userData = data.data.data;
             return {
                 ...user_auth,
-                // company_name: data.data.company,
-                // id: data.data.id,
                 role: userData.role,
-                // user_id: data.data.userid,
-                // username: data.data.username,
-                // token: data.data.token
                 expiredAt: userData.expiredAt,
                 memberNo: userData.memberNo,
                 staffNo: userData.staffNo,

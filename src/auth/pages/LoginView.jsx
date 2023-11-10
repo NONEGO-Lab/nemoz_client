@@ -16,7 +16,7 @@ const LoginView = () => {
                     rounded={'rounded-[15px]'}>
             <div className="mt-[71px]">
                 <div className="w-[252px] h-[44px] m-auto">
-                    <img src="../images/nemozCallLogo.png" alt="logo"/>
+                    <img src="/images/nemozCallLogo.png" alt="logo"/>
                 </div>
                 <form
                     className="text-center mt-[94px] w-[502px]"
