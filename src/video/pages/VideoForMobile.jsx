@@ -42,7 +42,6 @@ const VideoForMobile = ({
         }
     }, [streamManager]);
 
-
     const isFan = streamManager.role === 'member'
     const isStaff = streamManager.role === 'staff'
     const removeFanLetterInMobile = (e) =>{
@@ -51,11 +50,13 @@ const VideoForMobile = ({
     }
     const onClickMobileFullScreen = () =>{
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+        document.getElementsByTagName('body')[0].style.background = '#000'
         sock.emit('rotateFan', roomNum, true)
         setIsFullScreenMobile(true)
     }
     const onClickMobileHalfScreen = () =>{
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+        document.getElementsByTagName('body')[0].style.background = ''
         sock.emit('rotateFan', roomNum, false)
         setIsFullScreenMobile(false)
     }
