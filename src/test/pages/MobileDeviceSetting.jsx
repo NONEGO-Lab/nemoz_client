@@ -19,7 +19,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
     "w-[100%] max-w-[100vw] max-h-[100vh] min-h-[100%] h-[100vh] bg-[#fff] absolute top-0 left-0 z-[100] p-[2rem] overflow-hidden";
 
   const { register, watch, handleSubmit } = useForm();
-  const { createJoinSession, msgBeforeOut } = useDeviceTest();
+  const { createJoinSession, isMobile } = useDeviceTest();
   const publisher = useSelector((state) => state.device.publisher);
   const sessionInfo = useSelector((state) => state.device.sessionInfo);
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -73,7 +73,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
         selectedAudioDevices || audioDevices[0].deviceId
       );
     }
-    if (!localStorage.getItem("audioOutputId")) {
+    if (!localStorage.getItem("audioOutputId") && !isMobile) {
       localStorage.setItem(
         "audioOutputId",
         selectedAudioOutputDevices || audioOutputDevices[0].deviceId
@@ -129,11 +129,13 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
         </div>
         <div className="">
           <form>
+
             <DeviceSelect
               label={
                 <img
                   src="/images/micIcon.png"
                   className="w-[19px] h-[28px] mr-[2px]"
+                  alt={"mic"}
                 />
               }
               register={register}
@@ -142,20 +144,17 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
               width={"w-[100%]"}
               border={"border border-[#c7c7c7] rounded-[10px]"}
               mb={"items-center mb-[20px] py-[0.6rem]"}
+
             />
+
             <DeviceSelect
-              label={
-                <img
-                  src="/images/soundIcon.png"
-                  className="w-[27px] h-[23px] mr-[2px]"
-                />
-              }
-              register={register}
-              options={audioOuputList ?? []}
-              name={"selectedAudioOutputDevices"}
-              width={"w-[100%]"}
-              mb={"items-center mb-[20px] py-[0.6rem]"}
-              border={"border border-[#c7c7c7] rounded-[10px]"}
+                label={<img src="/images/soundIcon.png" className="w-[27px] h-[23px] mr-[2px]" alt={'speaker'}/>}
+                register={register}
+                options={audioOuputList ?? []}
+                name={"selectedAudioOutputDevices"}
+                width={"w-[100%]"}
+                mb={"items-center mb-[20px] py-[0.6rem]"}
+                border={"border border-[#c7c7c7] rounded-[10px]"}
             />
           </form>
         </div>

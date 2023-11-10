@@ -17,7 +17,6 @@ export const RoomListController = () => {
     const [currentFanInfo, setCurrentFanInfo] = useState({});
     const [isOpenAddUser, setIsOpenAddUser] = useState(false);
     const eventId = localStorage.getItem("eventId");
-    const currentEventId = useSelector(state => state.event.currentEventId)
     const userInfo = useSelector((state) => state.user.userInfo);
     const eventList = useSelector(state => state.event.eventList)
     const navigate = useNavigate()

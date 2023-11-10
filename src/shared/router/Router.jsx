@@ -30,7 +30,7 @@ const Router = () => {
             <Route path="/devicetest" element={<Auth><DeviceTest/></Auth>}/>
             {/*<Route path="/test/:id" element={<Auth><ConnectTest/></Auth>}/>*/}
             <Route path="/test/:id" element={<Auth><TmpVideoContainer/></Auth>}/>
-            <Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>
+            {/*<Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>*/}
             <Route path="/video2/:id" element={<Auth><VideoContainer2/></Auth>}/>
             <Route path="/tmpvideo" element={<Auth><TmpVideoContainer/></Auth>}/>
             <Route path="/create/event" element={<Auth><CreateEvent/></Auth>}/>

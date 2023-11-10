@@ -32,7 +32,6 @@ const Video2 = ({
     const fanRotateScreen = useSelector(state => state.video.rotateFanScreen)
     const unique_id = nanoid(4)
     const selectedAudioOutputDeviceId = localStorage.getItem("audioOutputId")
-    const [fanRotate, setFanRotate] = useState(false)
     const vStyle = {transform:'rotate(90deg)', width:'368px', height:'650px', margin:'-140px 0 -10vw 141px '}
 
     useEffect(() => {
@@ -41,14 +40,15 @@ const Video2 = ({
             streamManager.addVideoElement(videoRef.current);
         }
 
-        if (videoRef.current && deviceSetting) {
-            videoRef.current.setSinkId(selectedAudioOutputDeviceId)
-                .then(() => {
-                })
-                .catch(error => {
-                    console.error('Error setting audio output: ', error);
-                });
-        }
+        // if (videoRef.current && deviceSetting) {
+        //
+        //     videoRef.current.setSinkId(selectedAudioOutputDeviceId)
+        //         .then(() => {
+        //         })
+        //         .catch(error => {
+        //             console.error('Error setting audio output: ', error);
+        //         });
+        // }
 
     }, [streamManager]);
 
