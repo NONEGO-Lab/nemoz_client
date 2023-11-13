@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 
 
 
-const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
+const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
     const {register, handleSubmit, control, formState: {errors}, setError, onChange} = useForm();
     const [imgUrl, setImgUrl] = useState({
@@ -83,7 +83,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
                 </div>
                 <div onClick={() => setOnModal(false)}
                      className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
-                    <img src={"../images/closeIcon.png"} alt='close-icon'/>
+                    <img src={"/images/closeIcon.png"} alt='close-icon'/>
                 </div>
             </div>
 
@@ -246,7 +246,7 @@ const CreateRoom2 = ({setOnModal, getEventListApi, eventList}) => {
     </ModalFrame>);
 };
 
-export default memo(CreateRoom2);
+export default memo(CreateRoom);
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -283,7 +283,7 @@ const customStyles = {
 }
 
 const ArrowDownIcon = () => {
-    return <img src="../images/nemozPlusIcon.png" alt={"arrow-down"} className={`w-[20px] h-[20px]`}/>;
+    return <img src="/images/nemozPlusIcon.png" alt={"arrow-down"} className={`w-[20px] h-[20px]`}/>;
 };
 
 const DropdownIndicator = (props) => {

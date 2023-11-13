@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../../element";
 import {Layout} from "../../shared/Layout";
-import CreateRoom2 from "../../room/components/CreateRoom2";
+import CreateRoom from "../../room/components/CreateRoom";
 import WaitingList from "../../call/pages/components/WaitingList";
 import FanDetail from "../../fans/pages/components/FanDetail";
 import AddUser from "../../call/pages/components/AddUser";
@@ -88,7 +88,7 @@ const RoomListView = () => {
             </div>
 
 
-            {isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
+            {isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
                                               getEventListApi={getEventListApi} eventList={eventList}/>}
             {currentRoom.room_id &&
                 <WaitingList
