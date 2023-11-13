@@ -1,4 +1,4 @@
-import React, {useState, memo, useCallback, useEffect} from "react";
+import React, {useState, memo, useCallback} from "react";
 import {ModalFrame} from "../../modal/ModalFrame";
 import {Input, Button, Select} from "../../element";
 import {useForm, Controller} from "react-hook-form";
@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 
 const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
     const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
-    const {register, handleSubmit, control, formState: {errors}, setError, onChange} = useForm();
+    const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
     });
