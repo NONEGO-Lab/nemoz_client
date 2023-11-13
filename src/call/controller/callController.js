@@ -172,7 +172,6 @@ export const CallController = () => {
     }
 
     const getCurrentFanInfo = async () => {
-        console.log('????')
         let roomId = roomInfo.room_id;
         const eventId = roomInfo.event_id
         try {
