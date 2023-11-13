@@ -3,9 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addTestFanInfo, clearTestSession} from "../../redux/modules/testSlice";
 import {attendeeApi} from "../data/attendee_data";
-import {roomApi} from "../../room/data/room_data";
-import {setError, setIsError} from "../../redux/modules/errorSlice";
-import {addEventName, currentEvent, setEventIds} from "../../redux/modules/eventSlice";
+import {addEventName, setEventIds} from "../../redux/modules/eventSlice";
 
 export const ParticipantController = () => {
   const navigate = useNavigate();

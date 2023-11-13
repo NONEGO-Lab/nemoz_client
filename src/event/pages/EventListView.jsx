@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../../shared/Header";
 import { EventListController as controller } from "../controller/eventListController";
 

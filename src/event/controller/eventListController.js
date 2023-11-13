@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addEventInfo, addEventList, setEventIds} from "../../redux/modules/eventSlice";
+import {addEventInfo, addEventList} from "../../redux/modules/eventSlice";
 import {eventApi} from "../data/event_data";
 import {setError, setIsError} from "../../redux/modules/errorSlice";
 
