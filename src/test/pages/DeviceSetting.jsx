@@ -126,6 +126,13 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                         {/*    border={"border border-[#c7c7c7] rounded-[10px]"}*/}
                         {/*/>*/}
                         <DeviceSelect
+                            label={
+                                <img
+                                    src="/images/micIcon.png"
+                                    className="w-[19px] h-[28px] mr-[2px]"
+                                    alt={"mic"}
+                                />
+                            }
                             register={register}
                             options={audioList ?? []}
                             name={"selectedAudioDevices"}
@@ -134,6 +141,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                             mb={"mb-[20px]"}
                         />
                         <DeviceSelect
+                            label={<img src="/images/soundIcon.png" className="w-[27px] h-[23px] mr-[2px]" alt={'speaker'}/>}
                             register={register}
                             options={audioOuputList ?? []}
                             name={"selectedAudioOutputDevices"}
