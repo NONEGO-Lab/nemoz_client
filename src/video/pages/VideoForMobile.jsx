@@ -1,25 +1,20 @@
 import React, {useRef, useEffect, Fragment, useState} from "react";
 import {useSelector} from "react-redux";
 import {upper_imoticon_path, down_imoticon_path, emoji_list} from "../../common/imoticon_path";
-import Toast from "../../shared/Toast";
 import {nanoid} from "nanoid";
-import {subscribedFanInfo} from "../../redux/modules/videoSlice";
 import {timeToKorean} from "../../utils/convert";
 import {Timer} from "../../call/pages/components";
 import MobileToast from "../../shared/MobileToast";
 import {sock} from "../../socket/config";
+import {TbMoodSmileFilled, TbMoodSmile} from 'react-icons/tb';
 
 const VideoForMobile = ({
                             streamManager,
                             style,
                             fanInfo,
                             warnCnt,
-                            // emoticonToggle,
-                            setEmoticonToggle,
                             sendReactionHandler,
                             isWebFullScreen,
-                            setIsWebFullScreen,
-                            deviceSetting,
                             reserved_time,
                             fanEnterNoti,
                             leftTimeRef,
@@ -44,17 +39,17 @@ const VideoForMobile = ({
 
     const isFan = streamManager.role === 'member'
     const isStaff = streamManager.role === 'staff'
-    const removeFanLetterInMobile = (e) =>{
+    const removeFanLetterInMobile = (e) => {
         e.stopPropagation()
         setToggleMobileFanLetter(false)
     }
-    const onClickMobileFullScreen = () =>{
+    const onClickMobileFullScreen = () => {
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
         document.getElementsByTagName('body')[0].style.background = '#000'
         sock.emit('rotateFan', roomNum, true)
         setIsFullScreenMobile(true)
     }
-    const onClickMobileHalfScreen = () =>{
+    const onClickMobileHalfScreen = () => {
         let roomNum = `${roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
         document.getElementsByTagName('body')[0].style.background = ''
         sock.emit('rotateFan', roomNum, false)
@@ -72,40 +67,54 @@ const VideoForMobile = ({
             }
             {isFan &&
                 <>
-                    <div className={`w-[100vw] text-white text-[18px] absolute top-[1rem] left-[80%] flex items-center`}>
+                    <div
+                        className={`w-[100vw] text-white text-[18px] absolute top-[1rem] left-[80%] flex items-center`}>
 
-                        <Timer inMeet={true} leftTimeRef={leftTimeRef} />
+                        <Timer inMeet={true} leftTimeRef={leftTimeRef}/>
                         <div className={'w-[8px] h-[8px] rounded-full bg-[#02c5cb] ml-[6px]'}/>
                     </div>
-                <div
-                    className={` w-[100vw] text-white text-[18px] absolute bottom-[5vw] flex ${fanEnterNoti ? "justify-between" : "justify-end"} `}>
-                    {fanEnterNoti && <div className={`ml-[30px]`}>
-                        <img className={"w-[22px] mr-[12px]"} src={"/images/screenIconChatroom.png"}
-                             alt={"screenIconChatroom"}/>
-                        <span
-                            className={"whitespace-nowrap transition-none"}>{userInfo?.username}님, 연결되었습니다.<br/>
+                    <div
+                        className={` w-[100vw] text-white text-[18px] absolute bottom-[5vw] flex ${fanEnterNoti ? "justify-between" : "justify-end"} `}>
+                        {fanEnterNoti && <div className={`ml-[30px]`}>
+                            <img className={"w-[22px] mr-[12px]"} src={"/images/screenIconChatroom.png"}
+                                 alt={"screenIconChatroom"}/>
+                            <span
+                                className={"whitespace-nowrap transition-none"}>{userInfo?.username}님, 연결되었습니다.<br/>
                         (영상통화 <b>{timeToKorean(reserved_time)}</b>)
                     </span>
-                    </div>}
-                    <div className={`mr-[30px] flex ${isTest && 'hidden'}`}>
-                        <div className={`flex items-center`}>
-                            <img className={"w-[30px]"} src={"/images/fanLetterWhite.png"}
-                                 onClick={() => setToggleMobileFanLetter(true)}
-                                 alt={"fanletterIcon"}/>
-                        </div>
-                        <div className={`flex items-center ml-[12.5px] mr-[10px]`}>
-                            <img className={"w-[30px] mr-[5px]"}
-                                 src={`/images/${warnCnt > 0 ? "warningIconInScreen.png" : "warningPhoneIcon.png"}`}
-                                 alt={"warningIcon"}/>
-                            <span className={"font-bold text-white"}>{warnCnt || 0}</span>
-                        </div>
-                        <div className={`flex items-center `}>
-                            <img className={"w-[30px]"} src={"/images/emoticonIcon.png"}
-                                 onClick={() => setToggleMobilsEmoticons(true)}
-                                 alt={"emoticonIcon"}/>
+                        </div>}
+                        <div className={`mr-[30px] flex ${isTest && 'hidden'}`}>
+                            <div className={`flex items-center`}>
+                                <img className={"w-[30px]"} src={"/images/fanLetterWhite.png"}
+                                     onClick={() => setToggleMobileFanLetter(true)}
+                                     alt={"fanletterIcon"}/>
+                            </div>
+                            <div className={`flex items-center ml-[12.5px] mr-[10px]`}>
+                                <img className={"w-[30px] mr-[5px]"}
+                                     src={`/images/${warnCnt > 0 ? "warningIconInScreen.png" : "warningPhoneIcon.png"}`}
+                                     alt={"warningIcon"}/>
+                                <span className={"font-bold text-white"}>{warnCnt || 0}</span>
+                            </div>
+                            <div className={`flex items-center`}>
+                                {/*<img className={"w-[30px]"} src={"/images/emoticonIcon.png"}*/}
+                                {/*     onClick={() => setToggleMobilsEmoticons(true)}*/}
+                                {/*     alt={"emoticonIcon"}/>*/}
+
+                                {!toggleMobilsEmoticons ? <TbMoodSmile style={{
+                                        color: 'white',
+                                        width: '30px',
+                                        height: '30px',
+                                        cursor: "pointer"
+                                    }} onClick={() => setToggleMobilsEmoticons(true)}/> :
+                                    <TbMoodSmileFilled style={{
+                                        color: 'white',
+                                        width: '30px',
+                                        height: '30px',
+                                        cursor: "pointer"
+                                    }} onClick={() => setToggleMobilsEmoticons(false)}/>}
+                            </div>
                         </div>
                     </div>
-                </div>
                 </>
             }
             {(isFan && toggleMobileFanLetter) &&
@@ -195,9 +204,18 @@ const VideoForMobile = ({
                                 <span className={"font-bold text-white"}>{warnCnt || 0}</span>
                             </div>
                             <div className={`flex items-center mr-[20px]`}>
-                                <img className={"w-[30px]"} src={"/images/emoticonIcon.png"}
-                                     onClick={() => setToggleMobilsEmoticons(true)}
-                                     alt={"emoticonIcon"}/>
+                                {!toggleMobilsEmoticons ? <TbMoodSmile style={{
+                                        color: 'white',
+                                        width: '30px',
+                                        height: '30px',
+                                        cursor: "pointer"
+                                    }} onClick={() => setToggleMobilsEmoticons(true)}/> :
+                                    <TbMoodSmileFilled style={{
+                                        color: 'white',
+                                        width: '30px',
+                                        height: '30px',
+                                        cursor: "pointer"
+                                    }} onClick={() => setToggleMobilsEmoticons(false)}/>}
                             </div>
 
                             <img
@@ -237,12 +255,12 @@ const VideoForMobile = ({
 
             }
 
-            {(isFullScreenMobile && toggleMobileFanLetter)&&
+            {(isFullScreenMobile && toggleMobileFanLetter) &&
                 <div className={'bg-white top-0 right-0 w-[30%] h-full absolute z-[99999]'}>
                     <img src={"../images/closeIcon.png"}
                          className={"w-[15px] h-[15px] float-right mr-[30px] mt-[30px] cursor-pointer"}
                          alt={"close-icon"}
-                         onClick={(e)=>removeFanLetterInMobile(e)}/>
+                         onClick={(e) => removeFanLetterInMobile(e)}/>
                     <div className={`clear-both py-[25px] px-[40px]`}>
                         {fanInfo.letter || '없음'}
                     </div>
@@ -250,7 +268,7 @@ const VideoForMobile = ({
 
             }
 
-            {(isFullScreenMobile && toggleMobilsEmoticons)&&
+            {(isFullScreenMobile && toggleMobilsEmoticons) &&
                 <div className={'bg-white top-0 right-0 w-[30%] h-full absolute z-[99999]'}>
                     <img src={"../images/closeIcon.png"}
                          className={"w-[15px] h-[15px] float-right mr-[30px] mt-[30px] mb-[60px] cursor-pointer"}
@@ -258,7 +276,7 @@ const VideoForMobile = ({
                          onClick={() => setToggleMobilsEmoticons(false)}/>
                     <div className={`clear-both mx-[62px]`}>
                         <div className={"flex"}>
-                            {emoji_list.slice(0,3)?.map((i, idx) =>
+                            {emoji_list.slice(0, 3)?.map((i, idx) =>
                                 <div className={`flex flex-col items-center mr-[35px]`} key={i.name}
                                      onClick={() => sendReactionHandler({
                                          emo: i.emo,
@@ -274,7 +292,7 @@ const VideoForMobile = ({
                             }
                         </div>
                         <div className={"flex"}>
-                            {emoji_list.slice(3,6)?.map((i, idx) =>
+                            {emoji_list.slice(3, 6)?.map((i, idx) =>
                                 <div className={`flex flex-col items-center mr-[35px]`} key={i.name}
                                      onClick={() => sendReactionHandler({
                                          emo: i.emo,
@@ -290,7 +308,7 @@ const VideoForMobile = ({
                             }
                         </div>
                         <div className={"flex"}>
-                            {emoji_list.slice(6,9)?.map((i, idx) =>
+                            {emoji_list.slice(6, 9)?.map((i, idx) =>
                                 <div className={`flex flex-col items-center mr-[35px]`} key={i.name}
                                      onClick={() => sendReactionHandler({
                                          emo: i.emo,
