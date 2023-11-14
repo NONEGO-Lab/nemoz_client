@@ -17,7 +17,7 @@ export const Layout = ({
     return (
         <div className="w-[100%] m-[0 auto]">
             <Header/>
-            <div className="">
+            <div className="w-[100vw]">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
                                      endText={endText}

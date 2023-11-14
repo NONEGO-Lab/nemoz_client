@@ -3,7 +3,7 @@ import React from "react";
 const Button = (props) => {
 
     const {
-        children, _onClick, type, style, tabIndex, disabled,
+        children, _onClick, type, style, tabIndex, disabled,coverWidth,
         margin, borderColor, width, height, textColor, bgColor, createRoom, textSize
     } = props;
 
@@ -29,7 +29,7 @@ const Button = (props) => {
 
     } else {
         return (
-            <div className={'flex items-center justify-center'}>
+            <div className={`flex items-center justify-center ${coverWidth}`}>
                 {createRoom &&<div className={'w-[22px] h-[22px]'}>
                     <img src={"../images/plusIcon.png"} alt='create-room-icon'/>
                 </div>}

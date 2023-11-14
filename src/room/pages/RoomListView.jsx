@@ -32,19 +32,19 @@ const RoomListView = () => {
 
             {/*table 뷰*/}
             {/* Tabler Header*/}
-            <div>
+
                 <div
                     className="flex items-center w-[100%]  px-[100px] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 pb-[14px]">
-                    <div className="w-[288px]">Event</div>
-                    <div className="w-[195px]">Artist</div>
-                    <div className="w-[317px]">Fan</div>
-                    <div className="w-[132px]">Waiting</div>
-                    <div className="w-[120px]">Start</div>
-                    <div>Quit</div>
+                    <div className="w-[30vw]">Event</div>
+                    <div className="w-[20vw]">Artist</div>
+                    <div className="w-[30vw]">Fan</div>
+                    <div className="w-[10vw] text-center">Waiting</div>
+                    <div className="w-[10vw] text-center">Start</div>
+                    <div className={'w-[10vw] text-center'}>Quit</div>
                 </div>
 
 
-                <div className="px-[100px]">
+                <div className="w-[100vw] px-[100px]">
 
                     <StaffProvider role={role}>
                         {
@@ -66,10 +66,10 @@ const RoomListView = () => {
                         }
                     </ArtistProvider>
                 </div>
-            </div>
+
 
             {/* page */}
-            <div className={"w-[100%] text-[15px] pt-[20px] flex justify-center items-center"}>
+            <div className={"text-[15px] pt-[20px] flex justify-center items-center"}>
                 {
                     page?.map((num, index) => {
                         return (
@@ -127,33 +127,34 @@ const Room = ({room, endRoomApi, setCurrentRoom, id, bgColor, eventList, navigat
     }
 
     return (
-        <div className={`flex items-center h-[70px] ${bgColor} `} key={id}>
-            <div className="w-[288px]">
+        <div className={`flex items-center h-[70px] ${bgColor} w-[100%]`} key={id}>
+            <div className="w-[30vw]">
                 {room.room_name}
             </div>
 
-            <div className="w-[195px] font-bold">
+            <div className="font-bold w-[20vw]">
                 {room.artist_name}
             </div>
 
-            <div className="w-[317px]">
+            <div className="w-[30vw]">
                 {room.fan_name}
             </div>
 
-            <Button _onClick={() => setCurrentRoom({event_id, ...room})} width={"w-[132px]"}>
+            <Button _onClick={() => setCurrentRoom({event_id, ...room})} coverWidth={'w-[10vw]'}>
                 <div className={"w-[26px] h-[25px]"}>
                     <img src="../images/waitingIcon.png" alt={'waiting-icon'}/>
                 </div>
             </Button>
-            <Button _onClick={() => joinAdminSession(room)} width={"w-[120px]"}>
+            <Button _onClick={() => joinAdminSession(room)} coverWidth={'w-[10vw]'}>
                 <div className={"w-[26px] h-[25px]"}>
-                    <img src="../images/startIcon.png" alt={'start-icon'}/>
+                    <img src="../images/startIcon.png" alt={'start-icon'} />
                 </div>
             </Button>
             <Button
                 _onClick={() => roomEnd(room)}
+                coverWidth={'w-[10vw]'}
             >
-                <div className={"w-[26px] h-[25px]"}>
+                <div className={"w-[26px] h-[25px]"} >
                     <img src="../images/quitIcon.png" alt={'quit-icon'}/>
                 </div>
             </Button>
