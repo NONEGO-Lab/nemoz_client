@@ -21,7 +21,7 @@ const FanDetail = ({setOnModal, currentFanId, eventId}) => {
     return (
         <ModalFrameDepth setOnModal={setOnModal} style={style}>
             <div>
-                <div className="text-[1.2rem] font-[500] px-[45px] pt-[45px] pb-[30px]">
+                <div className={"text-[1.2rem] px-[45px] pt-[45px] pb-[30px] font-bold"} >
                     Fan Info
                 </div>
                 <div>
