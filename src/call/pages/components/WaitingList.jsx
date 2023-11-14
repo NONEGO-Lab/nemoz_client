@@ -18,7 +18,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
         originalWaitingList.current = result?.data;
     }
 
-    const style = "w-[650px] h-[900px] drop-shadow-md  rounded-[15px] bg-[#fff]";
+    const style = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";;
     const addFanModal = useSelector(state => state.common.addFanModalToggle)
 
     const [waitingList, setWaitingList] = useState([]);
@@ -56,10 +56,10 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
     return (
         <ModalFrame setOnModal={setOnModal} style={style}>
 
-            <div className="flex justify-between items-center mt-[60px] mb-[40px] mx-[60px] ">
-                <div className={"text-[24px] font-[600] text-[#444]"}>Fan List</div>
+            <div className="flex justify-between items-center mt-[45px] mb-[30px] mx-[45px] ">
+                <div className={"text-[1.25rem] font-[600] text-[#444]"}>Fan List</div>
 
-                <img className={"w-20px h-[20px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
+                <img className={"w-[15px] h-[15px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
                      onClick={setOnModal}/>
 
             </div>
@@ -79,11 +79,11 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                 </div>
             </DndProvider>
 
-            <div className="flex items-center justify-start pt-[46px] px-[60px]">
+            <div className="flex items-center justify-start pt-[32px] px-[22.5px]">
                 <div>
                     <Button
                         _onClick={addUserOpenHandler}
-                        width={"w-[140px]"}
+                        width={"w-[7rem]"}
                         height={"min-h-[50px]"}
                         style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
                     >
@@ -96,7 +96,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
 
                 <Button
                     _onClick={resetOrder}
-                    width={"w-[140px]"}
+                    width={"w-[7rem]"}
                     height={"min-h-[50px]"}
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center  ml-[90px] mr-[20px]"}
                 >
@@ -108,7 +108,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
 
                 <Button
                     _onClick={saveReOrder}
-                    width={"w-[140px]"}
+                    width={"w-[7rem]"}
                     height={"min-h-[50px]"}
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
                 >
@@ -131,7 +131,7 @@ const containerStyles = {
     display: 'flex',
     flexDirection: 'column',
     width: "100%",
-    maxHeight: "625px",
+    maxHeight: "475px",
     overflowY: "scroll"
 };
 
@@ -157,22 +157,22 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
     });
 
     const styles = {
-        width: '650px',
         minHeight: '62.5px',
         backgroundColor: `${index % 2 === 0 ? "#f0f0f0" : "#e9e9e9"}`,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'move',
+        padding:'0 45px'
     };
 
 
     return (
         <div ref={(node) => ref(drop(node))} style={{...styles, opacity: isDragging ? 0.4 : 1}}>
-            <div className="text-[19px] font-bold">
+            <div className="text-[1rem] font-bold">
                 {fan.fan_name}
             </div>
-            <div className="text-[19px] ml-[72px] mr-[211px]">
+            <div className="text-[1rem] ml-[4.5rem] mr-[9rem]">
                 {fan.status === "waiting" ? "대기중" : "접속중"}
             </div>
 
@@ -181,7 +181,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
                 onClick={() => {
                     fanDetailOpenHandler(fan)
                 }}
-                className="w-[110px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                className="w-[83px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
             >
                 <div className={"flex items-center justify-center"}>
                     Fan Info
