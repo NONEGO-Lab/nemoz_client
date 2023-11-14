@@ -62,7 +62,7 @@ const TestVideoArea = ({
                         }
                     </div>
                     {!isFan && isTestConnect && <ConnectControl2 setToggleNext={setToggleNext} setIsSuccess={setIsSuccess}/>}
-                    {((!isFan && !subscriber) || (isFan && !publisherVideo))&&
+                    {(!isFan && !subscriber) || (isFan && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
                                     className='flex justify-center items-center text-[25px] text-white w-full'>{isFan? username:fan_name}</span>

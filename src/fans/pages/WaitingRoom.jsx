@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from "react";
-import {SizeLayout, VideoLayout, SideBar} from "../../shared/Layout";
+import React from "react";
+import {SizeLayout} from "../../shared/Layout";
 import Header from "../../shared/Header";
-import {MobilePopup} from "../../shared/MobilePopup";
 import {WaitRoomController as controller} from "../controller/waitRoomController";
 import WaitingMents from "./components/WaitingMents";
-import {useSelector} from "react-redux";
 import ReactPlayer from "react-player";
 import DeviceSetting from "../../test/pages/DeviceSetting";
 import MobileHeader from "shared/MobileHeader";
@@ -24,21 +22,19 @@ const WaitingRoom = () => {
         myWaitInfo,
         isAvailableCall,
         isReadyTest,
-        isMobPopupOpen,
         toggleDeviceSetting,
     } = controller();
 
     const wait_url = myWaitInfo?.waiting?.std_screen_url;
     const isVideo = myWaitInfo?.waiting?.mimetype?.includes("video");
     const isTest = myWaitInfo?.fan_info?.is_tested === 0
-    // const isTest =false
+
     if (!isMobile) {
         return (
             <SizeLayout isWaitingRoom={true}>
                 <Header/>
                 <div className="flex flex-col">
                     {/* 대기 화면*/}
-
                     {!isVideo ? (
                         wait_url ? (
                             <div className={"min-h-[781px]"}>
@@ -81,7 +77,6 @@ const WaitingRoom = () => {
                         </div>
 
                         {/* 버튼 */}
-
                         <div className={"flex justify-center items-center"}>
                             <button
                                 disabled={!isReadyTest}
@@ -119,10 +114,8 @@ const WaitingRoom = () => {
     } else {
         return (
             <div className={"bg-white w-[100vw] h-[100vh] absolute top-0 left-0"}>
-                {/* mobile view */}
-                {/* header (logo  || user info / logout btn ) */}
-                <MobileHeader/>
 
+                <MobileHeader/>
                 <div
                     className={
                         "flex flex-col justify-center items-center pt-[100px] absolute top-55"
@@ -184,7 +177,6 @@ const WaitingRoom = () => {
                 </div>
 
                 {/* button area */}
-                {/* 케이스 맞춰서 처리 필요 */}
               <div className="w-[100%] p-[5vw] absolute bottom-0">
                 {(isTest)
                     && (
@@ -212,59 +204,7 @@ const WaitingRoom = () => {
                         </button>
                     )
                 }
-
-                {/*{myWaitInfo.fan_info.is_tested !== 1 && myWaitInfo.fan_info.is_tested !== 0 && (*/}
-                {/*    <button*/}
-                {/*        onClick={() => {*/}
-                {/*            fanLogout();*/}
-                {/*        }}*/}
-                {/*        className={`w-[100%] min-h-[50px] rounded-[10px] text-[1.2rem] cursor-pointer  text-white font-medium ${"bg-[#00cace]"} flex items-center justify-center`}*/}
-                {/*    >*/}
-                {/*        나가기*/}
-                {/*    </button>*/}
-                {/*)}*/}
-
-
               </div>
-
-
-
-
-                    {/*{userInfo.isCallTested && !userInfo.isCallFinished && (*/}
-                    {/*    <button*/}
-                    {/*        disabled={!isAvailableCall}*/}
-                    {/*        onClick={goToArtistRoom}*/}
-                    {/*        className={`w-[100%] min-h-[50px] rounded-[10px] text-[1.2rem] cursor-pointer  text-white font-medium ${*/}
-                    {/*            isAvailableCall ? "bg-[#00cace]" : "bg-[#c8c8c8]"*/}
-                    {/*        } flex items-center justify-center`}*/}
-                    {/*    >*/}
-                    {/*        통화 시작*/}
-                    {/*    </button>*/}
-                    {/*)}*/}
-
-                {/*</div>*/}
-
-                {/* waiting status :: end call / waiting / goto connect test */}
-
-                {/* {isMobPopupOpen &&
-          (userInfo.isCallTested ? (
-            isCallFinished ? (
-              <MobilePopup type={"endCall"} closePopup={closePopup} />
-            ) : (
-              <MobilePopup
-                type={"waiting"}
-                closePopup={closePopup}
-                isAvailableCall={isAvailableCall}
-              />
-            )
-          ) : (
-            <MobilePopup
-              type={"goToConnectTest"}
-              closePopup={closePopup}
-              isReadyTest={isReadyTest}
-            />
-          ))} */}
-
                 {toggleDeviceSetting &&
                     <MobileDeviceSetting closeDeviceSetting={closePopup}/>}
             </div>

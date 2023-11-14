@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Button} from "../../element";
 import {Layout} from "../../shared/Layout";
-import CreateRoom2 from "../../room/components/CreateRoom2";
+import CreateRoom from "../../room/components/CreateRoom";
 import WaitingList from "../../call/pages/components/WaitingList";
 import FanDetail from "../../fans/pages/components/FanDetail";
 import AddUser from "../../call/pages/components/AddUser";
@@ -49,7 +49,7 @@ const RoomListView = () => {
                     <StaffProvider role={role}>
                         {
                             roomList?.map((room, idx) => {
-                                return <Room room={room} key={room.room_id} setCurrentRoom={setCurrentRoom}
+                                return <Room room={room} key={room.room_id} id={idx}  setCurrentRoom={setCurrentRoom}
                                              eventList={eventList} navigate={navigate} dispatch={dispatch}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
@@ -59,7 +59,7 @@ const RoomListView = () => {
                     <ArtistProvider role={role}>
                         {
                             roomList.filter((room) => room.artist_id === userInfo.artistNo||userInfo.no).map((room, idx) => {
-                                return <Room room={room} key={room?.room_id} eventList={eventList} setCurrentRoom={setCurrentRoom}
+                                return <Room room={room} key={room?.room_id} id={idx}  eventList={eventList} setCurrentRoom={setCurrentRoom}
                                              navigate={navigate} dispatch={dispatch}
                                              endRoomApi={endRoomApi} bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                             })
@@ -88,7 +88,7 @@ const RoomListView = () => {
             </div>
 
 
-            {isOpenRoomCreate && <CreateRoom2 setOnModal={() => setIsOpenRoomCreate(false)}
+            {isOpenRoomCreate && <CreateRoom setOnModal={() => setIsOpenRoomCreate(false)}
                                               getEventListApi={getEventListApi} eventList={eventList}/>}
             {currentRoom.room_id &&
                 <WaitingList
@@ -109,10 +109,9 @@ const RoomListView = () => {
 
 export default RoomListView;
 
-const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList, navigate, dispatch}) => {
+const Room = ({room, endRoomApi, setCurrentRoom, id, bgColor, eventList, navigate, dispatch}) => {
 
     const event_id = eventList.find(e => e.event_name === room.room_name)?.event_id
-    dispatch(currentEvent(event_id))
     const roomEnd = (room) => {
         endRoomApi(room)
     }
@@ -122,12 +121,13 @@ const Room = ({room, endRoomApi, setCurrentRoom, key, bgColor, eventList, naviga
     }
 
     const joinAdminSession = async (room) => {
+        dispatch(currentEvent(event_id))
         await joinNewSession(room);
         navigate(`/video2/${room.room_id}`);
     }
 
     return (
-        <div className={`flex items-center h-[70px] ${bgColor} `}>
+        <div className={`flex items-center h-[70px] ${bgColor} `} key={id}>
             <div className="w-[288px]">
                 {room.room_name}
             </div>

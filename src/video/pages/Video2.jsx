@@ -6,7 +6,7 @@ import {nanoid} from "nanoid";
 import {subscribedFanInfo} from "../../redux/modules/videoSlice";
 import {timeToKorean} from "../../utils/convert";
 import {Timer} from "../../call/pages/components";
-
+import {TbMoodSmileFilled, TbMoodSmile} from 'react-icons/tb';
 
 const Video2 = ({
                     streamManager,
@@ -32,7 +32,7 @@ const Video2 = ({
     const fanRotateScreen = useSelector(state => state.video.rotateFanScreen)
     const unique_id = nanoid(4)
     const selectedAudioOutputDeviceId = localStorage.getItem("audioOutputId")
-    const vStyle = {transform:'rotate(90deg)', width:'368px', height:'650px', margin:'-140px 0 -10vw 141px '}
+    const vStyle = {transform: 'rotate(90deg)', width: '368px', height: '650px', margin: '-140px 0 -10vw 141px '}
 
     useEffect(() => {
 
@@ -76,7 +76,7 @@ const Video2 = ({
                     className={`object-contain h-[100%] w-full ${style} scale-x-[-1] `}
                     autoPlay
                     ref={videoRef}
-                    style={(left&&fanRotateScreen)? vStyle : null}
+                    style={(left && fanRotateScreen) ? vStyle : null}
                 />
             }
 
@@ -156,8 +156,18 @@ const Video2 = ({
                     </div>}
                     {currentRole === 'member' &&
                         <div className={"ml-[30px] flex items-center"}>
-                            <img className={"w-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                                 alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
+                            {!emoticonToggle.left ? <TbMoodSmile style={{
+                                    color: 'white',
+                                    width: '30px',
+                                    height: '30px',
+                                    cursor: "pointer"
+                                }} onClick={() => toggleEmoticon('left')}/> :
+                                <TbMoodSmileFilled style={{
+                                    color: 'white',
+                                    width: '30px',
+                                    height: '30px',
+                                    cursor: "pointer"
+                                }} onClick={() => toggleEmoticon('left')}/>}
                         </div>
                     }
                 </div>
@@ -215,12 +225,24 @@ const Video2 = ({
                 className={`absolute ${isWebFullScreen ? "w-[1280px]" : "w-[650px]"} mt-[-50px] flex items-center text-white justify-end z-100`}>
                 <div className={`flex items-center ${isWebFullScreen ? 'w-full' : ''}`}>
                     {currentRole === 'artist' ?
-                        <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
-                             alt={"emoticonIcon"} onClick={() => toggleEmoticon('right')}/>
+                        // <img className={"w-[30px] mr-[30px] cursor-pointer"} src={"/images/emoticonIcon.png"}
+                        //      alt={"emoticonIcon"} onClick={() => toggleEmoticon('right')}/>
+                        !emoticonToggle.right ? <TbMoodSmile style={{
+                                color: 'white',
+                                width: '30px',
+                                height: '30px',
+                                marginRight: '30px',
+                                cursor: "pointer"
+                            }} onClick={() => toggleEmoticon('right')}/> :
+                            <TbMoodSmileFilled style={{
+                                color: 'white',
+                                width: '30px',
+                                height: '30px',
+                                marginRight: '30px',
+                                cursor: "pointer"
+                            }} onClick={() => toggleEmoticon('right')}/>
                         :
                         <>
-
-
                             {isWebFullScreen &&
                                 <>
                                     <div className="flex justify-between w-[100%]">
@@ -235,9 +257,20 @@ const Video2 = ({
                                                 <span className={"text-[24px] ml-[8.5px]"}>{warnCnt}</span>
                                             </div>
 
-                                            <img className={"w-[30px] mx-[30px] cursor-pointer"}
-                                                 src={"/images/emoticonIcon.png"}
-                                                 alt={"emoticonIcon"} onClick={() => toggleEmoticon('left')}/>
+                                            {!emoticonToggle.left ? <TbMoodSmile style={{
+                                                    color: 'white',
+                                                    width: '30px',
+                                                    height: '30px',
+                                                    cursor: "pointer",
+                                                    margin: '0 30px'
+                                                }} onClick={() => toggleEmoticon('left')}/> :
+                                                <TbMoodSmileFilled style={{
+                                                    color: 'white',
+                                                    width: '30px',
+                                                    height: '30px',
+                                                    cursor: "pointer",
+                                                    margin: '0 30px'
+                                                }} onClick={() => toggleEmoticon('left')}/>}
                                         </div>
                                     </div>
                                 </>

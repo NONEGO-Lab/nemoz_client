@@ -1,7 +1,7 @@
 import React from 'react';
 import {secondsToMins} from "../../../utils/convert";
 
-const WatingMents = ({isCallFinished, myWaitInfo, fan_name, eventTitle}) => {
+const WaitingMents = ({isCallFinished, myWaitInfo, fan_name, eventTitle}) => {
     const isCallTested = myWaitInfo.fan_info?.is_tested === 0
     if(isCallTested){
         return(
@@ -31,4 +31,4 @@ const WatingMents = ({isCallFinished, myWaitInfo, fan_name, eventTitle}) => {
     }
 };
 
-export default WatingMents;
+export default WaitingMents;

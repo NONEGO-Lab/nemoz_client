@@ -9,24 +9,20 @@ import {sock} from "../../socket/config";
 
 const ConnectControl2 = ({setToggleNext, setIsSuccess}) => {
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const fanInfo = useSelector((state) => state.test.fanInfo);
-    const userInfo = useSelector((state) => state.user.userInfo);
-    const sessionInfo = useSelector((state) => state.test.sessionInfo);
     const eventId = useSelector((state) => state.event.eventId);
 
-    const finishTest = async () => {
-        const response = await testApi.testEnd(sessionInfo.meet_name);
-
-        // 종료되면 role에 따라 해산
-        if (response) {
-            dispatch(clearTestSession());
-            navigate("/userlist");
-            let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
-            sock.emit("leaveRoom", roomNum, userInfo, navigate)
-        }
-    }
+    // const finishTest = async () => {
+    //     const response = await testApi.testEnd(sessionInfo.meet_name);
+    //
+    //     // 종료되면 role에 따라 해산
+    //     if (response) {
+    //         dispatch(clearTestSession());
+    //         navigate("/userlist");
+    //         let roomNum = `${eventId}_test_${fanInfo.fan_id}`;
+    //         sock.emit("leaveRoom", roomNum, userInfo, navigate)
+    //     }
+    // }
 
     const successConnect = async () => {
         let fanId = fanInfo.fan_id;

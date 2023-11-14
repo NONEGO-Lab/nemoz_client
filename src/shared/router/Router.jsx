@@ -5,12 +5,8 @@ import RoomList from "../../room/pages/RoomListView";
 import { Auth } from "../Auth";
 import ParticipantList from "../../fans/pages/ParticipantListView";
 import DeviceTest from "../../test/pages/DeviceTest";
-import VideoContainer from "../../call/pages/VideoContainer";
-import CreateEvent from "../../event/pages/components/CreateEvent";
-import UpdateEvent from "../../event/pages/components/UpdateEvent";
 import EventListView from "../../event/pages/EventListView";
 import ErrorBoundary from "../../shared/ErrorBoundary";
-import ConnectTest from "../../test/pages/ConnectTest";
 import LoginView from "../../auth/pages/LoginView";
 import WaitingRoom from "../../fans/pages/WaitingRoom";
 import TmpVideoContainer from "call/pages/TmpVideoContainer";
@@ -28,17 +24,10 @@ const Router = () => {
             <Route path="/userlist" element={<Auth><ParticipantList/></Auth>}/>
             <Route path="/waitcall" element={<Auth><WaitingRoom/></Auth>}/>
             <Route path="/devicetest" element={<Auth><DeviceTest/></Auth>}/>
-            {/*<Route path="/test/:id" element={<Auth><ConnectTest/></Auth>}/>*/}
             <Route path="/test/:id" element={<Auth><TmpVideoContainer/></Auth>}/>
-            {/*<Route path="/video/:id" element={<Auth><VideoContainer/></Auth>}/>*/}
             <Route path="/video2/:id" element={<Auth><VideoContainer2/></Auth>}/>
-            <Route path="/tmpvideo" element={<Auth><TmpVideoContainer/></Auth>}/>
-            <Route path="/create/event" element={<Auth><CreateEvent/></Auth>}/>
-            <Route path="/update/event/:id" element={<Auth><UpdateEvent/></Auth>}/>
             <Route path="/eventlist" element={<Auth><EventListView/></Auth>}/>
-            
           </Routes>
-          {/*{ isError && <ErrorPopup/> }*/}
         </BrowserRouter>
       </ErrorBoundary>
 

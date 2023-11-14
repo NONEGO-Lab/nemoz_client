@@ -64,8 +64,7 @@ export const CallController = () => {
     }
 
     const [toggleNext, setToggleNext] = useState(setDefaultNextToggle())
-
-    let roomNum = `${eventId}_${roomInfo.room_id}_${sessionInfo.meetId}`;
+    let roomNum = `${roomInfo?.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
     const navigateByRole = () => {
         if (userInfo.role === "fan" || userInfo.role === 'member') {
             navigate("/waitcall");
@@ -82,6 +81,7 @@ export const CallController = () => {
                 meet_name: sessionInfo.meetName,
                 room_id: roomInfo.room_id,
                 event_id: eventId,
+                progress_time: leftTimeRef.current
                 //   fan_id 추가 필요
             }
             try {
@@ -173,6 +173,7 @@ export const CallController = () => {
 
     const getCurrentFanInfo = async () => {
         let roomId = roomInfo.room_id;
+        const eventId = roomInfo.event_id
         try {
             const result = await roomApi.getListOrder({eventId, roomId});
             const currentFan = result.fan_orders.find((fan) => fan.orders === 1);
@@ -208,7 +209,7 @@ export const CallController = () => {
     const finishCurrentCall = async () => {
         try {
             let roomId = roomInfo.room_id;
-            let eventId = roomInfo.event_id || roomInfo.event_id
+            let eventId = roomInfo.event_id
             const fanList = await roomApi.getListOrder({eventId, roomId});
             let curFan = subscribers.find((sub) => sub['role'] === 'fan' || sub['role'] === 'member');
             if(!curFan){
@@ -253,12 +254,13 @@ export const CallController = () => {
                     const otherStaffInfo = subscribers.find((sub) => sub['id'].toString() !== userInfo.id.toString());
                     sock.emit("joinNextRoom", roomNum, newSessionInfo, otherStaffInfo['id'], nextFan);
                     sock.emit("joinRoom", roomNum, userInfo);
-                    sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
+                    // sock.emit("nextCallReady", nextFan, sessionInfo, roomInfo);
                     sock.emit("checkSessionState", nextFan, roomNum, true);
 
                     setToggleNext(true)
                 } else {
                     alert('모든 팬과 미팅이 끝났습니다.')
+                    sock.emit("lastMeet", roomInfo.artist_id)
                     navigateByRole()
                 }
 

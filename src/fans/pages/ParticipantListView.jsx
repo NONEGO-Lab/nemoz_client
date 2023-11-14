@@ -9,7 +9,6 @@ const ParticipantListView = () => {
     const {
         attendeeList,
         movePage,
-        roomArray,
         isOpenFanDetail,
         currentPage,
         connectToTest,
@@ -77,7 +76,7 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor}) => {
+const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor}) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
@@ -89,21 +88,15 @@ const User = ({user, setIsOpenFanDetail, setOpenDeviceSetting, setCurrentFanId, 
                 <div className="w-[630px]">
                     <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
-                    {/* <span>{status.artist_name} 진행 중</span> */}
                     <span>{user.status.room_name}</span>
                 </div>
-                {/* 
-                is_tested 0 테스트전
-                is_tested 1 성공
-                is_tested 2 실패
-                */}
                 <div className="w-[90px] ml-[10px]">
                     {user.is_tested === 0 &&
-                        <img className="w-[14px] h-[2px]" src="../images/testBefore.png" alt='test-before'/>}
+                        <img className="w-[14px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
                     {user.is_tested === 1 &&
-                        <img className="w-[17px] h-[17px]" src="../images/testSuccess.png" alt='test-success'/>}
+                        <img className="w-[17px] h-[17px]" src="/images/testSuccess.png" alt='test-success'/>}
                     {user.is_tested === 2 &&
-                        <img className="w-[17px] h-[17px]" src="../images/testFail.png" alt='test-fail'/>}
+                        <img className="w-[17px] h-[17px]" src="/images/testFail.png" alt='test-fail'/>}
                 </div>
             </div>
 

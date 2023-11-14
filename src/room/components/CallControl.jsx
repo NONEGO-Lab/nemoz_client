@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Button } from "../../element";
 import { useVideo } from "../../call/controller/hooks/useVideo";
-import { useSocket } from "../../socket/useSocket";
 import {useDispatch, useSelector} from "react-redux";
 import { meetApi } from "../../call/data/call_data";
 import { roomApi } from "../data/room_data";
@@ -148,7 +147,6 @@ const CallControl = ({ currentFan, setCurrentFan }) => {
   return(
       <>
         <div className={"ml-4"}>
-          {/*남은 시간 : { time !== undefined && Math.floor(time/60) + ":" + Math.floor(time%60) }*/}
         </div>
         <div className="items-center my-4 border-b border-black">
           <div className="m-4">팬정보</div>

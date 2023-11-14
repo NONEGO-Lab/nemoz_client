@@ -1,4 +1,6 @@
-@import url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/css/NotoSansCJKkr.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +13,7 @@
   font-style: normal;
   font-weight: 400;
   font-stretch: condensed;
-  src: url('https://cdn.jsdelivr.net/npm/noto-sans-cjk-kr@latest/fonts/NotoSansCJKkr-');
+  src: url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap);
 }
 
 * {

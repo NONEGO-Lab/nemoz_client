@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {disconnectSession, videoReset} from "../redux/modules/videoSlice";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {logout} from "../redux/modules/userSlice";
 import {useVideo} from "../call/controller/hooks/useVideo";
 import {sock} from "../socket/config";
@@ -10,7 +10,6 @@ import {clearLocalStorage} from "../utils";
 
 
 const Header = () => {
-
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -41,7 +40,7 @@ const Header = () => {
 
                     }}
                     className="cursor-pointer w-[115px] ">
-                    <img src="../images/headerLogo.png" alt='header logo'/>
+                    <img src="/images/headerLogo.png" alt='header logo'/>
                 </div>
 
                 <div className={`${loginPage ? "hidden" : "flex"} text-[18px] `}>
@@ -52,7 +51,7 @@ const Header = () => {
                             {currentLocation() !== 'userlist' &&
                                 <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
                             <div className={'w-[33px] ml-[11px]'}>
-                                <img alt='room-icon' src="../images/roomIcon.png"/>
+                                <img alt='room-icon' src="/images/roomIcon.png"/>
                             </div>
                             <div className={` ml-[10px] ${currentLocation() !== 'userlist' ? 'font-bold' : ''}`}>
                                 방목록
@@ -68,7 +67,7 @@ const Header = () => {
                             {currentLocation() === 'userlist' &&
                                 <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
                             <div className={'w-[33px] ml-[11px]'}>
-                                <img alt='room-icon' src="../images/participantsIcon.png"/>
+                                <img alt='room-icon' src="/images/participantsIcon.png"/>
                             </div>
                             <div
                                 className={`ml-[10px] ${currentLocation() === 'userlist' ? 'font-bold' : ''}`}>
@@ -83,8 +82,10 @@ const Header = () => {
                 </div>
             </div>
             <div className="flex items-center">
-                <div className="w-[25px] h-[25px]">
-                    {!userInfo.userImg && <img src="../images/profileIcon.png" alt={'userImage'}/>}
+                <div className="w-[25px] h-[25px] rounded-full bg-white flex justify-center items-center">
+                    {isFan && <img src="/images/profileIcon.png" alt={'userImage'}/>}
+                    {userInfo.role==='staff' && <img src="/images/staffIcon.png" alt={'staffIcon'} className={'w-[18px]'}/>}
+                    {userInfo.role==='artist' && <img src="/images/starIcon.png" alt={'starIcon'} className={'w-[18px]'}/>}
                 </div>
                 <div className="cursor-pointer mr-[10px] ml-[7px]">{userInfo.username}</div>
                 <div
@@ -100,7 +101,7 @@ const Header = () => {
                         navigate("/");
                     }}
                     className="w-[72px] cursor-pointer">
-                    <img src="../images/logoutIcon.png" alt={"logout"}/>
+                    <img src="/images/logoutIcon.png" alt={"logout"}/>
                 </div>
             </div>
         </div>

@@ -1,8 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {addToast, deleteToast, deleteToastAfter3s} from "../../redux/modules/toastSlice";
 import { useParams } from "react-router-dom";
-import { meetApi } from "../../call/data/call_data";
 import { sock } from "../../socket/config";
 
 export const useReaction = () => {

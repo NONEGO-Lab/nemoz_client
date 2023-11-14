@@ -9,7 +9,7 @@ const Select = (props) => {
     return (
         <div
             className={`flex ${items} ${justify} ${border ? border : "border-b-[1.5px] border-b-[#c7c7c7]"} min-h-[44px] ${mb} ${pb}`}>
-            <label htmlFor={name} className=" flex items-center text-[20px] text-[#646464] font-medium">
+            <label htmlFor={name} className=" flex items-center text-[1rem] text-[#646464] font-medium">
                 {label}
             </label>
             <select

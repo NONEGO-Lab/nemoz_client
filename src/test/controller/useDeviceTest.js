@@ -13,7 +13,7 @@ export const useDeviceTest = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const sessionInfo = useSelector((state) => state.device.sessionInfo);
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-  console.log(isMobile, 'isMobile')
+
   // 나가기 전에 세션 관련 리덕스 정보 삭제
   const msgBeforeOut = () => {
     dispatch(clearDeviceSession());
@@ -130,18 +130,24 @@ export const useDeviceTest = () => {
 
   useEffect(() => {
     if(!isMobile){
-      console.log('fdafgadfdsafas')
       navigator.mediaDevices.enumerateDevices()
           .then(devices => {
             const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
-            console.log(audioOutputDevices, 'audioOutputDevicesaudioOutputDevices')
             dispatch(addAudioOutputDevices(audioOutputDevices))
           })
           .catch(error => {
             console.error('Error enumerating audio output devices: ', error);
           });
     }else{
-      dispatch(addAudioOutputDevices([]))
+      dispatch(
+          addAudioOutputDevices([
+            {
+              deviceId: 'default',
+              kind: 'audiooutput',
+              label: '모바일 환경에서는 기기 설정을 따릅니다.',
+              groupId: 'default',
+            },
+          ]))
     }
 
   }, []);
