@@ -1,6 +1,5 @@
 import React from "react";
 import {BrowserRouter, Routes, Route,} from "react-router-dom";
-import SignUpView from "../../auth/pages/SignUpView";
 import RoomList from "../../room/pages/RoomListView";
 import { Auth } from "../Auth";
 import ParticipantList from "../../fans/pages/ParticipantListView";
@@ -19,7 +18,6 @@ const Router = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LoginView/>}/>
-            <Route path="/signup" element={<SignUpView/>}/>
             <Route path="/roomlist" element={<Auth><RoomList/></Auth>}/>
             <Route path="/userlist" element={<Auth><ParticipantList/></Auth>}/>
             <Route path="/waitcall" element={<Auth><WaitingRoom/></Auth>}/>

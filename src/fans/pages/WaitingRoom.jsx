@@ -118,7 +118,7 @@ const WaitingRoom = () => {
                 <MobileHeader/>
                 <div
                     className={
-                        "flex flex-col justify-center items-center pt-[100px] absolute top-55"
+                        "flex flex-col justify-center items-center pt-[100px] absolute top-55 w-[100vw]"
                     }
                 >
                     <img className="w-[68px] m-[16px]" src={"../images/roomIcon.png"}/>
