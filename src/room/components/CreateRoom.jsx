@@ -144,7 +144,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     <div>
                         <input
                             {...register('time')}
-                            className={`bg-white text-[1.25rem] text-[#646464] w-[100px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            className={`bg-white text-[1.25rem] text-[#646464] w-[5rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             name={"time"}
                             type={"number"}
                         >
@@ -215,7 +215,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             {...field}
                             styles={customStyles}
                             width="100%"
-                            height="44px"
+                            height="33px"
                             closeMenuOnSelect={false}
                             components={{DropdownIndicator, IndicatorSeparator: () => null}}
                             isSearchable={false}
@@ -257,7 +257,7 @@ const customStyles = {
 
     control: (_, {selectProps: {}}) => ({
         width: "100%",
-        height: "44px",
+        height: "33px",
         borderRadius: "7px",
         display:'flex'
         // padding: 2,
@@ -273,18 +273,18 @@ const customStyles = {
     multiValue: () => ({
         borderRadius: "18px",
         background: '#c7c7c7',
-        width: "110px",
         color: '#FFF',
         display: 'flex',
         justifyContent: "center",
-        marginRight: "15px"
+        marginRight: "15px",
+        padding:'0 10px'
     }), multiValueLabel: () => ({
-        textSize: "20px", margin: "9px 0", fontWeight: "bold"
+        textSize: "1rem", margin: "4px 0", fontWeight: "bold"
     })
 }
 
 const ArrowDownIcon = () => {
-    return <img src="/images/nemozPlusIcon.png" alt={"arrow-down"} className={`w-[20px] h-[20px]`}/>;
+    return <img src="/images/nemozPlusIcon.png" alt={"arrow-down"} className={`w-[15px] h-[15px]`}/>;
 };
 
 const DropdownIndicator = (props) => {
