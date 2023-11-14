@@ -18,7 +18,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
         originalWaitingList.current = result?.data;
     }
 
-    const style = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";;
+    const style = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";
     const addFanModal = useSelector(state => state.common.addFanModalToggle)
 
     const [waitingList, setWaitingList] = useState([]);
