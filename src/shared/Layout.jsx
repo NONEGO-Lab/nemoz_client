@@ -17,7 +17,7 @@ export const Layout = ({
     return (
         <div className="w-[100%] m-[0 auto]">
             <Header/>
-            <div className="w-[100vw]">
+            <div className="">
                 <div className="flex justify-between">
                     <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick} _endClick={_endClick}
                                      endText={endText}
@@ -40,25 +40,6 @@ export const SizeLayout = ({children, width, height, color, flex, justifyCenter,
     );
 }
 
-export const VideoLayout2 = ({children, title, buttonText, _onClick, _endClick}) => {
-    return (
-        <div className="w-[1080px] m-auto">
-            <Header/>
-            <div className="w-[100%] flex">
-                <div className="bg-sky-100 w-[75%] h-[700px]">
-                    <div className="flex justify-between mb-8">
-                        <ContainerHeader title={title} buttonText={buttonText} _onClick={_onClick}
-                                         _endClick={_endClick}/>
-                    </div>
-                    {children}
-                </div>
-                <div className="bg-white w-[25%] h-[700px] border-gray-200 border-2">
-                    <SideBar/>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 export const VideoLayout = ({children, title, buttonText, _onClick, endText, _endClick, role}) => {
     return (
