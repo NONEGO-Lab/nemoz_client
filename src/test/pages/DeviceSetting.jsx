@@ -108,7 +108,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                         onClick={outRoom} />
                 </div>
                 <div >
-                    <div className="h-[368px] flex justify-center relative">
+                    <div className="h-[355px] flex justify-center relative">
                         {publisher !== undefined && (
                             <Video2 streamManager={publisher} userInfo={userInfo} deviceSetting={true} />)
                         }
