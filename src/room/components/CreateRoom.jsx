@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 
 
 const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
-    const modalStyle = "w-[650px] min-h-[900px] rounded-[15px] drop-shadow-md";
+    const modalStyle = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";
     const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -75,24 +75,24 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
 
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
-        <div className={"p-[60px]"}>
+        <div className={"p-[2rem]"}>
             {/*Title*/}
             <div className="flex justify-between">
-                <div className="text-[24px] font-medium text-[#444]">
+                <div className="text-[1.5rem] font-medium text-[#444]">
                     방 만들기
                 </div>
                 <div onClick={() => setOnModal(false)}
-                     className={"w-[20px] min-h-[20px] flex items-center cursor-pointer"}>
+                     className={"w-[15px] min-h-[15px] flex items-center cursor-pointer"}>
                     <img src={"/images/closeIcon.png"} alt='close-icon'/>
                 </div>
             </div>
 
-            <form className="mt-[57px]">
+            <form className="mt-[25px]">
                 {/*Select Event*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[25px] pb-[15px]`}>
                     <label htmlFor={"roomTitle"}
-                           className=" flex items-center text-[20px] text-[#646464] font-medium">
+                           className=" flex items-center text-[1rem] text-[#646464] font-medium">
                         이벤트 선택
                     </label>
                     <select
@@ -108,7 +108,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             setTargetArtistFullInfo(eventList.find(e =>e.event_name === target).target_artist_ids)
                             setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                         }}
-                        className={`bg-white text-[23px] flex items-center text-[#646464] `}
+                        className={`bg-white text-[1.25rem] flex items-center text-[#646464] `}
                         id={"roomTitle"}
                         placeholder={"이벤트 선택"}
                     >
@@ -130,21 +130,21 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     items={'items-center'}
                     justify={"justify-between"}
                     width={"w-[25%]"}
-                    fontSize={"text-[23px]"}
-                    mb={"mb-[40px]"}
-                    pb={"pb-[20px]"}
+                    fontSize={"text-[1.25rem]"}
+                    mb={"mb-[25px]"}
+                    pb={"pb-[15px]"}
                 />
 
                 {/*영상통화 시간 선택*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] min-h-[44px] mb-[40px] pb-[20px]`}>
-                    <label htmlFor={"time"} className=" flex items-center text-[20px] text-[#646464] font-medium">
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7]  mb-[25px] pb-[15px]`}>
+                    <label htmlFor={"time"} className=" flex items-center text-[1rem] text-[#646464] font-medium">
                         영상통화 시간 선택
                     </label>
                     <div>
                         <input
                             {...register('time')}
-                            className={`bg-white text-[23px] text-[#646464] w-[100px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            className={`bg-white text-[1.25rem] text-[#646464] w-[100px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             name={"time"}
                             type={"number"}
                         >
@@ -159,8 +159,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"startDate"}
                     required={true}
                     width={"w-[100%]"}
-                    height={"min-h-[44px]"}
-                    marginBottom={"mb-[40px]"}
+                    marginBottom={"mb-[25px]"}
                     placeholder={"시작 일시"}
                     type={"datetime-local"}
                 />
@@ -172,17 +171,16 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"file"}
                     required={true}
                     width={"w-[100%]"}
-                    height={"min-h-[44px]"}
-                    marginBottom={"mb-[40px]"}
+                    marginBottom={"mb-[25px]"}
                     fileName={fileName && fileName}
                     onChange={onChangeFile}
                     type={"file"}
                 />
 
                 {/*multi select가 가능한 스탭 목록*/}
-                <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#646464] text-[20px] font-medium flex items-center">
+                           className="text-[#646464] text-[1rem] font-medium flex items-center">
                         스탭 등록
                     </label>
                     <Controller
@@ -193,7 +191,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                                 {...field}
                                 styles={customStyles}
                                 width="100%"
-                                height="44px"
+                                height="33px"
                                 closeMenuOnSelect={false}
                                 isSearchable={false}
                                 components={{DropdownIndicator, IndicatorSeparator: () => null }}
@@ -205,9 +203,9 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 </div>
 
                 {/*multi select가 가능한 팬 목록*/}
-                <div className={`flex w-[100%] mb-[40px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[20px]`}>
+                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#646464] text-[20px] font-medium flex items-center">
+                           className="text-[#646464] text-[1rem] font-medium flex items-center">
                         팬 등록
                     </label>
                     <Controller
@@ -234,8 +232,11 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     type={"submit"}
                     _onClick={handleSubmit(onSubmit)}
                     bgColor={"bg-[#01dfe0]"}
+                    width={"w-[100vw]"}
+                    height={"h-[3rem]"}
+                    style={"flex justify-center items-center"}
                 >
-                    <div className={"mx-[241px] my-[21px] min-h[24.5px] text-[26px] text-white font-medium"}>
+                    <div className={"text-[1.35rem] text-white font-medium flex justify-center items-center"}>
                         확인
                     </div>
                 </Button>
