@@ -59,7 +59,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
             <div className="flex justify-between items-center mt-[45px] mb-[30px] mx-[45px] ">
                 <div className={"text-[1.25rem] font-[600] text-[#444]"}>Fan List</div>
 
-                <img className={"w-[15px] h-[15px] cursor-pointer"} src={"../images/closeIcon.png"} alt={"close-icon"}
+                <img className={"w-[15px] h-[15px] cursor-pointer"} src={"/images/closeIcon.png"} alt={"close-icon"}
                      onClick={setOnModal}/>
 
             </div>
@@ -88,7 +88,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                         style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
                     >
              <span>
-               <img src={"../images/plusIcon.png"} className={"w-[17px] h-[17px]"} alt={"plus-icon"}/>
+               <img src={"/images/plusIcon.png"} className={"w-[17px] h-[17px]"} alt={"plus-icon"}/>
              </span>
                         <span className={"ml-[8px] text-[16px] text-[#444]"}>Add Fan</span>
                     </Button>
@@ -101,7 +101,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center  ml-[90px] mr-[20px]"}
                 >
                            <span>
-               <img src={"../images/refreshIcon.png"} className={"w-[17px] h-[17px]"} alt={"refresh-icon"}/>
+               <img src={"/images/refreshIcon.png"} className={"w-[17px] h-[17px]"} alt={"refresh-icon"}/>
              </span>
                     <span className={"ml-[8px] text-[16px] text-[#444]"}>Refresh</span>
                 </Button>
@@ -113,7 +113,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
                 >
                   <span>
-               <img src={"../images/saveIcon.png"} className={"w-[17px] h-[17px]"} alt={"plus-icon"}/>
+               <img src={"/images/saveIcon.png"} className={"w-[17px] h-[17px]"} alt={"plus-icon"}/>
              </span>
                     <span className={"ml-[8px] text-[16px] text-[#444]"}>Save List</span>
                 </Button>
@@ -185,7 +185,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
             >
                 <div className={"flex items-center justify-center"}>
                     Fan Info
-                    <img src={"../images/rightArrowIcon.png"} className={"w-[7px] h-[11px] ml-[10px]"}
+                    <img src={"/images/rightArrowIcon.png"} className={"w-[7px] h-[11px] ml-[10px]"}
                          alt={"arrow-icon"}/>
                 </div>
             </button>
