@@ -44,11 +44,3 @@ code {
     monospace;
 }
 
-#authInput{
-  font-size: 20.3px;
-  ::placeholder{
-    color: #646464;
-    margin-bottom: 29px;
-  }
-}
-
