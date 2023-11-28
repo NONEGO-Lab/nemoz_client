@@ -178,11 +178,11 @@ const EventListFilter = () => {
     }, [eventId])
 
     return (
-        <div className={"w-[278px] ml-[45px] "}>
+        <div className={"w-[278px] ml-[45px] "} onClick={() => setIsOpen(!isOpen)}>
             <div className={"flex justify-between items-center border-b-[#e0e0e0] border-b-[1px] pb-[10px] "}>
                 <div className={"font-medium text-[17.5px]"}>{currentEventName}</div>
                 <img className={"w-[13.5px] h-[7.5px] cursor-pointer z-5"} src="/images/arrowDown.png"
-                     alt={'arrowdown-icon'} onClick={() => setIsOpen(!isOpen)}/>
+                     alt={'arrowdown-icon'} />
             </div>
             {isOpen && <div className={"w-[278px] fixed bg-[#e9e9e9] text-[17.5px]"}>
                 <li className={"mx-[5px] list-none cursor-pointer"} onClick={() => clickLi(allEventIds)}>전체</li>
