@@ -169,10 +169,12 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
 
     return (
         <div ref={(node) => ref(drop(node))} style={{...styles, opacity: isDragging ? 0.4 : 1}}>
-            <div className="text-[1rem] font-bold">
-                {fan.fan_name}
+            <div className="text-[1rem] font-bold w-[30%]">
+                <p className={"w-[70px] text-ellipsis overflow-hidden"}>
+                    {fan.fan_name}
+                </p>
             </div>
-            <div className="text-[1rem] ml-[4.5rem] mr-[9rem]">
+            <div className="text-[1rem] w-[40%]">
                 {fan.status === "waiting" ? "대기중" : "접속중"}
             </div>
 
@@ -181,7 +183,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
                 onClick={() => {
                     fanDetailOpenHandler(fan)
                 }}
-                className="w-[83px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                className="w-[83px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] w-[30%]"
             >
                 <div className={"flex items-center justify-center"}>
                     Fan Info
