@@ -40,6 +40,7 @@ const ParticipantListView = () => {
                     return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setCurrentFanEventId={setCurrentFanEventId}
                                  setOpenDeviceSetting={setOpenDeviceSetting}
                                  setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}
+                                 totalFanCnt = {attendeeList.length}
                                  bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                 })}
             </div>
@@ -76,7 +77,7 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor}) => {
+const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor, totalFanCnt}) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
@@ -86,7 +87,7 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, 
                 </div>
 
                 <div className="w-[40vw]">
-                    <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
+                    <span className={"text-[#444] font-bold"}>{status.orders}/{totalFanCnt}</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
                     <span>{user.status.room_name}</span>
                 </div>
