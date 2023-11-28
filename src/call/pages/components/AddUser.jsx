@@ -82,7 +82,10 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
                         name={"reservedTime"}
                         type={"number"}
                         placeholder={"추가 할 시간을 입력하세요"}
-                        className={"text-[#646464] w-full  border-b-2 border-b-[#c7c7c7] py-[10px] mb-[35px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"}
+                        className={"pl-[13.5px] text-[#646464] text-[20.3px] font-medium " +
+                            "w-full  border-b-[1.5px] border-[#c7c7c7] pt-[10px] pb-[25px] mb-[35px] " +
+                            "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none  " +
+                            "placeholder-[#646464] placeholder:font-medium placeholder:text-[20.3px]"}
                     />
 
                     <div
@@ -92,22 +95,30 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
                       required: true
                   })}
                   name={"reason"}
-                  className={"w-full min-h-full resize-none"} placeholder={"추가 사유를 입력하세요"}/>
+                  className={"w-full min-h-full resize-none placeholder-[#646464] placeholder:font-medium"} placeholder={"추가 사유를 입력하세요"} id="addFanTextArea"/>
+
                     </div>
                 </form>
                 <div className="flex justify-between w-full">
                     <button
-                        className={"w-[105px] h-[38px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
+                        className={"w-[105px] h-[38px] border border-[#c7c7c7] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
                         type={"submit"}
                         onClick={handleSubmit(onSubmit)}
                     >
-                        <span>+ ADD</span>
+
+                        <div className={"flex items-center"}>
+                            <img src={"/images/plusIcon.png"} alt="plusicon" className={"w-[10.5px] h-[10.5px] mr-[5px]"}/>
+                            <span>ADD</span>
+                        </div>
                     </button>
                     <button
                         className={"w-[105px] h-[38px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
                         onClick={setOnModal}
                     >
-                        <span>X CANCEL</span>
+                        <div className={"flex items-center"}>
+                            <img src={"/images/closeIcon.png"} alt="closeicon" className={"w-[10.5px] h-[10.5px] mr-[5px]"}/>
+                            <span>CANCEL</span>
+                        </div>
                     </button>
 
                 </div>
@@ -122,14 +133,22 @@ const customStyles = {
         ...provided,
         lineHeight: 'normal',
         border: 'none',
-        borderBottom: '3px solid #c7c7c7',
+        borderBottom: '1.5px solid #c7c7c7',
         paddingBottom: "22.5px",
         boxShadow: '0 !important',
         '&:hover': {
             border: '0 !important'
         },
-        marginBottom: '32px'
+        marginBottom: '32px',
+        fontSize:'20.3px',
+        color: '#646464',
     }),
+    placeholder: (provided) =>({
+        ...provided,
+        color:'#646464',
+        fontWeight:500,
+        fontSize: '20.3px'
+    })
 };
 
 const ArrowDownIcon = () => {
