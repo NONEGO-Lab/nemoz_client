@@ -24,15 +24,19 @@ const LoginView = () => {
                 >
                     <input
                         {...register("id")}
-                        className={`text-sm outline-none w-[502px] h-[44px] text-[20px] ${errors?.id && 'text-[#01dfe0]'} mb-[55px] flex justify-between items-center border-b-2 border-b-[#c7c7c7] `}
+                        className={`text-sm outline-none w-[502px]  text-[20.3px] pb-[29px] ${errors?.id && 'text-[#01dfe0]'} mb-[55px] flex justify-between items-center border-b-2 border-b-[#c7c7c7] 
+                            placeholder:text-[20.3px] placeholder-[#646464] placeholder:mb-[29px] `}
                         placeholder={"User ID"}
+                        id={"authInput"}
                         type={"text"}
-                        onFocus={() => setValue("id", '')}
+                        // onFocus={() => setValue("id", '')}
                     />
                     <input
                         {...register("password")}
-                        className={`text-sm outline-none w-[502px] h-[44px] text-[20px] ${errors?.password && 'text-[#01dfe0]'} mb-[55px] flex justify-between items-center border-b-2 border-b-[#c7c7c7] `}
+                        className={`text-sm outline-none w-[502px]  text-[20.3px] pb-[29px] ${errors?.password && 'text-[#01dfe0]'} mb-[55px] flex justify-between items-center border-b-2 border-b-[#c7c7c7] 
+                                    placeholder:text-[20.3px] placeholder-[#646464] placeholder:mb-[29px] `}
                         placeholder={"Password"}
+                        id={"authInput"}
                         type={showPwdError ? "text" : "password"}
                         onFocus={() => {
                             setShowPwdError(false);

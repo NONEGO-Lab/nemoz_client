@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 
 
 const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
-    const modalStyle = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";
+    const modalStyle = "w-[488px]  rounded-[15px] drop-shadow-md";
     const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -17,13 +17,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
     const [targetArtistFullInfo, setTargetArtistFullInfo] = useState(eventList.map(e => e.target_artist_ids));
-    const [targetArtistIds, setTargetArtistIds] = useState(Array(eventList.map(e =>e.target_artist_ids)[0][0].name));
+    const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0]?.map(artist => artist.name));
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
     const userInfo = useSelector(state => state.user.userInfo)
 
     const {location, mimeType, fileName} = imgUrl;
-
     const onSubmit = async (data) => {
         const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
         let fanIdArray = [];
@@ -92,7 +91,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 <div
                     className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[25px] pb-[15px]`}>
                     <label htmlFor={"roomTitle"}
-                           className=" flex items-center text-[1rem] text-[#646464] font-medium">
+                           className=" flex items-center text-[1rem] text-[#444] font-medium">
                         이벤트 선택
                     </label>
                     <select
@@ -108,12 +107,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             setTargetArtistFullInfo(eventList.find(e =>e.event_name === target).target_artist_ids)
                             setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                         }}
-                        className={`bg-white text-[1.25rem] flex items-center text-[#646464] `}
+                        className={`bg-white text-[1.25rem] flex items-center text-[#444] `}
                         id={"roomTitle"}
                         placeholder={"이벤트 선택"}
                     >
                         {eventList.map(e => e.event_name).map((value, idx) => {
-                            return (<option className={"bg-white text-center"} key={idx} value={value}>
+                            return (<option className={"bg-white text-center text-ellipsis"} key={idx} value={value}>
                                 {value}
                             </option>)
                         })}
@@ -138,13 +137,13 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 {/*영상통화 시간 선택*/}
                 <div
                     className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7]  mb-[25px] pb-[15px]`}>
-                    <label htmlFor={"time"} className=" flex items-center text-[1rem] text-[#646464] font-medium">
+                    <label htmlFor={"time"} className=" flex items-center text-[1rem] text-[#444] font-medium">
                         영상통화 시간 선택
                     </label>
                     <div>
                         <input
                             {...register('time')}
-                            className={`bg-white text-[1.25rem] text-[#646464] w-[5rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            className={`bg-white text-[1.25rem] text-[#444] w-[5rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             name={"time"}
                             type={"number"}
                         >
@@ -180,7 +179,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 {/*multi select가 가능한 스탭 목록*/}
                 <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#646464] text-[1rem] font-medium flex items-center">
+                           className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
                         스탭 등록
                     </label>
                     <Controller
@@ -205,17 +204,17 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 {/*multi select가 가능한 팬 목록*/}
                 <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#646464] text-[1rem] font-medium flex items-center">
+                           className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
                         팬 등록
                     </label>
                     <Controller
                         name="fanIds"
                         control={control}
-                        render={({field}) => <SelectBox
+                        render={({field}) =>
+                            <SelectBox
                             {...field}
                             styles={customStyles}
                             width="100%"
-                            height="33px"
                             closeMenuOnSelect={false}
                             components={{DropdownIndicator, IndicatorSeparator: () => null}}
                             isSearchable={false}
@@ -257,10 +256,12 @@ const customStyles = {
 
     control: (_, {selectProps: {}}) => ({
         width: "100%",
-        height: "33px",
+        // height: "33px",
         borderRadius: "7px",
-        display:'flex'
-        // padding: 2,
+        display:'flex',
+        padding: 2,
+        flexWrap:'wrap',
+        justifyContent: 'space-between',
     }),
 
     singleValue: (provided, state) => {
@@ -277,9 +278,10 @@ const customStyles = {
         display: 'flex',
         justifyContent: "center",
         marginRight: "15px",
-        padding:'0 10px'
+        padding:'0 10px',
+        marginBottom:'5px',
     }), multiValueLabel: () => ({
-        textSize: "1rem", margin: "4px 0", fontWeight: "bold"
+        textSize: "1.25rem", margin: "4px 0", fontWeight: "bold"
     })
 }
 

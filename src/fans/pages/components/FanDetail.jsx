@@ -21,49 +21,49 @@ const FanDetail = ({setOnModal, currentFanId, eventId}) => {
     return (
         <ModalFrameDepth setOnModal={setOnModal} style={style}>
             <div>
-                <div className="text-[1.2rem] font-[500] px-[45px] pt-[45px] pb-[30px]">
+                <div className={"text-[1.2rem] px-[45px] pt-[45px] pb-[30px] font-bold"} >
                     Fan Info
                 </div>
                 <div>
 
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1.2rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
                             이름
                         </div>
-                        <div className={"text-[1.3rem] text-[#444] font-[500]"}>
+                        <div className={"text-[1rem] text-[#444] font-[500]"}>
                             {fanInfo.fan_name || '정보 없음'}
                         </div>
                     </div>
 
                     <div className={"bg-[#fff] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1.2rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
                             성별
                         </div>
-                        <div className={"text-[1.3rem] text-[#444] font-[500]"}>
+                        <div className={"text-[1rem] text-[#444] font-[500]"}>
                             {fanInfo.sex || '정보 없음'}
                         </div>
                     </div>
 
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1.2rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
                             나이
                         </div>
-                        <div className={"text-[1.3rem] text-[#444] font-[500]"}>
+                        <div className={"text-[1rem] text-[#444] font-[500]"}>
                             {fanInfo?.age || '나이 없음'}
                         </div>
 
                     </div>
 
                     <div className={"bg-[#fff] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1.2rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
                             팬레터
                         </div>
                     </div>
 
-                    <div className={"bg-[#f0f0f0] min-h-[350px] flex"}>
+                    <div className={"bg-[#f0f0f0] min-h-[190px] flex"}>
                         <div
-                            className={"text-[1.3rem] font-[500] min-w-[50px] text-[#444] mx-[60px] mt-[36px]"}>
-                            {fanInfo?.letter}
+                            className={"text-[1rem] font-[500] min-w-[50px] text-[#444] mx-[60px] mt-[36px]"}>
+                            {fanInfo?.letter || '내용 없음'}
                         </div>
                     </div>
 
@@ -73,10 +73,10 @@ const FanDetail = ({setOnModal, currentFanId, eventId}) => {
                     width={"w-[106px]"}
                     textColor={"text-[#444]"}
                     _onClick={setOnModal}>
-                  <span className={"my-[18px]"}>
+                  <span className={"my-[13px]"}>
                <img src={"/images/closeIcon.png"} className={"w-[15px] h-[15px]"} alt={"close-icon"}/>
              </span>
-                    <span className={"ml-[8px] text-[16px] text-[#444]"}>Close</span>
+                    <span className={"ml-[8px] text-[1rem] text-[#444]"}>Close</span>
                 </Button>
 
             </div>
@@ -85,14 +85,3 @@ const FanDetail = ({setOnModal, currentFanId, eventId}) => {
 }
 
 export default FanDetail;
-
-
-export const FanDetailInto = ({value, fanInfo}) => {
-
-    return (
-        <div className="mb-6">
-            <span className="mr-2">{value.key}:</span>
-            <span>{fanInfo[value.dataKey]}</span>
-        </div>
-    )
-}

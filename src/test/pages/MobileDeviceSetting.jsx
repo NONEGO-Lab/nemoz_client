@@ -16,7 +16,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
   const dispatch = useDispatch();
 
   const style =
-    "w-[100%] max-w-[100vw] max-h-[100vh] min-h-[100%] h-[100vh] bg-[#fff] absolute top-0 left-0 z-[100] p-[2rem] overflow-hidden";
+    "w-[100%] max-w-[100vw] max-h-[80vh] min-h-[80%] h-[80vh] bg-[#fff] absolute top-0 left-0 z-[100] p-[1.5rem]";
 
   const { register, watch, handleSubmit } = useForm();
   const { createJoinSession, isMobile } = useDeviceTest();
@@ -107,17 +107,18 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
     <ModalFrame setOnModal={closeDeviceSetting} style={style}>
       <div className="flex flex-col justify-center ">
         <div className="flex justify-between items-center">
+          <div className="text-[1.2rem] font-medium">{eventName}</div>
           <img
-            className={"w-[20px] h-[20px] mt-[2rem] cursor-pointer"}
+            className={"w-[20px] h-[20px] cursor-pointer"}
             src={"../images/closeIcon.png"}
             alt={"close-icon"}
             onClick={outRoom}
           />
         </div>
-        <div className="mt-[40px]">
-          <div className="text-[1.2rem] font-medium">{eventName}</div>
+        <div className="mt-[20px]">
+
           {/*<div className="text-[1.2rem] font-medium">{eventName}</div>*/}
-          <div className="w-[100vw] h-[75vw] mx-[-2rem] my-[2rem] flex justify-center bg-[#eee]">
+          <div className="w-[100vw] h-[65vw] mx-[-2rem] my-[1rem] flex justify-center bg-[#eee]">
             {publisher !== undefined && (
               <Video2
                 streamManager={publisher}
@@ -143,7 +144,7 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
               name={"selectedAudioDevices"}
               width={"w-[100%]"}
               border={"border border-[#c7c7c7] rounded-[10px]"}
-              mb={"items-center mb-[20px] py-[0.6rem]"}
+              mb={"items-center mb-[10px] py-[0.6rem]"}
 
             />
 
@@ -153,12 +154,12 @@ const MobileDeviceSetting = ({ closeDeviceSetting }) => {
                 options={audioOuputList ?? []}
                 name={"selectedAudioOutputDevices"}
                 width={"w-[100%]"}
-                mb={"items-center mb-[20px] py-[0.6rem]"}
+                mb={"items-center mb-[10px] py-[0.6rem]"}
                 border={"border border-[#c7c7c7] rounded-[10px]"}
             />
           </form>
         </div>
-        <div className="my-[60px]">
+        <div className="mt-[10px] mb-[5px]">
           <button
             onClick={handleSubmit(setDeviceHandler)}
             className={`w-[100%] min-h-[50px] rounded-[10px] text-[1.2rem] cursor-pointer  text-white font-medium ${"bg-[#00cace]"} flex items-center justify-center`}

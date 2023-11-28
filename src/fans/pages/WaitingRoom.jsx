@@ -113,12 +113,12 @@ const WaitingRoom = () => {
         );
     } else {
         return (
-            <div className={"bg-white w-[100vw] h-[100vh] absolute top-0 left-0"}>
+            <div className={"bg-white w-[100vw] "} style={{height: 'calc(var(--vh, 1vh) * 100)'}}>
 
                 <MobileHeader/>
                 <div
                     className={
-                        "flex flex-col justify-center items-center pt-[100px] absolute top-55"
+                        "flex flex-col justify-center items-center pt-[50px] top-55 w-[100vw]"
                     }
                 >
                     <img className="w-[68px] m-[16px]" src={"../images/roomIcon.png"}/>
@@ -126,7 +126,7 @@ const WaitingRoom = () => {
                         {eventTitle}
                     </h1>
 
-                    <div className="my-[4rem]">
+                    <div className="my-[1.5rem]">
                         {!isVideo ? (
                             wait_url ? (
                                 <div>
@@ -153,21 +153,21 @@ const WaitingRoom = () => {
                     </div>
                     {isTest ?
                         <>
-                            <p className="text-[1.4rem] text-[#444] font-[400] m-[10px] text-center">
+                            <p className="text-[1.2rem] text-[#444] font-[400] m-[10px] text-center">
                                 <span className="font-[700] ">{userInfo.username}</span>님의 <br/>
                                 테스트 순서입니다
                             </p>
-                            <p className="text-[1.4rem] text-[#5bc7cc] font-[700]">
+                            <p className="text-[1.2rem] text-[#5bc7cc] font-[700]">
                                 연결 테스트를 진행해주세요
                             </p>
                         </> :
 
                         <>
-                            <p className="text-[1.4rem] text-[#444] font-[400] m-[10px] text-center">
+                            <p className="text-[1.2rem] text-[#444] font-[400] m-[10px] text-center">
                                 <span className="font-[700] ">{userInfo.username}</span>님의 <br/>
                                 대기번호는 {myWaitInfo.waiting?.orders}번입니다.
                             </p>
-                            <p className="text-[1.4rem] text-[#5bc7cc] font-[700]">
+                            <p className="text-[1.2rem] text-[#5bc7cc] font-[700]">
                                 예상 대기 시간은 {secondsToMins(myWaitInfo.waiting?.wait_seconds)}분입니다.
                             </p></>
 
@@ -177,13 +177,13 @@ const WaitingRoom = () => {
                 </div>
 
                 {/* button area */}
-              <div className="w-[100%] p-[5vw] absolute bottom-0">
+              <div className="w-[100%] px-[5vw] mt-[5vw]">
                 {(isTest)
                     && (
                         <button
                             disabled={!isReadyTest}
                             onClick={connectTest}
-                            className={`w-[100%] min-h-[50px] rounded-[10px] py-[1.2rem] text-[1.2rem] cursor-pointer  text-white font-medium ${
+                            className={`w-[100%] min-h-[25px] rounded-[10px] py-[1.2rem] text-[1.2rem] cursor-pointer  text-white font-medium ${
                                 isReadyTest ? "bg-[#00cace]" : "bg-[#444444]"
                             } flex items-center justify-center mr-[35px]`}
                         >

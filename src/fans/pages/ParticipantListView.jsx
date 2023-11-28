@@ -28,10 +28,10 @@ const ParticipantListView = () => {
         {/*table 뷰*/}
         <div>
             <div
-                className="w-[100%] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px] pb-[14px]">
-                <span className="w-[115px] inline-block">Fan</span>
-                <span className="w-[630px] inline-block">Status</span>
-                <span className="w-[90px] inline-block">Test</span>
+                className="w-[100vw] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px] pb-[14px]">
+                <span className="w-[7.5vw] inline-block">Fan</span>
+                <span className="w-[40vw] inline-block">Status</span>
+                <span className="w-[7.5vw] inline-block text-center">Test</span>
             </div>
 
             {/* User List */}
@@ -40,6 +40,7 @@ const ParticipantListView = () => {
                     return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setCurrentFanEventId={setCurrentFanEventId}
                                  setOpenDeviceSetting={setOpenDeviceSetting}
                                  setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}
+                                 totalFanCnt = {attendeeList.length}
                                  bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                 })}
             </div>
@@ -76,21 +77,21 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor}) => {
+const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor, totalFanCnt}) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
             <div className="flex items-center">
-                <div className="w-[115px]">
+                <div className="w-[7.5vw]">
                     {user.fan_name}
                 </div>
 
-                <div className="w-[630px]">
-                    <span className={"text-[#444] font-bold"}>{status.orders}/5</span>
+                <div className="w-[40vw]">
+                    <span className={"text-[#444] font-bold"}>{user.done_meet}/{user.done_meet + user.remain_meet}</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
                     <span>{user.status.room_name}</span>
                 </div>
-                <div className="w-[90px] ml-[10px]">
+                <div className="w-[7.5vw] flex justify-center">
                     {user.is_tested === 0 &&
                         <img className="w-[14px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
                     {user.is_tested === 1 &&
