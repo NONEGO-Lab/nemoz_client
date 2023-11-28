@@ -183,7 +183,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
                 onClick={() => {
                     fanDetailOpenHandler(fan)
                 }}
-                className="w-[83px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] w-[30%]"
+                className=" rounded-[15px] border-[1px] border-[#aaa] text-[#444] w-[30%]"
             >
                 <div className={"flex items-center justify-center"}>
                     Fan Info
