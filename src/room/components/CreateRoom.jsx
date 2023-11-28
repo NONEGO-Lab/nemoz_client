@@ -17,13 +17,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
     const [targetFanIds, setTargetFanIds] = useState(eventList.map(e => e.target_fan_ids)[0]);
     const [targetArtistFullInfo, setTargetArtistFullInfo] = useState(eventList.map(e => e.target_artist_ids));
-    const [targetArtistIds, setTargetArtistIds] = useState(Array(eventList.map(e =>e.target_artist_ids)[0][0].name));
+    const [targetArtistIds, setTargetArtistIds] = useState(eventList.map(e => e.target_artist_ids)[0]?.map(artist => artist.name));
     const [targetStaffIds, setTargetStaffIds] = useState(eventList.map(e => e.target_staff_ids)[0]);
     const [currentEventId, setCurrentEventId] = useState(eventList.map(e => e.event_id)[0])
     const userInfo = useSelector(state => state.user.userInfo)
 
     const {location, mimeType, fileName} = imgUrl;
-
     const onSubmit = async (data) => {
         const {selectArtist, roomTitle, time, startDate, fanIds, staffIds} = data;
         let fanIdArray = [];
