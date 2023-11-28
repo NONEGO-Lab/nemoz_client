@@ -36,7 +36,7 @@ const MainCallUtil = ({
 
     let roomNum = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
-    let style = "flex justify-center items-center flex-row mt-[153px] mx-[110px] absolute bottom-[100px] left-[20%] text-white";
+    let style = "flex items-center flex-row mt-[153px] mx-[110px] justify-center";
 
     const nextCallConnect = async () => {
         if (role === 'member') {
@@ -101,7 +101,7 @@ const MainCallUtil = ({
             {userInfo.role === 'staff' &&
                 <>
                     {/* 팬 목록 */}
-                    <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px]"}
+                    <div className={"flex flex-col text-[8px] items-center w-[75px] mr-[30px] "}
                          onClick={() => setCurrentRoom(roomInfo)}>
                         <div className={"w-[75px] cursor-pointer"}>
                             <img src="../images/staffFanListIcon.png" alt="staff_fan_list"/>
