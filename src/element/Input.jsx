@@ -17,7 +17,7 @@ const Input = (props) => {
             {
                 type === "file" ?
                     <>
-                        <div className="text-[#646464] text-[1rem] font-medium">
+                        <div className="text-[#444] text-[1rem] font-medium">
                             {title}
                         </div>
                         <label
@@ -25,7 +25,7 @@ const Input = (props) => {
                             htmlFor="file_input">
                             {fileName ?
                                 <div
-                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[1.5rem] font-bold"}>{fileName} </div>
+                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[1.25rem] font-bold text-ellipsis whitespace-nowrap w-[250px] overflow-hidden"}>{fileName} </div>
                                 : "파일 선택"}
                         </label>
 
@@ -42,7 +42,7 @@ const Input = (props) => {
                     </>
                     :
                     <>
-                        <div className="text-[#646464] text-[1rem] font-medium">
+                        <div className="text-[#444] text-[1rem] font-medium">
                             {title}
                         </div>
                         <input
@@ -50,7 +50,8 @@ const Input = (props) => {
                                     required: required,
                                     onChange: (e) => _onChange(e)
                                     })}
-                            className={`text-sm  outline-none
+                            className={`outline-none
+                                    text-[1.25rem]
                                     ${inputWidth}
                                     ${height}
                                     ${errors && 'text-[#848484]'}

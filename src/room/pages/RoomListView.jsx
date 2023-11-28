@@ -26,8 +26,16 @@ const RoomListView = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const page = [...new Array(totalPage)].map((_, i) => i + 1) || []
+    const createRoom = () =>{
+        if(eventList.length<=0){
+            alert('소속된 이벤트가 없습니다')
+            setIsOpenRoomCreate(false)
+        }else{
+            setIsOpenRoomCreate(true)
+        }
+    }
     return (
-        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={() => setIsOpenRoomCreate(true)}
+        <Layout title={"방목록"} buttonText={"방 만들기"} _onClick={createRoom}
                 >
 
             {/*table 뷰*/}
