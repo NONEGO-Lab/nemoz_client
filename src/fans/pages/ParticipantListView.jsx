@@ -87,7 +87,7 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, 
                 </div>
 
                 <div className="w-[40vw]">
-                    <span className={"text-[#444] font-bold"}>{status.orders}/{totalFanCnt}</span>
+                    <span className={"text-[#444] font-bold"}>{user.done_meet}/{user.done_meet + user.remain_meet}</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
                     <span>{user.status.room_name}</span>
                 </div>
