@@ -4,7 +4,7 @@ import React from "react";
 const Select = (props) => {
     const {
         name, register, options,required, label, items, justify, border,
-        width, height, marginBottom, placeholder, selectStyle, defaultValue, fontSize, mb, pb
+        width, height, marginBottom, placeholder, selectStyle, defaultValue, fontSize, mb, pb, style
     } = props;
     return (
         <div
@@ -25,6 +25,7 @@ const Select = (props) => {
                          flex
                          items-center
                          text-[#444]
+                         ${style}
                     `}
                 id={name}
                 placeholder={placeholder}

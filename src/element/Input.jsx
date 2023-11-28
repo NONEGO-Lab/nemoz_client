@@ -13,7 +13,7 @@ const Input = (props) => {
 
     return (
         <div
-            className={`flex ${width} ${marginBottom} justify-between items-center  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
+            className={`flex ${width} ${marginBottom} justify-between items-center  border-b-2 border-b-[#c7c7c7] pb-[1.75rem]`}>
             {
                 type === "file" ?
                     <>

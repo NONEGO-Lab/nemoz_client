@@ -8,8 +8,9 @@ import {useSelector} from "react-redux";
 
 
 
+
 const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
-    const modalStyle = "w-[488px]  rounded-[15px] drop-shadow-md";
+    const modalStyle = "w-[40.625rem] rounded-[15px] drop-shadow-md";
     const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -74,22 +75,22 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
 
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
-        <div className={"p-[2rem]"}>
+        <div className={"p-[3.75rem]"}>
             {/*Title*/}
             <div className="flex justify-between">
                 <div className="text-[1.5rem] font-medium text-[#444]">
                     방 만들기
                 </div>
                 <div onClick={() => setOnModal(false)}
-                     className={"w-[15px] min-h-[15px] flex items-center cursor-pointer"}>
+                     className={"w-[15px] flex items-center cursor-pointer"}>
                     <img src={"/images/closeIcon.png"} alt='close-icon'/>
                 </div>
             </div>
 
-            <form className="mt-[25px]">
+            <form className="mt-[3.5rem]">
                 {/*Select Event*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[25px] pb-[15px]`}>
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[2.719rem] pb-[1.75rem]  `}>
                     <label htmlFor={"roomTitle"}
                            className=" flex items-center text-[1rem] text-[#444] font-medium">
                         이벤트 선택
@@ -107,16 +108,17 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             setTargetArtistFullInfo(eventList.find(e =>e.event_name === target).target_artist_ids)
                             setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                         }}
-                        className={`bg-white text-[1.25rem] flex items-center text-[#444] `}
+                        className={`bg-white text-[1.25rem] flex items-center text-[#444] text-ellipsis w-[250px] overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]`}
                         id={"roomTitle"}
                         placeholder={"이벤트 선택"}
                     >
                         {eventList.map(e => e.event_name).map((value, idx) => {
-                            return (<option className={"bg-white text-center text-ellipsis"} key={idx} value={value}>
+                            return (<option className={"bg-white text-center"} key={idx} value={value}>
                                 {value}
                             </option>)
                         })}
                     </select>
+
                 </div>
 
 
@@ -130,13 +132,14 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     justify={"justify-between"}
                     width={"w-[25%]"}
                     fontSize={"text-[1.25rem]"}
-                    mb={"mb-[25px]"}
-                    pb={"pb-[15px]"}
+                    mb={"mb-[2.719rem]"}
+                    pb={"pb-[1.75rem] "}
+                    style={"overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]"}
                 />
 
                 {/*영상통화 시간 선택*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7]  mb-[25px] pb-[15px]`}>
+                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[2.719rem] pb-[1.75rem]`}>
                     <label htmlFor={"time"} className=" flex items-center text-[1rem] text-[#444] font-medium">
                         영상통화 시간 선택
                     </label>
@@ -158,7 +161,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"startDate"}
                     required={true}
                     width={"w-[100%]"}
-                    marginBottom={"mb-[25px]"}
+                    marginBottom={"mb-[2.719rem]"}
                     placeholder={"시작 일시"}
                     type={"datetime-local"}
                 />
@@ -170,14 +173,14 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"file"}
                     required={true}
                     width={"w-[100%]"}
-                    marginBottom={"mb-[25px]"}
+                    marginBottom={"mb-[2.719rem]"}
                     fileName={fileName && fileName}
                     onChange={onChangeFile}
                     type={"file"}
                 />
 
                 {/*multi select가 가능한 스탭 목록*/}
-                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
+                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7]  pb-[1.75rem]`}>
                     <label htmlFor={"staffList"}
                            className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
                         스탭 등록
@@ -202,7 +205,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 </div>
 
                 {/*multi select가 가능한 팬 목록*/}
-                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7] pb-[15px]`}>
+                <div className={`flex w-[100%] mb-[2.469rem] justify-between  border-b-2 border-b-[#c7c7c7] pb-[1.75rem]`}>
                     <label htmlFor={"staffList"}
                            className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
                         팬 등록
@@ -232,10 +235,10 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     _onClick={handleSubmit(onSubmit)}
                     bgColor={"bg-[#01dfe0]"}
                     width={"w-[100vw]"}
-                    height={"h-[3rem]"}
+                    height={"h-[3.75rem]"}
                     style={"flex justify-center items-center"}
                 >
-                    <div className={"text-[1.35rem] text-white font-medium flex justify-center items-center"}>
+                    <div className={"text-[1.644rem] text-white font-medium flex justify-center items-center"}>
                         확인
                     </div>
                 </Button>
@@ -277,11 +280,11 @@ const customStyles = {
         color: '#FFF',
         display: 'flex',
         justifyContent: "center",
-        marginRight: "15px",
+        marginRight: "4.5px",
         padding:'0 10px',
         marginBottom:'5px',
     }), multiValueLabel: () => ({
-        textSize: "1.25rem", margin: "4px 0", fontWeight: "bold"
+        textSize: "1.25rem", margin: "8px 14.5px 8px 22px ", fontWeight: "bold"
     })
 }
 

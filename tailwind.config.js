@@ -16,6 +16,12 @@ module.exports = {
           "from": { opacity: 0, transform: "translateY(100%)" },
           "to": { opacity: 1, transform: "none" }
         }
+      },
+      backgroundImage:{
+        'arrow-down':"url(../public/images/arrowDown.png)"
+      },
+      backgroundSize:{
+        '15':'15px'
       }
     }
   },
