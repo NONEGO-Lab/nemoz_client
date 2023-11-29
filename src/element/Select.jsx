@@ -8,8 +8,8 @@ const Select = (props) => {
     } = props;
     return (
         <div
-            className={`flex ${items} ${justify} ${border ? border : "border-b-[1.5px] border-b-[#c7c7c7]"} ${mb} ${pb}`}>
-            <label htmlFor={name} className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px] h-[18.5px]">
+            className={`flex ${items} ${justify} ${border ? border : "border-b-[1.5px] border-b-[#c7c7c7]"} ${mb} ${pb}  h-[18.5px] `}>
+            <label htmlFor={name} className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px]">
                 {label}
             </label>
             <select
