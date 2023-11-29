@@ -50,7 +50,7 @@ const Header = () => {
                              className={'flex items-center cursor-pointer hover:font-bold'}>
                             {currentLocation() !== 'userlist' &&
                                 <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
-                            <div className={'w-[33px] ml-[11px]'}>
+                            <div className={'w-[25px] h-[22px] ml-[11px]'}>
                                 <img alt='room-icon' src="/images/roomIcon.png"/>
                             </div>
                             <div className={` ml-[10px] ${currentLocation() !== 'userlist' ? 'font-bold' : ''}`}>
@@ -66,7 +66,7 @@ const Header = () => {
                              className={'flex items-center ml-[56px] cursor-pointer hover:font-bold'}>
                             {currentLocation() === 'userlist' &&
                                 <div className={'w-[6px] h-[6px] bg-[#01dfe0] rounded-full'}/>}
-                            <div className={'w-[33px] ml-[11px]'}>
+                            <div className={'w-[29.5px] h-[18.5px] ml-[11px]'}>
                                 <img alt='room-icon' src="/images/participantsIcon.png"/>
                             </div>
                             <div
@@ -87,7 +87,7 @@ const Header = () => {
                     {userInfo.role==='staff' && <img src="/images/staffIcon.png" alt={'staffIcon'} className={'w-[18px]'}/>}
                     {userInfo.role==='artist' && <img src="/images/starIcon.png" alt={'starIcon'} className={'w-[18px]'}/>}
                 </div>
-                <div className="cursor-pointer mr-[10px] ml-[7px]">{userInfo.username}</div>
+                <div className="cursor-pointer mr-[10px] ml-[7px] text-[18px]">{userInfo.username}</div>
                 <div
                     onClick={() => {
                         dispatch(logout());
