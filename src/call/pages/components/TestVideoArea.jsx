@@ -32,7 +32,7 @@ const TestVideoArea = ({
             {/* Fan Area */}
             <div className='w-[650px] text-center'>
                         <span
-                            className='text-[19px] font-medium flex justify-center items-center'>
+                            className='text-[19px] font-medium flex justify-center items-center h-[20px]'>
                             {`FAN ${fan_name||username} (${age}세)`}
                             <InnerCircleText gender={sex} width={"w-[22px]"} height={"h-[22px]"} bgcolor={"bg-[#444]"}
                                              ml={"ml-[13px]"} textSize={"text-[15px]"} textColor={"text-white"}
@@ -65,7 +65,7 @@ const TestVideoArea = ({
                     {(!isFan && !subscriber) || (isFan && !publisherVideo)&&
                         <div className={`relative h-[368px] border-none rounded-[15px] bg-[#444] flex`}>
                                 <span
-                                    className='flex justify-center items-center text-[25px] text-white w-full'>{isFan? username:fan_name}</span>
+                                    className='flex justify-center items-center text-[25px] text-white w-full h-[20px]'>{isFan? username:fan_name}</span>
                         </div>
                     }
 

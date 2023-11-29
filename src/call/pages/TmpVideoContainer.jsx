@@ -191,10 +191,10 @@ if(!isMobile)
     return (
         <SizeLayout isVideo={true} width={'w-[1366px]'} height={'min-h-[1024px]'}>
             <Header/>
-            <div className={"bg-main_theme flex flex-col justify-center"}>
-                <div className={"flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"}>
+            <div className={"bg-main_theme flex flex-col justify-center "}>
+                <div className={"flex justify-center pt-[87.5px] text-[23px] text-[#000] font-[500] mb-[80px] items-center h-[24px]"}>
                     <span>
-                        <img className='w-[30px] h-[30px]' src="/images/roomIcon.png" alt="room-icon"/>
+                        <img className='w-[33px] h-[28.5px]' src="/images/roomIcon.png" alt="room-icon"/>
                     </span>
                     <span className='ml-[10px]'>{eventName}</span>
                 </div>
