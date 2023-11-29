@@ -75,14 +75,14 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
 
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
-        <div className={"px-[60px] py-[30px]"}>
+        <div className={"p-[60px]"}>
             {/*Title*/}
             <div className="flex justify-between mb-[56.5px]">
                 <div className="text-[24px] font-medium text-[#444]">
                     방 만들기
                 </div>
                 <div onClick={() => setOnModal(false)}
-                     className={"w-[15px] flex items-center cursor-pointer"}>
+                     className={"w-[20px] flex items-center cursor-pointer"}>
                     <img src={"/images/closeIcon.png"} alt='close-icon'/>
                 </div>
             </div>
@@ -228,6 +228,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             placeholder={"Fan 등록"}
                             isMulti
                             options={valueMaker(targetFanIds)}
+                            isClearable={false}
                         />
 
                         }
@@ -269,7 +270,6 @@ const customStyles = {
         // flexDirection:'row',
         // padding: 2,
         justifyContent: 'space-between',
-        overflowX: 'scroll',
     }),
     singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
@@ -286,20 +286,19 @@ const customStyles = {
         marginRight: "4.5px",
         padding:'0 10px',
         marginBottom:'5px',
+        alignItems: 'center',
+        minWidth:'100px',
+        height:'36px',
     }),
     multiValueLabel: () => ({
-        textSize: "20.3px", margin: "8px 14.5px 8px 22px ", fontWeight: "bold"
+        textSize: "20.3px",  fontWeight: "bold",
     }),
     valueContainer:()=>({
         display:'flex',
         // justifyContent: 'flex-end',
-        // alignItems:'center',
-        overflowX: 'auto',
+        alignItems:'center',
+        overflowX: 'scroll',
         maxWidth:'300px',
-        textAlign:'right'
-    }),
-    placeholder:()=>({
-
     })
 }
 
