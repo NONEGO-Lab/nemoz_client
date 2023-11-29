@@ -72,7 +72,7 @@ export const ContainerHeader = ({
     const currentLocation=(location) => window.location.pathname.split('/')[1] === location
     return (
 
-        <div className="w-[100%] flex justify-between items-center px-[100px] py-[44px]">
+        <div className="w-[100%] flex justify-between items-center px-[100px] py-[48.5px]">
             <div className="flex items-center font-medium">
                 {currentLocation('roomlist') &&
                     <div className={'w-[33px] ml-[11px]'}>
