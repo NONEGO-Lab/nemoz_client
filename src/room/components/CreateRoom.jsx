@@ -202,6 +202,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                                 components={{DropdownIndicator, IndicatorSeparator: () => null }}
                                 placeholder={"Staff 등록"}
                                 isMulti
+                                isClearable={false}
                                 options={valueMaker(targetStaffIds)}
                         />}
                     />
