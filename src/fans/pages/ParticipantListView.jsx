@@ -81,12 +81,12 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, 
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
-            <div className="flex items-center">
-                <div className="w-[7.5vw]">
+            <div className="flex items-center ">
+                <div className="w-[7.5vw] text-[19px]">
                     {user.fan_name}
                 </div>
 
-                <div className="w-[40vw]">
+                <div className="w-[40vw] text-[18px]">
                     <span className={"text-[#444] font-bold"}>{user.done_meet}/{user.done_meet + user.remain_meet}</span>
                     <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
                     <span>{user.status.room_name}</span>
@@ -108,18 +108,20 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, 
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);
                     }}
-                    className="w-[110px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                    className="w-[106px] h-[30px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] flex justify-center items-center"
                 >
-                    Fan Info {">"}
+                    <div>Fan Info</div>
+                    <img src={"/images/arrowRight.png"} alt={"arrowRight"} className={`w-[7px] h-[11px] ml-[10px]`} />
                 </button>
             </div>
             <div>
                 <button
                     onClick={() => connectToTest(user)}
-                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||(status.orders < 0)) && "opacity-30"}`}
+                    className={`w-[106px] h-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||(status.orders < 0)) && "opacity-30"} flex justify-center items-center`}
                     disabled={user.is_tested || (status.orders < 0)}
                 >
-                    Test Call
+                    <div>Test Call</div>
+                    <img src={"/images/arrowRight.png"} alt={"arrowRight"} className={`w-[7px] h-[11px] ml-[10px]`} />
                 </button>
 
             </div>
