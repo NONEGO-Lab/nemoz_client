@@ -82,7 +82,7 @@ export const ContainerHeader = ({
                     <div className={'w-[33px] ml-[11px]'}>
                         <img alt='participants-icon' src="../images/participantsIcon.png"/>
                     </div>}
-                <div className="text-[25px] ml-[15px]">
+                <div className={`text-[25px] ${currentLocation('roomlist') && 'ml-[8px]'} ${currentLocation('userlist') && 'ml-[11px]'}`}>
                     {title}
                 </div>
 

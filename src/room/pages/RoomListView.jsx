@@ -135,7 +135,7 @@ const Room = ({room, endRoomApi, setCurrentRoom, id, bgColor, eventList, navigat
     }
 
     return (
-        <div className={`flex items-center h-[70px] ${bgColor} w-[100%]`} key={id}>
+        <div className={`flex items-center h-[70px] ${bgColor} w-[100%] text-[19px]`} key={id}>
             <div className="w-[30vw]">
                 {room.room_name}
             </div>
@@ -149,12 +149,12 @@ const Room = ({room, endRoomApi, setCurrentRoom, id, bgColor, eventList, navigat
             </div>
 
             <Button _onClick={() => setCurrentRoom({event_id, ...room})} coverWidth={'w-[10vw]'}>
-                <div className={"w-[26px] h-[25px]"}>
+                <div className={"w-[25px] h-[25px]"}>
                     <img src="../images/waitingIcon.png" alt={'waiting-icon'}/>
                 </div>
             </Button>
             <Button _onClick={() => joinAdminSession(room)} coverWidth={'w-[10vw]'}>
-                <div className={"w-[26px] h-[25px]"}>
+                <div className={"w-[25px] h-[25px]"}>
                     <img src="../images/startIcon.png" alt={'start-icon'} />
                 </div>
             </Button>
@@ -162,7 +162,7 @@ const Room = ({room, endRoomApi, setCurrentRoom, id, bgColor, eventList, navigat
                 _onClick={() => roomEnd(room)}
                 coverWidth={'w-[10vw]'}
             >
-                <div className={"w-[26px] h-[25px]"} >
+                <div className={"w-[25px] h-[25px]"} >
                     <img src="../images/quitIcon.png" alt={'quit-icon'}/>
                 </div>
             </Button>
