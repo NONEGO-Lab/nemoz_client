@@ -21,7 +21,8 @@ module.exports = {
         'arrow-down':"url(../public/images/arrowDown.png)"
       },
       backgroundSize:{
-        '15':'15px'
+        '15':'15px',
+        '19-10':'19px 10.5px'
       }
     }
   },
