@@ -90,9 +90,9 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
             <form>
                 {/*Select Event*/}
                 <div
-                    className={`flex items-center justify-between  `}>
+                    className={`flex items-center justify-between `}>
                     <label htmlFor={"roomTitle"}
-                           className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px]">
+                           className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px] h-[18.5px]">
                         이벤트 선택
                     </label>
                     <select
@@ -120,7 +120,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     </select>
 
                 </div>
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[43.5px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/*Select Artist*/}
                 <Select
@@ -133,13 +133,13 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     width={"w-[25%]"}
                     fontSize={"text-[20.3px]"}
                     border={"none"}
-                    style={"overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]"}
+                    style={"overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px] "}
                 />
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[41px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/*영상통화 시간 선택*/}
                 <div
-                    className={`flex items-center justify-between`}>
+                    className={`flex items-center justify-between  h-[18.5px]`}>
                     <label htmlFor={"time"} className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px]">
                         영상통화 시간 선택
                     </label>
@@ -153,7 +153,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                         </input>
                     </div>
                 </div>
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[27.5px] mb-[41px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/* 시작 일시 */}
                 <Input
@@ -166,7 +166,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     type={"datetime-local"}
                     inputStyle={"text-[#444]"}
                 />
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[24px] mb-[34.5px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/* 파일 추가 */}
                 <Input
@@ -180,10 +180,10 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     onChange={onChangeFile}
                     type={"file"}
                 />
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[19.5px] mb-[34px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/*multi select가 가능한 스탭 목록*/}
-                <div className={`flex w-[100%] justify-between`}>
+                <div className={`flex w-[100%] justify-between  h-[18.5px]`}>
                     <label htmlFor={"staffList"}
                            className="text-[#444] text-[20.3px] font-medium flex items-center whitespace-nowrap pl-[10.5px]">
                         스탭 등록
@@ -207,12 +207,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                         />}
                     />
                 </div>
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[19.5px] mb-[42.5px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
 
                 {/*multi select가 가능한 팬 목록*/}
-                <div className={`flex w-[100%] justify-between`}>
+                <div className={`flex w-[100%] justify-between  h-[18.5px]`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#444] text-[20.3px] font-medium flex items-center whitespace-nowrap mr-[100px] pl-[10.5px]">
+                           className="text-[#444] text-[20.3px] font-medium flex items-center whitespace-nowrap mr-[100px] pl-[10.5px] ">
                         팬 등록
                     </label>
                     <Controller
@@ -235,7 +235,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                         }
                     />
                 </div>
-                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[27.5px] mb-[39.5px] mx-0"}/>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[44px] mx-0"}/>
                 <Button
                     type={"submit"}
                     _onClick={handleSubmit(onSubmit)}
@@ -292,7 +292,7 @@ const customStyles = {
         height:'36px',
     }),
     multiValueLabel: () => ({
-        textSize: "20.3px",  fontWeight: "bold",
+        fontSize: "20.3px",  fontWeight: "bold",
     }),
     valueContainer:()=>({
         display:'flex',

@@ -13,11 +13,11 @@ const Input = (props) => {
 
     return (
         <div
-            className={`flex ${width} ${marginBottom} justify-between items-center`}>
+            className={`flex ${width} ${marginBottom} justify-between items-center  h-[18.5px]`}>
             {
                 type === "file" ?
                     <>
-                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px]">
+                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px] ">
                             {title}
                         </div>
                         <label
@@ -25,7 +25,7 @@ const Input = (props) => {
                             htmlFor="file_input">
                             {fileName ?
                                 <div
-                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[20.3px] font-bold text-ellipsis whitespace-nowrap max-w-[250px] overflow-hidden"}>{fileName} </div>
+                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[20.3px] font-bold text-ellipsis whitespace-nowrap max-w-[250px] overflow-hidden h-[36px] flex items-center"}>{fileName} </div>
                                 : "파일 선택"}
                         </label>
 
@@ -42,7 +42,7 @@ const Input = (props) => {
                     </>
                     :
                     <>
-                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px]">
+                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px] ">
                             {title}
                         </div>
                         <input
