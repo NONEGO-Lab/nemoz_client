@@ -13,19 +13,19 @@ const Input = (props) => {
 
     return (
         <div
-            className={`flex ${width} ${marginBottom} justify-between items-center  border-b-2 border-b-[#c7c7c7] pb-[1.75rem]`}>
+            className={`flex ${width} ${marginBottom} justify-between items-center`}>
             {
                 type === "file" ?
                     <>
-                        <div className="text-[#444] text-[1rem] font-medium">
+                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px]">
                             {title}
                         </div>
                         <label
-                            className={` cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-400 dark:placeholder-gray-400 flex items-center`}
+                            className={` cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-400 dark:placeholder-gray-400 flex items-center `}
                             htmlFor="file_input">
                             {fileName ?
                                 <div
-                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[1.25rem] font-bold text-ellipsis whitespace-nowrap w-[250px] overflow-hidden"}>{fileName} </div>
+                                    className={"bg-[#c7c7c7] px-[15px] py-[7px] rounded-[18px] text-white text-[20.3px] font-bold text-ellipsis whitespace-nowrap max-w-[250px] overflow-hidden"}>{fileName} </div>
                                 : "파일 선택"}
                         </label>
 
@@ -42,7 +42,7 @@ const Input = (props) => {
                     </>
                     :
                     <>
-                        <div className="text-[#444] text-[1rem] font-medium">
+                        <div className="text-[#444] text-[20.3px] font-medium pl-[10.5px]">
                             {title}
                         </div>
                         <input
@@ -51,7 +51,7 @@ const Input = (props) => {
                                     onChange: (e) => _onChange(e)
                                     })}
                             className={`outline-none
-                                    text-[1.25rem]
+                                    text-[24px]
                                     ${inputWidth}
                                     ${height}
                                     ${errors && 'text-[#848484]'}

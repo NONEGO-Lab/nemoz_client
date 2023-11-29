@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 
 
 const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
-    const modalStyle = "w-[40.625rem] rounded-[15px] drop-shadow-md";
+    const modalStyle = "w-[650px] h-[900px] rounded-[15px] drop-shadow-md";
     const {register, handleSubmit, control} = useForm();
     const [imgUrl, setImgUrl] = useState({
         location: "", mimeType: "", fileName: "",
@@ -75,10 +75,10 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
 
 
     return (<ModalFrame setOnModal={setOnModal} style={modalStyle}>
-        <div className={"p-[3.75rem]"}>
+        <div className={"px-[60px] py-[30px]"}>
             {/*Title*/}
-            <div className="flex justify-between">
-                <div className="text-[1.5rem] font-medium text-[#444]">
+            <div className="flex justify-between mb-[56.5px]">
+                <div className="text-[24px] font-medium text-[#444]">
                     방 만들기
                 </div>
                 <div onClick={() => setOnModal(false)}
@@ -87,12 +87,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                 </div>
             </div>
 
-            <form className="mt-[3.5rem]">
+            <form>
                 {/*Select Event*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[2.719rem] pb-[1.75rem]  `}>
+                    className={`flex items-center justify-between  `}>
                     <label htmlFor={"roomTitle"}
-                           className=" flex items-center text-[1rem] text-[#444] font-medium">
+                           className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px]">
                         이벤트 선택
                     </label>
                     <select
@@ -108,7 +108,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                             setTargetArtistFullInfo(eventList.find(e =>e.event_name === target).target_artist_ids)
                             setTargetStaffIds(eventList.find(e => e.event_name === target)?.target_staff_ids);
                         }}
-                        className={`bg-white text-[1.25rem] flex items-center text-[#444] text-ellipsis w-[250px] overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]`}
+                        className={`bg-white text-[20.3px] flex items-center text-[#444] text-ellipsis w-[250px] overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]`}
                         id={"roomTitle"}
                         placeholder={"이벤트 선택"}
                     >
@@ -120,7 +120,7 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     </select>
 
                 </div>
-
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[43.5px] mx-0"}/>
 
                 {/*Select Artist*/}
                 <Select
@@ -131,28 +131,29 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     items={'items-center'}
                     justify={"justify-between"}
                     width={"w-[25%]"}
-                    fontSize={"text-[1.25rem]"}
-                    mb={"mb-[2.719rem]"}
-                    pb={"pb-[1.75rem] "}
+                    fontSize={"text-[20.3px]"}
+                    border={"none"}
                     style={"overflow-hidden whitespace-nowrap appearance-none bg-arrow-down bg-no-repeat bg-15 bg-right pr-[15px]"}
                 />
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[28px] mb-[41px] mx-0"}/>
 
                 {/*영상통화 시간 선택*/}
                 <div
-                    className={`flex items-center justify-between border-b-[1.5px] border-b-[#c7c7c7] mb-[2.719rem] pb-[1.75rem]`}>
-                    <label htmlFor={"time"} className=" flex items-center text-[1rem] text-[#444] font-medium">
+                    className={`flex items-center justify-between`}>
+                    <label htmlFor={"time"} className=" flex items-center text-[20.3px] text-[#444] font-medium pl-[10.5px]">
                         영상통화 시간 선택
                     </label>
                     <div>
                         <input
                             {...register('time')}
-                            className={`bg-white text-[1.25rem] text-[#444] w-[5rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                            className={`bg-white text-[20.3px] text-[#444] w-[100px] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             name={"time"}
                             type={"number"}
                         >
                         </input>
                     </div>
                 </div>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[27.5px] mb-[41px] mx-0"}/>
 
                 {/* 시작 일시 */}
                 <Input
@@ -161,10 +162,11 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"startDate"}
                     required={true}
                     width={"w-[100%]"}
-                    marginBottom={"mb-[2.719rem]"}
                     placeholder={"시작 일시"}
                     type={"datetime-local"}
+                    inputStyle={"text-[#444]"}
                 />
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[24px] mb-[34.5px] mx-0"}/>
 
                 {/* 파일 추가 */}
                 <Input
@@ -173,16 +175,17 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                     name={"file"}
                     required={true}
                     width={"w-[100%]"}
-                    marginBottom={"mb-[2.719rem]"}
+                    // marginBottom={"mb-[43px]"}
                     fileName={fileName && fileName}
                     onChange={onChangeFile}
                     type={"file"}
                 />
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[19.5px] mb-[34px] mx-0"}/>
 
                 {/*multi select가 가능한 스탭 목록*/}
-                <div className={`flex w-[100%] mb-[25px] justify-between  border-b-2 border-b-[#c7c7c7]  pb-[1.75rem]`}>
+                <div className={`flex w-[100%] justify-between`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
+                           className="text-[#444] text-[20.3px] font-medium flex items-center whitespace-nowrap pl-[10.5px]">
                         스탭 등록
                     </label>
                     <Controller
@@ -203,11 +206,12 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                         />}
                     />
                 </div>
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[19.5px] mb-[42.5px] mx-0"}/>
 
                 {/*multi select가 가능한 팬 목록*/}
-                <div className={`flex w-[100%] mb-[2.469rem] justify-between  border-b-2 border-b-[#c7c7c7] pb-[1.75rem]`}>
+                <div className={`flex w-[100%] justify-between`}>
                     <label htmlFor={"staffList"}
-                           className="text-[#444] text-[1rem] font-medium flex items-center whitespace-nowrap">
+                           className="text-[#444] text-[20.3px] font-medium flex items-center whitespace-nowrap mr-[100px] pl-[10.5px]">
                         팬 등록
                     </label>
                     <Controller
@@ -229,16 +233,16 @@ const CreateRoom = ({setOnModal, getEventListApi, eventList}) => {
                         }
                     />
                 </div>
-
+                <div className={"w-full h-[1.5px] bg-[#c7c7c7] mt-[27.5px] mb-[39.5px] mx-0"}/>
                 <Button
                     type={"submit"}
                     _onClick={handleSubmit(onSubmit)}
                     bgColor={"bg-[#01dfe0]"}
-                    width={"w-[100vw]"}
-                    height={"h-[3.75rem]"}
+                    width={"w-full"}
+                    height={"h-[66.5px]"}
                     style={"flex justify-center items-center"}
                 >
-                    <div className={"text-[1.644rem] text-white font-medium flex justify-center items-center"}>
+                    <div className={"text-[26.3px] text-white font-medium flex justify-center items-center"}>
                         확인
                     </div>
                 </Button>
@@ -253,24 +257,23 @@ export default memo(CreateRoom);
 
 const customStyles = {
     menu: (provided, state) => ({
-        ...provided, width: "400px", border: 'none', padding: 20, display: "flex", borderRadius: "18px",
+        ...provided, width: "auto", border: 'none', padding: 20, display: "flex", borderRadius: "18px"
 
     }),
 
     control: (_, {selectProps: {}}) => ({
-        width: "100%",
+        // width: "100%",
         // height: "33px",
         borderRadius: "7px",
         display:'flex',
-        padding: 2,
-        flexWrap:'wrap',
+        // flexDirection:'row',
+        // padding: 2,
         justifyContent: 'space-between',
+        overflowX: 'scroll',
     }),
-
     singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = 'opacity 300ms';
-
         return {...provided, opacity, transition};
     },
 
@@ -283,8 +286,20 @@ const customStyles = {
         marginRight: "4.5px",
         padding:'0 10px',
         marginBottom:'5px',
-    }), multiValueLabel: () => ({
-        textSize: "1.25rem", margin: "8px 14.5px 8px 22px ", fontWeight: "bold"
+    }),
+    multiValueLabel: () => ({
+        textSize: "20.3px", margin: "8px 14.5px 8px 22px ", fontWeight: "bold"
+    }),
+    valueContainer:()=>({
+        display:'flex',
+        // justifyContent: 'flex-end',
+        // alignItems:'center',
+        overflowX: 'auto',
+        maxWidth:'300px',
+        textAlign:'right'
+    }),
+    placeholder:()=>({
+
     })
 }
 
