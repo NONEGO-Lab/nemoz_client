@@ -59,7 +59,7 @@ const TestCallUtil = ({
             console.error('error in next Call Connect')
         }
     };
-    const style = "flex justify-center items-center flex-row mt-[153px] mx-[110px]"
+    const style = "flex justify-center items-center flex-row mt-[110px] mx-[110px]"
     return (
         <div className={customStyle ?? style}>
             {/* 캠 토글 */}

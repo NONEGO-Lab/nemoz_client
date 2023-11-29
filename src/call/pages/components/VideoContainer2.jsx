@@ -212,12 +212,12 @@ const VideoContainer2 = () => {
           <>
             <div
               className={
-                "flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px]"
+                "flex justify-center pt-[100px] text-[23px] text-[#444] font-[500] mb-[80px] items-center"
               }
             >
               <span>
                 <img
-                  className="w-[30px] h-[30px]"
+                  className='w-[33px] h-[28.5px]'
                   src="/images/roomIcon.png"
                   alt="room-icon"
                 />

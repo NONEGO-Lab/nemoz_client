@@ -36,7 +36,7 @@ const MainCallUtil = ({
 
     let roomNum = `${eventId || roomInfo.event_id}_${roomInfo.room_id}_${sessionInfo.meetId}`;
 
-    let style = "flex items-center flex-row mt-[153px] mx-[110px] justify-center";
+    let style = "flex items-center flex-row mt-[110px] mx-[110px] justify-center";
 
     const nextCallConnect = async () => {
         if (role === 'member') {
