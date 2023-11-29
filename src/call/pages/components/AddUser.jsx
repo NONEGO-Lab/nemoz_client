@@ -101,22 +101,22 @@ const AddUser = ({setOnModal, eventList, eventId, roomId}) => {
                 </form>
                 <div className="flex justify-between w-full">
                     <button
-                        className={"w-[105px] h-[38px] border border-[#c7c7c7] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
+                        className={"w-[140px] h-[50px] border border-[#c7c7c7] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
                         type={"submit"}
                         onClick={handleSubmit(onSubmit)}
                     >
 
                         <div className={"flex items-center"}>
-                            <img src={"/images/plusIcon.png"} alt="plusicon" className={"w-[10.5px] h-[10.5px] mr-[5px]"}/>
+                            <img src={"/images/plusIcon.png"} alt="plusicon" className={"w-[14.5px] h-[14.5px] mr-[5px]"}/>
                             <span>ADD</span>
                         </div>
                     </button>
                     <button
-                        className={"w-[105px] h-[38px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
+                        className={"w-[140px] h-[50px] border border-[#aaa] rounded-[10px] text-[#444] flex justify-center items-center cursor-pointer"}
                         onClick={setOnModal}
                     >
                         <div className={"flex items-center"}>
-                            <img src={"/images/closeIcon.png"} alt="closeicon" className={"w-[10.5px] h-[10.5px] mr-[5px]"}/>
+                            <img src={"/images/closeIcon.png"} alt="closeicon" className={"w-[14.5px] h-[14.5px] mr-[5px]"}/>
                             <span>CANCEL</span>
                         </div>
                     </button>

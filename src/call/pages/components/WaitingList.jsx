@@ -101,7 +101,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center  ml-[90.5px] mr-[20px]"}
                 >
                            <span>
-               <img src={"/images/refreshIcon.png"} className={"w-[17px] h-[17px]"} alt={"refresh-icon"}/>
+               <img src={"/images/refreshIcon.png"} className={"w-[15px] h-[15px]"} alt={"refresh-icon"}/>
              </span>
                     <span className={"ml-[8px] text-[16px] text-[#444]"}>Refresh</span>
                 </Button>
@@ -113,7 +113,7 @@ const WaitingList = ({curRoomId, setOnModal, fanDetailOpenHandler, addUserOpenHa
                     style={"rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
                 >
                   <span>
-               <img src={"/images/saveIcon.png"} className={"w-[17px] h-[17px]"} alt={"plus-icon"}/>
+               <img src={"/images/saveIcon.png"} className={"w-[15px] h-[15px]"} alt={"plus-icon"}/>
              </span>
                     <span className={"ml-[8px] text-[16px] text-[#444]"}>Save List</span>
                 </Button>
@@ -158,7 +158,7 @@ function DraggableBox({id, fan, updateOrder, index, fanDetailOpenHandler}) {
 
     const styles = {
         minHeight: '62.5px',
-        backgroundColor: `${index % 2 === 0 ? "#f0f0f0" : "#e9e9e9"}`,
+        backgroundColor: `${index % 2 === 0 ? "#f0f0f0" : "#fff"}`,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
