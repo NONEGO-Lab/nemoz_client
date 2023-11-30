@@ -53,6 +53,7 @@ export const useDeviceTest = () => {
   const createJoinSession = async () => {
 
     let OV = new OpenVidu();
+    OV.enableProdMode()
     let _session = OV.initSession()
 
     subscribeToStreamCreated(_session);

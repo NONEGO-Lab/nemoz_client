@@ -101,12 +101,12 @@ const User = ({
 
                 <span className={"text-[#01dfe0] text-[13px] mr-[11px]"}>◀</span>
 
-                <span className={"w-[446px] mr-[146.5px] text-ellipsis whitespace-nowrap "}>{user.status.room_name}</span>
+                <span className={"w-[446px] mr-[146.5px] text-ellipsis whitespace-nowrap  text-[18px] "}>{user.status.room_name}</span>
 
 
                 <div className="flex justify-center mr-[90px]">
                     {user.is_tested === 0 &&
-                        <img className="w-[14px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
+                        <img className="w-[17px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
                     {user.is_tested === 1 &&
                         <img className="w-[17px] h-[17px]" src="/images/testSuccess.png" alt='test-success'/>}
                     {user.is_tested === 2 &&
@@ -121,7 +121,7 @@ const User = ({
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);
                     }}
-                    className="w-[106px] h-[30px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] flex justify-center items-center"
+                    className="w-[106px] h-[30px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] flex justify-center items-center text-[15px]"
                 >
                     <div>Fan Info</div>
                     <img src={"/images/arrowRight.png"} alt={"arrowRight"} className={`w-[7px] h-[11px] ml-[10px]`}/>
@@ -130,7 +130,7 @@ const User = ({
             <div>
                 <button
                     onClick={() => connectToTest(user)}
-                    className={`w-[106px] h-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested || (status.orders < 0)) && "opacity-30"} flex justify-center items-center`}
+                    className={`w-[106px] h-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested || (status.orders < 0)) && "opacity-30"} flex justify-center items-center text-[15px]`}
                     disabled={user.is_tested || (status.orders < 0)}
                 >
                     <div>Test Call</div>

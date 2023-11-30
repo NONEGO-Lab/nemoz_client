@@ -53,7 +53,7 @@ const TmpVideoContainer = () => {
                         connectionName: connectInfo
                     });
 
-                    if (response === "LEAVED") {
+                    if (response) {
                         navigate("/waitcall");
                         let roomNum = `1_test_${userInfo.id}`;
                         sock.emit("leaveRoom", roomNum, userInfo, navigate);

@@ -3,7 +3,6 @@ import {BrowserRouter, Routes, Route,} from "react-router-dom";
 import RoomList from "../../room/pages/RoomListView";
 import { Auth } from "../Auth";
 import ParticipantList from "../../fans/pages/ParticipantListView";
-import DeviceTest from "../../test/pages/DeviceTest";
 import EventListView from "../../event/pages/EventListView";
 import ErrorBoundary from "../../shared/ErrorBoundary";
 import LoginView from "../../auth/pages/LoginView";
@@ -21,7 +20,6 @@ const Router = () => {
             <Route path="/roomlist" element={<Auth><RoomList/></Auth>}/>
             <Route path="/userlist" element={<Auth><ParticipantList/></Auth>}/>
             <Route path="/waitcall" element={<Auth><WaitingRoom/></Auth>}/>
-            <Route path="/devicetest" element={<Auth><DeviceTest/></Auth>}/>
             <Route path="/test/:id" element={<Auth><TmpVideoContainer/></Auth>}/>
             <Route path="/video2/:id" element={<Auth><VideoContainer2/></Auth>}/>
             <Route path="/eventlist" element={<Auth><EventListView/></Auth>}/>

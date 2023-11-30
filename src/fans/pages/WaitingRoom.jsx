@@ -38,7 +38,7 @@ const WaitingRoom = () => {
                     {!isVideo ? (
                         wait_url ? (
                             <div className={"min-h-[781px]"}>
-                                <img src={wait_url} alt={"waiting"}/>
+                                <img src={wait_url} alt={"waiting?"} className={"max-h-[781px] object-cover m-auto"}/>
                             </div>
                         ) : (
                             <div
