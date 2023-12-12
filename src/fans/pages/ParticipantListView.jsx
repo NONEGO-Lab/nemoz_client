@@ -29,18 +29,19 @@ const ParticipantListView = () => {
         <div>
             <div
                 className="w-[100vw] text-[16px] text-[#444444] border-b-[#e0e0e0] border-b-2 px-[100px] pb-[14px]">
-                <span className="w-[7.5vw] inline-block">Fan</span>
-                <span className="w-[40vw] inline-block">Status</span>
-                <span className="w-[7.5vw] inline-block text-center">Test</span>
+                <span className="w-[24.5px] inline-block mr-[114px]">Fan</span>
+                <span className="w-[26.5px] inline-block mr-[628.5px]">Status</span>
+                <span className="w-[11.5px] inline-block text-center">Test</span>
             </div>
 
             {/* User List */}
             <div>
                 {attendeeList.map((user, idx) => {
-                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId} setCurrentFanEventId={setCurrentFanEventId}
+                    return <User key={idx} user={user} setCurrentFanId={setCurrentFanId}
+                                 setCurrentFanEventId={setCurrentFanEventId}
                                  setOpenDeviceSetting={setOpenDeviceSetting}
                                  setIsOpenFanDetail={setIsOpenFanDetail} connectToTest={connectToTest}
-                                 totalFanCnt = {attendeeList.length}
+                                 totalFanCnt={attendeeList.length}
                                  bgColor={idx % 2 === 0 ? "" : "bg-[#e9e9e9]"}/>
                 })}
             </div>
@@ -69,7 +70,8 @@ const ParticipantListView = () => {
         </div>
 
         {/* Modal */}
-        {isOpenFanDetail && <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} eventId={currentFanEventId}/>}
+        {isOpenFanDetail &&
+            <FanDetail currentFanId={currentFanId} setOnModal={setOnModal} eventId={currentFanEventId}/>}
         {openDeviceSetting && <DeviceSetting closeDeviceSetting={closeDeviceSetting}/>}
     </Layout>)
 }
@@ -77,23 +79,34 @@ const ParticipantListView = () => {
 export default ParticipantListView;
 
 
-const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, connectToTest, bgColor, totalFanCnt}) => {
+const User = ({
+                  user,
+                  setIsOpenFanDetail,
+                  setCurrentFanId,
+                  setCurrentFanEventId,
+                  connectToTest,
+                  bgColor,
+                  totalFanCnt
+              }) => {
     const status = user.status
     return (
         <div className={`flex items-center min-h-[70px] ${bgColor} px-[100px]`}>
             <div className="flex items-center">
-                <div className="w-[7.5vw]">
+                <div className="w-[51.5px] text-[19px] mr-[89px] text-ellipsis whitespace-nowrap">
                     {user.fan_name}
                 </div>
 
-                <div className="w-[40vw]">
-                    <span className={"text-[#444] font-bold"}>{user.done_meet}/{user.done_meet + user.remain_meet}</span>
-                    <span className={"text-[#01dfe0] ml-[20px] mr-[11px]"}>◀</span>
-                    <span>{user.status.room_name}</span>
-                </div>
-                <div className="w-[7.5vw] flex justify-center">
+                <span
+                    className={"text-[#444] font-bold text-[18px] w-[26.5px] mr-[19.5px]"}>{user.done_meet}/{user.done_meet + user.remain_meet}</span>
+
+                <span className={"text-[#01dfe0] text-[13px] mr-[11px]"}>◀</span>
+
+                <span className={"w-[446px] mr-[146.5px] text-ellipsis whitespace-nowrap  text-[18px] "}>{user.status.room_name}</span>
+
+
+                <div className="flex justify-center mr-[90px]">
                     {user.is_tested === 0 &&
-                        <img className="w-[14px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
+                        <img className="w-[17px] h-[2px]" src="/images/testBefore.png" alt='test-before'/>}
                     {user.is_tested === 1 &&
                         <img className="w-[17px] h-[17px]" src="/images/testSuccess.png" alt='test-success'/>}
                     {user.is_tested === 2 &&
@@ -108,18 +121,20 @@ const User = ({user, setIsOpenFanDetail, setCurrentFanId, setCurrentFanEventId, 
                         setCurrentFanId(user.fan_id);
                         setIsOpenFanDetail(true);
                     }}
-                    className="w-[110px] ml-[90px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444]"
+                    className="w-[106px] h-[30px] mr-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] flex justify-center items-center text-[15px]"
                 >
-                    Fan Info {">"}
+                    <div>Fan Info</div>
+                    <img src={"/images/arrowRight.png"} alt={"arrowRight"} className={`w-[7px] h-[11px] ml-[10px]`}/>
                 </button>
             </div>
             <div>
                 <button
                     onClick={() => connectToTest(user)}
-                    className={`w-[100px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested||(status.orders < 0)) && "opacity-30"}`}
+                    className={`w-[106px] h-[30px] rounded-[15px] border-[1px] border-[#aaa] text-[#444] ${(user.is_tested || (status.orders < 0)) && "opacity-30"} flex justify-center items-center text-[15px]`}
                     disabled={user.is_tested || (status.orders < 0)}
                 >
-                    Test Call
+                    <div>Test Call</div>
+                    <img src={"/images/arrowRight.png"} alt={"arrowRight"} className={`w-[7px] h-[11px] ml-[10px]`}/>
                 </button>
 
             </div>

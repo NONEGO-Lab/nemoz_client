@@ -38,7 +38,7 @@ const WaitingRoom = () => {
                     {!isVideo ? (
                         wait_url ? (
                             <div className={"min-h-[781px]"}>
-                                <img src={wait_url} alt={"waiting"}/>
+                                <img src={wait_url} alt={"waiting?"} className={"max-h-[781px] object-cover m-auto"}/>
                             </div>
                         ) : (
                             <div
@@ -66,8 +66,9 @@ const WaitingRoom = () => {
                             <img src={"../images/roomIcon.png"} alt={"roomIcon"}/>
                         </div>
 
-                        <div className={"text-[#444] font-medium mr-[87px]"}>
+                        <div className={"text-[#444] font-medium mr-[86.5px]"}>
                             <WaitingMents
+                                isReadyTest={isReadyTest}
                                 isCallTested={userInfo.isCallTested}
                                 isCallFinished={isCallFinished}
                                 myWaitInfo={myWaitInfo}

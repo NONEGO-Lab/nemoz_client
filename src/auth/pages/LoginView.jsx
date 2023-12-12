@@ -19,7 +19,7 @@ const LoginView = () => {
                     <img src="/images/nemozCallLogo.png" alt="logo"/>
                 </div>
                 <form
-                    className="text-center mt-[94px] w-[502px]"
+                    className="text-center mt-[94px] w-[502px] "
                     onSubmit={handleSubmit(loginOnSubmit)}
                 >
                     <input
@@ -29,7 +29,7 @@ const LoginView = () => {
                         placeholder={"User ID"}
                         id={"authInput"}
                         type={"text"}
-                        // onFocus={() => setValue("id", '')}
+                        onFocus={() => errors?.id && setValue("id", '')}
                     />
                     <input
                         {...register("password")}

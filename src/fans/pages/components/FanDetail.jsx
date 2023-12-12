@@ -5,7 +5,7 @@ import {attendeeApi} from "../../data/attendee_data";
 
 const FanDetail = ({setOnModal, currentFanId, eventId}) => {
 
-    let style = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";
+    let style = "w-[650px] h-[900px] rounded-[15px] drop-shadow-md";
 
     const [fanInfo, setFanInfo] = useState({});
 
@@ -21,62 +21,62 @@ const FanDetail = ({setOnModal, currentFanId, eventId}) => {
     return (
         <ModalFrameDepth setOnModal={setOnModal} style={style}>
             <div>
-                <div className={"text-[1.2rem] px-[45px] pt-[45px] pb-[30px] font-bold"} >
+                <div className={"text-[24px] px-[60px] pt-[45px] pb-[30px] font-bold"} >
                     Fan Info
                 </div>
                 <div>
 
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[19px] min-w-[50px] text-[#444] ml-[77px] mr-[73.5px] "}>
                             이름
                         </div>
-                        <div className={"text-[1rem] text-[#444] font-[500]"}>
+                        <div className={"text-[21px] text-[#444] font-[500]"}>
                             {fanInfo.fan_name || '정보 없음'}
                         </div>
                     </div>
 
                     <div className={"bg-[#fff] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[19px] min-w-[50px] text-[#444] ml-[77px] mr-[73.5px]"}>
                             성별
                         </div>
-                        <div className={"text-[1rem] text-[#444] font-[500]"}>
+                        <div className={"text-[21px] text-[#444] font-[500] "}>
                             {fanInfo.sex || '정보 없음'}
                         </div>
                     </div>
 
                     <div className={"bg-[#f0f0f0] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[19px] min-w-[50px] text-[#444] ml-[77px] mr-[73.5px]"}>
                             나이
                         </div>
-                        <div className={"text-[1rem] text-[#444] font-[500]"}>
+                        <div className={"text-[21px] text-[#444] font-[500]"}>
                             {fanInfo?.age || '나이 없음'}
                         </div>
 
                     </div>
 
                     <div className={"bg-[#fff] min-h-[63px] flex items-center"}>
-                        <div className={"text-[1rem] min-w-[50px] text-[#444] mx-[60px]"}>
+                        <div className={"text-[19px] min-w-[50px] text-[#444] ml-[77px] mr-[73.5px]"}>
                             팬레터
                         </div>
                     </div>
 
                     <div className={"bg-[#f0f0f0] min-h-[190px] flex"}>
                         <div
-                            className={"text-[1rem] font-[500] min-w-[50px] text-[#444] mx-[60px] mt-[36px]"}>
+                            className={"text-[21px] font-[500] min-w-[50px] text-[#444] ml-[77px] mr-[73.5px] mt-[36px]"}>
                             {fanInfo?.letter || '내용 없음'}
                         </div>
                     </div>
 
                 </div>
                 <Button
-                    style={"fixed bottom-[60px] right-[60px] rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
-                    width={"w-[106px]"}
+                    style={"fixed h-[50px] bottom-[60px] right-[60px] rounded-[10px] border-[1px] border-[#aaa] flex items-center justify-center"}
+                    width={"w-[140px]"}
                     textColor={"text-[#444]"}
                     _onClick={setOnModal}>
                   <span className={"my-[13px]"}>
-               <img src={"/images/closeIcon.png"} className={"w-[15px] h-[15px]"} alt={"close-icon"}/>
+               <img src={"/images/closeIcon.png"} className={"w-[14.5px] h-[14.5px]"} alt={"close-icon"}/>
              </span>
-                    <span className={"ml-[8px] text-[1rem] text-[#444]"}>Close</span>
+                    <span className={"ml-[8px] text-[15.8px] text-[#444]"}>Close</span>
                 </Button>
 
             </div>

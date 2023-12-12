@@ -48,7 +48,7 @@ const ConnectControl2 = ({setToggleNext, setIsSuccess}) => {
 
     return (
         <div
-            className={`flex justify-center z-10 w-[650px] absolute top-[600px] `}>
+            className={`flex justify-center z-10 w-[650px] absolute mt-[247.9px] `}>
             <button
                 onClick={successConnect}
                 className='w-[180px] min-h-[50px] rounded-[25px] bg-white flex items-center justify-center cursor-pointer mr-[35px]'>

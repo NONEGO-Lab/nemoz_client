@@ -17,7 +17,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const style = "w-[488px] h-[675px] rounded-[15px] drop-shadow-md";
+    const style = "w-[650px] h-[900px] rounded-[15px] drop-shadow-md";
 
     const { register, watch, handleSubmit } = useForm();
     const { createJoinSession } = useDeviceTest();
@@ -102,19 +102,19 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
     return (
         <ModalFrame setOnModal={closeDeviceSetting} style={style}>
             <div className="flex flex-col justify-center">
-                <div className=" flex justify-between items-center px-[45px] mt-[45px]">
-                    <div className="text-[1.4rem] font-medium w-[433px] ">{eventName}</div>
-                    <img className={"w-[15px] h-[15px] cursor-pointer"} src={"/images/closeIcon.png"} alt={"close-icon"}
+                <div className=" flex justify-between items-center h-[150px] px-[60px]">
+                    <div className="text-[22.5px] font-medium w-[433px] ">{eventName}</div>
+                    <img className={"w-[20px] h-[20px] cursor-pointer"} src={"/images/closeIcon.png"} alt={"close-icon"}
                         onClick={outRoom} />
                 </div>
                 <div >
-                    <div className="h-[355px] flex justify-center relative">
+                    <div className="h-[367.5px] flex justify-center relative">
                         {publisher !== undefined && (
                             <Video2 streamManager={publisher} userInfo={userInfo} deviceSetting={true} />)
                         }
                     </div>
                 </div>
-                <div className="mx-[45px]">
+                <div className="mx-[45px] mt-[50px]">
                     <form>
                         {/*<DeviceSelect*/}
                         {/*    register={register}*/}
@@ -138,7 +138,7 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                             name={"selectedAudioDevices"}
                             width={"w-[100%]"}
                             border={"border border-[#c7c7c7] rounded-[10px]"}
-                            mb={"mb-[15px]"}
+                            mb={"mb-[25px]"}
                         />
                         <DeviceSelect
                             label={<img src="/images/soundIcon.png" className="w-[15px] h-[21px] mr-[10px]" alt={'speaker'}/>}
@@ -150,9 +150,9 @@ const DeviceSetting = ({ closeDeviceSetting }) => {
                         />
                     </form>
                 </div>
-                <div className="mt-[25px] mx-[40px]">
+                <div className="mt-[60.5px] mx-[40px]">
                     <button onClick={handleSubmit(setDeviceHandler)}
-                        className="min-h-[50px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[1.4rem]">완료
+                        className="min-h-[66.5px]  w-[100%] rounded-[10px] flex items-center justify-center bg-[#00cace] text-white text-[26.3px]">완료
                     </button>
                 </div>
             </div>
